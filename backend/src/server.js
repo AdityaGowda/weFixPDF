@@ -16,3 +16,7 @@ app.get("/", (req, res) => {
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
+
+app.get("/general/ping", (req, res) => {
+  res.status(200).send("OK");
+});
