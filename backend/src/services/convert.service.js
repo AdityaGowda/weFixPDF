@@ -1,5 +1,6 @@
 const sharp = require("sharp");
 const fs = require("fs");
+const path = require("path");
 
 async function imageCompressor({res,req,file,outputPath}){
 
@@ -40,52 +41,51 @@ await image[format](config[format])
   }
 }
 
-async function imageConverter({res,req,file}){
+async function imageConverter({ res, req, file }) {
+  try {
     const inputPath = file.path;
     const uid = req.uid;
-
     const tool = req.params.tool;
     const originalName = file.originalname;
-
     const ext = path.extname(originalName).toLowerCase();
-
 
     let outputPath;
     let downloadName;
-// ---------------- PNG -> JPG ----------------
-if (tool === "png-to-jpg") {
-  outputPath = `uploads/${uid}.jpg`;
-  downloadName = originalName.replace(ext, ".jpg");
 
-  await sharp(inputPath)
-    .jpeg()
-    .toFile(outputPath);
-}
+    const converters = {
+      "png-to-jpg": async () => {
+        outputPath = `uploads/converted-${uid}.jpg`;
+        downloadName = originalName.replace(ext, ".jpg");
+        await sharp(inputPath).jpeg({ quality: 80 }).toFile(outputPath);
+      },
 
-// ---------------- JPG -> PNG ----------------
-else if (tool === "jpg-to-png") {
-  outputPath = `uploads/${uid}.png`;
-  downloadName = originalName.replace(ext, ".png");
+      "jpg-to-png": async () => {
+        outputPath = `uploads/converted-${uid}.png`;
+        downloadName = originalName.replace(ext, ".png");
+        await sharp(inputPath).png().toFile(outputPath);
+      },
 
-  await sharp(inputPath)
-    .png()
-    .toFile(outputPath);
-}
+      "png-to-webp": async () => {
+        outputPath = `uploads/converted-${uid}.webp`;
+        downloadName = originalName.replace(ext, ".webp");
+        await sharp(inputPath).webp({ quality: 80 }).toFile(outputPath);
+      },
+    };
 
-// ---------------- PNG -> WEBP ----------------
-else if (tool === "png-to-webp") {
-  outputPath = `uploads/${uid}.webp`;
-  downloadName = originalName.replace(ext, ".webp");
+    if (!converters[tool]) {
+      return res.status(400).json({ error: "Tool not supported" });
+    }
 
-  await sharp(inputPath)
-    .webp()
-    .toFile(outputPath);
-}
-
-   res.download(outputPath, downloadName, () => {
+    await converters[tool]();
+    return res.download(outputPath, downloadName, () => {
       fs.unlinkSync(inputPath);
       fs.unlinkSync(outputPath);
     });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Conversion failed" });
+  }
 }
 
 

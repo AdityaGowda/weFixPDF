@@ -37,7 +37,7 @@ export default function Home() {
         </div>
 
         <p className="text-slate-500 mt-2">
-          PDF, Images and more — simple & secure.
+          Images and more — simple & secure.
         </p>
       </div>
 

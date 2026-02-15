@@ -1,7 +1,6 @@
   "use client";
 
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 interface UploadBoxProps {
   service: string;
 }
@@ -12,6 +11,13 @@ export default function UploadBox({ service }: UploadBoxProps) {
   const [loading, setLoading] = useState(false);
   const [quality, setQuality] = useState<number>(50);
 
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/general/ping`).then((res) => {
+      console.log(res, ":::::::::::::::::::::response")
+    }).catch((err) => {
+      console.log(err)
+    })
+  }, [])
 
   async function fileConversion() {
     if (!file) return;
@@ -26,13 +32,14 @@ export default function UploadBox({ service }: UploadBoxProps) {
       formData.append('quality', quality.toString());
     
 
-      const res = await fetch(`http://localhost:5000/api/convert/${service}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/convert/${service}`, {
         method: "POST",
         body: formData,
       });
 
-  console.log(res)
+      console.log(res, '::::::::::::::::::::::::::::::::::')
       if (!res.ok) throw new Error("Conversion failed");
+
 
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
@@ -47,14 +54,14 @@ export default function UploadBox({ service }: UploadBoxProps) {
     setLoading(false);
   }
 
+
   function checkNumber(e: React.ChangeEvent<HTMLInputElement>){
     const value=e.target.value;
-    if(!isNaN(value)){
+    if (!isNaN(Number(value))) {
     setQuality(Number(e.target.value))
     };
   }
-  function fileUpload(e: React.ChangeEvent<HTMLInputElement>){
-    setDownloadUrl
+  function fileUpload(e: React.ChangeEvent<HTMLInputElement>) {
      setFile(()=>{
       setDownloadUrl(null)
       return e.target.files?.[0] || null
@@ -123,7 +130,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
       {downloadUrl && (
         <a
           href={downloadUrl}
-          download={file?.name}
+          download=''
           className="block mt-6 w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
         >
           Download File

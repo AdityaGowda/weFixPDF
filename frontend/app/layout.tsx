@@ -46,7 +46,7 @@ export default function RootLayout({
                 </h2>
 
                 <p className="text-slate-600 leading-relaxed">
-                  ConvertLite helps you convert PDF files, compress images, and change image formats
+                  ConvertLite helps you convert compress images, and change image formats
                   instantly. No installations, no complicated steps — just upload your file and
                   download the result.
                 </p>
