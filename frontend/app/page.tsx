@@ -1,8 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Shield, Zap, Globe, Lock, ArrowRight, Star } from "lucide-react";
-import UploadBox from "./components/UploadBox";
 import { useState, useEffect } from "react";
 
 function TrustTicker() {
@@ -16,10 +14,8 @@ function TrustTicker() {
   }, []);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"
+    <div
+      className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-md animate-in fade-in slide-in-from-bottom-5 duration-700"
     >
       <div className="flex -space-x-2">
         {[1, 2, 3].map(i => (
@@ -33,7 +29,7 @@ function TrustTicker() {
         </p>
       </div>
       <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
-    </motion.div>
+    </div>
   );
 }
 
@@ -50,14 +46,12 @@ export default function Home() {
       {/* Hero Section: Centered around the Unique Core */}
       <section className="relative pt-20 pb-10 text-center space-y-12">
         <div className="space-y-8 max-w-4xl mx-auto px-4">
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-black uppercase tracking-[0.2em]"
+          <div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-black uppercase tracking-[0.2em] animate-in fade-in zoom-in duration-1000"
           >
             <Globe className="w-4 h-4" />
             Empowering 1M+ Global Creators
-          </motion.div>
+          </div>
 
           <h1 className="text-6xl md:text-8xl font-black text-slate-900 dark:text-white tracking-tighter leading-[0.9] text-reveal">
             The Future of <br />
