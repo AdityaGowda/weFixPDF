@@ -15,11 +15,8 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://wefixpdf.com"),
-  title: {
-    default: "Free Online File Converter - Images & PDFs | wefixPDF",
-    template: "%s | wefixPDF",
-  },
-  description: "Free online file converter. Convert JPG to PNG, compress images, and process files instantly. Zero retention, 100% private",
+  title: "Free Online File Converter - Images & PDFs | wefixPDF",
+  description: "Convert and compress files instantly. Free JPG to PNG, image compression, PDF tools. Zero retention, 100% private, no sign-up required.",
   keywords: ["free file converter", "jpg to png", "image compressor", "png to jpg", "pdf converter", "compress images online", "wefixPDF"],
   icons: {
     icon: "/favicon.ico",
@@ -32,7 +29,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     siteName: "wefixPDF",
     title: "Free Online File Converter - Images & PDFs | wefixPDF",
-    description: "Free online file converter. Convert JPG to PNG, compress images, and more. Zero retention, 100% private",
+    description: "Convert and compress files instantly. Free JPG to PNG, image compression, PDF tools. Zero retention, 100% private, no sign-up required.",
   },
 };
 
@@ -62,8 +59,8 @@ export default function RootLayout({
               },
               "aggregateRating": {
                 "@type": "AggregateRating",
-                "ratingValue": "4.8",
-                "ratingCount": "1248032"
+                "ratingValue": "4.9",
+                "ratingCount": "150"
               }
             })
           }}
@@ -78,7 +75,7 @@ export default function RootLayout({
           <Navbar />
 
           <main className="flex-1 w-full transition-all duration-500 overflow-x-hidden">
-            <div className="p-6 md:p-12 max-w-7xl mx-auto space-y-24">
+            <div className="px-0 sm:px-6 md:p-12 max-w-7xl mx-auto space-y-16 md:space-y-24">
               <div className="relative">
                 {/* Premium Visual Decorations */}
                 <div className="absolute -top-40 -left-40 w-96 h-96 bg-brand-primary/20 rounded-full blur-[120px] pointer-events-none animate-pulse-slow" />
@@ -90,31 +87,31 @@ export default function RootLayout({
               </div>
 
               {/* SEO CONTENT */}
-              <section className="glass dark:glass-dark rounded-[4rem] p-12 md:p-20 space-y-10 relative overflow-hidden group border border-slate-200/50 dark:border-white/5">
+              <section className="glass dark:glass-dark rounded-3xl md:rounded-[4rem] p-6 sm:p-12 md:p-20 space-y-10 relative overflow-hidden group border border-slate-200/50 dark:border-white/5">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-[100px] transition-transform duration-1000 group-hover:scale-150" />
 
                 <div className="relative z-10 space-y-8">
-                  <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tighter">
-                    Universal File <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-secondary">Powerhouse</span>
+                  <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tighter">
+                    Free Online <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-secondary">File Converter</span>
                   </h2>
 
-                  <div className="grid md:grid-cols-2 gap-12 text-slate-500 dark:text-slate-400 leading-relaxed text-lg font-medium">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-slate-500 dark:text-slate-400 leading-relaxed text-base md:text-lg font-medium">
                     <p>
-                      wefixPDF defines the next generation of file processing. We've eliminated slow uploads and complex menus, replacing them with a streamlined, browser-native experience that prioritizes your privacy above all else.
+                      wefixPDF provides a secure, private, and lightning-fast way to handle your file conversion needs. From converting images to compressing PDFs, our toolset is built for users who value their data privacy.
                     </p>
                     <p>
-                      From high-res image compression to complex document bridging, our tools are engineered for professionals who demand speed without sacrificing quality or security.
+                      Process your files instantly in your browser with zero data retention. No sign-ups, no hidden fees—just professional-grade conversion tools available to everyone for free.
                     </p>
                   </div>
 
                   {/* Trust badges */}
-                  <div className="flex flex-wrap gap-4 pt-8">
+                  <div className="flex flex-wrap gap-3 sm:gap-4 pt-4 sm:pt-8">
                     {[
                       { label: 'E2E Encryption', color: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20' },
                       { label: 'Cloud-Native Speed', color: 'bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20' },
                       { label: 'Zero Retention', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20' },
                     ].map((badge) => (
-                      <span key={badge.label} className={`${badge.color} px-8 py-3 rounded-2xl border text-xs font-black uppercase tracking-[0.2em] shadow-2xl transition-all hover:-translate-y-1 hover:bg-black/5 dark:hover:bg-white/5`}>
+                      <span key={badge.label} className={`${badge.color} px-4 sm:px-8 py-2 sm:py-3 rounded-xl sm:rounded-2xl border text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] shadow-2xl transition-all hover:-translate-y-1 hover:bg-black/5 dark:hover:bg-white/5`}>
                         {badge.label}
                       </span>
                     ))}
@@ -125,7 +122,7 @@ export default function RootLayout({
 
             {/* FOOTER */}
             <footer className="relative z-10 border-t border-slate-200 dark:border-white/5 pt-24 pb-12">
-              <div className="max-w-7xl mx-auto px-6 space-y-20">
+              <div className="max-w-7xl mx-auto px-0 sm:px-6 space-y-20">
                 {/* Top Footer: Brand & Status */}
                 <div className="flex flex-col md:flex-row justify-between items-start gap-12">
                   <div className="max-w-sm space-y-6">
@@ -152,7 +149,7 @@ export default function RootLayout({
                     </div>
                     <div className="px-6 py-3 rounded-2xl bg-brand-primary/5 border border-brand-primary/10 flex items-center gap-3">
                       <Globe className="w-4 h-4 text-brand-primary" />
-                      <span className="text-xs font-black text-brand-primary uppercase tracking-widest">180+ Regions Served</span>
+                      <span className="text-xs font-black text-brand-primary uppercase tracking-widest">Global Privacy Cloud</span>
                     </div>
                   </div>
                 </div>

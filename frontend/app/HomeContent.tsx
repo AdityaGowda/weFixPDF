@@ -2,36 +2,7 @@
 
 import { Shield, Zap, Globe, Lock, ArrowRight, Star, Users } from "lucide-react";
 import { useState, useEffect } from "react";
-
-function TrustTicker() {
-  const [count, setCount] = useState(1248032);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCount(prev => prev + Math.floor(Math.random() * 3));
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div
-      className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-md animate-in fade-in slide-in-from-bottom-5 duration-700"
-    >
-      <div className="flex -space-x-2">
-        {[1, 2, 3].map(i => (
-          <div key={i} className="w-8 h-8 rounded-full border-2 border-slate-900 bg-gradient-to-br from-brand-primary to-brand-secondary" />
-        ))}
-      </div>
-      <div className="text-left">
-        <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Live Conversions</p>
-        <p className="text-sm font-bold text-slate-200">
-          <span className="text-brand-primary font-black">{count.toLocaleString()}</span> Files Converted & Deleted
-        </p>
-      </div>
-      <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
-    </div>
-  );
-}
+import TrustTicker from "./components/trustTicker";
 
 export default function HomeContent() {
   const tools = [
@@ -39,45 +10,78 @@ export default function HomeContent() {
     { name: "PNG to JPG Converter", href: "/png-to-jpg", icon: "📸", desc: "Smaller files, optimized for web", cta: "Convert PNG to JPG Free" },
     { name: "Image Compressor", href: "/image-compressor", icon: "🗜️", desc: "Reduce size up to 80%, keep quality", cta: "Compress Images Now" },
     { name: "PNG to WEBP Converter", href: "/png-to-webp", icon: "🌐", desc: "Next-gen format, 30% smaller", cta: "Convert PNG to WEBP" },
-    { name: "Compress PDF", href: "#", icon: "📄", desc: "Reduce PDF file size instantly", upcoming: true },
-    { name: "PDF to JPG", href: "#", icon: "🖼️", desc: "Convert PDF pages to images", upcoming: true },
-    { name: "Merge PDF", href: "#", icon: "📚", desc: "Combine multiple PDFs into one", upcoming: true },
+    { name: "Compress PDF", href: "/compress-pdf", icon: "📄", desc: "Reduce PDF file size instantly", upcoming: true },
+    { name: "PDF to JPG", href: "/pdf-to-jpg", icon: "🖼️", desc: "Convert PDF pages to images", upcoming: true },
+    { name: "PDF to Word", href: "/pdf-to-word", icon: "📚", desc: "Convert PDF to editable DOCX", upcoming: true },
     { name: "HEIC to JPG", href: "#", icon: "📱", desc: "Convert iPhone photos instantly", upcoming: true },
   ];
 
   return (
     <div className="space-y-32 pb-20">
       {/* Hero */}
-      <section className="relative pt-20 pb-10 text-center space-y-12">
-        <div className="space-y-8 max-w-4xl mx-auto px-4">
+      <section className="relative pt-10 pb-10 text-center space-y-12">
+        <div className="space-y-8 max-w-4xl mx-auto px-0 sm:px-4">
           <div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-black uppercase tracking-[0.2em] animate-in fade-in zoom-in duration-1000"
           >
-            <Globe className="w-4 h-4" />
-            Trusted by 1M+ Users Worldwide
+            <Shield className="w-4 h-4" />
+            Privacy-First Processing • Edge Technology
           </div>
 
-          <h1 className="text-6xl md:text-8xl font-black text-slate-900 dark:text-white tracking-tighter leading-[0.9] text-reveal">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-slate-900 dark:text-white tracking-tighter leading-[0.95] text-reveal">
             Free Online<br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary via-white to-brand-secondary animate-shine">File Converter.</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary via-white to-brand-secondary animate-shine">File Converter</span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed">
-            Convert and compress images instantly. Free, fast, and 100% private. No sign-up required.
-          </p>
+          <div className="space-y-8">
+            <p className="text-lg md:text-2xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed px-4">
+              Convert PDFs, compress images, and transform documents. <br className="hidden sm:block" />
+              <span className="text-slate-900 dark:text-white font-black">Unlimited Files</span> with zero data retention.
+            </p>
 
-          <TrustTicker />
+            <TrustTicker />
+
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 py-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
+              <a href="/compress-pdf" className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-brand-primary text-white font-black hover:scale-105 transition-all shadow-xl shadow-brand-primary/20">
+                Compress PDF
+              </a>
+              <a href="/pdf-to-word" className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black hover:scale-105 transition-all shadow-xl">
+                PDF to Word
+              </a>
+              <a href="/image-compressor" className="w-full sm:w-auto px-8 py-4 rounded-2xl glass dark:glass-dark border border-slate-200 dark:border-white/10 font-bold hover:bg-white/10 transition-all">
+                Compress Images
+              </a>
+              <a href="/pdf-to-jpg" className="w-full sm:w-auto px-8 py-4 rounded-2xl glass dark:glass-dark border border-slate-200 dark:border-white/10 font-bold hover:bg-white/10 transition-all">
+                PDF to JPG
+              </a>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 px-4">
+              <div className="flex items-center gap-2 decoration-brand-primary/30 underline underline-offset-4">
+                <span className="text-brand-primary font-bold">✓</span> Zero Retention
+              </div>
+              <div className="flex items-center gap-2 decoration-brand-primary/30 underline underline-offset-4">
+                <span className="text-brand-primary font-bold">✓</span> 100% Private
+              </div>
+              <div className="flex items-center gap-2 decoration-brand-primary/30 underline underline-offset-4">
+                <span className="text-brand-primary font-bold">✓</span> No Sign-Up
+              </div>
+              <div className="flex items-center gap-2 decoration-brand-primary/30 underline underline-offset-4">
+                <span className="text-brand-primary font-bold">✓</span> All Files Supported
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Tool Grid */}
-      <section className="max-w-6xl mx-auto px-6 space-y-12">
+      <section className="max-w-6xl mx-auto px-0 sm:px-6 space-y-12">
         <div className="text-center space-y-4">
-          <h2 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Online File Converter Tools</h2>
+          <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">Online File Converter Tools</h2>
           <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Free • Instant • Private — No Sign-up Required</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {tools.map((tool, i) => (
             <a
               key={i}
@@ -105,11 +109,11 @@ export default function HomeContent() {
       </section>
 
       {/* Social Proof */}
-      <section className="max-w-6xl mx-auto px-6">
+      <section className="max-w-6xl mx-auto px-0 sm:px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { stat: "1M+", label: "Users Worldwide" },
-            { stat: "4.8/5", label: "User Rating" },
+            { stat: "Secure", label: "In-Browser Processing" },
+            { stat: "Fast", label: "Sub-Second Conversion" },
             { stat: "100%", label: "Free Forever" },
             { stat: "0 bytes", label: "Files Retained" },
           ].map((item, i) => (
@@ -122,7 +126,7 @@ export default function HomeContent() {
       </section>
 
       {/* Trust Features */}
-      <section className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+      <section className="max-w-6xl mx-auto px-0 sm:px-6 grid md:grid-cols-3 gap-8">
         {[
           { icon: Shield, title: "Zero Retention", desc: "Files are never stored. They are processed in memory and immediately deleted after conversion." },
           { icon: Lock, title: "100% Private", desc: "No tracking, no accounts, no cookies. Your files stay private from start to finish." },
@@ -139,14 +143,14 @@ export default function HomeContent() {
       </section>
 
       {/* CTA */}
-      <section className="max-w-4xl mx-auto px-6">
+      <section className="max-w-4xl mx-auto px-0 sm:px-6">
         <div className="glass dark:glass-dark rounded-[3rem] p-16 text-center relative overflow-hidden group">
           <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/10 to-brand-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity" />
           <div className="relative z-10 space-y-8">
             <div className="flex justify-center gap-1 text-amber-400">
               {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-5 h-5 fill-current" />)}
             </div>
-            <p className="text-sm font-black text-slate-500 uppercase tracking-widest">Trusted by 1M+ users · 4.8/5 rating · 50,000+ reviews</p>
+            <p className="text-sm font-black text-slate-500 uppercase tracking-widest">Minimalist Design • Zero Compromise • 100% Secure</p>
             <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">The Easiest File Converter<br />on the Internet.</h2>
             <p className="text-lg text-slate-500 dark:text-slate-400 font-medium">Convert, compress, and edit files — free, instantly, and 100% private.</p>
             <a href="/jpg-to-png" className="inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black hover:scale-105 transition-all">
@@ -158,4 +162,3 @@ export default function HomeContent() {
     </div>
   );
 }
-

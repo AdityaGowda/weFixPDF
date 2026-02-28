@@ -36,15 +36,17 @@ export default function Navbar() {
         { label: 'PNG to JPG', href: '/png-to-jpg', description: 'Fast PNG to JPG converter. Change image formats securely online with high-quality results.' },
         { label: 'JPG to PNG', href: '/jpg-to-png', description: 'Convert JPG to transparent PNG online. Free, fast, and secure image format converter.' },
         { label: 'PNG to WEBP', href: '/png-to-webp', description: 'Optimize images with our free PNG to WEBP converter. Create next-gen formats for faster websites.' },
+        { label: 'HEIC to JPG', href: '#', description: 'Convert iPhone HEIC photos to JPG instantly in your browser.', upcoming: true },
       ]
     },
     {
       label: 'PDF Tools',
       items: [
-        { label: 'Merge PDF', href: '/merge-pdf', description: 'Free online PDF merger. Combine multiple PDF files securely into one document in seconds.' },
-        { label: 'Split PDF', href: '/split-pdf', description: 'Split PDF pages easily online. Extract specific pages or separate large PDFs into multiple files.' },
-        { label: 'Compress PDF', href: '/compress-pdf', description: 'Best free PDF compressor. Reduce PDF file size online instantly without losing document quality.' },
-        { label: 'PDF to Word', href: '/pdf-to-word', description: 'Convert PDF to Word documents online. Accurate, fast, and free PDF to DOCX converter for easy editing.' },
+        { label: 'Compress PDF', href: '/compress-pdf', description: 'Best free PDF compressor. Reduce PDF file size online instantly without losing document quality.', upcoming: true },
+        { label: 'PDF to JPG', href: '/pdf-to-jpg', description: 'Fast PDF to JPG converter. Extract images or convert individual pages to images.', upcoming: true },
+        { label: 'PDF to Word', href: '/pdf-to-word', description: 'Convert PDF to Word documents online. Accurate, fast, and free PDF to DOCX converter.', upcoming: true },
+        { label: 'Merge PDF', href: '#', description: 'Free online PDF merger. Combine multiple PDF files securely into one document.', upcoming: true },
+        { label: 'Split PDF', href: '#', description: 'Split PDF pages easily online. Extract specific pages or separate large PDFs.', upcoming: true },
       ]
     }
   ];
@@ -83,11 +85,23 @@ export default function Navbar() {
               </button>
 
               <div className="absolute top-[80%] left-1/2 -translate-x-1/2 pt-4 opacity-0 scale-95 pointer-events-none group-hover/nav:opacity-100 group-hover/nav:scale-100 group-hover/nav:pointer-events-auto transition-all duration-300 z-50">
-                <div className="w-[480px] glass dark:glass-dark rounded-3xl p-4 border border-slate-200/50 dark:border-white/10 shadow-2xl grid grid-cols-2 gap-2 relative overflow-hidden">
+                <div className="w-[520px] glass dark:glass-dark rounded-3xl p-4 border border-slate-200/50 dark:border-white/10 shadow-2xl grid grid-cols-2 gap-2 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/5 to-transparent pointer-events-none" />
                   {category.items.map((item) => (
-                    <a key={item.href} href={item.href} className="relative z-10 flex flex-col gap-1.5 p-4 rounded-2xl hover:bg-white dark:hover:bg-white/10 shadow-sm hover:shadow-md transition-all group/item">
-                      <span className="text-sm font-bold text-slate-900 dark:text-white group-hover/item:text-brand-primary transition-colors">{item.label}</span>
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className={`relative z-10 flex flex-col gap-1.5 p-4 rounded-2xl hover:bg-white dark:hover:bg-white/10 shadow-sm hover:shadow-md transition-all group/item ${item.upcoming ? 'opacity-70 grayscale-[0.5]' : ''}`}
+                      onClick={(e) => item.href === '#' && e.preventDefault()}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-sm font-bold text-slate-900 dark:text-white group-hover/item:text-brand-primary transition-colors">{item.label}</span>
+                        {item.upcoming && (
+                          <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md bg-brand-primary/10 text-brand-primary border border-brand-primary/20 whitespace-nowrap">
+                            Soon
+                          </span>
+                        )}
+                      </div>
                       <span className="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">{item.description}</span>
                     </a>
                   ))}
@@ -128,35 +142,42 @@ export default function Navbar() {
 
       {/* Mobile Navigation Dropdown */}
       <div className={`
-        lg:hidden absolute top-full left-0 right-0 m-4 p-4 rounded-3xl 
+        lg:hidden absolute top-full left-0 right-0 m-2 sm:m-4 p-2 sm:p-4 rounded-[2rem] sm:rounded-3xl 
         glass dark:glass-dark border border-slate-200/50 dark:border-white/10 shadow-3xl
         transition-all duration-500 origin-top
         ${isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'}
       `}>
-        <div className="flex flex-col gap-2 max-h-[70vh] overflow-y-auto custom-scrollbar">
-          <a href="/" onClick={() => setIsOpen(false)} className="px-6 py-4 rounded-2xl text-lg font-bold text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all">Home</a>
+        <div className="flex flex-col gap-1 max-h-[75vh] overflow-y-auto custom-scrollbar px-1">
+          <a href="/" onClick={() => setIsOpen(false)} className="px-5 py-3 rounded-xl text-base font-bold text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all">Home</a>
 
           {navCategories.map((category) => (
             <div key={category.label} className="flex flex-col">
               <button
                 onClick={() => toggleCategory(category.label)}
-                className="flex items-center justify-between px-6 py-4 rounded-2xl text-lg font-bold text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all"
+                className="flex items-center justify-between px-5 py-3 rounded-xl text-base font-bold text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all"
               >
                 {category.label}
-                <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${openCategory === category.label ? '-rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${openCategory === category.label ? '-rotate-180' : ''}`} />
               </button>
 
               <div className={`overflow-hidden transition-all duration-300 ${openCategory === category.label ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                <div className="flex flex-col gap-2 px-4 pb-4">
+                <div className="flex flex-col gap-1.5 px-3 pb-3">
                   {category.items.map((item) => (
                     <a
-                      key={item.href}
+                      key={item.label}
                       href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className="flex flex-col gap-1 px-6 py-4 rounded-2xl hover:bg-black/5 dark:hover:bg-white/10 transition-all bg-white/50 dark:bg-black/20"
+                      onClick={() => !item.upcoming && setIsOpen(false)}
+                      className={`flex flex-col gap-0.5 px-5 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition-all bg-white/40 dark:bg-black/20 border border-slate-100/50 dark:border-white/5 ${item.upcoming ? 'opacity-70' : ''}`}
                     >
-                      <span className="text-sm font-bold text-slate-900 dark:text-white">{item.label}</span>
-                      <span className="text-xs text-slate-500 dark:text-slate-400">{item.description}</span>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-bold text-slate-900 dark:text-white">{item.label}</span>
+                        {item.upcoming && (
+                          <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md bg-brand-primary/20 text-brand-primary border border-brand-primary/30">
+                            Soon
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-[10px] leading-relaxed text-slate-500 dark:text-slate-400">{item.description}</span>
                     </a>
                   ))}
                 </div>
@@ -164,7 +185,7 @@ export default function Navbar() {
             </div>
           ))}
 
-          <a href="/about" onClick={() => setIsOpen(false)} className="px-6 py-4 rounded-2xl text-lg font-bold text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all">About</a>
+          <a href="/about" onClick={() => setIsOpen(false)} className="px-5 py-3 rounded-xl text-base font-bold text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all">About</a>
         </div>
       </div>
     </nav>

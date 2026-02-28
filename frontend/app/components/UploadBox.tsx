@@ -18,8 +18,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Removed Magnetic Core Physics for SEO (reduced JS footprint)
-
   useEffect(() => {
     // Magnetic Core Physics logic removed
   }, [isDragging]);
@@ -140,7 +138,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
                   <div className="space-y-6 animate-in fade-in zoom-in duration-500">
                     <FileText className="w-24 h-24 text-white mx-auto drop-shadow-xl" />
                     <div className="space-y-1">
-                      <p className="text-white text-3xl font-black truncate max-w-[280px] drop-shadow-md">{file.name}</p>
+                      <p className="text-white text-3xl font-black truncate max-w-[280px] ">{file.name}</p>
                       <p className="text-white/70 font-black uppercase tracking-[0.3em] text-xs">{(file.size / (1024 * 1024)).toFixed(2)} MB • READY</p>
                     </div>
                   </div>
@@ -217,7 +215,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
               onChange={(e) => setQuality(Number(e.target.value))}
               className="w-full h-2 bg-slate-100 dark:bg-white/10 rounded-full appearance-none cursor-pointer accent-brand-primary"
             />
-            <p className="text-[10px] text-slate-400 font-bold leading-relaxed italic">Lowering density increases speed but may reduce structural integrity.</p>
+            <p className="text-[12px] text-slate-700 font-bold leading-relaxed italic">Lowering density increases speed but may reduce structural integrity.</p>
           </div>
         )}
 

@@ -22,18 +22,6 @@ export default function TermsContent() {
 
   return (
     <div className="space-y-16 animate-fade-in">
-      {/* Header */}
-      <section className="text-center space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[10px] font-black uppercase tracking-[0.2em] border border-indigo-100 dark:border-indigo-500/20">
-          General Terms
-        </div>
-        <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tighter">
-          Terms of Service
-        </h1>
-        <p className="text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
-          Simple, fair terms for using our free file conversion tools.
-        </p>
-      </section>
 
       {/* Terms Grid */}
       <div className="grid md:grid-cols-2 gap-10">

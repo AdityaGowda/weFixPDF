@@ -22,18 +22,6 @@ export default function PrivacyContent() {
 
   return (
     <div className="space-y-16 animate-fade-in">
-      {/* Header */}
-      <section className="text-center space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-[0.2em] border border-emerald-100 dark:border-emerald-500/20">
-          Privacy Policy
-        </div>
-        <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tighter">
-          Privacy Policy
-        </h1>
-        <p className="text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
-          Your files are processed in-memory only. Zero retention, zero tracking.
-        </p>
-      </section>
 
       {/* Content Grid */}
       <div className="grid md:grid-cols-2 gap-8">
