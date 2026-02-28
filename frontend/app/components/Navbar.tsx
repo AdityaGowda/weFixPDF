@@ -19,14 +19,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Avoid hydration mismatch
-  if (!mounted) return (
-    <nav className="sticky top-0 z-50 px-4 py-2 lg:px-6 lg:py-4 bg-transparent opacity-0">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="w-10 h-10 rounded-2xl bg-brand-primary shadow-lg" />
-      </div>
-    </nav>
-  );
 
   const toggleTheme = () => {
     setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');

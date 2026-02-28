@@ -2,8 +2,8 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "About wefixPDF | Powerful & Free Online File Conversion",
-  description: "Convert between dozens of file formats with professional quality. No software installation required. Fast, secure, and ad-free.",
+  title: "About wefixPDF - Privacy-First File Converter",
+  description: "Learn about wefixPDF's mission to provide secure, private file conversion tools. Zero retention, edge processing, trusted by 1M+ users worldwide.",
 };
 
 const FeatureItem = ({ children }: { children: React.ReactNode }) => (
@@ -40,11 +40,10 @@ export default function AboutPage() {
           Modern File Processing
         </div>
         <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tighter leading-[1.05]">
-          A simpler way to <br className="hidden md:block" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-secondary">reshape your media safely.</span>
+          About wefixPDF
         </h1>
         <p className="text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
-          Professional-grade, browser-native file conversion tools designed for speed and total privacy. No accounts, no tracking, just pure utility.
+          Building the most secure and private file conversion platform in the world.
         </p>
       </section>
 

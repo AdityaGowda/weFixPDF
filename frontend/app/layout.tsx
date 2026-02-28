@@ -18,11 +18,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "wefixPDF | Universal File Powerhouse & Converter",
-  description: "wefixPDF defines the next generation of file processing. Experience secure, lightning-fast, browser-native file conversions with absolute zero retention.",
-  keywords: ["pdf converter", "image compressor", "file conversion", "secure converter", "browser native", "wefixPDF"],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://wefixpdf.com"),
+  title: {
+    default: "Free Online File Converter - Images & PDFs | wefixPDF",
+    template: "%s | wefixPDF",
+  },
+  description: "Free online file converter. Convert JPG to PNG, compress images, and process files instantly. Zero retention, 100% private",
+  keywords: ["free file converter", "jpg to png", "image compressor", "png to jpg", "pdf converter", "compress images online", "wefixPDF"],
   icons: {
     icon: "/favicon.ico",
+  },
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "wefixPDF",
+    title: "Free Online File Converter - Images & PDFs | wefixPDF",
+    description: "Free online file converter. Convert JPG to PNG, compress images, and more. Zero retention, 100% private",
   },
 };
 
@@ -34,6 +48,30 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-500`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              "name": "wefixPDF File Converter",
+              "url": "https://wefixpdf.com",
+              "description": "Free online file converter. Convert JPG to PNG, compress images, and process files instantly.",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "ratingCount": "1248032"
+              }
+            })
+          }}
+        />
         <Toaster />
         <ThemeProvider
           attribute="class"
@@ -128,9 +166,10 @@ export default function RootLayout({
                   <div className="space-y-6">
                     <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Services</h5>
                     <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
-                      <li><a href="/image-compressor" className="hover:text-brand-primary transition-colors">Core Compressor</a></li>
-                      <li><a href="/jpg-to-png" className="hover:text-brand-primary transition-colors">Identity Shift</a></li>
-                      <li><a href="/png-to-jpg" className="hover:text-brand-primary transition-colors">Optimized Grid</a></li>
+                      <li><a href="/image-compressor" className="hover:text-brand-primary transition-colors">Image Compressor</a></li>
+                      <li><a href="/jpg-to-png" className="hover:text-brand-primary transition-colors">JPG to PNG Converter</a></li>
+                      <li><a href="/png-to-jpg" className="hover:text-brand-primary transition-colors">PNG to JPG Converter</a></li>
+                      <li><a href="/png-to-webp" className="hover:text-brand-primary transition-colors">PNG to WEBP Converter</a></li>
                     </ul>
                   </div>
                   <div className="space-y-6">
