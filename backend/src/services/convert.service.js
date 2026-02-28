@@ -30,7 +30,24 @@ await image[format](config[format])
     await image.toFile(outputPath);
 
 
-    res.download(outputPath, `compressed-${file.originalname}`, () => {
+    // Add requested headers
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    const fileBaseName = path.parse(file.originalname).name;
+    const fileExt = path.extname(file.originalname);
+    const downloadName = `${fileBaseName}_wefixPDF_image-compressor${fileExt}`;
+    res.setHeader("Content-Disposition", `attachment; filename="${downloadName}"`);
+
+    const mimeTypes = {
+      ".jpg": "image/jpeg",
+      ".jpeg": "image/jpeg",
+      ".png": "image/png",
+      ".webp": "image/webp",
+      ".pdf": "application/pdf"
+    };
+    res.setHeader("Content-Type", mimeTypes[fileExt.toLowerCase()] || "application/octet-stream");
+
+
+    res.download(outputPath, downloadName, () => {
       fs.unlinkSync(file.path);
       fs.unlinkSync(outputPath);
     });
@@ -50,24 +67,24 @@ async function imageConverter({ res, req, file }) {
     const ext = path.extname(originalName).toLowerCase();
 
     let outputPath;
-    let downloadName;
+    const fileBaseName = path.parse(originalName).name;
 
     const converters = {
       "png-to-jpg": async () => {
         outputPath = `uploads/converted-${uid}.jpg`;
-        downloadName = originalName.replace(ext, ".jpg");
+        downloadName = `${fileBaseName}_wefixPDF_png-to-jpg.jpg`;
         await sharp(inputPath).jpeg({ quality: 80 }).toFile(outputPath);
       },
 
       "jpg-to-png": async () => {
         outputPath = `uploads/converted-${uid}.png`;
-        downloadName = originalName.replace(ext, ".png");
+        downloadName = `${fileBaseName}_wefixPDF_jpg-to-png.png`;
         await sharp(inputPath).png().toFile(outputPath);
       },
 
       "png-to-webp": async () => {
         outputPath = `uploads/converted-${uid}.webp`;
-        downloadName = originalName.replace(ext, ".webp");
+        downloadName = `${fileBaseName}_wefixPDF_png-to-webp.webp`;
         await sharp(inputPath).webp({ quality: 80 }).toFile(outputPath);
       },
     };
@@ -77,6 +94,21 @@ async function imageConverter({ res, req, file }) {
     }
 
     await converters[tool]();
+
+    // Add requested headers
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    res.setHeader("Content-Disposition", `attachment; filename="${downloadName}"`);
+
+    const outputExt = path.extname(downloadName).toLowerCase();
+    const mimeTypes = {
+      ".jpg": "image/jpeg",
+      ".jpeg": "image/jpeg",
+      ".png": "image/png",
+      ".webp": "image/webp",
+      ".pdf": "application/pdf"
+    };
+    res.setHeader("Content-Type", mimeTypes[outputExt] || "application/octet-stream");
+
     return res.download(outputPath, downloadName, () => {
       fs.unlinkSync(inputPath);
       fs.unlinkSync(outputPath);

@@ -15,6 +15,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
   const [quality, setQuality] = useState<number>(80);
   const [isDragging, setIsDragging] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [suggestedName, setSuggestedName] = useState<string>("");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -62,6 +63,27 @@ export default function UploadBox({ service }: UploadBoxProps) {
       });
 
       if (!res.ok) throw new Error("Conversion failed");
+
+      // Extract suggested filename from Content-Disposition
+      const disposition = res.headers.get('content-disposition');
+
+      let filename = "";
+      if (disposition) {
+        const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+        const matches = filenameRegex.exec(disposition);
+        if (matches != null && matches[1]) {
+          filename = matches[1].replace(/['"]/g, '');
+        }
+      }
+
+      // Fallback if header extraction fails
+      if (!filename) {
+        const fileBaseName = file.name.split('.').slice(0, -1).join('.');
+        const fileExt = file.name.split('.').pop();
+        filename = `${fileBaseName}_wefixPDF_${service}.${fileExt}`;
+      }
+
+      setSuggestedName(filename);
 
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
@@ -227,7 +249,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
               initial={{ scale: 0, y: 50 }}
               animate={{ scale: 1.2, y: 0 }}
               href={downloadUrl}
-              download=""
+              download={suggestedName}
               className="absolute bottom-[-40px] left-1/2 -translate-x-1/2 z-30 px-12 py-6 rounded-[2rem] bg-emerald-500 text-white font-black text-2xl shadow-2xl shadow-emerald-500/50 flex items-center gap-3 hover:scale-110"
             >
               <Download className="w-8 h-8" />
