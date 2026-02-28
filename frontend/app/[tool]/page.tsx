@@ -1,13 +1,53 @@
+import { Metadata } from "next";
 import UploadBox from "../components/UploadBox";
 
-export default async function ToolPage({ params }: { params: { tool: string } }) {
-    const serviceList: Record<string, string> = {
-    "image-compressor": "Image Compressor",
-    "png-to-jpg": "PNG to JPG",
-    "jpg-to-png": "JPG to PNG",
-    "png-to-webp": "PNG-to-WEBP"
-  };
+const toolMetadata: Record<string, { title: string; description: string; h1: string; subtitle: string }> = {
+  "jpg-to-png": {
+    title: "JPG to PNG Converter - Free Online Tool | wefixPDF",
+    description: "Convert JPG to PNG online free. Lossless quality, instant conversion, complete privacy. No file size limits or watermarks.",
+    h1: "JPG to PNG Converter",
+    subtitle: "Convert JPG images to PNG format instantly. Free, fast, and 100% secure.",
+  },
+  "png-to-jpg": {
+    title: "PNG to JPG Converter - Free Online Tool | wefixPDF",
+    description: "Convert PNG to JPG online free. Reduce file size, optimize for web. Instant conversion with complete privacy.",
+    h1: "PNG to JPG Converter",
+    subtitle: "Convert PNG images to JPG format. Perfect for web optimization and smaller file sizes.",
+  },
+  "image-compressor": {
+    title: "Image Compressor - Compress JPG & PNG Online Free | wefixPDF",
+    description: "Compress images online without losing quality. Reduce JPG, PNG, and WEBP file sizes up to 80%. Fast, free, and secure compression.",
+    h1: "Image Compressor",
+    subtitle: "Reduce image file size without losing quality. Compress JPG, PNG, and WEBP images instantly.",
+  },
+  "png-to-webp": {
+    title: "PNG to WEBP Converter - Free Online Tool | wefixPDF",
+    description: "Convert PNG to WEBP online free. Next-gen image format with superior compression. Reduce file sizes by up to 30% more than PNG.",
+    h1: "PNG to WEBP Converter",
+    subtitle: "Convert PNG to WEBP format. Next-generation image format for faster websites.",
+  },
+};
+
+export async function generateMetadata({ params }: { params: { tool: string } }): Promise<Metadata> {
   const reqService = await params;
+  const metadata = toolMetadata[reqService.tool];
+
+  if (!metadata) {
+    return {
+      title: "File Converter | wefixPDF",
+      description: "Fast, secure, and private file conversion tools.",
+    };
+  }
+
+  return {
+    title: metadata.title,
+    description: metadata.description,
+  };
+}
+
+export default async function ToolPage({ params }: { params: { tool: string } }) {
+  const reqService = await params;
+  const metadata = toolMetadata[reqService.tool];
 
   return (
     <div className="space-y-12 animate-fade-in">
@@ -16,11 +56,11 @@ export default async function ToolPage({ params }: { params: { tool: string } })
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-indigo-50 dark:bg-brand-primary/10 text-brand-primary text-[10px] font-black uppercase tracking-[0.2em] border border-indigo-100/50 dark:border-brand-primary/20">
             Active Tool
           </div>
-          <h2 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">
-            {serviceList[reqService.tool] || "File Converter"}
-          </h2>
+          <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">
+            {metadata?.h1 || "File Converter"}
+          </h1>
           <p className="text-slate-500 dark:text-slate-400 font-medium">
-            Fast, secure, and privacy-shielded conversion.
+            {metadata?.subtitle || "Fast, secure, and privacy-shielded conversion."}
           </p>
         </div>
       </div>
