@@ -4,7 +4,7 @@ export default function TermsPage() {
   const terms = [
     {
       title: "Usage Agreement",
-      content: "By accessing ConvertLite, you agree to use our tools responsibly and for lawful purposes only. You are solely responsible for the content you upload for conversion."
+      content: "By accessing wefixPDF, you agree to use our tools responsibly and for lawful purposes only. You are solely responsible for the content you upload for conversion."
     },
     {
       title: "Service Scope",
@@ -12,7 +12,7 @@ export default function TermsPage() {
     },
     {
       title: "Intellectual Property",
-      content: "We do not claim ownership of any files you upload. Likewise, all design elements, code, and logos of ConvertLite are protected by intellectual property laws and may not be reused without permission."
+      content: "We do not claim ownership of any files you upload. Likewise, all design elements, code, and logos of wefixPDF are protected by intellectual property laws and may not be reused without permission."
     },
     {
       title: "User Obligations",
@@ -43,6 +43,12 @@ export default function TermsPage() {
             <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
               {term.content}
             </p>
+            <div className="mt-12 p-6 rounded-2xl bg-brand-primary/5 border border-brand-primary/10 text-center">
+              <p className="text-sm font-bold text-slate-500">Questions about our terms? Contact us at:</p>
+              <a href="mailto:legal@wefixpdf.com" className="text-brand-primary font-black mt-2 inline-block hover:underline">
+                legal@wefixpdf.com
+              </a>
+            </div>
           </div>
         ))}
       </div>

@@ -4,7 +4,7 @@ export default function PrivacyPage() {
   const sections = [
     {
       title: "Zero Retention Policy",
-      content: "At ConvertLite, we prioritize your privacy above all else. Our 'Zero Retention' promise means that your files are processed in-memory or in a temporary secure environment and are permanently deleted immediately after conversion. We do not store, view, or share any of your data."
+      content: "At wefixPDF, we prioritize your privacy above all else. Our 'Zero Retention' promise means that your files are processed in-memory or in a temporary secure environment and are permanently deleted immediately after conversion. We do not store, view, or share any of your data."
     },
     {
       title: "Data Collection",
@@ -16,7 +16,7 @@ export default function PrivacyPage() {
     },
     {
       title: "Third-Party Services",
-      content: "ConvertLite does not sell your data to third parties. We do not display invasive advertisements that track your browsing behavior. Our business model is built on providing value, not on monetizing your information."
+      content: "wefixPDF does not sell your data to third parties. We do not display invasive advertisements that track your browsing behavior. Our business model is built on providing value, not on monetizing your information."
     }
   ];
 
@@ -53,9 +53,9 @@ export default function PrivacyPage() {
         <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-xl mx-auto font-medium">
           We are committed to total transparency. If you have any concerns about how our tools handle your files, feel free to reach out.
         </p>
-        <div className="inline-flex items-center gap-2 text-brand-primary font-bold">
-          support@convertlite.com
-        </div>
+        <a href="mailto:support@wefixpdf.com" className="text-brand-primary font-black mt-2 inline-block hover:underline">
+          support@wefixpdf.com
+        </a>
       </section>
     </div>
   );

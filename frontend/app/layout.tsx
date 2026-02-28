@@ -1,9 +1,10 @@
-"use client";
-
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import { ThemeProvider } from "./components/ThemeProvider";
+import { Globe } from "lucide-react";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,6 +15,12 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+export const metadata: Metadata = {
+  title: "wefixPDF | Universal File Powerhouse & Converter",
+  description: "wefixPDF defines the next generation of file processing. Experience secure, lightning-fast, browser-native file conversions with absolute zero retention.",
+  keywords: ["pdf converter", "image compressor", "file conversion", "secure converter", "browser native", "wefixPDF"],
+};
 
 export default function RootLayout({
   children,
@@ -54,7 +61,7 @@ export default function RootLayout({
 
                   <div className="grid md:grid-cols-2 gap-12 text-slate-500 dark:text-slate-400 leading-relaxed text-lg font-medium">
                     <p>
-                      ConvertLite defines the next generation of file processing. We've eliminated slow uploads and complex menus, replacing them with a streamlined, browser-native experience that prioritizes your privacy above all else.
+                      wefixPDF defines the next generation of file processing. We've eliminated slow uploads and complex menus, replacing them with a streamlined, browser-native experience that prioritizes your privacy above all else.
                     </p>
                     <p>
                       From high-res image compression to complex document bridging, our tools are engineered for professionals who demand speed without sacrificing quality or security.
@@ -78,44 +85,85 @@ export default function RootLayout({
             </div>
 
             {/* FOOTER */}
-            <footer className="mt-10 border-t border-slate-200/60 dark:border-white/5 bg-white/40 dark:bg-black/40 backdrop-blur-xl w-full">
-              <div className="max-w-6xl mx-auto px-10 py-20">
-                <div className="flex flex-col lg:flex-row justify-between items-start gap-16">
-                  <div className="max-w-md space-y-8">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-primary to-brand-secondary flex items-center justify-center text-white font-black text-xl shadow-xl">C</div>
-                      <span className="font-extrabold text-2xl tracking-tighter text-slate-900 dark:text-white">ConvertLite</span>
+            <footer className="relative z-10 border-t border-slate-200 dark:border-white/5 pt-24 pb-12">
+              <div className="max-w-7xl mx-auto px-6 space-y-20">
+                {/* Top Footer: Brand & Status */}
+                <div className="flex flex-col md:flex-row justify-between items-start gap-12">
+                  <div className="max-w-sm space-y-6">
+                    <div className="flex items-center gap-3">
+                      <div className="relative w-32 md:w-40 h-auto aspect-square max-h-20 overflow-hidden flex items-center justify-start">
+                        <Image
+                          src="/wefixpdf.png"
+                          alt="wefixPDF Logo"
+                          width={340}
+                          height={340}
+                          className="object-contain"
+                        />
+                      </div>
                     </div>
-                    <p className="text-slate-500 leading-relaxed font-medium text-sm">
-                      Reimagining file utility for the modern web. Clean, fast, and uncompromisingly secure. Built with passion for creators everywhere.
+                    <p className="text-sm text-slate-500 font-bold leading-relaxed">
+                      Reimagining file utility for the modern web. Clean, fast, and uncompromisingly secure. Built for a global creator economy.
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-16">
-                    <div className="space-y-6">
-                      <h3 className="font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] text-[10px]">Ecosystem</h3>
-                      <ul className="space-y-4 text-sm font-bold text-slate-500">
-                        <li><a href="/" className="hover:text-brand-primary transition-colors">Home</a></li>
-                        <li><a href="/about" className="hover:text-brand-primary transition-colors">Mission</a></li>
-                        <li><a href="/privacy" className="hover:text-brand-primary transition-colors">Privacy</a></li>
-                        <li><a href="/terms" className="hover:text-brand-primary transition-colors">Terms</a></li>
-                      </ul>
+                  <div className="flex flex-wrap items-center gap-6">
+                    <div className="px-6 py-3 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 flex items-center gap-3">
+                      <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                      <span className="text-xs font-black text-emerald-600 uppercase tracking-widest">Global Engine Active</span>
                     </div>
-                    <div className="space-y-6">
-                      <h3 className="font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] text-[10px]">Legal</h3>
-                      <ul className="space-y-4 text-sm font-bold text-slate-500">
-                        <li><a href="/privacy" className="hover:text-brand-primary transition-colors">Privacy</a></li>
-                        <li><a href="/terms" className="hover:text-brand-primary transition-colors">Terms</a></li>
-                      </ul>
+                    <div className="px-6 py-3 rounded-2xl bg-brand-primary/5 border border-brand-primary/10 flex items-center gap-3">
+                      <Globe className="w-4 h-4 text-brand-primary" />
+                      <span className="text-xs font-black text-brand-primary uppercase tracking-widest">180+ Regions Served</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-20 pt-10 border-t border-slate-200/60 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[11px] text-slate-500 font-black uppercase tracking-[0.25em]">
-                  <p>© 2026 ConvertLite — All rights reserved.</p>
-                  <div className="flex gap-10">
-                    <span className="flex items-center gap-2 font-semibold text-slate-500"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Privacy First</span>
-                    <span className="flex items-center gap-2 font-semibold text-slate-500"><span className="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span> Instant Results</span>
+                {/* Middle Footer: Links */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 border-t border-slate-200 dark:border-white/5 pt-12">
+                  <div className="space-y-6">
+                    <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Services</h5>
+                    <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
+                      <li><a href="/image-compressor" className="hover:text-brand-primary transition-colors">Core Compressor</a></li>
+                      <li><a href="/jpg-to-png" className="hover:text-brand-primary transition-colors">Identity Shift</a></li>
+                      <li><a href="/png-to-jpg" className="hover:text-brand-primary transition-colors">Optimized Grid</a></li>
+                    </ul>
+                  </div>
+                  <div className="space-y-6">
+                    <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Platform</h5>
+                    <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
+                      <li><a href="/" className="hover:text-brand-primary transition-colors">Universal Home</a></li>
+                      <li><a href="/about" className="hover:text-brand-primary transition-colors">Our Mission</a></li>
+                      <li><a href="/privacy" className="hover:text-brand-primary transition-colors">Privacy Cloud</a></li>
+                    </ul>
+                  </div>
+                  <div className="space-y-6">
+                    <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Legal</h5>
+                    <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
+                      <li><a href="/privacy" className="hover:text-brand-primary transition-colors">Data Protocol</a></li>
+                      <li><a href="/terms" className="hover:text-brand-primary transition-colors">Usage Terms</a></li>
+                    </ul>
+                  </div>
+                  <div className="space-y-6">
+                    <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Community</h5>
+                    <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
+                      <li><a href="/about" className="hover:text-brand-primary transition-colors">Join Global</a></li>
+                      <li><a href="/" className="hover:text-brand-primary transition-colors">Creator Hub</a></li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Bottom Footer */}
+                <div className="flex flex-col md:flex-row justify-between items-center gap-6 border-t border-slate-200 dark:border-white/5 pt-12">
+                  <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">© 2026 wefixPDF — All Rights Reserved.</p>
+                  <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Privacy First</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-brand-secondary" />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Zero Retention</span>
+                    </div>
                   </div>
                 </div>
               </div>

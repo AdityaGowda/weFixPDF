@@ -2,7 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About ConvertLite | Powerful & Free Online File Conversion",
+    title: "About wefixPDF | Powerful & Free Online File Conversion",
   description: "Convert between dozens of file formats with professional quality. No software installation required. Fast, secure, and ad-free.",
 };
 
@@ -97,7 +97,7 @@ export default function AboutPage() {
         
         <div className="relative z-10 space-y-16">
           <div className="space-y-4">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">The ConvertLite Edge</h2>
+                      <h2 className="text-4xl md:text-5xl font-bold tracking-tight">The wefixPDF Edge</h2>
             <p className="text-slate-500 dark:text-slate-400 text-lg font-medium">No compromises. Just performance.</p>
           </div>
           
@@ -133,7 +133,7 @@ export default function AboutPage() {
             <thead>
               <tr className="bg-slate-100/50 dark:bg-white/5">
                 <th className="p-8 text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Capability</th>
-                <th className="p-8 text-sm font-black text-brand-primary uppercase tracking-[0.2em] bg-brand-primary/5">ConvertLite</th>
+                              <th className="p-8 text-sm font-black text-brand-primary uppercase tracking-[0.2em] bg-brand-primary/5">wefixPDF</th>
                 <th className="p-8 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">iLovePDF</th>
                 <th className="p-8 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Smallpdf</th>
               </tr>
