@@ -7,45 +7,22 @@ export default async function ToolPage({ params }: { params: { tool: string } })
     "jpg-to-png": "JPG to PNG",
     "png-to-webp": "PNG-to-WEBP"
   };
-  let reqService = await params;
-  console.log(reqService.tool)
+  const reqService = await params;
 
   return (
-    <div className="space-y-10">
-
-      <div>
-        <div className="flex align-center justify-between">
-        <h2 className="text-3xl font-bold">
-           {serviceList[reqService.tool] || "File Converter"}
-        </h2>
-    <div className="flex float-left ml-10">
-  <a
-    href="https://www.buymeacoffee.com/adithya_m_r_"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="
-      inline-flex items-center gap-2
-      bg-gradient-to-r from-yellow-400 to-orange-400
-      text-slate-900
-      font-bold
-      px-6 py-3
-      rounded-xl
-      shadow-md
-      hover:shadow-lg
-      hover:scale-[1.03]
-      active:scale-[0.97]
-      transition-all
-      duration-300
-      text-sm
-    "
-  >
-    ☕ Buy Me a Coffee
-  </a>
-</div>
+    <div className="space-y-12 animate-fade-in">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-indigo-50 dark:bg-brand-primary/10 text-brand-primary text-[10px] font-black uppercase tracking-[0.2em] border border-indigo-100/50 dark:border-brand-primary/20">
+            Active Tool
+          </div>
+          <h2 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">
+            {serviceList[reqService.tool] || "File Converter"}
+          </h2>
+          <p className="text-slate-500 dark:text-slate-400 font-medium">
+            Fast, secure, and privacy-shielded conversion.
+          </p>
         </div>
-        <p className="text-slate-500 mt-2">
-          Images and more — simple & secure.
-        </p>
       </div>
 
       <UploadBox service={reqService.tool}/>
