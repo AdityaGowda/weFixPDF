@@ -71,30 +71,7 @@ export default function Home() {
 
           <TrustTicker />
         </div>
-
-        {/* The Central Experience */}
-        <div className="relative z-10 py-10">
-          <UploadBox service="image-compressor" />
-        </div>
       </section>
-
-      {/* Unique Browser-Native Proof */}
-      <section className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-        {[
-          { icon: Shield, title: "Zero Retention", desc: "Files never hit our persistent storage. They live and die in-memory." },
-          { icon: Lock, title: "Edge Privacy", desc: "Processing happens at the edge, closer to you for maximum security." },
-          { icon: Zap, title: "Sub-Second Speed", desc: "Blazing fast conversions optimized by our proprietary core engine." }
-        ].map((feature, i) => (
-          <div key={i} className="glass dark:glass-dark rounded-[2.5rem] p-10 border border-white/5 space-y-6 hover:-translate-y-2 transition-transform duration-500">
-            <div className="w-14 h-14 rounded-2xl bg-brand-primary/10 flex items-center justify-center">
-              <feature.icon className="w-7 h-7 text-brand-primary" />
-            </div>
-            <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{feature.title}</h3>
-            <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{feature.desc}</p>
-          </div>
-        ))}
-      </section>
-
       {/* Global Tool Network */}
       <section className="max-w-6xl mx-auto px-6 space-y-12">
         <div className="text-center space-y-4">
@@ -118,6 +95,22 @@ export default function Home() {
             </a>
           ))}
         </div>
+      </section>
+      {/* Unique Browser-Native Proof */}
+      <section className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+        {[
+          { icon: Shield, title: "Zero Retention", desc: "Files never hit our persistent storage. They live and die in-memory." },
+          { icon: Lock, title: "Edge Privacy", desc: "Processing happens at the edge, closer to you for maximum security." },
+          { icon: Zap, title: "Sub-Second Speed", desc: "Blazing fast conversions optimized by our proprietary core engine." }
+        ].map((feature, i) => (
+          <div key={i} className="glass dark:glass-dark rounded-[2.5rem] p-10 border border-white/5 space-y-6 hover:-translate-y-2 transition-transform duration-500">
+            <div className="w-14 h-14 rounded-2xl bg-brand-primary/10 flex items-center justify-center">
+              <feature.icon className="w-7 h-7 text-brand-primary" />
+            </div>
+            <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{feature.title}</h3>
+            <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{feature.desc}</p>
+          </div>
+        ))}
       </section>
 
       {/* Global Audience CTA */}
