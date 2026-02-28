@@ -1,0 +1,62 @@
+"use client";
+
+export default function PrivacyPage() {
+  const sections = [
+    {
+      title: "Zero Retention Policy",
+      content: "At ConvertLite, we prioritize your privacy above all else. Our 'Zero Retention' promise means that your files are processed in-memory or in a temporary secure environment and are permanently deleted immediately after conversion. We do not store, view, or share any of your data."
+    },
+    {
+      title: "Data Collection",
+      content: "We do not require accounts, email addresses, or any personal identification to use our tools. We collect minimal, anonymized usage data (such as tool popularity) only to improve our services. We do not use tracking cookies or third-party analytics that compromise your identity."
+    },
+    {
+      title: "Security Measures",
+      content: "All file transfers are protected by end-to-end encryption (SSL/TLS). Our processing engines are regularly audited for security vulnerabilities to ensure that your sensitive documents remain private during the brief window they are being reshaped."
+    },
+    {
+      title: "Third-Party Services",
+      content: "ConvertLite does not sell your data to third parties. We do not display invasive advertisements that track your browsing behavior. Our business model is built on providing value, not on monetizing your information."
+    }
+  ];
+
+  return (
+    <div className="space-y-16 animate-fade-in">
+      {/* Header */}
+      <section className="text-center space-y-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-[0.2em] border border-emerald-100 dark:border-emerald-500/20">
+          Privacy Policy
+        </div>
+        <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tighter">
+          Your Data, <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">Your Business.</span>
+        </h1>
+        <p className="text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
+          Transparency is the foundation of trust. Here is how we protect your digital footprint.
+        </p>
+      </section>
+
+      {/* Content Grid */}
+      <div className="grid md:grid-cols-2 gap-8">
+        {sections.map((section, i) => (
+          <div key={i} className="glass dark:glass-dark rounded-[2.5rem] p-10 border border-slate-200/50 dark:border-white/5 space-y-6 hover:shadow-2xl transition-all duration-500 hover:-translate-y-1">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{section.title}</h2>
+            <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+              {section.content}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Contact Note */}
+      <section className="glass dark:glass-dark rounded-[3rem] p-12 text-center border border-slate-200/50 dark:border-white/5 bg-slate-50/50 dark:bg-white/5">
+        <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">Questions about your privacy?</h3>
+        <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-xl mx-auto font-medium">
+          We are committed to total transparency. If you have any concerns about how our tools handle your files, feel free to reach out.
+        </p>
+        <div className="inline-flex items-center gap-2 text-brand-primary font-bold">
+          support@convertlite.com
+        </div>
+      </section>
+    </div>
+  );
+}
