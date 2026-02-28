@@ -10,10 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/png-to-jpg',
     '/jpg-to-png',
     '/png-to-webp',
-    '/merge-pdf',
-    '/split-pdf',
-    '/compress-pdf',
-    '/pdf-to-word',
     '/privacy',
     '/terms',
   ];

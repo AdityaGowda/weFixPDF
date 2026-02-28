@@ -43,12 +43,6 @@ export default function TermsPage() {
             <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
               {term.content}
             </p>
-            <div className="mt-12 p-6 rounded-2xl bg-brand-primary/5 border border-brand-primary/10 text-center">
-              <p className="text-sm font-bold text-slate-500">Questions about our terms? Contact us at:</p>
-              <a href="mailto:legal@wefixpdf.com" className="text-brand-primary font-black mt-2 inline-block hover:underline">
-                legal@wefixpdf.com
-              </a>
-            </div>
           </div>
         ))}
       </div>
@@ -59,9 +53,6 @@ export default function TermsPage() {
         <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-xl mx-auto font-medium">
           We offer these tools for free to provide maximum value. If you plan to use our services for heavy automated processing, please contact us for API access.
         </p>
-        <div className="inline-flex items-center gap-2 text-brand-primary font-bold">
-          legal@convertlite.com
-        </div>
       </section>
     </div>
   );
