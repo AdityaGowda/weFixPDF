@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   title: "wefixPDF | Universal File Powerhouse & Converter",
   description: "wefixPDF defines the next generation of file processing. Experience secure, lightning-fast, browser-native file conversions with absolute zero retention.",
   keywords: ["pdf converter", "image compressor", "file conversion", "secure converter", "browser native", "wefixPDF"],
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
