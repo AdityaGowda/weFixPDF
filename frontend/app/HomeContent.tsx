@@ -1,5 +1,4 @@
 import { Shield, Zap, Lock, ArrowRight, Star, Users } from "lucide-react";
-import TrustTicker from "./components/trustTicker";
 
 export default function HomeContent() {
   const tools = [
@@ -7,8 +6,8 @@ export default function HomeContent() {
     { name: "PNG to JPG Converter", href: "/png-to-jpg", icon: "📸", desc: "Smaller files, optimized for web", cta: "Convert PNG to JPG Free" },
     { name: "Image Compressor", href: "/image-compressor", icon: "🗜️", desc: "Reduce size up to 80%, keep quality", cta: "Compress Images Now" },
     { name: "PNG to WEBP Converter", href: "/png-to-webp", icon: "🌐", desc: "Next-gen format, 30% smaller", cta: "Convert PNG to WEBP" },
-    { name: "Compress PDF", href: "/compress-pdf", icon: "📄", desc: "Reduce PDF file size instantly", upcoming: true },
-    { name: "PDF to JPG", href: "/pdf-to-jpg", icon: "🖼️", desc: "Convert PDF pages to images", upcoming: true },
+    { name: "Compress PDF", href: "/compress-pdf", icon: "📄", desc: "Reduce PDF file size instantly", cta: "Compress PDF" },
+    { name: "PDF to JPG", href: "/pdf-to-jpg", icon: "🖼️", desc: "Convert PDF pages to images", cta: "Convert PDF to JPG Free" },
     { name: "PDF to Word", href: "/pdf-to-word", icon: "📚", desc: "Convert PDF to editable DOCX", upcoming: true },
     { name: "Merge PDF", href: "/merge-pdf", icon: "📑", desc: "Combine multiple PDFs into one", upcoming: true },
   ];
@@ -29,7 +28,6 @@ export default function HomeContent() {
               <span className="text-slate-900 dark:text-white font-black">Start free</span> with zero data retention.
             </p>
 
-            <TrustTicker />
 
             <div className="flex flex-wrap justify-center gap-3 sm:gap-4 py-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
               <a href="/jpg-to-png" className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-brand-primary text-white font-black hover:scale-105 transition-all shadow-xl shadow-brand-primary/20">

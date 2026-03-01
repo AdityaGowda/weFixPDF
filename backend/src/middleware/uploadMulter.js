@@ -1,39 +1,38 @@
 const multer = require("multer");
 const path = require("path");
+const crypto = require("crypto");
 
 const storage = multer.diskStorage({
   destination: "uploads/",
 
   filename: (req, file, cb) => {
-
-    const uniqueId = crypto.randomUUID();
-    const uid = uniqueId;
-
-    // extract original extension
+    const uid = crypto.randomUUID();
     const ext = path.extname(file.originalname).toLowerCase();
     req.uid = uid;
-    // rename file to UID + extension
     cb(null, `${uid}${ext}`);
   },
 });
+
+const allowedExtensions = [
+  ".jpg", ".jpeg", ".png", ".webp",   // images
+  ".pdf",                              // PDF
+  ".doc", ".docx",                     // Word
+];
 
 const upload = multer({
   storage,
 
   fileFilter: (req, file, cb) => {
-    const allowed = [".jpg", ".jpeg", ".png", ".webp", ".pdf"];
     const ext = path.extname(file.originalname).toLowerCase();
-console.log(ext,!allowed.includes(ext))
-    if (!allowed.includes(ext)) {
-      return cb(new Error("Invalid file type"));
+    if (!allowedExtensions.includes(ext)) {
+      return cb(new Error(`Invalid file type: ${ext}. Allowed: ${allowedExtensions.join(", ")}`));
     }
-
     cb(null, true);
   },
 
   limits: {
-    fileSize: 10 * 1024 * 1024, // 10MB
+    fileSize: 50 * 1024 * 1024, // 50MB — PDFs and Word docs can be large
   },
 });
 
-module.exports=upload
+module.exports = upload;

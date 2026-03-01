@@ -1,70 +1,131 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Upload, FileText, CheckCircle, RefreshCcw, Download, Zap, Shield, Clock, Sliders, Info } from "lucide-react";
+import { Upload, FileText, CheckCircle, RefreshCcw, Download, Zap, Shield, Clock, Sliders, X, GripVertical } from "lucide-react";
+import CompressionSettings from "./compressLevel";
 
 interface UploadBoxProps {
   service: string;
 }
 
+type CompressionLevel = "high" | "medium" | "low";
+// Tools that accept multiple files
+const MULTI_FILE_TOOLS = ["image-to-pdf"];
+
+// Max files allowed per tool
+const MAX_FILES: Record<string, number> = {
+  "image-to-pdf": 10,
+};
+
 export default function UploadBox({ service }: UploadBoxProps) {
-  const [file, setFile] = useState<File | null>(null);
+  const isMulti = MULTI_FILE_TOOLS.includes(service);
+
+  const [files, setFiles] = useState<File[]>([]);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [quality, setQuality] = useState<number>(80);
   const [isDragging, setIsDragging] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [suggestedName, setSuggestedName] = useState<string>("");
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+  const [quality, setQuality] = useState<CompressionLevel>("medium");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const dragItemIndex = useRef<number | null>(null);
 
-  useEffect(() => {
-    // Magnetic Core Physics logic removed
-  }, [isDragging]);
+  // Convenience — single file (for non-multi tools)
+  const file = files[0] ?? null;
+  const hasFiles = files.length > 0;
+  const maxFiles = MAX_FILES[service] ?? 1;
 
+  // ── File selection ──────────────────────────────────
+  function addFiles(incoming: FileList | null) {
+    if (!incoming) return;
+    const arr = Array.from(incoming);
+    setDownloadUrl(null);
+
+    if (!isMulti) {
+      setFiles([arr[0]]);
+      return;
+    }
+
+    setFiles((prev) => {
+      const combined = [...prev, ...arr];
+      return combined.slice(0, maxFiles);
+    });
+  }
+
+  function removeFile(index: number) {
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+    setDownloadUrl(null);
+  }
+
+  function clearAll() {
+    setFiles([]);
+    setDownloadUrl(null);
+  }
+
+  // ── Drag-to-reorder (multi only) ────────────────────
+  function onDragStart(index: number) {
+    dragItemIndex.current = index;
+  }
+
+  function onDragEnterItem(index: number) {
+    setDragOverIndex(index);
+  }
+
+  function onDropItem(index: number) {
+    if (dragItemIndex.current === null || dragItemIndex.current === index) return;
+    const reordered = [...files];
+    const [moved] = reordered.splice(dragItemIndex.current, 1);
+    reordered.splice(index, 0, moved);
+    setFiles(reordered);
+    dragItemIndex.current = null;
+    setDragOverIndex(null);
+  }
+
+  // ── Conversion ──────────────────────────────────────
   async function fileConversion() {
-    if (!file) return;
+    if (!hasFiles) return;
     setLoading(true);
     setDownloadUrl(null);
 
     try {
       const formData = new FormData();
-      formData.append("file", file);
-      formData.append("service", service);
-      formData.append("fileName", file.name);
       formData.append("quality", quality.toString());
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/convert/${service}`, {
-        method: "POST",
-        body: formData,
-      });
+      if (isMulti) {
+        files.forEach((f) => formData.append("files", f));
+      } else {
+        formData.append("file", files[0]);
+        formData.append("fileName", files[0].name);
+      }
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/convert/${service}`,
+        { method: "POST", body: formData }
+      );
 
       if (!res.ok) throw new Error("Conversion failed");
 
-      // Extract suggested filename from Content-Disposition
-      const disposition = res.headers.get('content-disposition');
-
+      // Extract filename from Content-Disposition
+      const disposition = res.headers.get("content-disposition");
       let filename = "";
       if (disposition) {
-        const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-        const matches = filenameRegex.exec(disposition);
-        if (matches != null && matches[1]) {
-          filename = matches[1].replace(/['"]/g, '');
-        }
+        const match = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
+        if (match?.[1]) filename = match[1].replace(/['"]/g, "");
       }
 
-      // Fallback if header extraction fails
       if (!filename) {
-        const fileBaseName = file.name.split('.').slice(0, -1).join('.');
-        const fileExt = file.name.split('.').pop();
-        filename = `${fileBaseName}_wefixPDF_${service}.${fileExt}`;
+        const base = files[0].name.split(".").slice(0, -1).join(".");
+        const ext = files[0].name.split(".").pop();
+        filename = isMulti
+          ? `wefixPDF_${service}.${service.includes("pdf") ? "pdf" : "zip"}`
+          : `${base}_wefixPDF_${service}.${ext}`;
       }
 
       setSuggestedName(filename);
-
       const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      setDownloadUrl(url);
+      setDownloadUrl(URL.createObjectURL(blob));
     } catch (err) {
       console.error(err);
       alert("Conversion encountered an error. Our team has been notified.");
@@ -73,17 +134,11 @@ export default function UploadBox({ service }: UploadBoxProps) {
     }
   }
 
-  const handleFileSelection = (selectedFile: File | null) => {
-    if (selectedFile) {
-      setFile(selectedFile);
-      setDownloadUrl(null);
-    }
-  };
-
+  // ── Render ───────────────────────────────────────────
   return (
-    <div className="relative w-full min-h-[600px] flex items-center justify-center py-20 px-4 overflow-visible">
+    <div className="relative w-full min-h-[600px] flex flex-col items-center justify-center py-20 px-4 overflow-visible gap-8">
 
-      {/* SVG Gooey Filter Definition */}
+      {/* SVG Gooey Filter */}
       <svg className="hidden">
         <defs>
           <filter id="gooey">
@@ -94,30 +149,43 @@ export default function UploadBox({ service }: UploadBoxProps) {
         </defs>
       </svg>
 
+      {/* ── Core Upload Zone ── */}
       <div id="core-trigger" className="relative w-full max-w-lg aspect-square flex items-center justify-center">
 
-        {/* The Morphing Core */}
         <label
           onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
           onDragLeave={() => setIsDragging(false)}
-          onDrop={(e) => { e.preventDefault(); setIsDragging(false); handleFileSelection(e.dataTransfer.files[0]); }}
+          onDrop={(e) => { e.preventDefault(); setIsDragging(false); addFiles(e.dataTransfer.files); }}
           className={`
             relative z-20 w-[90%] h-[90%] cursor-pointer group flex flex-col items-center justify-center
             transition-all duration-700 hover:scale-[1.02]
           `}
         >
-          <input ref={fileInputRef} type="file" hidden onChange={(e) => handleFileSelection(e.target.files?.[0] || null)} />
+          <input
+            ref={fileInputRef}
+            type="file"
+            hidden
+            multiple={isMulti}
+            accept={
+              service.includes("pdf") && !service.includes("image") && !service.includes("jpg")
+                ? ".pdf"
+                : service === "word-to-pdf"
+                  ? ".doc,.docx"
+                  : "image/*,.jpg,.jpeg,.png,.webp"
+            }
+            onChange={(e) => addFiles(e.target.files)}
+          />
 
           {/* Liquid Core Body */}
           <div className="absolute inset-0 gooey-container -z-10">
             <div className={`
               w-full h-full core-blob core-pulse opacity-90
-              ${isDragging ? 'scale-110 blur-[5px]' : file ? 'scale-105 saturate-150' : ''}
-              ${loading ? 'animate-spin brightness-125' : ''}
+              ${isDragging ? "scale-110 blur-[5px]" : hasFiles ? "scale-105 saturate-150" : ""}
+              ${loading ? "animate-spin brightness-125" : ""}
             `} />
           </div>
 
-          {/* Inner Content Case */}
+          {/* Inner Content */}
           <div className="text-center space-y-6 px-10">
             {loading ? (
               <div className="space-y-4 animate-in fade-in zoom-in duration-500">
@@ -134,13 +202,27 @@ export default function UploadBox({ service }: UploadBoxProps) {
                     <p className="text-white/80 font-bold">Transformation Successful</p>
                   </div>
                 </div>
-              ) : file ? (
-                  <div className="space-y-6 animate-in fade-in zoom-in duration-500">
-                    <FileText className="w-24 h-24 text-white mx-auto drop-shadow-xl" />
+              ) : hasFiles ? (
+                <div className="space-y-4 animate-in fade-in zoom-in duration-500">
+                  <FileText className="w-16 h-16 text-white mx-auto drop-shadow-xl" />
+                  {isMulti ? (
                     <div className="space-y-1">
-                      <p className="text-white text-3xl font-black truncate max-w-[280px] ">{file.name}</p>
-                      <p className="text-white/70 font-black uppercase tracking-[0.3em] text-xs">{(file.size / (1024 * 1024)).toFixed(2)} MB • READY</p>
-                    </div>
+                        <p className="text-white text-3xl font-black">{files.length}</p>
+                        <p className="text-white/70 font-black uppercase tracking-[0.3em] text-xs">
+                          FILE{files.length > 1 ? "S" : ""} LOADED
+                        </p>
+                        <p className="text-white/50 text-xs font-bold uppercase tracking-widest">
+                          Tap to add more
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="space-y-1">
+                        <p className="text-white text-3xl font-black truncate max-w-[280px]">{files[0].name}</p>
+                        <p className="text-white/70 font-black uppercase tracking-[0.3em] text-xs">
+                          {(files[0].size / (1024 * 1024)).toFixed(2)} MB • READY
+                        </p>
+                      </div>
+                    )}
                   </div>
                 ) : (
                     <div className="space-y-8 animate-in fade-in duration-500">
@@ -149,36 +231,39 @@ export default function UploadBox({ service }: UploadBoxProps) {
                         <div className="absolute inset-0 bg-white/20 blur-2xl rounded-full scale-150 -z-10 group-hover:bg-white/40 transition-all duration-700" />
                       </div>
                       <div className="space-y-2">
-                        <p className="text-white text-4xl font-black tracking-tighter drop-shadow-lg leading-tight uppercase">Integrate <br /> File</p>
-                        <p className="text-white/50 font-bold uppercase tracking-widest text-xs">Drag near core or tap</p>
+                        <p className="text-white text-4xl font-black tracking-tighter drop-shadow-lg leading-tight uppercase">
+                          {isMulti ? "Drop Files Here" : "Drop File"}<br />
+                        </p>
+                        <p className="text-white/50 font-bold uppercase tracking-widest text-xs">
+                          {isMulti ? `Up to ${maxFiles} files • Drag or tap` : "Drag near core or tap"}
+                        </p>
                       </div>
               </div>
             )}
           </div>
         </label>
 
-        {/* ORBITAL ELEMENTS */}
-        {file && !loading && !downloadUrl && (
+        {/* Orbital buttons */}
+        {hasFiles && !loading && !downloadUrl && (
           <>
-            {/* Settings Orbital */}
-            <button
-              onClick={(e) => { e.stopPropagation(); setShowSettings(!showSettings); }}
-              className="absolute top-0 right-0 z-30 w-20 h-20 orbital-node flex items-center justify-center bg-indigo-500 text-white shadow-indigo-500/50 hover:scale-110 active:scale-95 transition-all duration-300 animate-in fade-in zoom-in"
-            >
-              <Sliders className="w-8 h-8 rotate-90" />
-            </button>
+            {service.includes("compress") && (
+              <button
+                onClick={(e) => { e.stopPropagation(); setShowSettings(!showSettings); }}
+                className="absolute top-0 right-0 z-30 w-20 h-20 orbital-node flex items-center justify-center bg-indigo-500 text-white shadow-indigo-500/50 hover:scale-110 active:scale-95 transition-all duration-300 animate-in fade-in zoom-in"
+              >
+                <Sliders className="w-8 h-8 rotate-90" />
+              </button>
+            )}
 
-            {/* Action Orbital (Primary) */}
             <button
               onClick={(e) => { e.stopPropagation(); fileConversion(); }}
               className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 z-30 px-10 py-5 rounded-full bg-white text-brand-primary font-black text-xl shadow-2xl shadow-brand-primary/40 hover:scale-110 active:scale-95 transition-all duration-300 animate-in fade-in slide-in-from-bottom-10"
             >
-              INITIATE
+              {isMulti ? `${files.length > 1 ? "MERGE" : "CONVERT"}` : "INITIATE"}
             </button>
 
-            {/* Reset Orbital */}
             <button
-              onClick={(e) => { e.stopPropagation(); setFile(null); }}
+              onClick={(e) => { e.stopPropagation(); clearAll(); }}
               className="absolute top-0 left-0 z-30 w-16 h-16 orbital-node flex items-center justify-center text-rose-500 hover:scale-110 active:scale-95 transition-all duration-300 animate-in fade-in zoom-in"
             >
               <RefreshCcw className="w-6 h-6" />
@@ -188,7 +273,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
 
         {downloadUrl && (
           <a
-            key="download"
             href={downloadUrl}
             download={suggestedName}
             className="absolute bottom-[-40px] left-1/2 -translate-x-1/2 z-30 px-12 py-6 rounded-[2rem] bg-emerald-500 text-white font-black text-2xl shadow-2xl shadow-emerald-500/50 flex items-center gap-3 hover:scale-110 active:scale-95 transition-all duration-300 animate-in fade-in slide-in-from-bottom-10"
@@ -198,33 +282,95 @@ export default function UploadBox({ service }: UploadBoxProps) {
           </a>
         )}
 
-        {/* Dynamic Settings Layer (Orbiting) */}
-        {showSettings && service === 'image-compressor' && (
-          <div
-            className="absolute right-[-100px] top-1/2 -translate-y-1/2 z-40 w-[240px] glass dark:glass-dark rounded-[2.5rem] p-8 space-y-6 shadow-2xl border border-brand-primary/30 transition-all duration-500 animate-in fade-in slide-in-from-right-10"
-          >
-            <div className="space-y-1">
-              <p className="text-[10px] font-black text-brand-primary uppercase tracking-widest">Core Density</p>
-              <p className="text-xl font-black text-slate-800 dark:text-white">{quality}% PRO</p>
-            </div>
-            <input
-              type="range"
-              min="1"
-              max="100"
-              value={quality}
-              onChange={(e) => setQuality(Number(e.target.value))}
-              className="w-full h-2 bg-slate-100 dark:bg-white/10 rounded-full appearance-none cursor-pointer accent-brand-primary"
-            />
-            <p className="text-[12px] text-slate-700 font-bold leading-relaxed italic">Lowering density increases speed but may reduce structural integrity.</p>
-          </div>
-        )}
+        {/* Settings panel */}
+        <CompressionSettings
+          showSettings={showSettings}
+          service={service}
+          quality={quality}
+          setQuality={setQuality}
+        />;
 
-        {/* Global Trust Orbital (Static Decorative) */}
+        {/* Orbital decorative rings */}
         <div className="absolute inset-0 orbital-path scale-[1.3] opacity-30 animate-spin-slow pointer-events-none" />
         <div className="absolute inset-0 orbital-path scale-[1.6] opacity-10 animate-spin-slow-reverse pointer-events-none" />
       </div>
 
-      {/* Unique Trust Badge */}
+      {/* ── Multi-file List (below core) ── */}
+      {isMulti && files.length > 0 && !loading && (
+        <div className="w-full max-w-lg space-y-2 animate-in fade-in slide-in-from-bottom-5 duration-500">
+
+          {/* Header */}
+          <div className="flex items-center justify-between px-1">
+            <p className="text-xs font-black uppercase tracking-widest text-slate-400">
+              {files.length} / {maxFiles} files — drag to reorder
+            </p>
+            <button
+              onClick={clearAll}
+              className="text-xs font-bold text-rose-400 hover:text-rose-600 uppercase tracking-widest transition-colors"
+            >
+              Clear all
+            </button>
+          </div>
+
+          {/* File rows */}
+          <div className="space-y-2 max-h-[320px] overflow-y-auto pr-1">
+            {files.map((f, i) => (
+              <div
+                key={`${f.name}-${i}`}
+                draggable
+                onDragStart={() => onDragStart(i)}
+                onDragEnter={() => onDragEnterItem(i)}
+                onDrop={() => onDropItem(i)}
+                onDragOver={(e) => e.preventDefault()}
+                onDragEnd={() => setDragOverIndex(null)}
+                className={`
+                  flex items-center gap-3 px-4 py-3 rounded-2xl
+                  glass dark:glass-dark border transition-all duration-200
+                  ${dragOverIndex === i
+                    ? "border-brand-primary scale-[1.02] shadow-lg shadow-brand-primary/20"
+                    : "border-white/10 hover:border-white/20"}
+                `}
+              >
+                {/* Drag handle */}
+                <GripVertical className="w-4 h-4 text-slate-400 cursor-grab active:cursor-grabbing shrink-0" />
+
+                {/* Index badge */}
+                <span className="w-6 h-6 rounded-full bg-brand-primary/20 text-brand-primary text-xs font-black flex items-center justify-center shrink-0">
+                  {i + 1}
+                </span>
+
+                {/* File info */}
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-slate-700 dark:text-white truncate">{f.name}</p>
+                  <p className="text-xs text-slate-400 font-medium">
+                    {(f.size / (1024 * 1024)).toFixed(2)} MB
+                  </p>
+                </div>
+
+                {/* Remove */}
+                <button
+                  onClick={() => removeFile(i)}
+                  className="w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all shrink-0"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* Add more button */}
+          {files.length < maxFiles && (
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="w-full py-3 rounded-2xl border-2 border-dashed border-brand-primary/30 text-brand-primary font-black text-sm uppercase tracking-widest hover:border-brand-primary hover:bg-brand-primary/5 transition-all duration-300"
+            >
+              + Add More Files
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Trust badges */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-6 opacity-30 group hover:opacity-100 transition-opacity duration-700">
         {[Shield, Zap, Clock].map((Icon, idx) => (
           <Icon key={idx} className="w-5 h-5 text-slate-400 hover:text-brand-primary transition-colors" />

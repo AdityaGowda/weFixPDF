@@ -35,7 +35,8 @@ async function imageCompressor({ res, req, file }) {
       return res.status(400).json({ error: "Unsupported file type" });
     }
 
-    const qualityLevel = Math.min(Math.max(Number(req.body.quality) || 80, 10), 100);
+    const quality = { high: 80, medium: 50, low: 20 }
+    const qualityLevel = Math.min(Math.max(Number(quality[req.body.quality]) || 80, 10), 100);
 
     const uid = Date.now();
     const outputPath = `uploads/compressed-${uid}${ext}`;

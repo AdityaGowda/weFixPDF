@@ -36,14 +36,15 @@ export default function Navbar() {
         { label: 'PNG to JPG', href: '/png-to-jpg', description: 'Fast PNG to JPG converter. Change image formats securely online with high-quality results.' },
         { label: 'JPG to PNG', href: '/jpg-to-png', description: 'Convert JPG to transparent PNG online. Free, fast, and secure image format converter.' },
         { label: 'PNG to WEBP', href: '/png-to-webp', description: 'Optimize images with our free PNG to WEBP converter. Create next-gen formats for faster websites.' },
+        { label: 'Image to PDF', href: '/image-to-pdf', description: 'Convert images to PDF online. Free, fast, and secure image to PDF converter.' },
         { label: 'HEIC to JPG', href: '#', description: 'Convert iPhone HEIC photos to JPG instantly in your browser.', upcoming: true },
       ]
     },
     {
       label: 'PDF Tools',
       items: [
-        { label: 'Compress PDF', href: '/compress-pdf', description: 'Best free PDF compressor. Reduce PDF file size online instantly without losing document quality.', upcoming: true },
-        { label: 'PDF to JPG', href: '/pdf-to-jpg', description: 'Fast PDF to JPG converter. Extract images or convert individual pages to images.', upcoming: true },
+        { label: 'Compress PDF', href: '/compress-pdf', description: 'Best free PDF compressor. Reduce PDF file size online instantly without losing document quality.' },
+        { label: 'PDF to JPG', href: '/pdf-to-jpg', description: 'Fast PDF to JPG converter. Extract images or convert individual pages to images.', },
         { label: 'PDF to Word', href: '/pdf-to-word', description: 'Convert PDF to Word documents online. Accurate, fast, and free PDF to DOCX converter.', upcoming: true },
         { label: 'Merge PDF', href: '#', description: 'Free online PDF merger. Combine multiple PDF files securely into one document.', upcoming: true },
         { label: 'Split PDF', href: '#', description: 'Split PDF pages easily online. Extract specific pages or separate large PDFs.', upcoming: true },

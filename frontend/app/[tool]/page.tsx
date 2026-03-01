@@ -26,6 +26,24 @@ const toolMetadata: Record<string, { title: string; description: string; h1: str
     h1: "PNG to WEBP Converter",
     subtitle: "Convert PNG to WEBP format. Next-generation image format for faster websites.",
   },
+  "compress-pdf": {
+    title: "Compress PDF - Free Online Tool | wefixPDF",
+    description: "Compress PDF online without losing quality. Reduce PDF file sizes up to 80%. Fast, free, and secure compression.",
+    h1: "Compress PDF",
+    subtitle: "Reduce PDF file size without losing quality. Compress PDF files instantly.",
+  },
+  "image-to-pdf": {
+    title: "Image to PDF Converter - Free Online Tool | wefixPDF",
+    description: "Convert images to PDF online free. Supports JPG, JPEG, PNG, WEBP, BMP, TIFF, SVG, HEIC and more. Lossless quality, instant conversion, complete privacy. No file size limits or watermarks.",
+    h1: "Image to PDF Converter",
+    subtitle: "Convert JPG, PNG, WEBP, BMP, TIFF, SVG, HEIC and more to PDF instantly. Free, fast, and 100% secure.",
+  },
+  "pdf-to-jpg": {
+    title: "PDF to JPG Converter - Free Online Tool | wefixPDF",
+    description: "Convert PDF to JPG online free. Lossless quality, instant conversion, complete privacy. No file size limits or watermarks.",
+    h1: "PDF to JPG Converter",
+    subtitle: "Convert PDF images to JPG format instantly. Free, fast, and 100% secure.",
+  },
 };
 
 export async function generateMetadata({ params }: { params: { tool: string } }): Promise<Metadata> {
@@ -65,7 +83,7 @@ export default async function ToolPage({ params }: { params: { tool: string } })
         </div>
       </div>
 
-      <UploadBox service={reqService.tool}/>
+      <UploadBox service={reqService.tool} />
     </div>
   );
 }
