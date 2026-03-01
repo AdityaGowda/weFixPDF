@@ -13,9 +13,9 @@ export default function HomeContent() {
   ];
 
   return (
-    <div className="space-y-32 pb-20">
+    <div className="space-y-32 pb-20 px-20">
       {/* Hero */}
-      <section className="relative pt-10 pb-10 text-center space-y-12">
+      <section className="relative  pt-20 pb-10 text-center space-y-12">
         <div className="space-y-8 max-w-4xl mx-auto px-0 sm:px-4">
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-slate-900 dark:text-white tracking-tighter leading-[0.95] text-reveal">
             Online<br />
@@ -62,9 +62,13 @@ export default function HomeContent() {
               aria-label={tool.name}
               className={`group glass dark:glass-dark rounded-[2rem] p-8 border border-white/5 hover:border-brand-primary/50 transition-all duration-500 relative overflow-hidden ${tool.upcoming ? 'opacity-60 cursor-not-allowed' : ''}`}
             >
-              {tool.upcoming && (
-                <div className="absolute top-4 right-4 px-3 py-1 bg-brand-primary/20 text-brand-primary text-[10px] font-black uppercase tracking-widest rounded-full border border-brand-primary/30">
+              {tool.upcoming ? (
+                <div className="absolute top-4 right-4 px-3 py-1 bg-amber-500/20 text-amber-600 dark:text-amber-400 text-[10px] font-black uppercase tracking-widest rounded-full border border-amber-500/30">
                   Coming Soon
+                </div>
+              ) : (
+                <div className="absolute top-4 right-4 px-3 py-1 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-full border border-emerald-500/30">
+                  Active
                 </div>
               )}
               <div className="text-4xl mb-6 group-hover:scale-125 transition-transform duration-500 origin-left">{tool.icon}</div>

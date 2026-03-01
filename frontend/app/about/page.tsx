@@ -12,12 +12,16 @@ export const metadata: Metadata = {
 const FeatureItem = ({ children, upcoming }: { children: React.ReactNode; upcoming?: boolean }) => (
   <li className={`flex items-start justify-between gap-3 text-slate-500 dark:text-slate-400 ${upcoming ? 'opacity-60 grayscale' : ''}`}>
     <div className="flex items-start gap-3">
-      <span className="text-brand-secondary font-bold mt-0.5">✓</span>
+      <span className={`${upcoming ? 'text-amber-500' : 'text-emerald-500'} font-bold mt-0.5`}>✓</span>
       <span>{children}</span>
     </div>
-    {upcoming && (
-      <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md bg-brand-primary/10 text-brand-primary border border-brand-primary/20 whitespace-nowrap">
+    {upcoming ? (
+      <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 whitespace-nowrap">
         Soon
+      </span>
+    ) : (
+      <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 whitespace-nowrap">
+        Active
       </span>
     )}
   </li>

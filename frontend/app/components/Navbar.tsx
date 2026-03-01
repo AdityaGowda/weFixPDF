@@ -62,10 +62,17 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <a href="/" className="flex items-center gap-3 group">
-          <div className="relative w-28 h-8 sm:w-32 sm:h-10 md:w-40 md:h-12 overflow-hidden items-center justify-start flex hover:scale-105 transition-transform duration-300">
+          <div className="relative w-40 h-12 sm:w-32 sm:h-10 md:w-80 md:h-12 overflow-hidden items-center justify-start flex hover:scale-105 transition-transform duration-300">
+            <Image 
+              src="/logo.png"
+              alt="wefixPDF Logo"
+              width={80}
+              height={80}
+              priority
+            />
             <Image
               src="/wefixpdf.png"
-              alt="wefixPDF Logo"
+              alt="wefixPDF Text Image"
               width={160}
               height={160}
               className="object-contain"
@@ -97,9 +104,13 @@ export default function Navbar() {
                     >
                       <div className="flex items-center justify-between gap-2">
                         <span className="text-sm font-bold text-slate-900 dark:text-white group-hover/item:text-brand-primary transition-colors">{item.label}</span>
-                        {item.upcoming && (
-                          <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md bg-brand-primary/10 text-brand-primary border border-brand-primary/20 whitespace-nowrap">
+                        {item.upcoming ? (
+                          <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 whitespace-nowrap">
                             Soon
+                          </span>
+                        ) : (
+                          <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 whitespace-nowrap">
+                            Active
                           </span>
                         )}
                       </div>
@@ -172,9 +183,13 @@ export default function Navbar() {
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-sm font-bold text-slate-900 dark:text-white">{item.label}</span>
-                        {item.upcoming && (
-                          <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md bg-brand-primary/20 text-brand-primary border border-brand-primary/30">
+                        {item.upcoming ? (
+                          <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30">
                             Soon
+                          </span>
+                        ) : (
+                          <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                            Active
                           </span>
                         )}
                       </div>
