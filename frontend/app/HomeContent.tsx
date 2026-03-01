@@ -18,14 +18,6 @@ export default function HomeContent() {
       {/* Hero */}
       <section className="relative pt-10 pb-10 text-center space-y-12">
         <div className="space-y-8 max-w-4xl mx-auto px-0 sm:px-4">
-          <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-black uppercase tracking-[0.2em] animate-in fade-in zoom-in duration-1000"
-          >
-            <Shield className="w-4 h-4" />
-            Privacy-First Processing • Zero Data Retention
-          </div>
-
-
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-slate-900 dark:text-white tracking-tighter leading-[0.95] text-reveal">
             Online<br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary via-white to-brand-secondary animate-shine">File Converter</span>
@@ -110,9 +102,21 @@ export default function HomeContent() {
       {/* Trust Features */}
       <section className="max-w-6xl mx-auto px-0 sm:px-6 grid md:grid-cols-3 gap-8">
         {[
-          { icon: Shield, title: "Zero Data Retention", desc: "Files are never stored. They are processed in memory and immediately deleted after conversion." },
-          { icon: Lock, title: "100% Private & Secure", desc: "No tracking, no accounts, no cookies. Your files stay completely private from start to finish." },
-          { icon: Zap, title: "Lightning Fast Conversion", desc: "Instant file processing. Most conversions complete in under a second." }
+          {
+            icon: Shield,
+            title: "Files Never Stored",
+            desc: "Files are deleted immediately after conversion. Nothing saved on our servers."
+          },
+          {
+            icon: Lock,
+            title: "Secure Encryption",
+            desc: "All file uploads and processing are fully encrypted for maximum security."
+          },
+          {
+            icon: Zap,
+            title: "Lightning Fast Conversion",
+            desc: "Instant file processing. Most conversions complete in under a second."
+          }
         ].map((feature, i) => (
           <div key={i} className="glass dark:glass-dark rounded-[2.5rem] p-10 border border-white/5 space-y-6 hover:-translate-y-2 transition-transform duration-500">
             <div className="w-14 h-14 rounded-2xl bg-brand-primary/10 flex items-center justify-center">
