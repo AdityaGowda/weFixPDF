@@ -85,7 +85,7 @@ export default function Navbar() {
               </button>
 
               <div className="absolute top-[80%] left-1/2 -translate-x-1/2 pt-4 opacity-0 scale-95 pointer-events-none group-hover/nav:opacity-100 group-hover/nav:scale-100 group-hover/nav:pointer-events-auto transition-all duration-300 z-50">
-                <div className="w-[520px] glass dark:glass-dark rounded-3xl p-4 border border-slate-200/50 dark:border-white/10 shadow-2xl grid grid-cols-2 gap-2 relative overflow-hidden">
+                <div className="w-[520px]  bg-white dark:bg-slate-900  rounded-3xl p-4 border border-slate-200/50 dark:border-white/0 shadow-2xl grid grid-cols-2 gap-2 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/5 to-transparent pointer-events-none" />
                   {category.items.map((item) => (
                     <a

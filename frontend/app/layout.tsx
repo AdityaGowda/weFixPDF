@@ -16,8 +16,8 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://wefixpdf.com"),
   title: "Free Online File Converter - Images & PDFs | wefixPDF",
-  description: "Convert and compress files instantly. Free JPG to PNG, image compression, PDF tools. Zero retention, 100% private, no sign-up required.",
-  keywords: ["free file converter", "jpg to png", "image compressor", "png to jpg", "pdf converter", "compress images online", "wefixPDF"],
+  description: "Convert and compress files instantly. JPG to PNG, image compression, PDF tools. Zero retention, 100% private.",
+  keywords: ["file converter", "jpg to png", "image compressor", "png to jpg", "pdf converter", "compress images online", "wefixPDF"],
   icons: {
     icon: "/favicon.ico",
   },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     siteName: "wefixPDF",
     title: "Free Online File Converter - Images & PDFs | wefixPDF",
-    description: "Convert and compress files instantly. Free JPG to PNG, image compression, PDF tools. Zero retention, 100% private, no sign-up required.",
+    description: "Convert and compress files instantly. JPG to PNG, image compression, PDF tools. Zero retention, 100% private.",
   },
 };
 
@@ -47,20 +47,15 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebApplication",
-              "name": "wefixPDF File Converter",
+              "name": "wefixPDF - Online File Converter",
               "url": "https://wefixpdf.com",
-              "description": "Free online file converter. Convert JPG to PNG, compress images, and process files instantly.",
+              "description": "Online file converter. Convert JPG to PNG, compress images, and process PDFs instantly. Zero retention, 100% private.",
               "applicationCategory": "UtilitiesApplication",
               "operatingSystem": "Any",
               "offers": {
                 "@type": "Offer",
                 "price": "0",
                 "priceCurrency": "USD"
-              },
-              "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "4.9",
-                "ratingCount": "150"
               }
             })
           }}
@@ -92,15 +87,15 @@ export default function RootLayout({
 
                 <div className="relative z-10 space-y-8">
                   <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tighter">
-                    Free Online <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-secondary">File Converter</span>
+                    Universal <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-secondary">File Converter</span>
                   </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-slate-500 dark:text-slate-400 leading-relaxed text-base md:text-lg font-medium">
                     <p>
-                      wefixPDF provides a secure, private, and lightning-fast way to handle your file conversion needs. From converting images to compressing PDFs, our toolset is built for users who value their data privacy.
+                      wefixPDF provides a secure, private, and lightning-fast way to handle your file conversion needs. Convert images, compress PDFs, and transform documents—all with zero data retention.
                     </p>
                     <p>
-                      Process your files instantly in your browser with zero data retention. No sign-ups, no hidden fees—just professional-grade conversion tools available to everyone for free.
+                      Process your files instantly in your browser with complete privacy. Professional-grade conversion tools built with security and speed in mind.
                     </p>
                   </div>
 
@@ -130,7 +125,7 @@ export default function RootLayout({
                       <div className="relative w-32 md:w-40 h-auto aspect-square max-h-20 overflow-hidden flex items-center justify-start">
                         <Image
                           src="/wefixpdf.png"
-                          alt="wefixPDF Logo"
+                          alt="wefixPDF - Online File Converter Logo"
                           width={340}
                           height={340}
                           className="object-contain"
@@ -138,7 +133,7 @@ export default function RootLayout({
                       </div>
                     </div>
                     <p className="text-sm text-slate-500 font-bold leading-relaxed">
-                      Reimagining file utility for the modern web. Clean, fast, and uncompromisingly secure. Built for a global creator economy.
+                      Online file converter for images and PDFs. Fast, secure, and private file conversion with zero data retention. Built for creators worldwide.
                     </p>
                   </div>
 
@@ -149,7 +144,7 @@ export default function RootLayout({
                     </div>
                     <div className="px-6 py-3 rounded-2xl bg-brand-primary/5 border border-brand-primary/10 flex items-center gap-3">
                       <Globe className="w-4 h-4 text-brand-primary" />
-                      <span className="text-xs font-black text-brand-primary uppercase tracking-widest">Global Privacy Cloud</span>
+                      <span className="text-xs font-black text-brand-primary uppercase tracking-widest">Global Processing</span>
                     </div>
                   </div>
                 </div>
@@ -157,34 +152,34 @@ export default function RootLayout({
                 {/* Middle Footer: Links */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 border-t border-slate-200 dark:border-white/5 pt-12">
                   <div className="space-y-6">
-                    <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Services</h5>
+                    <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Image Tools</h5>
                     <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
                       <li><a href="/image-compressor" className="hover:text-brand-primary transition-colors">Image Compressor</a></li>
-                      <li><a href="/jpg-to-png" className="hover:text-brand-primary transition-colors">JPG to PNG Converter</a></li>
-                      <li><a href="/png-to-jpg" className="hover:text-brand-primary transition-colors">PNG to JPG Converter</a></li>
-                      <li><a href="/png-to-webp" className="hover:text-brand-primary transition-colors">PNG to WEBP Converter</a></li>
+                      <li><a href="/jpg-to-png" className="hover:text-brand-primary transition-colors">JPG to PNG</a></li>
+                      <li><a href="/png-to-jpg" className="hover:text-brand-primary transition-colors">PNG to JPG</a></li>
+                      <li><a href="/png-to-webp" className="hover:text-brand-primary transition-colors">PNG to WEBP</a></li>
                     </ul>
                   </div>
                   <div className="space-y-6">
                     <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Platform</h5>
                     <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
-                      <li><a href="/" className="hover:text-brand-primary transition-colors">Universal Home</a></li>
-                      <li><a href="/about" className="hover:text-brand-primary transition-colors">Our Mission</a></li>
-                      <li><a href="/privacy" className="hover:text-brand-primary transition-colors">Privacy Cloud</a></li>
+                      <li><a href="/" className="hover:text-brand-primary transition-colors">Home</a></li>
+                      <li><a href="/about" className="hover:text-brand-primary transition-colors">About Us</a></li>
+                      <li><a href="/privacy" className="hover:text-brand-primary transition-colors">Privacy Policy</a></li>
                     </ul>
                   </div>
                   <div className="space-y-6">
                     <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Legal</h5>
                     <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
-                      <li><a href="/privacy" className="hover:text-brand-primary transition-colors">Data Protocol</a></li>
-                      <li><a href="/terms" className="hover:text-brand-primary transition-colors">Usage Terms</a></li>
+                      <li><a href="/privacy" className="hover:text-brand-primary transition-colors">Privacy Policy</a></li>
+                      <li><a href="/terms" className="hover:text-brand-primary transition-colors">Terms of Service</a></li>
                     </ul>
                   </div>
                   <div className="space-y-6">
-                    <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Community</h5>
+                    <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Resources</h5>
                     <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
-                      <li><a href="/about" className="hover:text-brand-primary transition-colors">Join Global</a></li>
-                      <li><a href="/" className="hover:text-brand-primary transition-colors">Creator Hub</a></li>
+                      <li><a href="/about" className="hover:text-brand-primary transition-colors">How It Works</a></li>
+                      <li><a href="/" className="hover:text-brand-primary transition-colors">All Tools</a></li>
                     </ul>
                   </div>
                 </div>
