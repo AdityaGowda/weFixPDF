@@ -136,7 +136,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
 
   // ── Render ───────────────────────────────────────────
   return (
-    <div className="relative w-full min-h-[600px] flex flex-col items-center justify-center py-20 px-4 overflow-visible gap-8">
+    <div className="relative w-full min-h-[600px] flex flex-col items-center justify-center pt-0 pb-20 px-4 overflow-visible gap-8 max-[950px]:mt-0">
 
       {/* SVG Gooey Filter */}
       <svg className="hidden">

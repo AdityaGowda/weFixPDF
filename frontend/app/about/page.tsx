@@ -70,9 +70,9 @@ export default function AboutPage() {
           items={[
             { label: "High-quality conversions" },
             { label: "Multiple format support" },
+            { label: "PDF compression" },
             { label: "Smart PDF merging", upcoming: true },
             { label: "Flexible page splitting", upcoming: true },
-            { label: "PDF compression", upcoming: true },
             { label: "Page rotation tools", upcoming: true },
           ]}
         />
@@ -83,7 +83,7 @@ export default function AboutPage() {
           items={[
             { label: "All-format support" },
             { label: "Smart compression" },
-            { label: "Batch processing" },
+            { label: "Batch processing", upcoming: true },
             { label: "HEIC to JPG converter", upcoming: true },
             { label: "Image resize & crop", upcoming: true },
             { label: "Format conversion", upcoming: true }

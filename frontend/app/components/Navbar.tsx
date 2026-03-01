@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Menu, X, ChevronRight, ChevronDown, Globe, Sun, Moon } from "lucide-react";
+import { ChevronDown, Sun, Moon } from "lucide-react";
 import Image from "next/image";
 
 export default function Navbar() {
@@ -10,18 +10,15 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [openCategory, setOpenCategory] = useState<string | null>(null);
   const { theme, setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-
   const toggleTheme = () => {
-    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+    setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
   };
 
   const toggleCategory = (label: string) => {
@@ -54,28 +51,37 @@ export default function Navbar() {
 
   return (
     <nav className={`
-      sticky top-0 z-50 transition-all duration-500 px-2 py-1
+      sticky top-0 z-50 transition-all duration-500 px-2 max-[950px]:py-1
       ${scrolled 
-        ? 'bg-white/70 dark:bg-black/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-white/10 shadow-2xl dark:shadow-black/50' 
-        : 'bg-transparent'}
+      ? 'bg-white/70 dark:bg-black/80  border-b border-slate-200/50 dark:border-white/10 shadow-2xl dark:shadow-black/50'
+      : 'bg-transparent border-b border-transparent shadow-none'}
     `}>
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="max-w-7xl mx-auto flex items-center justify-between max-[950px]:py-1">
         {/* Logo */}
         <a href="/" className="flex items-center gap-3 group">
-          <div className="relative w-40 h-12 sm:w-32 sm:h-10 md:w-80 md:h-12 overflow-hidden items-center justify-start flex hover:scale-105 transition-transform duration-300">
-            <Image 
-              src="/logo.png"
+          <div className="relative w-40 h-12 sm:w-32 sm:h-12 md:w-80 md:h-12 overflow-hidden items-center justify-start flex hover:scale-105 transition-transform duration-300 gap-5 max-[950px]:pl-2">
+            <Image
+              src="/logo.svg"
               alt="wefixPDF Logo"
-              width={80}
-              height={80}
+              width={43}
+              height={43}
+              className="dark:hidden"
+              priority
+            />
+            <Image
+              src="/darklogo.svg"
+              alt="wefixPDF Logo"
+              width={45}
+              height={45}
+              className="hidden dark:block"
               priority
             />
             <Image
               src="/wefixpdf.png"
               alt="wefixPDF Text Image"
-              width={160}
-              height={160}
-              className="object-contain"
+              width={145}
+              height={145}
+              className="object-contain max-[950px]:hidden md:block"
               priority
             />
           </div>
@@ -92,7 +98,7 @@ export default function Navbar() {
                 <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover/nav:-rotate-180" />
               </button>
 
-              <div className="absolute top-[80%] left-1/2 -translate-x-1/2 pt-4 opacity-0 scale-95 pointer-events-none group-hover/nav:opacity-100 group-hover/nav:scale-100 group-hover/nav:pointer-events-auto transition-all duration-300 z-50">
+              <div className="absolute top-[80%] left-1/2 -translate-x-1/2 pt-4 opacity-0 scale-95 pointer-events-none group-hover/nav:opacity-100 group-hover/nav:scale-100 group-hover/nav:pointer-events-auto duration-300 z-50">
                 <div className="w-[520px]  bg-white dark:bg-slate-900  rounded-3xl p-4 border border-slate-200/50 dark:border-white/0 shadow-2xl grid grid-cols-2 gap-2 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/5 to-transparent pointer-events-none" />
                   {category.items.map((item) => (
@@ -129,7 +135,8 @@ export default function Navbar() {
             onClick={toggleTheme}
             className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 text-slate-500 transition-all"
           >
-            {resolvedTheme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            <Sun className="w-5 h-5 hidden dark:block" />
+            <Moon className="w-5 h-5 block dark:hidden" />
           </button>
         </div>
 
@@ -140,7 +147,8 @@ export default function Navbar() {
             className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200/50 dark:border-white/10 text-lg sm:text-xl"
             aria-label="Toggle Theme"
           >
-            {resolvedTheme === 'dark' ? '☀️' : '🌙'}
+            <Sun className="w-5 h-5 hidden dark:block" />
+            <Moon className="w-5 h-5 block dark:hidden" />
           </button>
           
           <button 

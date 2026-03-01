@@ -66,18 +66,18 @@ export async function generateMetadata({ params }: { params: { tool: string } })
 export default async function ToolPage({ params }: { params: { tool: string } }) {
   const reqService = await params;
   const metadata = toolMetadata[reqService.tool];
-
+  console.log(reqService.tool, ":::::::::::::::::::::::;using tool");
   return (
-    <div className="space-y-12 animate-fade-in">
+    <div className="space-y-12 max-[950px]:py-10 animate-fade-in px-4 sm:px-0 max-[950px]:mt-0">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-indigo-50 dark:bg-brand-primary/10 text-brand-primary text-[10px] font-black uppercase tracking-[0.2em] border border-indigo-100/50 dark:border-brand-primary/20">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-[0.2em] border border-emerald-500/20">
             Active Tool
           </div>
-          <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">
+          <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter transition-all duration-300">
             {metadata?.h1 || "File Converter"}
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 font-medium">
+          <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
             {metadata?.subtitle || "Fast, secure, and privacy-shielded conversion."}
           </p>
         </div>

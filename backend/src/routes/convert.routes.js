@@ -15,7 +15,7 @@ const MULTI_FILE_TOOLS = ["image-to-pdf"];
 // ─────────────────────────────────────────────────────────────
 function selectUpload(req, res, next) {
     const tool = req.params.tool;
-
+    console.log(tool, "::::::::::::::::::::::::;using tool");
     if (MULTI_FILE_TOOLS.includes(tool)) {
         upload.array("files", 10)(req, res, next);
     } else {
