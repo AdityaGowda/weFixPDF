@@ -26,6 +26,24 @@ const toolMetadata: Record<string, { title: string; description: string; h1: str
     h1: "PNG to WEBP Converter",
     subtitle: "Convert PNG to WEBP format. Next-generation image format for faster websites.",
   },
+  "compress-pdf": {
+    title: "Compress PDF - Free Online Tool | wefixPDF",
+    description: "Compress PDF online without losing quality. Reduce PDF file sizes up to 80%. Fast, free, and secure compression.",
+    h1: "Compress PDF",
+    subtitle: "Reduce PDF file size without losing quality. Compress PDF files instantly.",
+  },
+  "image-to-pdf": {
+    title: "Image to PDF Converter - Free Online Tool | wefixPDF",
+    description: "Convert images to PDF online free. Supports JPG, JPEG, PNG, WEBP, BMP, TIFF, SVG, HEIC and more. Lossless quality, instant conversion, complete privacy. No file size limits or watermarks.",
+    h1: "Image to PDF Converter",
+    subtitle: "Convert JPG, PNG, WEBP, BMP, TIFF, SVG, HEIC and more to PDF instantly. Free, fast, and 100% secure.",
+  },
+  "pdf-to-jpg": {
+    title: "PDF to JPG Converter - Free Online Tool | wefixPDF",
+    description: "Convert PDF to JPG online free. Lossless quality, instant conversion, complete privacy. No file size limits or watermarks.",
+    h1: "PDF to JPG Converter",
+    subtitle: "Convert PDF images to JPG format instantly. Free, fast, and 100% secure.",
+  },
 };
 
 export async function generateMetadata({ params }: { params: { tool: string } }): Promise<Metadata> {
@@ -48,24 +66,24 @@ export async function generateMetadata({ params }: { params: { tool: string } })
 export default async function ToolPage({ params }: { params: { tool: string } }) {
   const reqService = await params;
   const metadata = toolMetadata[reqService.tool];
-
+  console.log(reqService.tool, ":::::::::::::::::::::::;using tool");
   return (
-    <div className="space-y-12 animate-fade-in">
+    <div className="space-y-12 max-[950px]:py-10 animate-fade-in px-4 sm:px-0 max-[950px]:mt-0">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-indigo-50 dark:bg-brand-primary/10 text-brand-primary text-[10px] font-black uppercase tracking-[0.2em] border border-indigo-100/50 dark:border-brand-primary/20">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-[0.2em] border border-emerald-500/20">
             Active Tool
           </div>
-          <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">
+          <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter transition-all duration-300">
             {metadata?.h1 || "File Converter"}
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 font-medium">
+          <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
             {metadata?.subtitle || "Fast, secure, and privacy-shielded conversion."}
           </p>
         </div>
       </div>
 
-      <UploadBox service={reqService.tool}/>
+      <UploadBox service={reqService.tool} />
     </div>
   );
 }

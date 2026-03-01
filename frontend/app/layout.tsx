@@ -60,17 +60,16 @@ export default function RootLayout({
             })
           }}
         />
-        <Toaster />
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
           <Navbar />
-
+          <Toaster />
           <main className="flex-1 w-full transition-all duration-500 overflow-x-hidden">
-            <div className="px-0 sm:px-6 md:p-12 max-w-7xl mx-auto space-y-16 md:space-y-24">
+            <div className="px-4 sm:px-6 md:py-12 max-w-7xl mx-auto space-y-16 md:space-y-24">
               <div className="relative">
                 {/* Premium Visual Decorations */}
                 <div className="absolute -top-40 -left-40 w-96 h-96 bg-brand-primary/20 rounded-full blur-[120px] pointer-events-none animate-pulse-slow" />
@@ -117,10 +116,10 @@ export default function RootLayout({
 
             {/* FOOTER */}
             <footer className="relative z-10 border-t border-slate-200 dark:border-white/5 pt-24 pb-12">
-              <div className="max-w-7xl mx-auto px-0 sm:px-6 space-y-20">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-20">
                 {/* Top Footer: Brand & Status */}
                 <div className="flex flex-col md:flex-row justify-between items-start gap-12">
-                  <div className="max-w-sm space-y-6">
+                  <div className="max-w-xl space-y-6">
                     <div className="flex items-center gap-3">
                       <div className="relative w-32 md:w-40 h-auto aspect-square max-h-20 overflow-hidden flex items-center justify-start">
                         <Image

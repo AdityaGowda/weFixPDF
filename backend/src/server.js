@@ -28,7 +28,7 @@ app.use(
 
 app.use(
   cors({
-    origin: "https://wefixpdf.com",
+    origin: ["http://localhost:3000", "https://wefixpdf.com", "https://www.wefixpdf.com", 'http://localhost:5000'],
     methods: ["GET", "POST"],
     exposedHeaders: ["Content-Disposition"],
   })
