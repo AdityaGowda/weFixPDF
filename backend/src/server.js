@@ -3,54 +3,61 @@ const cors = require("cors");
 const helmet = require("helmet");
 
 const convertRoutes = require("./routes/convert.routes");
+
 const app = express();
 
-app.use(helmet({
-  hsts: {
-    maxAge: 31536000,
-    includeSubDomains: true,
-    preload: true,
-  },
-  referrerPolicy: { policy: "strict-origin-when-cross-origin" },
-}));
+/* ==============================
+   Helmet Security
+============================== */
 
 app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      imgSrc: ["'self'", "data:", "blob:"],
-      connectSrc: ["'self'", "http://localhost:5000", "https://convertlite.onrender.com"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      objectSrc: ["'none'"],
-      upgradeInsecureRequests: [],
+  helmet({
+    hsts: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+      preload: true,
     },
+    referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+    contentSecurityPolicy: false, // Let nginx / frontend handle CSP
   })
 );
 
-// Permissions-Policy
-app.use((req, res, next) => {
-  res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=(), interest-cohort=()");
-  next();
-});
+/* ==============================
+   CORS - Restrict To Your Domain
+============================== */
 
-app.use(cors({
-  origin: "*",
-  exposedHeaders: ['Content-Disposition']
-}));
+app.use(
+  cors({
+    origin: "https://wefixpdf.com",
+    methods: ["GET", "POST"],
+    exposedHeaders: ["Content-Disposition"],
+  })
+);
+
+/* ==============================
+   JSON Body Parsing
+============================== */
+
 app.use(express.json());
 
+/* ==============================
+   Routes
+============================== */
 
 app.use("/api/convert", convertRoutes);
-app.get("/", (req, res) => {
-  res.send("Backend running");
-});
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+app.get("/", (req, res) => {
+  res.status(200).send("Backend running");
 });
 
 app.get("/general/ping", (req, res) => {
   res.status(200).send("OK");
+});
+
+/* ==============================
+   Start Server
+============================== */
+
+app.listen(5000, () => {
+  console.log("Secure backend running on port 5000");
 });
