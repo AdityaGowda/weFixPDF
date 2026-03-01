@@ -3,26 +3,33 @@
 export default function PrivacyContent() {
   const sections = [
     {
-      title: "Zero Retention Policy",
-      content: "At wefixPDF, we prioritize your privacy above all else. Our 'Zero Retention' promise means that your files are processed in-memory or in a temporary secure environment and are permanently deleted immediately after conversion. We do not store, view, or share any of your data."
+      title: "Files Never Stored",
+      content: "At wefixPDF, we prioritize your privacy above all else. Your files are processed securely and permanently deleted immediately after conversion. We do not store, view, or share your files with anyone."
     },
     {
-      title: "Data Collection",
-      content: "We do not require accounts, email addresses, or any personal identification to use our tools. We collect minimal, anonymized usage data (such as tool popularity) only to improve our services. We do not use tracking cookies or third-party analytics that compromise your identity."
+      title: "What We Collect",
+      content: "We do not collect or store any of your files or personal data. Your conversions are completely anonymous. We do not track your activity or create user profiles."
     },
     {
-      title: "Security Measures",
-      content: "All file transfers are protected by end-to-end encryption (SSL/TLS). Our processing engines are regularly audited for security vulnerabilities to ensure that your sensitive documents remain private during the brief window they are being reshaped."
+      title: "Security & Encryption",
+      content: "All file transfers are protected by end-to-end encryption (SSL/TLS). Our processing systems are regularly audited for security vulnerabilities to ensure your documents remain completely private during conversion."
     },
     {
-      title: "Third-Party Services",
-      content: "wefixPDF does not sell your data to third parties. We do not display invasive advertisements that track your browsing behavior. Our business model is built on providing value, not on monetizing your information."
+      title: "Your Data Rights",
+      content: "wefixPDF does not sell your data to third parties. We do not display invasive advertisements that track your browsing behavior. Your files are yours alone."
+    },
+    {
+      title: "File Processing",
+      content: "Files are processed in a secure, isolated environment. All uploaded files are automatically and permanently deleted from our servers immediately after conversion completes."
+    },
+    {
+      title: "No Tracking",
+      content: "We do not use cookies for tracking or analytics. We do not monitor your browsing behavior. Your use of wefixPDF is completely private and anonymous."
     }
   ];
 
   return (
     <div className="space-y-16 animate-fade-in">
-
       {/* Content Grid */}
       <div className="grid md:grid-cols-2 gap-8">
         {sections.map((section, i) => (
@@ -35,16 +42,16 @@ export default function PrivacyContent() {
         ))}
       </div>
 
-      {/* Contact Note */}
-      <section className="glass dark:glass-dark rounded-[3rem] p-12 text-center border border-slate-200/50 dark:border-white/5 bg-slate-50/50 dark:bg-white/5">
+      {/* Privacy Commitment */}
+      {/* <section className="glass dark:glass-dark rounded-[3rem] p-12 text-center border border-slate-200/50 dark:border-white/5 bg-slate-50/50 dark:bg-white/5">
         <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">Questions about your privacy?</h3>
         <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-xl mx-auto font-medium">
-          We are committed to total transparency. If you have any concerns about how our tools handle your files, feel free to reach out.
+          We are committed to transparency. If you have any concerns about how we handle your data, please contact us.
         </p>
-        <a href="mailto:support@wefixpdf.com" className="text-brand-primary font-black mt-2 inline-block hover:underline">
-          support@wefixpdf.com
-        </a>
-      </section>
+        <p className="text-sm text-slate-400 dark:text-slate-500 font-medium">
+          Last updated: March 2026
+        </p>
+      </section> */}
     </div>
   );
 }
