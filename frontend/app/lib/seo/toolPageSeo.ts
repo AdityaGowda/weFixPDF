@@ -15,6 +15,10 @@ export type ToolMetaData = {
   intro: string;
   keywords: string[];
   url: string;
+  softwareSchema: {
+    name: string;
+    browserRequirements: string;
+  };
   howTo: {
     title: string;
     description: string;
@@ -48,6 +52,10 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "compress pdf for email",
     ],
     url: `${SITE_URL}/compress-pdf`,
+    softwareSchema: {
+      name: "PDF Compressor",
+      browserRequirements: "Requires a modern browser with JavaScript enabled. Compatible with Chrome 80+, Firefox 75+, Safari 13+, and Edge 80+.",
+    },
     howTo: {
       title: "How to Compress a PDF Online for Free",
       description: "Reduce your PDF file size by up to 80% in seconds using weFixPDF's free online PDF compressor. No sign-up required.",
@@ -120,6 +128,10 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "pdf to jpg high quality",
     ],
     url: `${SITE_URL}/pdf-to-jpg`,
+    softwareSchema: {
+      name: "PDF to JPG Converter",
+      browserRequirements: "Requires a modern browser with JavaScript enabled. Compatible with Chrome 80+, Firefox 75+, Safari 13+, and Edge 80+.",
+    },
     howTo: {
       title: "How to Convert PDF to JPG Online for Free",
       description: "Extract every page of your PDF as a high-resolution JPG image instantly using weFixPDF's free online PDF to JPG converter.",
@@ -188,6 +200,10 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "extract text from pdf",
     ],
     url: `${SITE_URL}/pdf-to-word`,
+    softwareSchema: {
+      name: "PDF to Word Converter",
+      browserRequirements: "Requires a modern browser with JavaScript enabled. Compatible with Chrome 80+, Firefox 75+, Safari 13+, and Edge 80+.",
+    },
     howTo: {
       title: "How to Convert PDF to Word Online for Free",
       description: "Convert your PDF to an editable Word document in seconds using weFixPDF. Formatting, tables, and fonts are preserved accurately.",
@@ -256,6 +272,10 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "merge pdf without adobe",
     ],
     url: `${SITE_URL}/merge-pdf`,
+    softwareSchema: {
+      name: "PDF Merger",
+      browserRequirements: "Requires a modern browser with JavaScript enabled. Compatible with Chrome 80+, Firefox 75+, Safari 13+, and Edge 80+.",
+    },
     howTo: {
       title: "How to Merge PDF Files Online for Free",
       description: "Combine multiple PDF files into one document instantly using weFixPDF's free online PDF merger. No sign-up required.",
@@ -324,6 +344,10 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "remove pages from pdf",
     ],
     url: `${SITE_URL}/split-pdf`,
+    softwareSchema: {
+      name: "PDF Splitter",
+      browserRequirements: "Requires a modern browser with JavaScript enabled. Compatible with Chrome 80+, Firefox 75+, Safari 13+, and Edge 80+.",
+    },
     howTo: {
       title: "How to Split a PDF Online for Free",
       description: "Extract specific pages or split your PDF into multiple files instantly using weFixPDF's free online PDF splitter.",
@@ -395,6 +419,10 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "image size reducer",
     ],
     url: `${SITE_URL}/image-compressor`,
+    softwareSchema: {
+      name: "Image Compressor",
+      browserRequirements: "Requires a modern browser with JavaScript enabled. Compatible with Chrome 80+, Firefox 75+, Safari 13+, and Edge 80+.",
+    },
     howTo: {
       title: "How to Compress an Image Online for Free",
       description: "Reduce JPG, PNG and WEBP image file sizes by up to 80% without quality loss using weFixPDF's free online image compressor. No sign-up required.",
@@ -463,6 +491,10 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "jpg to png high quality",
     ],
     url: `${SITE_URL}/jpg-to-png`,
+    softwareSchema: {
+      name: "JPG to PNG Converter",
+      browserRequirements: "Requires a modern browser with JavaScript enabled. Compatible with Chrome 80+, Firefox 75+, Safari 13+, and Edge 80+.",
+    },
     howTo: {
       title: "How to Convert JPG to PNG Online for Free",
       description: "Convert JPG images to lossless PNG format instantly using weFixPDF's free online converter. No watermarks, no sign-up required.",
@@ -527,6 +559,10 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "reduce png file size to jpg",
     ],
     url: `${SITE_URL}/png-to-jpg`,
+    softwareSchema: {
+      name: "PNG to JPG Converter",
+      browserRequirements: "Requires a modern browser with JavaScript enabled. Compatible with Chrome 80+, Firefox 75+, Safari 13+, and Edge 80+.",
+    },
     howTo: {
       title: "How to Convert PNG to JPG Online for Free",
       description: "Convert PNG images to smaller JPG files optimized for web and email using weFixPDF's free online converter. Instant results, no sign-up.",
@@ -591,6 +627,10 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "png to webp without losing quality",
     ],
     url: `${SITE_URL}/png-to-webp`,
+    softwareSchema: {
+      name: "PNG to WEBP Converter",
+      browserRequirements: "Requires a modern browser with JavaScript enabled. Compatible with Chrome 80+, Firefox 75+, Safari 13+, and Edge 80+.",
+    },
     howTo: {
       title: "How to Convert PNG to WEBP Online for Free",
       description: "Convert PNG images to Google's next-gen WEBP format for 25–35% smaller file sizes using weFixPDF's free online converter. No sign-up required.",
@@ -655,6 +695,10 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "convert image to pdf free",
     ],
     url: `${SITE_URL}/image-to-pdf`,
+    softwareSchema: {
+      name: "Image to PDF Converter",
+      browserRequirements: "Requires a modern browser with JavaScript enabled. Compatible with Chrome 80+, Firefox 75+, Safari 13+, and Edge 80+.",
+    },
     howTo: {
       title: "How to Convert Images to PDF Online for Free",
       description: "Convert JPG, PNG, and WEBP images to a PDF document instantly using weFixPDF's free online converter. Combine multiple images into one PDF.",
@@ -723,6 +767,10 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "heic to jpg without losing quality",
     ],
     url: `${SITE_URL}/heic-to-jpg`,
+    softwareSchema: {
+      name: "HEIC to JPG Converter",
+      browserRequirements: "Requires a modern browser with JavaScript enabled. Compatible with Chrome 80+, Firefox 75+, Safari 13+, and Edge 80+.",
+    },
     howTo: {
       title: "How to Convert HEIC to JPG Online for Free",
       description: "Convert iPhone HEIC photos to universally compatible JPG format instantly using weFixPDF's free online converter. No app download needed.",

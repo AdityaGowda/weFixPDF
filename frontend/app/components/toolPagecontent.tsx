@@ -6,36 +6,56 @@ type ToolPageContentProps = {
 
 export default async function ToolPageContent({ metadata }: ToolPageContentProps) {
 
-  const faqSchema = metadata ? {
+  const structuredData = metadata ? {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": metadata.faqs.map((faq: any) => ({
-      "@type": "Question",
-      "name": faq.q,
-      "acceptedAnswer": { "@type": "Answer", "text": faq.a },
-    })),
-  } : null;
-
-  const howToSchema = metadata ? {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "name": metadata.howTo.title,
-    "description": metadata.howTo.description,
-    "step": metadata.howTo.steps.map((step: HowItWorksStep, i: any) => ({
-      "@type": "HowToStep",
-      "position": i + 1,
-      "name": step.name,
-      "text": step.text,
-    })),
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "weFixPDF",
+        "url": "https://wefixpdf.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://wefixpdf.com/logo.svg",
+        },
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": metadata.softwareSchema.name,
+        "url": metadata.url,
+        "description": metadata.description,
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "browserRequirements": metadata.softwareSchema.browserRequirements,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+        },
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": metadata.faqs.map((faq: any) => ({
+          "@type": "Question",
+          "name": faq.q,
+          "acceptedAnswer": { "@type": "Answer", "text": faq.a },
+        })),
+      },
+      {
+        "@type": "HowTo",
+        "name": metadata.howTo.title,
+        "description": metadata.howTo.description,
+        "step": metadata.howTo.steps.map((step: HowItWorksStep, i: number) => ({
+          "@type": "HowToStep",
+          "position": i + 1,
+          "name": step.name,
+          "text": step.text,
+        })),
+      },
+    ],
   } : null;
 
   return (
     <div className="space-y-20 mt-8">
-
-      {/* JSON-LD */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
-
       {/* ── Intro ── */}
       <div className="relative max-w-3xl">
         <div className="absolute -left-4 top-0 bottom-0 w-[3px] rounded-full bg-gradient-to-b from-emerald-400 to-emerald-600" />
@@ -69,6 +89,9 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
                   Step {i + 1}
                 </span>
               </div>
+              <p className="text-slate-700 dark:text-slate-300 font-semibold text-sm leading-relaxed">
+                {step.name}
+              </p>
               <p className="text-slate-700 dark:text-slate-300 font-semibold text-sm leading-relaxed">
                 {step.text}
               </p>
@@ -144,7 +167,12 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
           ))}
         </div>
       </section>
-
+      {structuredData && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+      )}
     </div>
   );
 }
