@@ -108,7 +108,7 @@ export default function HomeContent() {
       <section className="max-w-6xl mx-auto px-0">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { stat: "1K+", label: "Files Converted" },
+            { stat: "1K+", label: "Daily File Conversions" },
             { stat: "Fast", label: "Sub-Second Speed" },
             { stat: "100%", label: "Free Forever" },
             { stat: "0 bytes", label: "Data Retained" },

@@ -1,47 +1,11 @@
-// const toolMetadata: Record<string, { title: string; description: string; h1: string; subtitle: string }> = {
-//   "jpg-to-png": {
-//     title: "JPG to PNG Converter - Free Online Tool | weFixPDF",
-//     description: "Convert JPG to PNG online free. Lossless quality, instant conversion, complete privacy. No file size limits or watermarks.",
-//     h1: "JPG to PNG Converter",
-//     subtitle: "Convert JPG images to PNG format instantly. Free, fast, and 100% secure.",
-//   },
-//   "png-to-jpg": {
-//     title: "PNG to JPG Converter - Free Online Tool | weFixPDF",
-//     description: "Convert PNG to JPG online free. Reduce file size, optimize for web. Instant conversion with complete privacy.",
-//     h1: "PNG to JPG Converter",
-//     subtitle: "Convert PNG images to JPG format. Perfect for web optimization and smaller file sizes.",
-//   },
-//   "image-compressor": {
-//     title: "Image Compressor - Compress JPG & PNG Online Free | weFixPDF",
-//     description: "Compress images online without losing quality. Reduce JPG, PNG, and WEBP file sizes up to 80%. Fast, free, and secure compression.",
-//     h1: "Image Compressor",
-//     subtitle: "Reduce image file size without losing quality. Compress JPG, PNG, and WEBP images instantly.",
-//   },
-//   "png-to-webp": {
-//     title: "PNG to WEBP Converter - Free Online Tool | weFixPDF",
-//     description: "Convert PNG to WEBP online free. Next-gen image format with superior compression. Reduce file sizes by up to 30% more than PNG.",
-//     h1: "PNG to WEBP Converter",
-//     subtitle: "Convert PNG to WEBP format. Next-generation image format for faster websites.",
-//   },
-//   "compress-pdf": {
-//     title: "Compress PDF - Free Online Tool | weFixPDF",
-//     description: "Compress PDF online without losing quality. Reduce PDF file sizes up to 80%. Fast, free, and secure compression.",
-//     h1: "Compress PDF",
-//     subtitle: "Reduce PDF file size without losing quality. Compress PDF files instantly.",
-//   },
-//   "image-to-pdf": {
-//     title: "Image to PDF Converter - Free Online Tool | weFixPDF",
-//     description: "Convert images to PDF online free. Supports JPG, JPEG, PNG, WEBP, BMP, TIFF, SVG, HEIC and more. Lossless quality, instant conversion, complete privacy. No file size limits or watermarks.",
-//     h1: "Image to PDF Converter",
-//     subtitle: "Convert JPG, PNG, WEBP, BMP, TIFF, SVG, HEIC and more to PDF instantly. Free, fast, and 100% secure.",
-//   },
-//   "pdf-to-jpg": {
-//     title: "PDF to JPG Converter - Free Online Tool | weFixPDF",
-//     description: "Convert PDF to JPG online free. Lossless quality, instant conversion, complete privacy. No file size limits or watermarks.",
-//     h1: "PDF to JPG Converter",
-//     subtitle: "Convert PDF images to JPG format instantly. Free, fast, and 100% secure.",
-//   },
-// };
+const SITE_URL = "https://wefixpdf.com";
+const SITE_NAME = "weFixPDF";
+const SITE_LOGO = "https://wefixpdf.com/logo.svg";
+
+export type HowItWorksStep = {
+  name: string;
+  text: string;
+};
 
 export type ToolMetaData = {
   title: string;
@@ -50,7 +14,12 @@ export type ToolMetaData = {
   h2: string;
   intro: string;
   keywords: string[];
-  howItWorks: string[];
+  url: string;
+  howTo: {
+    title: string;
+    description: string;
+    steps: HowItWorksStep[];
+  };
   features: string[];
   faqs: {
     q: string;
@@ -78,6 +47,29 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "compress pdf to 100kb",
       "compress pdf for email",
     ],
+    url: `${SITE_URL}/compress-pdf`,
+    howTo: {
+      title: "How to Compress a PDF Online for Free",
+      description: "Reduce your PDF file size by up to 80% in seconds using weFixPDF's free online PDF compressor. No sign-up required.",
+      steps: [
+        {
+          name: "Upload your PDF file",
+          text: "Click the upload area or drag and drop your PDF file into the compressor tool.",
+        },
+        {
+          name: "Choose compression level",
+          text: "Select your preferred compression level — High, Medium, or Low — depending on how much you want to reduce the file size.",
+        },
+        {
+          name: "Start compression",
+          text: "Click 'Initiate' to begin compressing your PDF instantly in your browser.",
+        },
+        {
+          name: "Download your compressed PDF",
+          text: "Once compression is complete, download your smaller PDF file immediately.",
+        },
+      ],
+    },
     faqs: [
       {
         q: "How do I compress a PDF without losing quality?",
@@ -99,12 +91,6 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
         q: "How much can I reduce my PDF size?",
         a: "Most PDFs can be reduced by 40–80% depending on content. Image-heavy PDFs compress the most.",
       },
-    ],
-    howItWorks: [
-      "Upload your PDF file",
-      "Choose compression level — High.Medium.Low",
-      "Click 'Initiate' to start compression",
-      "Download your compressed PDF instantly",
     ],
     features: [
       "Reduce PDF size up to 80%",
@@ -133,6 +119,29 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "convert pdf to picture",
       "pdf to jpg high quality",
     ],
+    url: `${SITE_URL}/pdf-to-jpg`,
+    howTo: {
+      title: "How to Convert PDF to JPG Online for Free",
+      description: "Extract every page of your PDF as a high-resolution JPG image instantly using weFixPDF's free online PDF to JPG converter.",
+      steps: [
+        {
+          name: "Upload your PDF file",
+          text: "Click the upload area or drag and drop your PDF into the converter tool.",
+        },
+        {
+          name: "Start converting to JPG",
+          text: "Click 'Initiate' to begin converting each PDF page to a high-quality JPG image.",
+        },
+        {
+          name: "Download your JPG images",
+          text: "Once conversion is complete, download all your JPG images in a single ZIP file.",
+        },
+        {
+          name: "Unzip and use your images",
+          text: "Extract the ZIP file to access your individual JPG images ready for use anywhere.",
+        },
+      ],
+    },
     faqs: [
       {
         q: "How do I convert a PDF to JPG for free?",
@@ -150,12 +159,6 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
         q: "Is my PDF safe when converting online?",
         a: "Absolutely. All uploaded PDFs are encrypted and deleted immediately after conversion. We never store your files.",
       },
-    ],
-    howItWorks: [
-      "Upload your PDF file",
-      "Click 'Initiate' to start converting to JPG",
-      "Download your JPG images instantly in zip file",
-      "Unzip and use your JPG images",
     ],
     features: [
       "High resolution JPG output",
@@ -184,6 +187,29 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "adobe pdf to word",
       "extract text from pdf",
     ],
+    url: `${SITE_URL}/pdf-to-word`,
+    howTo: {
+      title: "How to Convert PDF to Word Online for Free",
+      description: "Convert your PDF to an editable Word document in seconds using weFixPDF. Formatting, tables, and fonts are preserved accurately.",
+      steps: [
+        {
+          name: "Upload your PDF file",
+          text: "Click the upload area or drag and drop your PDF into the converter tool.",
+        },
+        {
+          name: "Start conversion to Word",
+          text: "Click 'Initiate' to begin converting your PDF to an editable Word document.",
+        },
+        {
+          name: "Wait for processing",
+          text: "Our tool processes your PDF and accurately recreates the layout, fonts, and tables in Word format.",
+        },
+        {
+          name: "Download your Word document",
+          text: "Download your editable .docx file ready to open in Microsoft Word, Google Docs, or LibreOffice.",
+        },
+      ],
+    },
     faqs: [
       {
         q: "How do I convert PDF to Word for free?",
@@ -201,12 +227,6 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
         q: "Is there a file size limit?",
         a: "You can convert PDFs up to 50MB for free with no sign-up required.",
       },
-    ],
-    howItWorks: [
-      "Upload your PDF file",
-      "Click 'Initiate' to start conversion to Word",
-      "Wait a few seconds for processing",
-      "Download your editable .docx file",
     ],
     features: [
       "Accurate formatting preservation",
@@ -235,6 +255,29 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "combine pdf pages",
       "merge pdf without adobe",
     ],
+    url: `${SITE_URL}/merge-pdf`,
+    howTo: {
+      title: "How to Merge PDF Files Online for Free",
+      description: "Combine multiple PDF files into one document instantly using weFixPDF's free online PDF merger. No sign-up required.",
+      steps: [
+        {
+          name: "Upload your PDF files",
+          text: "Click the upload area or drag and drop two or more PDF files into the merger tool.",
+        },
+        {
+          name: "Reorder your files",
+          text: "Drag and drop the uploaded PDFs to arrange them in the order you want in the final document.",
+        },
+        {
+          name: "Merge your PDFs",
+          text: "Click 'Merge PDF' to combine all uploaded files into a single PDF document.",
+        },
+        {
+          name: "Download your merged PDF",
+          text: "Download your combined PDF file instantly — all pages from every file in one document.",
+        },
+      ],
+    },
     faqs: [
       {
         q: "How do I merge PDF files for free?",
@@ -252,12 +295,6 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
         q: "Will the quality be affected when merging?",
         a: "No. Merging PDFs does not affect the quality or content of the original documents.",
       },
-    ],
-    howItWorks: [
-      "Upload two or more PDF files",
-      "Drag to reorder if needed",
-      "Click Merge PDF",
-      "Download your combined PDF instantly",
     ],
     features: [
       "Merge up to 20 PDFs at once",
@@ -286,6 +323,29 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "pdf page extractor",
       "remove pages from pdf",
     ],
+    url: `${SITE_URL}/split-pdf`,
+    howTo: {
+      title: "How to Split a PDF Online for Free",
+      description: "Extract specific pages or split your PDF into multiple files instantly using weFixPDF's free online PDF splitter.",
+      steps: [
+        {
+          name: "Upload your PDF file",
+          text: "Click the upload area or drag and drop your PDF file into the splitter tool.",
+        },
+        {
+          name: "Select pages to extract",
+          text: "Choose specific pages, a page range, or select all pages to split into individual files.",
+        },
+        {
+          name: "Split your PDF",
+          text: "Click 'Split PDF' to extract your selected pages into separate PDF files.",
+        },
+        {
+          name: "Download your split files",
+          text: "Download your extracted PDF files instantly, individually or as a ZIP archive.",
+        },
+      ],
+    },
     faqs: [
       {
         q: "How do I split a PDF online for free?",
@@ -303,12 +363,6 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
         q: "Can I split a large PDF?",
         a: "Yes. Our tool supports PDFs up to 100MB and can split them into as many files as needed.",
       },
-    ],
-    howItWorks: [
-      "Upload your PDF file",
-      "Select pages or page ranges to extract",
-      "Click Split PDF",
-      "Download your split files instantly",
     ],
     features: [
       "Extract any page or page range",
@@ -340,6 +394,29 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "compress image to 100kb",
       "image size reducer",
     ],
+    url: `${SITE_URL}/image-compressor`,
+    howTo: {
+      title: "How to Compress an Image Online for Free",
+      description: "Reduce JPG, PNG and WEBP image file sizes by up to 80% without quality loss using weFixPDF's free online image compressor. No sign-up required.",
+      steps: [
+        {
+          name: "Upload your image",
+          text: "Upload your JPG, PNG, or WEBP image by clicking the upload area or dragging it into the compressor tool.",
+        },
+        {
+          name: "Start compression",
+          text: "Click 'Initiate' to start compressing your image instantly using our smart compression algorithms.",
+        },
+        {
+          name: "Compression runs automatically",
+          text: "Our tool automatically compresses your image, reducing file size while preserving visual quality.",
+        },
+        {
+          name: "Download your compressed image",
+          text: "Download your optimized image immediately — smaller file size with no visible quality loss.",
+        },
+      ],
+    },
     faqs: [
       {
         q: "How do I compress an image without losing quality?",
@@ -357,12 +434,6 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
         q: "Is there a limit on how many images I can compress?",
         a: "You can compress unlimited images for free. No sign-up or account needed.",
       },
-    ],
-    howItWorks: [
-      "Upload your JPG, PNG, or WEBP image",
-      "Click 'Initiate' to start compression",
-      "Our tool automatically compresses it",
-      "Download your compressed image",
     ],
     features: [
       "Supports JPG, PNG, WEBP",
@@ -391,6 +462,25 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "convert image to png free",
       "jpg to png high quality",
     ],
+    url: `${SITE_URL}/jpg-to-png`,
+    howTo: {
+      title: "How to Convert JPG to PNG Online for Free",
+      description: "Convert JPG images to lossless PNG format instantly using weFixPDF's free online converter. No watermarks, no sign-up required.",
+      steps: [
+        {
+          name: "Upload your JPG image",
+          text: "Click the upload area or drag and drop your JPG or JPEG image into the converter tool.",
+        },
+        {
+          name: "Start converting to PNG",
+          text: "Click 'Initiate' to begin converting your JPG image to PNG format.",
+        },
+        {
+          name: "Download your PNG file",
+          text: "Download your lossless PNG file instantly — no watermark, full quality preserved.",
+        },
+      ],
+    },
     faqs: [
       {
         q: "Why should I convert JPG to PNG?",
@@ -408,11 +498,6 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
         q: "Is the converted PNG file free of watermarks?",
         a: "Yes. All converted files are completely watermark-free.",
       },
-    ],
-    howItWorks: [
-      "Upload your JPG or JPEG image",
-      "Click on 'Initiate' to start Converting to PNG",
-      "Download your PNG file instantly",
     ],
     features: [
       "Lossless PNG output",
@@ -441,6 +526,25 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "png to jpg high quality",
       "reduce png file size to jpg",
     ],
+    url: `${SITE_URL}/png-to-jpg`,
+    howTo: {
+      title: "How to Convert PNG to JPG Online for Free",
+      description: "Convert PNG images to smaller JPG files optimized for web and email using weFixPDF's free online converter. Instant results, no sign-up.",
+      steps: [
+        {
+          name: "Upload your PNG image",
+          text: "Click the upload area or drag and drop your PNG image into the converter tool.",
+        },
+        {
+          name: "Start converting to JPG",
+          text: "Click 'Initiate' to begin converting your PNG to a smaller, web-optimized JPG file.",
+        },
+        {
+          name: "Download your JPG file",
+          text: "Download your converted JPG file instantly — smaller size, no watermark, ready for web or email use.",
+        },
+      ],
+    },
     faqs: [
       {
         q: "Why convert PNG to JPG?",
@@ -458,11 +562,6 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
         q: "How many PNG files can I convert?",
         a: "You can convert unlimited PNG files to JPG for free with no sign-up.",
       },
-    ],
-    howItWorks: [
-      "Upload your PNG image",
-      "Click 'Initiate' to start converting to JPG",
-      "Download your JPG file instantly",
     ],
     features: [
       "Smaller JPG output files",
@@ -491,6 +590,25 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "next gen image format converter",
       "png to webp without losing quality",
     ],
+    url: `${SITE_URL}/png-to-webp`,
+    howTo: {
+      title: "How to Convert PNG to WEBP Online for Free",
+      description: "Convert PNG images to Google's next-gen WEBP format for 25–35% smaller file sizes using weFixPDF's free online converter. No sign-up required.",
+      steps: [
+        {
+          name: "Upload your PNG image",
+          text: "Click the upload area or drag and drop your PNG image into the converter tool.",
+        },
+        {
+          name: "Start converting to WEBP",
+          text: "Click 'Initiate' to begin converting your PNG to the next-gen WEBP format.",
+        },
+        {
+          name: "Download your WEBP file",
+          text: "Download your smaller WEBP file instantly — 25–35% smaller than the original PNG with no visible quality loss.",
+        },
+      ],
+    },
     faqs: [
       {
         q: "What is WEBP and why should I use it?",
@@ -508,11 +626,6 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
         q: "How much smaller will my WEBP file be?",
         a: "WEBP files are typically 25–35% smaller than PNG files of the same image.",
       },
-    ],
-    howItWorks: [
-      "Upload your PNG image",
-      "Click 'Initiate' to start converting to WEBP",
-      "Download your smaller WEBP file instantly",
     ],
     features: [
       "25–35% smaller than PNG",
@@ -541,6 +654,29 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "picture to pdf converter",
       "convert image to pdf free",
     ],
+    url: `${SITE_URL}/image-to-pdf`,
+    howTo: {
+      title: "How to Convert Images to PDF Online for Free",
+      description: "Convert JPG, PNG, and WEBP images to a PDF document instantly using weFixPDF's free online converter. Combine multiple images into one PDF.",
+      steps: [
+        {
+          name: "Upload your images",
+          text: "Upload one or more JPG, PNG, or WEBP images by clicking the upload area or dragging them into the tool.",
+        },
+        {
+          name: "Arrange image order",
+          text: "If combining multiple images, drag and drop them to arrange the order they will appear in the PDF.",
+        },
+        {
+          name: "Start conversion to PDF",
+          text: "Click 'Initiate' to begin converting your images into a PDF document.",
+        },
+        {
+          name: "Download your PDF",
+          text: "Download your completed PDF file instantly — all images combined at full quality.",
+        },
+      ],
+    },
     faqs: [
       {
         q: "How do I convert an image to PDF for free?",
@@ -558,12 +694,6 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
         q: "Will the image quality be preserved in the PDF?",
         a: "Yes. Images are embedded at full quality in the PDF output.",
       },
-    ],
-    howItWorks: [
-      "Upload one or more images (JPG, PNG, WEBP)",
-      "Arrange order if combining multiple images",
-      "Click 'Initiate' to start conversion to PDF",
-      "Download your PDF instantly",
     ],
     features: [
       "Supports JPG, PNG, WEBP",
@@ -592,6 +722,25 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
       "convert apple heic photo",
       "heic to jpg without losing quality",
     ],
+    url: `${SITE_URL}/heic-to-jpg`,
+    howTo: {
+      title: "How to Convert HEIC to JPG Online for Free",
+      description: "Convert iPhone HEIC photos to universally compatible JPG format instantly using weFixPDF's free online converter. No app download needed.",
+      steps: [
+        {
+          name: "Upload your HEIC file",
+          text: "Click the upload area or drag and drop your HEIC photo from your iPhone into the converter tool.",
+        },
+        {
+          name: "Start converting to JPG",
+          text: "Click 'Initiate' to begin converting your HEIC image to a universally compatible JPG file.",
+        },
+        {
+          name: "Download your JPG file",
+          text: "Download your converted JPG file instantly — compatible with Windows, Android, and all websites.",
+        },
+      ],
+    },
     faqs: [
       {
         q: "What is a HEIC file?",
@@ -609,11 +758,6 @@ export const ToolPageMetaData: Record<string, ToolMetaData> = {
         q: "Can I open HEIC files on Windows after converting?",
         a: "Yes. Once converted to JPG, your photos will open on any Windows PC, Android phone, or website.",
       },
-    ],
-    howItWorks: [
-      "Upload your HEIC file from iPhone",
-      "Click 'Initiate' to start conversion to JPG",
-      "Download your JPG file instantly",
     ],
     features: [
       "Works with iPhone HEIC photos",

@@ -1,4 +1,4 @@
-import { ToolMetaData } from "../lib/seo/toolPageSeo";
+import { HowItWorksStep, ToolMetaData } from "../lib/seo/toolPageSeo";
 
 type ToolPageContentProps = {
   metadata: ToolMetaData | undefined;
@@ -19,11 +19,13 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
   const howToSchema = metadata ? {
     "@context": "https://schema.org",
     "@type": "HowTo",
-    "name": metadata.h1,
-    "step": metadata.howItWorks.map((step: any, i: any) => ({
+    "name": metadata.howTo.title,
+    "description": metadata.howTo.description,
+    "step": metadata.howTo.steps.map((step: HowItWorksStep, i: any) => ({
       "@type": "HowToStep",
       "position": i + 1,
-      "text": step,
+      "name": step.name,
+      "text": step.text,
     })),
   } : null;
 
@@ -54,7 +56,7 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
 
           <div className="hidden sm:block absolute top-[2.2rem] left-[18%] right-[18%] h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent" />
 
-          {metadata?.howItWorks?.map((step: string, i: number) => (
+          {metadata?.howTo?.steps?.map((step: HowItWorksStep, i: number) => (
             <div
               key={i}
               className="relative flex flex-col gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 shadow-sm hover:shadow-md hover:border-emerald-500/40 dark:hover:border-emerald-500/30 transition-all duration-300 group"
@@ -68,7 +70,7 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
                 </span>
               </div>
               <p className="text-slate-700 dark:text-slate-300 font-semibold text-sm leading-relaxed">
-                {step}
+                {step.text}
               </p>
             </div>
           ))}
