@@ -16,7 +16,7 @@ export default function PrivacyContent() {
     },
     {
       title: "Your Data Rights",
-      content: "wefixPDF does not sell your data to third parties. We do not display invasive advertisements that track your browsing behavior. Your files are yours alone."
+      content: "weFixPDF does not sell your data to third parties. We do not display invasive advertisements that track your browsing behavior. Your files are yours alone."
     },
     {
       title: "File Processing",

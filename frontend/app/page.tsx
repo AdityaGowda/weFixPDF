@@ -1,14 +1,27 @@
 import { Metadata } from "next";
 import HomeContent from "./HomeContent";
+import { homePageSchemas } from "./lib/seo/seoschema";
 
 export const metadata: Metadata = {
-  title: "Free Online File Converter - Images & PDFs | wefixPDF",
-  description: "Convert and compress files instantly. Free JPG to PNG, image compression, PDF tools. Zero retention, 100% private, no sign-up required.",
-  alternates: {
-    canonical: "/",
-  },
+  ...homePageSchemas.metadata,
 };
 
 export default function Home() {
-  return <HomeContent />;
+  const schemas = [
+    homePageSchemas.webApplication,
+    homePageSchemas.organization,
+    homePageSchemas.webSite,
+    homePageSchemas.itemList,
+  ];
+
+  return <>
+    {schemas.map((schema, i) => (
+      <script
+        key={i}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+    ))}
+    <HomeContent />
+  </>
 }

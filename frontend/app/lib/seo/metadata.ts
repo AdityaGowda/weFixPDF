@@ -21,7 +21,7 @@ export function buildMetadata(page: SeoPage, pathPrefix = ""): Metadata {
       title: page.title,
       description: page.description,
       url,
-      siteName: "wefixPDF",
+      siteName: "weFixPDF",
       type: "website",
       images: [
         {
@@ -88,7 +88,7 @@ export function buildArticleSchema(page: SeoPage) {
     url: `${BASE_URL}/blog/${page.slug}`,
     publisher: {
       "@type": "Organization",
-      name: "wefixPDF",
+      name: "weFixPDF",
       url: BASE_URL,
     },
   };

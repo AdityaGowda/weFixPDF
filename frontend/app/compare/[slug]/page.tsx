@@ -31,21 +31,21 @@ export default async function ComparePage({ params }: Props) {
     { name: page.h1, href: `/compare/${page.slug}` },
   ]);
 
-  // Generic comparison table for wefixpdf vs competitor pages
-  const isVsPage = page.slug.startsWith("wefixpdf-vs-");
+  // Generic comparison table for weFixPDF vs competitor pages
+  const isVsPage = page.slug.startsWith("weFixPDF-vs-");
   const competitor = isVsPage ? page.h1.split(" vs ")[1] : null;
 
   const comparisonFeatures = [
-    { feature: "100% Free",           wefixpdf: true,  other: false },
-    { feature: "No file size limits", wefixpdf: true,  other: false },
-    { feature: "No sign-up required", wefixpdf: true,  other: false },
-    { feature: "Zero data retention", wefixpdf: true,  other: false },
-    { feature: "Runs in browser",     wefixpdf: true,  other: false },
-    { feature: "No watermarks",       wefixpdf: true,  other: false },
-    { feature: "Merge PDF",           wefixpdf: true,  other: true  },
-    { feature: "Compress PDF",        wefixpdf: true,  other: true  },
-    { feature: "PDF to Word",         wefixpdf: true,  other: true  },
-    { feature: "Remove background",   wefixpdf: true,  other: false },
+    { feature: "100% Free", weFixPDF: true, other: false },
+    { feature: "No file size limits", weFixPDF: true, other: false },
+    { feature: "No sign-up required", weFixPDF: true, other: false },
+    { feature: "Zero data retention", weFixPDF: true, other: false },
+    { feature: "Runs in browser", weFixPDF: true, other: false },
+    { feature: "No watermarks", weFixPDF: true, other: false },
+    { feature: "Merge PDF", weFixPDF: true, other: true },
+    { feature: "Compress PDF", weFixPDF: true, other: true },
+    { feature: "PDF to Word", weFixPDF: true, other: true },
+    { feature: "Remove background", weFixPDF: true, other: false },
   ];
 
   return (
@@ -69,7 +69,7 @@ export default async function ComparePage({ params }: Props) {
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="text-left px-6 py-4 font-black text-slate-500 dark:text-slate-400">Feature</th>
-                  <th className="px-6 py-4 font-black text-brand-primary text-center">wefixPDF</th>
+                  <th className="px-6 py-4 font-black text-brand-primary text-center">weFixPDF</th>
                   <th className="px-6 py-4 font-black text-slate-500 text-center">{competitor}</th>
                 </tr>
               </thead>
@@ -78,7 +78,7 @@ export default async function ComparePage({ params }: Props) {
                   <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                     <td className="px-6 py-4 font-semibold text-slate-700 dark:text-slate-300">{row.feature}</td>
                     <td className="px-6 py-4 text-center">
-                      {row.wefixpdf
+                      {row.weFixPDF
                         ? <CheckCircle className="w-5 h-5 text-emerald-500 mx-auto" />
                         : <XCircle className="w-5 h-5 text-rose-400 mx-auto" />}
                     </td>
