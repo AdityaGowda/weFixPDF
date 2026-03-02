@@ -15,23 +15,32 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
     return {
       title: "File Converter | wefixPDF",
       description: "Fast, secure, and private file conversion tools.",
-    };
+      alternates: {
+        canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/${reqService.tool}`,
+      },
+      robots: {
+        index: true,
+        follow: true,
+      },
+    }
   }
 
   return {
     title: metadata.title,
     description: metadata.description,
+    alternates: {
+      canonical: `${metadata.url}`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
     openGraph: {
       title: metadata.title,
       description: metadata.description,
-      url: `https://wefixpdf.com/${reqService.tool}`,
+      url: `${metadata.url}`,
       siteName: "wefixPDF",
       type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: metadata.title,
-      description: metadata.description,
     },
   };
 }

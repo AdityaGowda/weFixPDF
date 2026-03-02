@@ -3,7 +3,10 @@ import HomeContent from "./HomeContent";
 import { homePageSchemas } from "./lib/seo/seoschema";
 
 export const metadata: Metadata = {
-  ...homePageSchemas.metadata,
+  ...homePageSchemas.metadata, robots: {
+    index: true,
+    follow: true,
+  }
 };
 
 export default function Home() {
