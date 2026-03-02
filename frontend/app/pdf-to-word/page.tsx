@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { Clock, ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "PDF to Word Converter - Convert PDF to DOCX Free | wefixPDF",
+  title: "PDF to Word Converter - Convert PDF to DOCX Free | weFixPDF",
   description: "Convert PDF to Word online free. Editable DOCX output with preserved formatting. No email required, instant download.",
 };
 

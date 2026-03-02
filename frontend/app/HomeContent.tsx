@@ -1,6 +1,6 @@
 import { Shield, Zap, Lock, ArrowRight, Star, Users } from "lucide-react";
 import Link from "next/link";
-import TrustTicker from "./components/trustTicker";
+import { LiveProcessingTicker } from "./components/clientDymaic";
 
 export default function HomeContent() {
   const tools = [
@@ -29,8 +29,9 @@ export default function HomeContent() {
               Convert images, compress PDFs, and transform documents instantly. <br className="hidden sm:block" />
               <span className="text-slate-900 dark:text-white font-black">Start free</span> with zero data retention.
             </p>
-
-            <TrustTicker />
+            <div aria-hidden="true" role="presentation" className="flex justify-center">
+              <LiveProcessingTicker />
+            </div>
 
             <div className="flex flex-wrap justify-center gap-4 sm:gap-4 py-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
               <Link
@@ -163,6 +164,38 @@ export default function HomeContent() {
             <a href="/jpg-to-png" className="max-[950px]:text-sm inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black hover:scale-105 transition-all">
               Start Converting <ArrowRight className="w-5 h-5" />
             </a>
+          </div>
+        </div>
+      </section>
+      {/* SEO CONTENT */}
+      <section className="glass dark:glass-dark rounded-3xl md:rounded-[4rem] p-6 sm:p-12 md:p-20 space-y-10 relative overflow-hidden group border border-slate-200/50 dark:border-white/5">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-[100px] transition-transform duration-1000 group-hover:scale-150" />
+
+        <div className="relative z-10 space-y-8">
+          <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tighter">
+            Universal <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-secondary">File Converter</span>
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-slate-500 dark:text-slate-400 leading-relaxed text-base md:text-lg font-medium">
+            <p>
+              wefixPDF provides a secure, private, and lightning-fast way to handle your file conversion needs. Convert images, compress PDFs, and transform documents—all with zero data retention.
+            </p>
+            <p>
+              Process your files instantly in your browser with complete privacy. Professional-grade conversion tools built with security and speed in mind.
+            </p>
+          </div>
+
+          {/* Trust badges */}
+          <div className="flex flex-wrap gap-3 sm:gap-4 pt-4 sm:pt-8">
+            {[
+              { label: 'E2E Encryption', color: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20' },
+              { label: 'Cloud-Native Speed', color: 'bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20' },
+              { label: 'Zero Retention', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20' },
+            ].map((badge) => (
+              <span key={badge.label} className={`${badge.color} px-4 sm:px-8 py-2 sm:py-3 rounded-xl sm:rounded-2xl border text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] shadow-2xl transition-all hover:-translate-y-1 hover:bg-black/5 dark:hover:bg-white/5`}>
+                {badge.label}
+              </span>
+            ))}
           </div>
         </div>
       </section>

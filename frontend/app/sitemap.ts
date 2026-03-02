@@ -66,7 +66,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://wefixpdf.com';
 
   const toolRoutes = ['/image-compressor', '/png-to-jpg', '/jpg-to-png', '/png-to-webp'];
-  const staticRoutes = ['/about', '/privacy', '/terms', 'compress-pdf', '/image-to-pdf', '/pdf-to-jpg'];
+  const staticRoutes = ['/about', '/privacy', '/terms', '/compress-pdf', '/image-to-pdf', '/pdf-to-jpg'];
 
   return [
     { url: `${baseUrl}`, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
@@ -82,7 +82,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
-  ]; http://localhost:3000/compress-pdf
+  ]
 }
 
 

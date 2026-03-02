@@ -95,7 +95,7 @@ export default function ToolPage({ page }: ToolPageProps) {
           <section className="py-20 px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-black text-center text-slate-900 dark:text-white mb-12 tracking-tight">
-                Why Use wefixPDF?
+                Why Use weFixPDF?
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {page.features.map((feature: any, i: number) => (

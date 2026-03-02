@@ -4,7 +4,7 @@ export default function TermsContent() {
   const terms = [
     {
       title: "Usage Agreement",
-      content: "By accessing wefixPDF, you agree to use our tools responsibly and for lawful purposes only. You are solely responsible for the content you upload for conversion."
+      content: "By accessing weFixPDF, you agree to use our tools responsibly and for lawful purposes only. You are solely responsible for the content you upload for conversion."
     },
     {
       title: "Service Scope",

@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Upload, FileText, CheckCircle, RefreshCcw, Download, Zap, Shield, Clock, Sliders, X, GripVertical } from "lucide-react";
 import CompressionSettings from "./compressLevel";
+import toast from "react-hot-toast";
 
 interface UploadBoxProps {
   service: string;
@@ -83,12 +84,20 @@ export default function UploadBox({ service }: UploadBoxProps) {
     setDragOverIndex(null);
   }
 
+  useEffect(() => {
+
+    if (downloadUrl) {
+      toast.success("Download now!");
+    }
+  }, [downloadUrl])
+
   // ── Conversion ──────────────────────────────────────
   async function fileConversion() {
     if (!hasFiles) return;
     setLoading(true);
     setDownloadUrl(null);
 
+    const toastId = toast.loading("⏳ Processing...");
     try {
       const formData = new FormData();
       formData.append("quality", quality.toString());
@@ -125,12 +134,15 @@ export default function UploadBox({ service }: UploadBoxProps) {
 
       setSuggestedName(filename);
       const blob = await res.blob();
-      setDownloadUrl(URL.createObjectURL(blob));
+      setDownloadUrl(() => {
+        return URL.createObjectURL(blob);
+      });
     } catch (err) {
       console.error(err);
-      alert("Conversion encountered an error. Our team has been notified.");
+      toast.error("Conversion failed. Please try again. please check format", { id: toastId });
     } finally {
       setLoading(false);
+      toast.dismiss(toastId);
     }
   }
 
@@ -371,7 +383,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
       )}
 
       {/* Trust badges */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-6 opacity-30 group hover:opacity-100 transition-opacity duration-700">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-6 opacity-30 group hover:opacity-100 transition-opacity duration-700 z-50 mt-10">
         {[Shield, Zap, Clock].map((Icon, idx) => (
           <Icon key={idx} className="w-5 h-5 text-slate-400 hover:text-brand-primary transition-colors" />
         ))}

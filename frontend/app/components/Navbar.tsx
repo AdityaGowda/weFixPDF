@@ -62,7 +62,7 @@ export default function Navbar() {
           <div className="relative w-40 h-12 sm:w-32 sm:h-12 md:w-80 md:h-12 overflow-hidden items-center justify-start flex hover:scale-105 transition-transform duration-300 gap-5 max-[950px]:pl-2">
             <Image
               src="/logo.svg"
-              alt="wefixPDF Logo"
+              alt="weFixPDF Logo"
               width={43}
               height={43}
               className="dark:hidden"
@@ -70,15 +70,15 @@ export default function Navbar() {
             />
             <Image
               src="/darklogo.svg"
-              alt="wefixPDF Logo"
+              alt="weFixPDF Logo"
               width={45}
               height={45}
               className="hidden dark:block"
               priority
             />
             <Image
-              src="/wefixpdf.png"
-              alt="wefixPDF Text Image"
+              src="/weFixPDF.png"
+              alt="weFixPDF Text Image"
               width={145}
               height={145}
               className="object-contain max-[950px]:hidden md:block"

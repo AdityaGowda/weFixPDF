@@ -2,8 +2,8 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About - Secure File Converter | wefixPDF",
-  description: "Learn about wefixPDF's mission to provide secure, private file conversion tools. Zero data retention, encrypted processing, and instant results.",
+  title: "About - Secure File Converter | weFixPDF",
+  description: "Learn about weFixPDF's mission to provide secure, private file conversion tools. Zero data retention, encrypted processing, and instant results.",
   alternates: {
     canonical: "/about",
   },
@@ -54,7 +54,7 @@ export default function AboutPage() {
           Secure File Processing
         </div>
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tighter leading-[1.05] px-4">
-          About wefixPDF
+          About weFixPDF
         </h1>
         <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium px-4">
           We build fast, secure and private file conversion tools. Your files are never stored. Once processed, they are instantly deleted from our system.
@@ -110,7 +110,7 @@ export default function AboutPage() {
         
         <div className="relative z-10 space-y-16">
           <div className="space-y-4">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">The wefixPDF Difference</h2>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">The weFixPDF Difference</h2>
             <p className="text-slate-500 dark:text-slate-400 text-lg font-medium">Privacy, security, and speed—built in.</p>
           </div>
           
@@ -137,7 +137,7 @@ export default function AboutPage() {
       {/* Feature Comparison */}
       <section className="space-y-16">
         <div className="text-center space-y-4">
-          <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Why Choose wefixPDF</h2>
+          <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Why Choose weFixPDF</h2>
           <p className="text-slate-500 dark:text-slate-400 font-medium">What makes us different from other file converters.</p>
         </div>
 
@@ -146,7 +146,7 @@ export default function AboutPage() {
             <thead>
               <tr className="bg-slate-100/50 dark:bg-white/5">
                 <th className="p-4 sm:p-8 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Feature</th>
-                <th className="p-4 sm:p-8 text-xs sm:text-sm font-black text-brand-primary uppercase tracking-[0.2em] bg-brand-primary/5">wefixPDF</th>
+                <th className="p-4 sm:p-8 text-xs sm:text-sm font-black text-brand-primary uppercase tracking-[0.2em] bg-brand-primary/5">weFixPDF</th>
                 <th className="p-4 sm:p-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Others</th>
               </tr>
             </thead>
