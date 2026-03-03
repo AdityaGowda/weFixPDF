@@ -10,17 +10,28 @@ interface UploadBoxProps {
 }
 
 type CompressionLevel = "high" | "medium" | "low";
-// Tools that accept multiple files
-const MULTI_FILE_TOOLS = ["image-to-pdf", "merge-pdf"];
-
-// Max files allowed per tool
-const MAX_FILES: Record<string, number> = {
-  "image-to-pdf": 10,
-  "merge-pdf": 20,
+// ── Tool Configuration ───────────────────────────────
+const TOOL_CONFIG: Record<string, { multi?: boolean; max?: number; accept: string }> = {
+  "image-to-pdf": { multi: true, max: 20, accept: "image/*,.jpg,.jpeg,.png,.webp,.heic,.heif" },
+  "merge-pdf": { multi: true, max: 20, accept: ".pdf" },
+  "heic-to-jpg": { accept: ".heic,.heif" },
+  "word-to-pdf": { accept: ".doc,.docx" },
+  "pdf-to-jpg": { accept: ".pdf" },
+  "pdf-to-word": { accept: ".pdf" },
+  "split-pdf": { accept: ".pdf" },
+  "compress-pdf": { accept: ".pdf" },
+  "pdf-to-png": { accept: ".pdf" },
+  "pdf-to-webp": { accept: ".pdf" },
 };
 
+const DEFAULT_ACCEPT = "image/*,.jpg,.jpeg,.png,.webp";
+const DEFAULT_MAX_FILES = 1;
+
 export default function UploadBox({ service }: UploadBoxProps) {
-  const isMulti = MULTI_FILE_TOOLS.includes(service);
+  const config = TOOL_CONFIG[service];
+  const isMulti = config?.multi ?? false;
+  const maxFiles = config?.max ?? DEFAULT_MAX_FILES;
+  const accept = config?.accept ?? DEFAULT_ACCEPT;
 
   const [files, setFiles] = useState<File[]>([]);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
@@ -35,10 +46,8 @@ export default function UploadBox({ service }: UploadBoxProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragItemIndex = useRef<number | null>(null);
 
-  // Convenience — single file (for non-multi tools)
   const file = files[0] ?? null;
   const hasFiles = files.length > 0;
-  const maxFiles = MAX_FILES[service] ?? 1;
 
   // ── File selection ──────────────────────────────────
   function addFiles(incoming: FileList | null) {
@@ -192,15 +201,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
             type="file"
             hidden
             multiple={isMulti}
-            accept={
-              service === "heic-to-jpg"
-                ? ".heic,.heif"
-                : service.includes("pdf") && !service.includes("image") && !service.includes("jpg")
-                ? ".pdf"
-                : service === "word-to-pdf"
-                  ? ".doc,.docx"
-                  : "image/*,.jpg,.jpeg,.png,.webp"
-            }
+            accept={accept}
             onChange={(e) => addFiles(e.target.files)}
           />
 
