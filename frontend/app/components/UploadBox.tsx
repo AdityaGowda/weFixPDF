@@ -96,13 +96,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
     setDragOverIndex(null);
   }
 
-  useEffect(() => {
-
-    if (downloadUrl) {
-      toast.success("Download now!");
-    }
-  }, [downloadUrl])
-
   // ── Conversion ──────────────────────────────────────
   async function fileConversion() {
     if (!hasFiles) return;
@@ -110,7 +103,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
     setDownloadUrl(null);
     setErrorVisible(null);
 
-    const toastId = toast.loading("⏳ Processing...");
     try {
       const formData = new FormData();
       formData.append("quality", quality.toString());
@@ -162,10 +154,9 @@ export default function UploadBox({ service }: UploadBoxProps) {
       console.error(err);
       const msg = err instanceof Error ? err.message : String(err);
       setErrorVisible(msg);
-      toast.error(msg, { id: toastId });
+      toast.error(msg);
     } finally {
       setLoading(false);
-      setTimeout(() => toast.dismiss(toastId), 5000)
     }
   }
 
