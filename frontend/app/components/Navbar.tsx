@@ -122,6 +122,30 @@ export default function Navbar() {
             </div>
           ))}
 
+          {/* Resources dropdown */}
+          <div className="relative group/nav">
+            <button className="flex items-center gap-1 text-sm font-bold text-slate-500 hover:text-brand-primary transition-colors py-6">
+              Resources
+              <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover/nav:-rotate-180" />
+            </button>
+            <div className="absolute top-[80%] left-1/2 -translate-x-1/2 pt-4 opacity-0 scale-95 pointer-events-none group-hover/nav:opacity-100 group-hover/nav:scale-100 group-hover/nav:pointer-events-auto duration-300 z-50">
+              <div className="w-64 bg-white dark:bg-slate-900 rounded-3xl p-3 border border-slate-200/50 dark:border-white/0 shadow-2xl flex flex-col gap-1">
+                {[
+                  { label: "Blog", href: "/blog", desc: "Guides & tutorials" },
+                  { label: "Compare Tools", href: "/compare", desc: "weFixPDF vs alternatives" },
+                  { label: "Use Cases", href: "/use-cases", desc: "By profession & workflow" },
+                  { label: "Help Center", href: "/help", desc: "FAQs & troubleshooting" },
+                  { label: "Security", href: "/security", desc: "How we protect your files" },
+                ].map((r) => (
+                  <a key={r.href} href={r.href} className="flex flex-col gap-0.5 px-4 py-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group/item">
+                    <span className="text-sm font-bold text-slate-900 dark:text-white group-hover/item:text-brand-primary transition-colors">{r.label}</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">{r.desc}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
           <a href="/about" className="text-sm font-bold text-slate-500 hover:text-brand-primary transition-colors py-6">About</a>
 
           <div className="h-4 w-px bg-slate-200 dark:bg-white/10 mx-2" />
@@ -197,6 +221,11 @@ export default function Navbar() {
             </div>
           ))}
 
+          <a href="/blog" onClick={() => setIsOpen(false)} className="px-5 py-3 rounded-xl text-base font-bold text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all">Blog</a>
+          <a href="/compare" onClick={() => setIsOpen(false)} className="px-5 py-3 rounded-xl text-base font-bold text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all">Compare</a>
+          <a href="/use-cases" onClick={() => setIsOpen(false)} className="px-5 py-3 rounded-xl text-base font-bold text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all">Use Cases</a>
+          <a href="/help" onClick={() => setIsOpen(false)} className="px-5 py-3 rounded-xl text-base font-bold text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all">Help</a>
+          <a href="/security" onClick={() => setIsOpen(false)} className="px-5 py-3 rounded-xl text-base font-bold text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all">Security</a>
           <a href="/about" onClick={() => setIsOpen(false)} className="px-5 py-3 rounded-xl text-base font-bold text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all">About</a>
         </div>
       </div>

@@ -193,7 +193,7 @@ const seoData = [
   // USE CASE PAGES
   // ============================================
   {
-    type: 'usecase',
+    type: 'use_cases',
     slug: 'pdf-tools-for-students',
     title: 'Free PDF Tools for College Students & Teachers | weFixPDF',
     description: 'The ultimate toolkit for students. Learn how to merge assignments, compress heavy lecture PDFs, and convert images to documents for free.',
@@ -202,7 +202,7 @@ const seoData = [
     schema_name: 'PDF Tools for Education'
   },
   {
-    type: 'usecase',
+    type: 'use_cases',
     slug: 'image-optimization-for-developers',
     title: 'Image Optimization Guide for Web Developers | weFixPDF',
     description: 'Optimize web performance. Convert PNGs to WEBP, compress assets, and improve Core Web Vitals with our developer-friendly image tools.',
@@ -211,7 +211,7 @@ const seoData = [
     schema_name: 'File Conversion for Developers'
   },
   {
-    type: 'usecase',
+    type: 'use_cases',
     slug: 'document-management-for-business',
     title: 'Secure Document Management for Small Business | weFixPDF',
     description: 'Manage invoices, contracts, and business documents securely. weFixPDF offers free, encrypted PDF tools for small businesses and freelancers.',
@@ -220,7 +220,7 @@ const seoData = [
     schema_name: 'Document Management for Business'
   },
   {
-    type: 'usecase',
+    type: 'use_cases',
     slug: 'pdf-tools-for-freelancers',
     title: 'PDF Tools for Freelancers: Proposals, Invoices & More | weFixPDF',
     description: 'Streamline your freelance workflow. Create, compress, and share PDFs for proposals, contracts, and invoices — all free with weFixPDF.',
@@ -229,7 +229,7 @@ const seoData = [
     schema_name: 'PDF Tools for Freelancers'
   },
   {
-    type: 'usecase',
+    type: 'use_cases',
     slug: 'pdf-tools-for-real-estate',
     title: 'PDF Tools for Real Estate Agents & Brokers | weFixPDF',
     description: 'Merge listing documents, compress photos, and share property PDFs securely. weFixPDF makes document management easy for real estate professionals.',
@@ -238,7 +238,7 @@ const seoData = [
     schema_name: 'PDF Tools for Real Estate'
   },
   {
-    type: 'usecase',
+    type: 'use_cases',
     slug: 'pdf-tools-for-lawyers',
     title: 'Secure PDF Tools for Lawyers & Legal Professionals | weFixPDF',
     description: 'Merge court filings, compress exhibits, and protect sensitive legal documents. weFixPDF is built for privacy — no files stored on our servers.',
@@ -247,7 +247,7 @@ const seoData = [
     schema_name: 'PDF Tools for Legal Professionals'
   },
   {
-    type: 'usecase',
+    type: 'use_cases',
     slug: 'compress-images-for-email',
     title: 'How to Compress Images for Email Attachments | weFixPDF',
     description: 'Email attachments too large? Compress JPG, PNG, and PDF files to meet inbox size limits without sacrificing quality. Free and instant.',
@@ -256,7 +256,7 @@ const seoData = [
     schema_name: 'Compress Files for Email'
   },
   {
-    type: 'usecase',
+    type: 'use_cases',
     slug: 'pdf-tools-for-hr',
     title: 'PDF Tools for HR Teams: Onboarding & Document Handling | weFixPDF',
     description: 'Simplify HR document workflows. Merge onboarding packets, compress resumes, and distribute forms securely — all with free PDF tools from weFixPDF.',

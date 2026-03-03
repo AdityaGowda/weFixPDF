@@ -1,5 +1,5 @@
 -- ─────────────────────────────────────────────────────────────
--- ConvertLite — MySQL 8 Initial Setup
+-- weFixPDF — MySQL 8 Initial Setup
 -- ─────────────────────────────────────────────────────────────
 -- Run this ONCE as the MySQL root user to create the
 -- application database and a dedicated DB user.
