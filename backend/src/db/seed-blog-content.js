@@ -1,18 +1,5 @@
-/**
- * ──────────────────────────────────────────────────────────────────
- * seed-blog-content.js  —  Seed rich blog content (body_content, faq,
- * features, keywords, cta, related_tools, breadcrumb) for all blog posts
- * ──────────────────────────────────────────────────────────────────
- * Run:  node src/db/seed-blog-content.js
- *
- * This script patches blog posts that only have title/h1/description
- * but no body content (created by seed-extra-seo.js).
- * ──────────────────────────────────────────────────────────────────
- */
-
-require('dotenv').config();
-const db = require('../config/db.config');
 const SeoContent = require('../models/seoContent.model');
+const db = require('../config/db.config');
 
 const blogContent = [
 
@@ -51,15 +38,7 @@ Documents that require caution before online upload:
 - Passport copies and government ID scans
 - HR documents with employee personal data
 
-For these file types, verify privacy policy or use a local tool.
-
-## 4. Check for HTTPS Encryption
-
-Every legitimate file converter should use HTTPS for uploads. Look for the padlock icon in your browser's address bar. If a site uses plain HTTP for file uploads, your data travels unencrypted — do not use it.
-
-## 5. Use Local Tools for Highly Sensitive Files
-
-For files containing personally identifiable information (PII), legal privilege, or medical data that requires HIPAA compliance, use a locally installed tool where no data leaves your device. Adobe Acrobat, Preview (Mac), and LibreOffice are all capable offline alternatives.
+For these file types, verify the privacy policy or use a locally installed tool.
 
 ## Quick Decision Guide
 
@@ -69,7 +48,7 @@ For files containing personally identifiable information (PII), legal privilege,
     keywords: JSON.stringify(["privacy when converting files online", "safe pdf converter", "protect documents online", "file converter privacy", "secure document conversion", "private pdf tools", "online tool privacy risks", "pdf converter data safety"]),
     faq: JSON.stringify([
       { q: "Is it safe to upload a PDF containing personal information?", a: "It depends on the tool. Only upload sensitive PDFs to services that explicitly state immediate file deletion and zero data retention — like weFixPDF. For highly sensitive files (medical records, legal documents), prefer local software." },
-      { q: "Do free online PDF converters store my files?", a: "Some do. Smallpdf stores files for up to 1 hour. iLovePDF stores temporarily. Some lesser-known tools keep files indefinitely. Always check the privacy policy." },
+      { q: "Do free online PDF converters store my files?", a: "Some do. Many tools store files temporarily — from 1 hour up to several days. Others keep files indefinitely. Always check the privacy policy before uploading." },
       { q: "What is zero-storage architecture?", a: "Zero-storage means your file is processed entirely in server memory and never written to persistent storage. When processing is complete, the memory is cleared. Your file cannot be retrieved because it was never saved." },
       { q: "Can I tell if a site is safe without reading their privacy policy?", a: "Check for HTTPS (padlock in the URL bar), look for a clear 'Files are deleted after download' statement on the tool page, and verify it was not recently acquired by a data company." },
       { q: "Is weFixPDF safe for confidential documents?", a: "Yes. weFixPDF uses zero-storage architecture. Files are processed in memory and deleted immediately after you download. No human access. No server-side storage." }
@@ -428,7 +407,7 @@ The reason: some PDF compressors work more effectively on smaller files where th
 
 Dense scanned documents: if every page is a high-resolution photo scan, there may be limited room for compression without visible quality loss.
 
-Already-compressed images: a PDF exported from Canva or exported at web quality may already have compressed images. Compressing again yields minimal results.
+Already-compressed images: a PDF exported from design tools or exported at web quality may already have compressed images. Compressing again yields minimal results.
 
 Encrypted PDFs: compression cannot access the content of password-protected files. Unlock the PDF first.
 
@@ -445,7 +424,7 @@ Government portals: typically strict 5-10MB limits. Use aggressive compression �
 Print-ready files: do not compress — maintain 300 DPI images for print output.`,
     keywords: JSON.stringify(["complete guide pdf compression", "how pdf compression works", "pdf compression techniques", "compress pdf quality settings", "pdf file size reduction", "pdf compression algorithms", "scanned pdf compression", "reduce pdf for email"]),
     faq: JSON.stringify([
-      { q: "How does PDF compression work?", a: "PDF compression applies multiple techniques to reduce file size: downsampling high-resolution images, re-encoding images with JPEG compression, removing embedded font subsets, and stripping unused metadata and hidden elements." },
+      { q: "How does PDF compression work?", a: "PDF compression applies multiple techniques to reduce file size: downsampling high-resolution images, re-encod`ing images with JPEG compression, removing embedded font subsets, and stripping unused metadata and hidden elements." },
       { q: "What compression ratio can I expect?", a: "Scanned documents typically compress 70-90%. PDFs with photos compress 60-80%. Word-exported PDFs compress 20-50%. Already-optimized PDFs may only reduce by 0-15%." },
       { q: "Will compressing a PDF reduce text quality?", a: "No. Text elements (actual text, vector graphics) are never affected by quality-reduction compression. Only embedded images may show quality differences, and at standard settings these are invisible." },
       { q: "Can I compress a password-protected PDF?", a: "No. You need to unlock the PDF first using the Unlock PDF tool (requires knowing the current password). Once unlocked, you can compress normally." },
@@ -535,11 +514,11 @@ For casual use (compressing a recipe PDF, converting a product photo): any reput
 For personal data, financial documents, and legal files: use tools that explicitly guarantee zero storage and have a verifiable track record. Or use local software that processes files entirely on your device.`,
     keywords: JSON.stringify(["sensitive pdf upload risks", "is it safe to upload pdf online", "pdf converter privacy risks", "confidential document online conversion", "secure pdf tools", "pdf data breach risk", "private document converter", "safe online pdf tools"]),
     faq: JSON.stringify([
-      { q: "Do online PDF converters store your files?", a: "Some do, some don't. Smallpdf stores files for 1 hour. Some lesser-known tools store indefinitely. Always check the privacy policy before uploading." },
+      { q: "Do online PDF converters store your files?", a: "Some do, some don't. Many tools store files temporarily — from 1 hour up to several days. Always check the privacy policy before uploading." },
       { q: "Is it safe to upload a bank statement to a PDF converter?", a: "Only if the tool explicitly guarantees immediate file deletion and zero data retention. For very sensitive financial documents, prefer local software or verified zero-storage tools like weFixPDF." },
       { q: "Can a PDF converter use my files for AI training?", a: "Some can and do. Tools that mention using uploads to 'improve our services' or 'enhance our AI' may use your documents as training data. Read the privacy policy carefully." },
       { q: "How do I know if a PDF site is safe?", a: "Look for: explicit file deletion guarantee, HTTPS, a real company with verifiable information, and a clear privacy policy. Avoid sites with no privacy policy or vague data retention language." },
-      { q: "What should I use instead of random PDF sites for sensitive documents?", a: "Use verified zero-storage services (like weFixPDF) or local installed software (Adobe Acrobat, Preview on Mac, LibreOffice). Local software never sends your file anywhere." }
+      { q: "What should I use instead of random PDF sites for sensitive documents?", a: "Use verified zero-storage services (like weFixPDF) or local installed software such as LibreOffice or built-in OS tools. Local software never sends your file anywhere." }
     ]),
     features: JSON.stringify(["Zero-storage architecture", "Files deleted immediately after download", "TLS encrypted transfers", "No user accounts or tracking", "Transparent privacy policy"]),
     cta: JSON.stringify({ text: "Upload Securely to weFixPDF", url: "https://wefixpdf.com" }),

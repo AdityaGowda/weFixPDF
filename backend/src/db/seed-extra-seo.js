@@ -80,7 +80,7 @@ const seoData = [
     type: 'blog',
     slug: 'how-to-split-pdf',
     title: 'How to Split a PDF Into Multiple Files Online | weFixPDF',
-    description: 'Extract pages or split a large PDF into separate files without Adobe Acrobat. Use weFixPDF\'s free split tool — no download required.',
+    description: 'Extract pages or split a large PDF into separate files without any paid software. Use weFixPDF\'s free split tool — no download required.',
     h1: 'How to Split a PDF Into Separate Pages or Files',
     schema_type: 'Article',
     schema_name: 'How to Split a PDF Into Multiple Files Online'
@@ -127,57 +127,57 @@ const seoData = [
   // ============================================
   {
     type: 'compare',
-    slug: 'wefixpdf-vs-adobe-acrobat',
-    title: 'weFixPDF vs Adobe Acrobat - Best PDF Editor 2026 | weFixPDF',
-    description: 'Comparing weFixPDF and Adobe Acrobat. Discover which PDF software offers better pricing, speed, security, and free file conversion tools.',
-    h1: 'weFixPDF vs Adobe Acrobat: Which is Right for You?',
-    schema_type: 'WebPage',
-    schema_name: 'weFixPDF vs Adobe Acrobat Comparison'
-  },
-  {
-    type: 'compare',
-    slug: 'wefixpdf-vs-smallpdf',
-    title: 'weFixPDF vs Smallpdf: Free Alternatives Compared | weFixPDF',
-    description: 'Looking for a Smallpdf alternative without daily limits? Compare weFixPDF vs Smallpdf for PDF compression, merging, and image conversion.',
-    h1: 'weFixPDF vs Smallpdf: The Ultimate Breakdown',
-    schema_type: 'WebPage',
-    schema_name: 'weFixPDF vs Smallpdf Comparison'
-  },
-  {
-    type: 'compare',
     slug: 'free-vs-paid-pdf-converters',
-    title: 'Free vs Paid PDF Converters: Is Premium Worth It? | weFixPDF',
-    description: 'Should you pay for a PDF converter? We break down the differences between free online tools and paid desktop software like Acrobat Pro.',
-    h1: 'Free vs Paid PDF Converters',
+    title: 'Free vs Paid PDF Tools: Is a Subscription Worth It? | weFixPDF',
+    description: 'Should you pay for a PDF tool? We break down the real differences between free online PDF converters and paid software in 2026.',
+    h1: 'Free vs Paid PDF Tools: An Honest Comparison',
     schema_type: 'WebPage',
-    schema_name: 'Free vs Paid PDF Converters'
+    schema_name: 'Free vs Paid PDF Converters Comparison'
   },
   {
     type: 'compare',
-    slug: 'wefixpdf-vs-ilovepdf',
-    title: 'weFixPDF vs iLovePDF: Which is Better in 2026? | weFixPDF',
-    description: 'Side-by-side comparison of weFixPDF and iLovePDF. See which platform offers faster processing, better privacy, and more free tools.',
-    h1: 'weFixPDF vs iLovePDF: Full Feature Comparison',
+    slug: 'online-vs-desktop-pdf-tools',
+    title: 'Online vs Desktop PDF Tools: Which Should You Use? | weFixPDF',
+    description: 'Online PDF tools vs installed software — compare speed, privacy, cost, and convenience to find the best fit for your workflow.',
+    h1: 'Online vs Desktop PDF Tools: Pros, Cons & Use Cases',
     schema_type: 'WebPage',
-    schema_name: 'weFixPDF vs iLovePDF Comparison'
+    schema_name: 'Online vs Desktop PDF Tools Comparison'
   },
   {
     type: 'compare',
-    slug: 'wefixpdf-vs-compress2go',
-    title: 'weFixPDF vs Compress2Go: Best Free PDF Compressor | weFixPDF',
-    description: 'Compare weFixPDF and Compress2Go for compressing PDFs and images. Find out which offers better compression ratios and file size limits.',
-    h1: 'weFixPDF vs Compress2Go: Compression Tool Comparison',
+    slug: 'free-pdf-tools-with-no-limits',
+    title: 'Free PDF Tools With No Daily Limits — What to Look For | weFixPDF',
+    description: 'Most free PDF tools cap you at 2-3 tasks per day. Learn what separates genuinely unlimited free tools from those with hidden restrictions.',
+    h1: 'Free PDF Tools With No Daily Limits: What\'s Actually Free?',
     schema_type: 'WebPage',
-    schema_name: 'weFixPDF vs Compress2Go Comparison'
+    schema_name: 'Free PDF Tools With No Limits'
   },
   {
     type: 'compare',
-    slug: 'wefixpdf-vs-pdf2go',
-    title: 'weFixPDF vs PDF2Go: Which PDF Tool is Faster? | weFixPDF',
-    description: 'Comparing weFixPDF and PDF2Go on speed, features, privacy, and ease of use. Find the best free online PDF converter for your needs.',
-    h1: 'weFixPDF vs PDF2Go: Speed & Feature Comparison',
+    slug: 'best-pdf-tools-for-privacy',
+    title: 'Best PDF Tools for Privacy — Zero Storage Options | weFixPDF',
+    description: 'Not all PDF tools delete your files. Compare online PDF tools by their privacy policies and file retention practices to find the safest option.',
+    h1: 'Best PDF Tools for Privacy: Zero-Storage vs Standard Tools',
     schema_type: 'WebPage',
-    schema_name: 'weFixPDF vs PDF2Go Comparison'
+    schema_name: 'Best PDF Tools for Privacy'
+  },
+  {
+    type: 'compare',
+    slug: 'jpg-vs-png-for-web',
+    title: 'JPG vs PNG for Web: Which Should You Use? | weFixPDF',
+    description: 'JPG or PNG? Understand the tradeoffs in file size, transparency, and quality. Pick the right image format for your website or app.',
+    h1: 'JPG vs PNG: Which Image Format is Best for Your Website?',
+    schema_type: 'WebPage',
+    schema_name: 'JPG vs PNG for Web Comparison'
+  },
+  {
+    type: 'compare',
+    slug: 'lossless-vs-lossy-compression',
+    title: 'Lossless vs Lossy Compression: Which is Better for PDFs & Images? | weFixPDF',
+    description: 'Understand the key differences between lossless and lossy compression for PDFs, JPGs, and PNGs — and when to use each for best results.',
+    h1: 'Lossless vs Lossy Compression: The Complete Breakdown',
+    schema_type: 'WebPage',
+    schema_name: 'Lossless vs Lossy Compression'
   },
   {
     type: 'compare',
@@ -343,8 +343,8 @@ const seoData = [
   {
     type: 'tool',
     slug: 'pdf-to-word',
-    title: 'PDF to Word Converter — Free Online DOCX Export | weFixPDF',
-    description: 'Convert PDF to editable Word documents (DOCX) in seconds. Preserve formatting and layout — no Acrobat needed. Free and secure.',
+    title: 'Convert PDF to Word Online (Free & Fast) | weFixPDF',
+    description: 'Convert PDF to editable Word documents (DOCX) in seconds. Preserve formatting and layout without expensive subscriptions. Free and secure.',
     h1: 'Convert PDF to Word (DOCX) Online — Free',
     schema_type: 'SoftwareApplication',
     schema_name: 'weFixPDF PDF to Word Converter'

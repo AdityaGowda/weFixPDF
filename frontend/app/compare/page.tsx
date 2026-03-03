@@ -1,32 +1,41 @@
-// app/compare/page.tsx — Compare index page
+// app/compare/page.tsx — Compare index page (no competitor names)
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllSlugs, getPageSeo, type SeoPage } from "@/app/lib/seo/seoApi";
-import { ArrowRight, BarChart3, CheckCircle, XCircle } from "lucide-react";
+import { ArrowRight, BarChart3, CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Compare PDF Tools — weFixPDF vs iLovePDF, Smallpdf & Adobe | weFixPDF",
+  title: "Compare PDF Tools — Is weFixPDF Right for You? | weFixPDF",
   description:
-    "Honest side-by-side comparisons of weFixPDF against Smallpdf, iLovePDF, Adobe Acrobat, and more. See features, pricing, and privacy policies at a glance.",
-  alternates: { canonical: "https://wefixpdf.com/compare" },
+    "See how weFixPDF stacks up on features, pricing, and privacy. Honest comparisons to help you choose the right PDF and image conversion tool.",
+  alternates: { canonical: "/compare" },
   openGraph: {
     title: "Compare PDF Tools | weFixPDF",
-    description: "Honest comparisons of weFixPDF vs Smallpdf, iLovePDF, Adobe Acrobat, and more.",
-    url: "https://wefixpdf.com/compare",
+    description: "Honest comparisons to help you choose the right PDF and image tool.",
+    url: "/compare",
     siteName: "weFixPDF",
     type: "website",
   },
 };
 
-const GLOBAL_FEATURES = [
-  { feature: "100% Free",              weFixPDF: true },
-  { feature: "No daily task limits",   weFixPDF: true },
-  { feature: "No sign-up required",    weFixPDF: true },
-  { feature: "Zero data retention",    weFixPDF: true },
-  { feature: "No watermarks",          weFixPDF: true },
-  { feature: "Image tools included",   weFixPDF: true },
-  { feature: "Works in browser",       weFixPDF: true },
-  { feature: "HEIC → JPG conversion",  weFixPDF: true },
+const WHY_WEFIXPDF = [
+  { label: "100% Free — no hidden tiers", icon: "✓" },
+  { label: "No daily task limits", icon: "✓" },
+  { label: "No sign-up ever required", icon: "✓" },
+  { label: "Zero file retention", icon: "✓" },
+  { label: "No watermarks on output", icon: "✓" },
+  { label: "Image tools included", icon: "✓" },
+  { label: "Works in any browser", icon: "✓" },
+  { label: "HEIC → JPG conversion", icon: "✓" },
+];
+
+const FEATURE_TABLE = [
+  { f: "Price", wfp: "Free", alt: "Often paid" },
+  { f: "Daily limits", wfp: "None", alt: "Common" },
+  { f: "Sign-up needed", wfp: "Never", alt: "Usually" },
+  { f: "File storage", wfp: "Never stored", alt: "Temporary" },
+  { f: "Watermarks", wfp: "None", alt: "On free tier" },
+  { f: "Image tools", wfp: "Included", alt: "Rarely" },
 ];
 
 async function getComparePages(): Promise<SeoPage[]> {
@@ -48,40 +57,40 @@ export default async function CompareIndexPage() {
             <BarChart3 className="w-3 h-3" /> Tool Comparisons
           </div>
           <h1 className="text-4xl md:text-6xl font-black tracking-tight text-slate-900 dark:text-white mb-4 leading-[1.1]">
-            weFixPDF vs the{" "}
-            <span className="text-reveal">Competition</span>
+            Is weFixPDF Right{" "}
+            <span className="text-reveal">for You?</span>
           </h1>
           <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed">
-            Honest, data-backed comparisons to help you choose the right PDF and image tool — no marketing fluff.
+            We believe in honest comparisons. See exactly what makes weFixPDF different — and decide for yourself.
           </p>
         </div>
       </section>
 
       <div className="max-w-5xl mx-auto px-4 py-16 space-y-20">
 
-        {/* ── Key Advantages Summary ── */}
+        {/* ── Key Advantages ── */}
         <section>
           <p className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-400 mb-5">
-            Why users choose weFixPDF
+            What you get with weFixPDF
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {GLOBAL_FEATURES.map((f, i) => (
+            {WHY_WEFIXPDF.map((f, i) => (
               <div
                 key={i}
                 className="flex items-center gap-3 p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60"
               >
                 <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{f.feature}</span>
+                <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{f.label}</span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* ── Comparison Cards ── */}
+        {/* ── Comparison Articles ── */}
         {pages.length > 0 && (
           <section>
             <p className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-400 mb-6">
-              All Comparisons
+              Detailed Comparisons
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {pages.map((page) => (
@@ -97,16 +106,16 @@ export default async function CompareIndexPage() {
                     </span>
                   </div>
 
-                  <h2 className="text-lg font-black text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors mb-3 leading-snug">
+                  <h2 className="text-lg font-black text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors mb-3 leading-snug flex-1">
                     {page.h1}
                   </h2>
 
-                  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-5 flex-1 line-clamp-2">
+                  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-5 line-clamp-2">
                     {page.description}
                   </p>
 
                   <div className="flex items-center gap-2 text-xs font-bold text-emerald-600 dark:text-emerald-400 group-hover:gap-3 transition-all">
-                    View comparison <ArrowRight className="w-3.5 h-3.5" />
+                    Read comparison <ArrowRight className="w-3.5 h-3.5" />
                   </div>
                 </Link>
               ))}
@@ -114,10 +123,10 @@ export default async function CompareIndexPage() {
           </section>
         )}
 
-        {/* ── Quick Summary Table ── */}
+        {/* ── Feature Summary Table ── */}
         <section>
           <p className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-400 mb-6">
-            Quick Reference
+            At a Glance
           </p>
           <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-700/60">
             <table className="w-full text-sm">
@@ -125,26 +134,15 @@ export default async function CompareIndexPage() {
                 <tr className="border-b border-slate-200 dark:border-slate-700">
                   <th className="text-left px-6 py-4 font-black text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50">Feature</th>
                   <th className="px-6 py-4 font-black text-emerald-600 text-center bg-emerald-500/5">weFixPDF</th>
-                  <th className="px-6 py-4 font-black text-slate-500 text-center bg-slate-50 dark:bg-slate-800/50">Smallpdf</th>
-                  <th className="px-6 py-4 font-black text-slate-500 text-center bg-slate-50 dark:bg-slate-800/50">iLovePDF</th>
-                  <th className="px-6 py-4 font-black text-slate-500 text-center bg-slate-50 dark:bg-slate-800/50">Adobe Acrobat</th>
+                  <th className="px-6 py-4 font-black text-slate-500 text-center bg-slate-50 dark:bg-slate-800/50">Most Other Tools</th>
                 </tr>
               </thead>
               <tbody>
-                {[
-                  { f: "Price",            wfp: "Free",         sm: "$108/yr",     il: "$96/yr",       aa: "$240/yr" },
-                  { f: "Daily limits",     wfp: "None",         sm: "2 tasks/day", il: "Limited",      aa: "Unlimited" },
-                  { f: "Sign-up needed",   wfp: "Never",        sm: "Optional",    il: "Some tools",   aa: "Required" },
-                  { f: "File storage",     wfp: "Never stored", sm: "1 hour",      il: "Temporary",    aa: "Adobe Cloud" },
-                  { f: "Image tools",      wfp: "✓",            sm: "✗",           il: "✗",            aa: "Partial" },
-                  { f: "Direct PDF edit",  wfp: "✗",            sm: "✗",           il: "✗",            aa: "✓" },
-                ].map((row, i) => (
+                {FEATURE_TABLE.map((row, i) => (
                   <tr key={i} className="border-b border-slate-100 dark:border-slate-800 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                     <td className="px-6 py-4 font-semibold text-slate-700 dark:text-slate-300">{row.f}</td>
                     <td className="px-6 py-4 text-center font-bold text-emerald-600 dark:text-emerald-400">{row.wfp}</td>
-                    <td className="px-6 py-4 text-center text-slate-500">{row.sm}</td>
-                    <td className="px-6 py-4 text-center text-slate-500">{row.il}</td>
-                    <td className="px-6 py-4 text-center text-slate-500">{row.aa}</td>
+                    <td className="px-6 py-4 text-center text-slate-500">{row.alt}</td>
                   </tr>
                 ))}
               </tbody>
@@ -152,6 +150,19 @@ export default async function CompareIndexPage() {
           </div>
         </section>
 
+        {/* ── CTA ── */}
+        <section className="p-8 md:p-12 rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white text-center">
+          <h2 className="text-3xl font-black mb-3 tracking-tight">See for Yourself</h2>
+          <p className="text-emerald-200 font-medium mb-8 max-w-xl mx-auto">
+            No sign-up. No limits. No watermarks. Just fast, private file processing — completely free.
+          </p>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 bg-white text-emerald-700 font-black px-8 py-4 rounded-2xl text-sm hover:bg-emerald-50 transition-colors shadow-lg"
+          >
+            Try weFixPDF Free <ArrowRight className="w-4 h-4" />
+          </Link>
+        </section>
       </div>
     </main>
   );
