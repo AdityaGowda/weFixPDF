@@ -1,4 +1,4 @@
-import { HowItWorksStep, ToolMetaData } from "../lib/seo/toolPageSeo";
+import { HowItWorksStep, ToolMetaData } from "../lib/seo/seoApi";
 
 type ToolPageContentProps = {
   metadata: ToolMetaData | undefined;
@@ -19,10 +19,10 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
         },
       },
       {
-        "@type": "SoftwareApplication",
-        "name": metadata.softwareSchema.name,
+        "@type": metadata.schema_type || "SoftwareApplication",
+        "name": metadata.schema_name || metadata.softwareSchema.name,
         "url": metadata.url,
-        "description": metadata.description,
+        "description": metadata.schema_description || metadata.description,
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Web",
         "browserRequirements": metadata.softwareSchema.browserRequirements,
@@ -65,41 +65,53 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
       </div>
 
       {/* ── How It Works ── */}
-      <section>
-        <div className="flex items-center gap-3 mb-10">
+      <section className="py-16">
+        {/* Header */}
+        <div className="flex items-center gap-3 mb-4">
           <div className="w-1 h-8 rounded-full bg-emerald-500" />
           <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-            How It Works
+            {metadata?.howTo?.title}
           </h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 relative">
 
-          <div className="hidden sm:block absolute top-[2.2rem] left-[18%] right-[18%] h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent" />
+        <p className="text-slate-500 dark:text-slate-400 font-medium text-sm leading-relaxed max-w-2xl mb-12">
+          {metadata?.howTo?.description}
+        </p>
+
+        {/* Steps Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 relative">
+
+          {/* Decorative Line */}
+          <div className="hidden sm:block absolute top-10 left-[18%] right-[18%] h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent" />
 
           {metadata?.howTo?.steps?.map((step: HowItWorksStep, i: number) => (
             <div
               key={i}
-              className="relative flex flex-col gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 shadow-sm hover:shadow-md hover:border-emerald-500/40 dark:hover:border-emerald-500/30 transition-all duration-300 group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-black text-sm shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40 transition-all duration-300 shrink-0">
-                  {i + 1}
-                </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
-                  Step {i + 1}
-                </span>
-              </div>
-              <p className="text-slate-700 dark:text-slate-300 font-semibold text-sm leading-relaxed">
-                {step.name}
-              </p>
-              <p className="text-slate-700 dark:text-slate-300 font-semibold text-sm leading-relaxed">
-                {step.text}
-              </p>
-            </div>
-          ))}
+        className="relative flex flex-col gap-3 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 shadow-sm hover:shadow-md hover:border-emerald-500/40 dark:hover:border-emerald-500/30 transition-all duration-300 group"
+      >
+        {/* Step Header */}
+        <div className="flex items-center gap-3 mb-2">
+          <div className="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-black text-sm shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40 transition-all duration-300 shrink-0">
+            {i + 1}
+          </div>
+          <span className="text-[10px] font-black uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
+            Step {i + 1}
+          </span>
+        </div>
+
+        {/* Step Title */}
+        <p className="text-slate-900 dark:text-white font-semibold text-sm">
+          {step.name}
+        </p>
+
+        {/* Step Description */}
+        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+          {step.text}
+        </p>
+      </div>
+    ))}
         </div>
       </section>
-
       {/* ── Features ── */}
       <section>
         <div className="flex items-center gap-3 mb-8">
@@ -127,6 +139,33 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
           ))}
         </div>
       </section>
+
+      {/* ── Related Tools ── */}
+      {
+        metadata?.relatedTools && metadata.relatedTools.length > 0 && (
+          <section>
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-1 h-8 rounded-full bg-emerald-500" />
+              <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+                Related Tools
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {metadata.relatedTools.map((tool: any, i: number) => (
+                <a
+                  key={i}
+                  href={tool.url}
+                  className="flex items-center justify-center p-4 rounded-xl text-center font-bold text-sm text-slate-700 dark:text-white bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 hover:border-emerald-500/40 dark:hover:border-emerald-500/30 hover:bg-emerald-50/30 dark:hover:bg-emerald-500/5 transition-all duration-300 group"
+                >
+                  <span className="group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                    {tool.name}
+                  </span>
+                </a>
+              ))}
+            </div>
+          </section>
+        )
+      }
 
       {/* ── FAQ ── */}
       <section className="pb-8">

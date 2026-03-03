@@ -10,24 +10,26 @@ export default function HomeContent() {
     { name: "PNG to WEBP Converter", href: "/png-to-webp", icon: "🌐", desc: "Next-gen format, 30% smaller", cta: "Convert PNG to WEBP" },
     { name: "Compress PDF", href: "/compress-pdf", icon: "📄", desc: "Reduce PDF file size instantly", cta: "Compress PDF" },
     { name: "PDF to JPG", href: "/pdf-to-jpg", icon: "🖼️", desc: "Convert PDF pages to images", cta: "Convert PDF to JPG Free" },
-    { name: "PDF to Word", href: "/pdf-to-word", icon: "📚", desc: "Convert PDF to editable DOCX", upcoming: true },
-    { name: "Merge PDF", href: "/merge-pdf", icon: "📑", desc: "Combine multiple PDFs into one", upcoming: true },
+    { name: "PDF to Word", href: "/pdf-to-word", icon: "📚", desc: "Convert PDF to editable DOCX", cta: "Convert PDF to Word Free" },
+    { name: "Merge PDF", href: "/merge-pdf", icon: "📑", desc: "Combine multiple PDFs into one", cta: "Merge PDF Files Free" },
+    { name: "Split PDF", href: "/split-pdf", icon: "✂️", desc: "Extract pages or split by range", cta: "Split PDF Free" },
+    { name: "HEIC to JPG", href: "/heic-to-jpg", icon: "📱", desc: "Convert iPhone HEIC photos to JPG", cta: "Convert HEIC to JPG Free" },
   ];
 
   return (
-    <div className="space-y-20 md:space-y-32 pb-20 px-4 sm:px-10 md:px-20">
+    <div className="space-y-20 md:space-y-32 pb-20 px-0 sm:px-2 md:px-20">
       {/* Hero */}
       <section className="relative  pt-20 pb-10 text-center space-y-12">
         <div className="space-y-8 max-w-4xl mx-auto px-0">
-          <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-slate-900 dark:text-white tracking-tighter leading-[0.95] text-reveal">
-            Online<br />
+          <h1 className="text-5xl sm:text-7xl md:text-8xl font-black text-slate-900 dark:text-white tracking-tighter leading-[0.95] text-reveal flex flex-col gap-2">
+            Free Online 
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary via-white to-brand-secondary animate-shine">File Converter</span>
           </h1>
 
           <div className="space-y-8">
             <p className="text-lg md:text-2xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed px-4">
-              Convert images, compress PDFs, and transform documents instantly. <br className="hidden sm:block" />
-              <span className="text-slate-900 dark:text-white font-black">Start free</span> with zero data retention.
+              All-in-one PDF tools and Image converter. <br className="hidden sm:block" />
+              <span className="text-slate-900 dark:text-white font-black">100% Free & Secure.</span> Zero data retention.
             </p>
             <div aria-hidden="true" role="presentation" className="flex justify-center">
               <LiveProcessingTicker />
@@ -78,27 +80,19 @@ export default function HomeContent() {
           {tools.map((tool, i) => (
             <a  
               key={i}
-              href={tool.upcoming ? undefined : tool.href}
+              href={tool.href}
               aria-label={tool.name}
-              className={`group glass dark:glass-dark rounded-[2rem] p-8 border border-white/5 hover:border-brand-primary/50 transition-all duration-500 relative overflow-hidden ${tool.upcoming ? 'opacity-60 cursor-not-allowed' : ''}`}
+              className="group glass dark:glass-dark rounded-[2rem] p-8 border border-white/5 hover:border-brand-primary/50 transition-all duration-500 relative overflow-hidden"
             >
-              {tool.upcoming ? (
-                <div className="absolute top-4 right-4 px-3 py-1 bg-amber-500/20 text-amber-600 dark:text-amber-400 text-[10px] font-black uppercase tracking-widest rounded-full border border-amber-500/30">
-                  Coming Soon
-                </div>
-              ) : (
-                <div className="absolute top-4 right-4 px-3 py-1 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-full border border-emerald-500/30">
-                  Active
-                </div>
-              )}
+              <div className="absolute top-4 right-4 px-3 py-1 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-full border border-emerald-500/30">
+                Active
+              </div>
               <div className="text-4xl mb-6 group-hover:scale-125 transition-transform duration-500 origin-left">{tool.icon}</div>
               <h3 className="text-lg font-black text-slate-900 dark:text-white mb-2 group-hover:text-brand-primary transition-colors">{tool.name}</h3>
               <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-6">{tool.desc}</p>
-              {!tool.upcoming && (
-                <div className="flex items-center gap-2 text-brand-primary font-black text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-                  {tool.cta} <ArrowRight className="w-3 h-3" />
-                </div>
-              )}
+              <div className="flex items-center gap-2 text-brand-primary font-black text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                {tool.cta} <ArrowRight className="w-3 h-3" />
+              </div>
             </a>
           ))}
         </div>

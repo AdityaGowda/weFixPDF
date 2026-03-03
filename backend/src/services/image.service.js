@@ -2,13 +2,15 @@ const sharp = require("sharp");
 const fs = require("fs");
 const path = require("path");
 
-const allowedExtensions = [".jpg", ".jpeg", ".png", ".webp"];
+const allowedExtensions = [".jpg", ".jpeg", ".png", ".webp", ".heic", ".heif"];
 
 const mimeTypes = {
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
   ".png": "image/png",
-  ".webp": "image/webp"
+  ".webp": "image/webp",
+  ".heic": "image/heic",
+  ".heif": "image/heif"
 };
 
 function validateFile(ext) {
@@ -77,8 +79,10 @@ async function imageCompressor({ res, req, file }) {
     });
 
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: "Compression failed" });
+    safeDelete(file.path);
+    const error = new Error(`Image compression failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
   }
 }
 
@@ -139,12 +143,57 @@ async function imageConverter({ res, req, file }) {
     });
 
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: "Conversion failed" });
+    safeDelete(file.path);
+    const error = new Error(`Image conversion failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
+  }
+}
+
+/**
+ * HEIC to JPG converter
+ * Sharp has built-in HEIC/HEIF support via libvips.
+ * Converts iPhone HEIC photos to universally compatible JPG.
+ */
+async function heicToJpg({ res, req, file }) {
+  try {
+    const inputPath = file.path;
+    const ext = path.extname(file.originalname).toLowerCase();
+
+    if (ext !== ".heic" && ext !== ".heif") {
+      safeDelete(inputPath);
+      return res.status(400).json({ error: "Please upload a HEIC or HEIF file" });
+    }
+
+    const uid = Date.now();
+    const fileBaseName = path.parse(file.originalname).name;
+    const outputPath = `uploads/heic-to-jpg-${uid}.jpg`;
+    const downloadName = `${fileBaseName}_wefixPDF_heic-to-jpg.jpg`;
+
+    await sharp(inputPath)
+      .jpeg({ quality: 90, mozjpeg: true })
+      .toFile(outputPath);
+
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    res.setHeader("Content-Type", "image/jpeg");
+    res.setHeader("Content-Disposition", `attachment; filename="${downloadName}"`);
+
+    const fileStream = fs.createReadStream(outputPath);
+    fileStream.pipe(res);
+
+    fileStream.on("close", () => {
+      safeDelete(inputPath);
+      safeDelete(outputPath);
+    });
+
+  } catch (err) {
+    console.error("HEIC to JPG error:", err);
+    return res.status(500).json({ error: "HEIC conversion failed. Make sure the file is a valid HEIC image." });
   }
 }
 
 module.exports = {
   imageCompressor,
-  imageConverter
+  imageConverter,
+  heicToJpg
 };

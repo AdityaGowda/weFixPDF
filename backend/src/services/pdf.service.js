@@ -78,9 +78,10 @@ async function mergePdf({ res, req, files }) {
     inputPaths.forEach(safeDelete);
     sendFile(res, outputPath, "application/pdf", `wefixPDF_merged-${uid}.pdf`);
   } catch (err) {
-    console.error(err);
     inputPaths.forEach(safeDelete);
-    return res.status(500).json({ error: "PDF merge failed." });
+    const error = new Error(`PDF Merge failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
   }
 }
 
@@ -161,9 +162,10 @@ async function splitPdf({ res, req, file }) {
     outputPaths.forEach((p, i) => archive.file(p, { name: `part${i + 1}.pdf` }));
     await archive.finalize();
   } catch (err) {
-    console.error(err);
     safeDelete(inputPath);
-    return res.status(500).json({ error: "PDF split failed." });
+    const error = new Error(`PDF Split failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
   }
 }
 
@@ -260,9 +262,10 @@ async function compressPdf({ res, req, file }) {
     );
 
   } catch (err) {
-    console.error(err);
     safeDelete(inputPath);
-    return res.status(500).json({ error: "PDF compression failed." });
+    const error = new Error(`PDF Compression failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
   }
 }
 /*
@@ -350,10 +353,11 @@ async function pdfToJpg({ res, req, file }) {
     );
 
   } catch (err) {
-    console.error("[pdfToJpg]", err);
     safeDelete(inputPath);
     fs.rmSync(outputDir, { recursive: true, force: true });
-    return res.status(500).json({ error: "PDF to JPG conversion failed." });
+    const error = new Error(`PDF to JPG conversion failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
   }
 }
 
@@ -404,9 +408,10 @@ async function jpgToPdf({ res, req,file, files }) {
     inputPaths.forEach(safeDelete);
     sendFile(res, outputPath, "application/pdf", `wefixPDF_images-to-pdf-${uid}.pdf`);
   } catch (err) {
-    console.error(err);
     inputPaths.forEach(safeDelete);
-    return res.status(500).json({ error: "JPG to PDF conversion failed." });
+    const error = new Error(`Image to PDF conversion failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
   }
 }
 
@@ -449,9 +454,10 @@ async function wordToPdf({ res, req, file }) {
     safeDelete(inputPath);
     sendFile(res, outputPath, "application/pdf", `${origBase}_wefixPDF.pdf`);
   } catch (err) {
-    console.error(err);
     safeDelete(inputPath);
-    return res.status(500).json({ error: "Word to PDF conversion failed. Ensure LibreOffice is installed on the server." });
+    const error = new Error(`Word to PDF conversion failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
   }
 }
 
@@ -512,9 +518,10 @@ async function pdfToWord({ res, req, file }) {
       `${origBase}_wefixPDF.docx`
     );
   } catch (err) {
-    console.error(err);
     safeDelete(inputPath);
-    return res.status(500).json({ error: "PDF to Word conversion failed." });
+    const error = new Error(`PDF to Word conversion failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
   }
 }
 
@@ -554,9 +561,10 @@ async function removeBackground({ res, req, file }) {
     safeDelete(inputPath);
     sendFile(res, outputPath, "image/png", `${origBase}_wefixPDF_nobg.png`);
   } catch (err) {
-    console.error(err);
     safeDelete(inputPath);
-    return res.status(500).json({ error: "Background removal failed." });
+    const error = new Error(`Background removal failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
   }
 }
 
@@ -609,9 +617,10 @@ async function removeWatermark({ res, req, file }) {
     safeDelete(inputPath);
     sendFile(res, outputPath, mimeTypes[ext] || "image/jpeg", `${origBase}_wefixPDF_nowatermark${ext}`);
   } catch (err) {
-    console.error(err);
     safeDelete(inputPath);
-    return res.status(500).json({ error: "Watermark removal failed." });
+    const error = new Error(`Watermark removal failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
   }
 }
 

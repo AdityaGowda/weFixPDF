@@ -4,26 +4,27 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import Link from "next/link";
 import { ArrowRight, CheckCircle, XCircle } from "lucide-react";
-import { comparePages, getPageBySlug } from "@/app/lib/seo/seoData";
+import { getPageSeo, getAllSlugs } from "@/app/lib/seo/seoApi";
 import { buildMetadata, buildBreadcrumbSchema } from "@/app/lib/seo/metadata";
 
 interface Props { params: { slug: string } }
 
-export function generateStaticParams() {
-  return comparePages.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs();
+  return slugs.filter(s => s.page_type === "compare").map(s => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const {slug}=await params
-  const page = getPageBySlug(slug);
+  const { slug } = await params;
+  const page = await getPageSeo(slug, "compare");
   if (!page) return {};
   return buildMetadata(page, "/compare");
 }
 
 export default async function ComparePage({ params }: Props) {
-  const {slug}=await params
-  const page = getPageBySlug(slug);
-  if (!page || page.type !== "compare") notFound();
+  const { slug } = await params;
+  const page = await getPageSeo(slug, "compare");
+  if (!page) notFound();
 
   const breadcrumbs = buildBreadcrumbSchema([
     { name: "Home", href: "/" },

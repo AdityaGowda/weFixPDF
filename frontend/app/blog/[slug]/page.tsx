@@ -6,30 +6,31 @@
 
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { toolPages, getPageBySlug } from "@/app/lib/seo/seoData";
+import { getPageSeo, getAllSlugs } from "@/app/lib/seo/seoApi";
 import { buildMetadata } from "@/app/lib/seo/metadata";
 import ToolPage from "@/app/components/seo/ToolPage";
 
 interface Props {
-  params: { tool: string };
+  params: { slug: string };
 }
 
-// Tell Next.js all valid tool slugs at build time
-export function generateStaticParams() {
-  return toolPages.map((p: any) => ({ tool: p.slug }));
+// Tell Next.js all valid blog slugs at build time
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs();
+  return slugs.filter(s => s.page_type === "blog").map(s => ({ slug: s.slug }));
 }
 
-// Generate metadata per tool
+// Generate metadata per blog post
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const {tool}=await params
-  const page = getPageBySlug(tool);
+  const { slug } = await params;
+  const page = await getPageSeo(slug, "blog");
   if (!page) return {};
-  return buildMetadata(page);
+  return buildMetadata(page, "/blog");
 }
 
 export default async function ToolRoute({ params }: Props) {
-  const {tool}=await params
-  const page = getPageBySlug(tool);
-  if (!page || page.type !== "tool") notFound();
+  const { slug } = await params;
+  const page = await getPageSeo(slug, "blog");
+  if (!page) notFound();
   return <ToolPage page={page} />;
 }
