@@ -27,13 +27,13 @@ export default async function Footer() {
                     height={40}
                     className="hidden dark:block"
                   />
-                        <Image
-                          src="/wefixpdf.png"
-                          alt="wefixPDF - Online File Converter Logo"
+                  <Image
+                    src="/weFixPDF.png"
+                    alt="weFixPDF - Online File Converter Logo"
                     width={140}
                     height={38}
-                          className="object-contain"
-                        />
+                    className="object-contain"
+                  />
                       </div>
                     </div>
                     <p className="text-sm text-slate-500 font-bold leading-relaxed">
