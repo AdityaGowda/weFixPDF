@@ -136,7 +136,7 @@ export default function ToolPage({ page }: ToolPageProps) {
                 </h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                {page.features.map((feature: any, i: number) => (
+                {page.features.map((feature, i) => (
                   <div key={i} className="flex items-center gap-3 p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:shadow-blue-500/5 transition-all duration-200">
                     <div className="w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center shrink-0 border border-slate-100 dark:border-slate-700/50">
                       {featureIcons[i % featureIcons.length]}
@@ -173,13 +173,13 @@ export default function ToolPage({ page }: ToolPageProps) {
                 </h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {page.related.map((tool: any, i: number) => (
+                {page.related.map((tool, i) => (
                   <Link
                     key={i}
-                    href={tool.href || tool.url}
+                    href={tool.href || "#"}
                     className="flex items-center justify-center min-h-[64px] px-6 py-4 rounded-2xl text-center font-bold text-xs uppercase tracking-widest text-slate-600 dark:text-slate-400 border border-slate-100 dark:border-slate-800 hover:border-brand-primary hover:text-brand-primary transition-all duration-300 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md hover:scale-[1.02]"
                   >
-                    {tool.label || tool.name}
+                    {tool.label}
                   </Link>
                 ))}
               </div>
@@ -198,7 +198,7 @@ export default function ToolPage({ page }: ToolPageProps) {
                 </h2>
               </div>
               <div className="space-y-3">
-                {page.faq.map((item: any, i: number) => (
+                {page.faq.map((item, i) => (
                   <details
                     key={i}
                     className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm"

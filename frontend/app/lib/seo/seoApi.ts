@@ -42,10 +42,10 @@ export type SeoPage = {
   bodyContent?: string;
   keywords?: string | string[];
   howTo?: { title: string; description: string };
-  howItWorks?: { title?: string; desc?: string; name?: string; text?: string }[];
+  howItWorks?: { title: string; desc: string }[];
   features?: string[];
   faq?: { q: string; a: string }[];
-  related?: { label?: string; href?: string; name?: string; url?: string }[];
+  related?: RelatedTool[];
   breadcrumb?: { name: string; url: string }[];
   schema_type?: string;
   schema_name?: string;
