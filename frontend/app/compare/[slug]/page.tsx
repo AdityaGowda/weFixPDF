@@ -65,11 +65,11 @@ export default async function CompareDetailPage({ params }: Props) {
 
   return (
     <>
-      <Script id="webpage-schema" type="application/ld+json">{JSON.stringify(webPageSchema)}</Script>
+      <script id="webpage-schema" type="application/ld+json">{JSON.stringify(webPageSchema)}</script>
       {faqSchema && (
-        <Script id="faq-schema" type="application/ld+json">{JSON.stringify(faqSchema)}</Script>
+        <script id="faq-schema" type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       )}
-      <Script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</Script>
+      <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
 
       <main className="min-h-screen">
         {/* ── Hero ── */}

@@ -35,8 +35,8 @@ export default async function FormatPage({ params }: Props) {
 
   return (
     <>
-      <Script id="article-schema" type="application/ld+json">{JSON.stringify(articleSchema)}</Script>
-      <Script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</Script>
+      <script id="article-schema" type="application/ld+json">{JSON.stringify(articleSchema)}</script>
+      <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
 
       <main className="max-w-3xl mx-auto py-16 px-4">
         <nav className="flex items-center gap-2 text-xs text-slate-400 mb-8">

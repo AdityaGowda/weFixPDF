@@ -42,11 +42,11 @@ export default async function UseCasePage({ params }: Props) {
 
   return (
     <>
-      <Script id="collection-schema" type="application/ld+json">{JSON.stringify(collectionSchema)}</Script>
+      <script id="collection-schema" type="application/ld+json">{JSON.stringify(collectionSchema)}</script>
       {faqSchema && (
-        <Script id="faq-schema" type="application/ld+json">{JSON.stringify(faqSchema)}</Script>
+        <script id="faq-schema" type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       )}
-      <Script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</Script>
+      <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
 
       <main className="min-h-screen">
         {/* ── Hero ── */}
