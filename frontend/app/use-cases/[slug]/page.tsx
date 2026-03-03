@@ -55,7 +55,7 @@ export default async function UseCasePage({ params }: Props) {
           <div className="border-t border-slate-200 dark:border-white/10 pt-10">
             <p className="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Recommended Tools</p>
             <div className="flex flex-wrap gap-3">
-              {page.related.map((r: any, i: number) => (
+              {page.related.map((r, i) => (
                 <Link key={i} href={r.href} className="px-5 py-3 rounded-2xl bg-brand-primary text-white font-black text-sm hover:scale-105 transition-transform">
                   {r.label} →
                 </Link>
