@@ -48,11 +48,11 @@ export default async function BlogArticlePage({ params }: Props) {
 
   return (
     <>
-      <Script id="article-schema" type="application/ld+json">{JSON.stringify(articleSchema)}</Script>
+      <script id="article-schema" type="application/ld+json">{JSON.stringify(articleSchema)}</script>
       {faqSchema && (
-        <Script id="faq-schema" type="application/ld+json">{JSON.stringify(faqSchema)}</Script>
+        <script id="faq-schema" type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       )}
-      <Script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</Script>
+      <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
 
       <main className="min-h-screen">
         {/* ── Hero Banner ── */}

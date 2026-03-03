@@ -1,13 +1,18 @@
 // app/help/page.tsx — Comprehensive Help Center
 import type { Metadata } from "next";
 import Link from "next/link";
-import { HelpCircle, Search, FileText, Shield, Zap, Image, Lock, Merge, Scissors, RefreshCw, ChevronRight } from "lucide-react";
+import { HelpCircle, FileText, Shield, Zap, Image, Lock, RefreshCw, ChevronRight, ArrowRight } from "lucide-react";
+import { buildBreadcrumbSchema, buildFaqSchema } from "../lib/seo/metadata";
 
 export const metadata: Metadata = {
   title: "Help Center — FAQ & Support | weFixPDF",
   description:
     "Find answers to common questions about compressing PDFs, converting images, file size limits, privacy, and using all of weFixPDF's free tools.",
   alternates: { canonical: "https://wefixpdf.com/help" },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 const categories = [
@@ -92,11 +97,25 @@ const categories = [
 
 export default function HelpCenterPage() {
   const totalFaqs = categories.reduce((sum, c) => sum + c.faqs.length, 0);
-
+  const allFaqs = categories.map((c: any) => c.faqs).flat()
+  const faqSchema = categories && categories.length > 0 ? buildFaqSchema(allFaqs) : null;
+  const breadcrumbs = buildBreadcrumbSchema([
+    { name: "Home", href: "/" },
+    { name: "Help Center", href: "/help" },
+  ]);
   return (
     <main className="min-h-screen">
+      <script id="faq-schema" type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+      <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+      {/* Breadcrumb */}
+      <nav className="flex items-center gap-2 text-xs text-slate-400 mb-0 max-[950px]:mt-8 font-medium">
+        <Link href="/" className="hover:text-emerald-600 transition-colors">Home</Link>
+        <ArrowRight className="w-3 h-3 text-slate-300" />
+        <Link href="/help" className="hover:text-emerald-600 transition-colors">Help Center</Link>
+      </nav>
+
       {/* ── Hero ── */}
-      <section className="pt-16 pb-12 px-4 border-b border-slate-100 dark:border-slate-800">
+      <section className="pt-10 pb-12 px-4 border-b border-slate-100 dark:border-slate-800">
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-[11px] font-black uppercase tracking-[0.2em] mb-6">
             <HelpCircle className="w-3 h-3" /> Help Center
