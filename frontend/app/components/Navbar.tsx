@@ -77,8 +77,8 @@ export default function Navbar() {
               priority
             />
             <Image
-              src="/wefixpdf.png"
-              alt="weFixPDF Text Image"
+              src="/weFixPDF.png"
+              alt="weFixPDF"
               width={140}
               height={38}
               className="object-contain max-[950px]:hidden md:block"
