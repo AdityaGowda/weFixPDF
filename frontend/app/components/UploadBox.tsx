@@ -11,11 +11,12 @@ interface UploadBoxProps {
 
 type CompressionLevel = "high" | "medium" | "low";
 // Tools that accept multiple files
-const MULTI_FILE_TOOLS = ["image-to-pdf"];
+const MULTI_FILE_TOOLS = ["image-to-pdf", "merge-pdf"];
 
 // Max files allowed per tool
 const MAX_FILES: Record<string, number> = {
   "image-to-pdf": 10,
+  "merge-pdf": 20,
 };
 
 export default function UploadBox({ service }: UploadBoxProps) {
@@ -29,6 +30,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
   const [suggestedName, setSuggestedName] = useState<string>("");
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const [quality, setQuality] = useState<CompressionLevel>("medium");
+  const [errorVisible, setErrorVisible] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragItemIndex = useRef<number | null>(null);
@@ -63,6 +65,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
   function clearAll() {
     setFiles([]);
     setDownloadUrl(null);
+    setErrorVisible(null);
   }
 
   // ── Drag-to-reorder (multi only) ────────────────────
@@ -96,6 +99,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
     if (!hasFiles) return;
     setLoading(true);
     setDownloadUrl(null);
+    setErrorVisible(null);
 
     const toastId = toast.loading("⏳ Processing...");
     try {
@@ -113,8 +117,16 @@ export default function UploadBox({ service }: UploadBoxProps) {
         `${process.env.NEXT_PUBLIC_API_URL}/api/convert/${service}`,
         { method: "POST", body: formData }
       );
-
-      if (!res.ok) throw new Error("Conversion failed");
+      if (!res.ok) {
+        let errorMsg = `HTTP Error ${res.status}`;
+        try {
+          const errorData = await res.json();
+          errorMsg = errorData.error || errorData.message || JSON.stringify(errorData);
+        } catch (e) {
+          errorMsg = (await res.text()) || res.statusText;
+        }
+        throw new Error(errorMsg);
+      }
 
       // Extract filename from Content-Disposition
       const disposition = res.headers.get("content-disposition");
@@ -137,21 +149,23 @@ export default function UploadBox({ service }: UploadBoxProps) {
       setDownloadUrl(() => {
         return URL.createObjectURL(blob);
       });
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      toast.error("Conversion failed. Please try again. please check format", { id: toastId });
+      const msg = err instanceof Error ? err.message : String(err);
+      setErrorVisible(msg);
+      toast.error(msg, { id: toastId });
     } finally {
       setLoading(false);
-      toast.dismiss(toastId);
+      setTimeout(() => toast.dismiss(toastId), 5000)
     }
   }
 
   // ── Render ───────────────────────────────────────────
   return (
-    <div className="relative w-full min-h-[600px] flex flex-col items-center justify-center pt-0 pb-20 px-4 overflow-visible gap-8 max-[950px]:mt-0">
+    <div className="relative w-full min-h-[450px] md:min-h-[600px] flex flex-col items-center justify-center pt-0 pb-10 md:pb-20 px-4 overflow-visible gap-8 max-[950px]:mt-0">
 
-      {/* SVG Gooey Filter */}
-      <svg className="hidden">
+      {/* SVG Gooey Filter - Only defined/rendered on desktop for better mobile performance */}
+      <svg className="hidden md:block absolute -z-50">
         <defs>
           <filter id="gooey">
             <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur" />
@@ -179,7 +193,9 @@ export default function UploadBox({ service }: UploadBoxProps) {
             hidden
             multiple={isMulti}
             accept={
-              service.includes("pdf") && !service.includes("image") && !service.includes("jpg")
+              service === "heic-to-jpg"
+                ? ".heic,.heif"
+                : service.includes("pdf") && !service.includes("image") && !service.includes("jpg")
                 ? ".pdf"
                 : service === "word-to-pdf"
                   ? ".doc,.docx"
@@ -254,6 +270,29 @@ export default function UploadBox({ service }: UploadBoxProps) {
             )}
           </div>
         </label>
+
+        {/* ── Error Message Overlay ── */}
+        {errorVisible && (
+          <div className="absolute inset-0 z-40 flex items-center justify-center p-6 animate-in fade-in zoom-in duration-300">
+            <div className="w-full max-w-sm glass-dark border border-rose-500/50 rounded-3xl p-8 shadow-2xl backdrop-blur-2xl flex flex-col items-center text-center gap-4">
+              <div className="w-16 h-16 rounded-2xl bg-rose-500/20 flex items-center justify-center">
+                <X className="w-8 h-8 text-rose-500" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-black text-white italic uppercase tracking-tighter">Processing Error</h3>
+                <p className="text-rose-200/70 text-sm font-medium leading-relaxed">
+                  {errorVisible}
+                </p>
+              </div>
+              <button
+                onClick={() => setErrorVisible(null)}
+                className="mt-2 px-8 py-3 rounded-full bg-rose-500 text-white font-black text-xs uppercase tracking-widest hover:bg-rose-600 transition-all active:scale-95"
+              >
+                Try Again
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Orbital buttons */}
         {hasFiles && !loading && !downloadUrl && (

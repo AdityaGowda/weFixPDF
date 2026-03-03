@@ -1,89 +1,43 @@
 // app/sitemap.ts
-// Auto-generates XML sitemap for all ~100 pages
+// Auto-generates XML sitemap — fetches slugs from backend API
 import type { MetadataRoute } from "next";
-// import { toolPages, blogPages, comparePages, usecasePages, formatPages } from "@/app/lib/seo/seoData";
+import { getAllSlugs } from "@/app/lib/seo/seoApi";
 
-// const BASE_URL = "https://wefixpdf.com";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://wefixpdf.com";
 
-// export default function sitemap(): MetadataRoute.Sitemap {
-//   const now = new Date();
+// Priority & frequency by page type
+const TYPE_CONFIG: Record<string, { changeFrequency: "weekly" | "monthly" | "yearly"; priority: number; prefix: string }> = {
+  tool: { changeFrequency: "weekly", priority: 0.9, prefix: "" },
+  blog: { changeFrequency: "monthly", priority: 0.7, prefix: "/blog" },
+  compare: { changeFrequency: "monthly", priority: 0.6, prefix: "/compare" },
+  use_cases: { changeFrequency: "monthly", priority: 0.6, prefix: "/use-cases" },
+  format: { changeFrequency: "monthly", priority: 0.5, prefix: "/formats" },
+  homepage: { changeFrequency: "weekly", priority: 1.0, prefix: "" },
+};
 
-//   const staticRoutes: MetadataRoute.Sitemap = [
-//     { url: BASE_URL, lastModified: now, changeFrequency: "weekly", priority: 1.0 },
-//     { url: `${BASE_URL}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-//     { url: `${BASE_URL}/compare`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-//     { url: `${BASE_URL}/use-cases`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-//     { url: `${BASE_URL}/formats`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-//   ];
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Static pages that always exist
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: BASE_URL, lastModified: new Date(), changeFrequency: "weekly", priority: 1.0 },
+    { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE_URL}/privacy`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
+    { url: `${BASE_URL}/terms`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
+  ];
 
-//   const toolRoutes: MetadataRoute.Sitemap = toolPages.map((p) => ({
-//     url: `${BASE_URL}/${p.slug}`,
-//     lastModified: now,
-//     changeFrequency: "monthly",
-//     priority: 0.9,
-//   }));
+  // Dynamic pages from database
+  const slugs = await getAllSlugs();
 
-//   const blogRoutes: MetadataRoute.Sitemap = blogPages.map((p) => ({
-//     url: `${BASE_URL}/blog/${p.slug}`,
-//     lastModified: now,
-//     changeFrequency: "monthly",
-//     priority: 0.7,
-//   }));
+  const dynamicPages: MetadataRoute.Sitemap = slugs
+    .filter((s) => s.page_type !== "homepage") // homepage is already in static
+    .map((s) => {
+      const config = TYPE_CONFIG[s.page_type] || { changeFrequency: "monthly" as const, priority: 0.5, prefix: "" };
+      return {
+        url: `${BASE_URL}${config.prefix}/${s.slug}`,
+        lastModified: s.updated_at ? new Date(s.updated_at) : new Date(),
+        changeFrequency: config.changeFrequency,
+        priority: config.priority,
+      };
+    });
 
-//   const compareRoutes: MetadataRoute.Sitemap = comparePages.map((p) => ({
-//     url: `${BASE_URL}/compare/${p.slug}`,
-//     lastModified: now,
-//     changeFrequency: "monthly",
-//     priority: 0.6,
-//   }));
-
-//   const usecaseRoutes: MetadataRoute.Sitemap = usecasePages.map((p) => ({
-//     url: `${BASE_URL}/use-cases/${p.slug}`,
-//     lastModified: now,
-//     changeFrequency: "monthly",
-//     priority: 0.6,
-//   }));
-
-//   const formatRoutes: MetadataRoute.Sitemap = formatPages.map((p) => ({
-//     url: `${BASE_URL}/formats/${p.slug}`,
-//     lastModified: now,
-//     changeFrequency: "monthly",
-//     priority: 0.5,
-//   }));
-
-//   return [
-//     ...staticRoutes,
-//     ...toolRoutes,
-//     ...blogRoutes,
-//     ...compareRoutes,
-//     ...usecaseRoutes,
-//     ...formatRoutes,
-//   ];
-// }
-
-
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://wefixpdf.com';
-
-  const toolRoutes = ['/image-compressor', '/png-to-jpg', '/jpg-to-png', '/png-to-webp'];
-  const staticRoutes = ['/about', '/privacy', '/terms', '/compress-pdf', '/image-to-pdf', '/pdf-to-jpg'];
-
-  return [
-    { url: `${baseUrl}`, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
-    ...toolRoutes.map(route => ({
-      url: `${baseUrl}${route}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
-    })),
-    ...staticRoutes.map(route => ({
-      url: `${baseUrl}${route}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    })),
-  ]
+  return [...staticPages, ...dynamicPages];
 }
-
-
-

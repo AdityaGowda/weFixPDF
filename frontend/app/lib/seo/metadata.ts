@@ -5,7 +5,7 @@
 // ─────────────────────────────────────────────────────────────
 
 import type { Metadata } from "next";
-import type { SeoPage } from "./seoData";
+import type { SeoPage } from "./seoApi";
 
 const BASE_URL = "https://wefixpdf.com";
 
@@ -82,14 +82,34 @@ export function buildBreadcrumbSchema(crumbs: { name: string; href: string }[]) 
 export function buildArticleSchema(page: SeoPage) {
   return {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": page.schema_type || "Article",
     headline: page.h1,
-    description: page.description,
+    description: page.schema_description || page.description,
     url: `${BASE_URL}/blog/${page.slug}`,
     publisher: {
       "@type": "Organization",
       name: "weFixPDF",
       url: BASE_URL,
     },
+  };
+}
+
+export function buildCollectionPageSchema(page: SeoPage) {
+  return {
+    "@context": "https://schema.org",
+    "@type": page.schema_type || "CollectionPage",
+    name: page.schema_name || page.h1,
+    description: page.schema_description || page.description,
+    url: `${BASE_URL}/use-cases/${page.slug}`,
+  };
+}
+
+export function buildWebPageSchema(page: SeoPage) {
+  return {
+    "@context": "https://schema.org",
+    "@type": page.schema_type || "WebPage",
+    name: page.schema_name || page.h1,
+    description: page.schema_description || page.description,
+    url: `${BASE_URL}/compare/${page.slug}`,
   };
 }

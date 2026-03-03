@@ -6,7 +6,7 @@ const { convertFile } = require("../controllers/convert.controller");
 // ─────────────────────────────────────────────────────────────
 // Tools that accept MULTIPLE files
 // ─────────────────────────────────────────────────────────────
-const MULTI_FILE_TOOLS = ["image-to-pdf"];
+const MULTI_FILE_TOOLS = ["image-to-pdf", "merge-pdf"];
 
 // ─────────────────────────────────────────────────────────────
 // Dynamic middleware selector:
@@ -28,9 +28,9 @@ function selectUpload(req, res, next) {
 // POST /api/:tool
 //
 // Supported tools:
-//   Image  → jpg-to-png | png-to-jpg | png-to-webp | compress-image
+//   Image  → jpg-to-png | png-to-jpg | png-to-webp | image-compressor | heic-to-jpg
 //   PDF    → merge-pdf | split-pdf | compress-pdf | pdf-to-jpg
-//            jpg-to-pdf | word-to-pdf | pdf-to-word
+//            image-to-pdf | word-to-pdf | pdf-to-word
 //   AI     → remove-background | remove-watermark
 // ─────────────────────────────────────────────────────────────
 router.post("/:tool", selectUpload, convertFile);

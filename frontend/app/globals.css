@@ -39,6 +39,21 @@
       filter: blur(10px);
       animation: core-morph 15s ease-in-out infinite;
       transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, border-radius;
+    }
+
+    /* Performance optimization for mobile */
+    @media (max-width: 768px) {
+      .gooey-container {
+        filter: none !important;
+      }
+      .core-blob {
+        filter: blur(5px); /* Reduced blur */
+      }
+      .glass, .glass-dark {
+        backdrop-filter: blur(10px) !important; /* Reduced backdrop blur */
+        -webkit-backdrop-filter: blur(10px) !important;
+      }
     }
     
     @keyframes core-morph {

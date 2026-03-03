@@ -34,17 +34,17 @@ export default function Navbar() {
         { label: 'JPG to PNG', href: '/jpg-to-png', description: 'Convert JPG to transparent PNG online. Free, fast, and secure image format converter.' },
         { label: 'PNG to WEBP', href: '/png-to-webp', description: 'Optimize images with our free PNG to WEBP converter. Create next-gen formats for faster websites.' },
         { label: 'Image to PDF', href: '/image-to-pdf', description: 'Convert images to PDF online. Free, fast, and secure image to PDF converter.' },
-        { label: 'HEIC to JPG', href: '#', description: 'Convert iPhone HEIC photos to JPG instantly in your browser.', upcoming: true },
+        { label: 'HEIC to JPG', href: '/heic-to-jpg', description: 'Convert iPhone HEIC photos to JPG instantly in your browser.' },
       ]
     },
     {
       label: 'PDF Tools',
       items: [
         { label: 'Compress PDF', href: '/compress-pdf', description: 'Best free PDF compressor. Reduce PDF file size online instantly without losing document quality.' },
-        { label: 'PDF to JPG', href: '/pdf-to-jpg', description: 'Fast PDF to JPG converter. Extract images or convert individual pages to images.', },
-        { label: 'PDF to Word', href: '/pdf-to-word', description: 'Convert PDF to Word documents online. Accurate, fast, and free PDF to DOCX converter.', upcoming: true },
-        { label: 'Merge PDF', href: '#', description: 'Free online PDF merger. Combine multiple PDF files securely into one document.', upcoming: true },
-        { label: 'Split PDF', href: '#', description: 'Split PDF pages easily online. Extract specific pages or separate large PDFs.', upcoming: true },
+        { label: 'PDF to JPG', href: '/pdf-to-jpg', description: 'Fast PDF to JPG converter. Extract images or convert individual pages to images.' },
+        { label: 'PDF to Word', href: '/pdf-to-word', description: 'Convert PDF to Word documents online. Accurate, fast, and free PDF to DOCX converter.' },
+        { label: 'Merge PDF', href: '/merge-pdf', description: 'Free online PDF merger. Combine multiple PDF files securely into one document.' },
+        { label: 'Split PDF', href: '/split-pdf', description: 'Split PDF pages easily online. Extract specific pages or separate large PDFs.' },
       ]
     }
   ];
@@ -59,28 +59,28 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between max-[950px]:py-1">
         {/* Logo */}
         <a href="/" className="flex items-center gap-3 group">
-          <div className="relative w-40 h-12 sm:w-32 sm:h-12 md:w-80 md:h-12 overflow-hidden items-center justify-start flex hover:scale-105 transition-transform duration-300 gap-5 max-[950px]:pl-2">
+          <div className="relative w-full h-12 overflow-hidden items-center justify-start flex transition-transform duration-300 gap-4 max-[950px]:pl-2">
             <Image
               src="/logo.svg"
               alt="weFixPDF Logo"
-              width={43}
-              height={43}
+              width={38}
+              height={38}
               className="dark:hidden"
               priority
             />
             <Image
               src="/darklogo.svg"
               alt="weFixPDF Logo"
-              width={45}
-              height={45}
+              width={40}
+              height={40}
               className="hidden dark:block"
               priority
             />
             <Image
-              src="/weFixPDF.png"
+              src="/wefixpdf.png"
               alt="weFixPDF Text Image"
-              width={145}
-              height={145}
+              width={140}
+              height={38}
               className="object-contain max-[950px]:hidden md:block"
               priority
             />
@@ -105,20 +105,14 @@ export default function Navbar() {
                     <a
                       key={item.label}
                       href={item.href}
-                      className={`relative z-10 flex flex-col gap-1.5 p-4 rounded-2xl hover:bg-white dark:hover:bg-white/10 shadow-sm hover:shadow-md transition-all group/item ${item.upcoming ? 'opacity-70 grayscale-[0.5]' : ''}`}
+                      className="relative z-10 flex flex-col gap-1.5 p-4 rounded-2xl hover:bg-white dark:hover:bg-white/10 shadow-sm hover:shadow-md transition-all group/item"
                       onClick={(e) => item.href === '#' && e.preventDefault()}
                     >
                       <div className="flex items-center justify-between gap-2">
                         <span className="text-sm font-bold text-slate-900 dark:text-white group-hover/item:text-brand-primary transition-colors">{item.label}</span>
-                        {item.upcoming ? (
-                          <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 whitespace-nowrap">
-                            Soon
-                          </span>
-                        ) : (
-                          <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 whitespace-nowrap">
-                            Active
-                          </span>
-                        )}
+                        <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 whitespace-nowrap">
+                          Active
+                        </span>
                       </div>
                       <span className="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">{item.description}</span>
                     </a>
@@ -186,20 +180,14 @@ export default function Navbar() {
                     <a
                       key={item.label}
                       href={item.href}
-                      onClick={() => !item.upcoming && setIsOpen(false)}
-                      className={`flex flex-col gap-0.5 px-5 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition-all bg-white/40 dark:bg-black/20 border border-slate-100/50 dark:border-white/5 ${item.upcoming ? 'opacity-70' : ''}`}
+                      onClick={() => setIsOpen(false)}
+                      className="flex flex-col gap-0.5 px-5 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition-all bg-white/40 dark:bg-black/20 border border-slate-100/50 dark:border-white/5"
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-sm font-bold text-slate-900 dark:text-white">{item.label}</span>
-                        {item.upcoming ? (
-                          <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30">
-                            Soon
-                          </span>
-                        ) : (
-                          <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-                            Active
-                          </span>
-                        )}
+                        <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                          Active
+                        </span>
                       </div>
                       <span className="text-[10px] leading-relaxed text-slate-500 dark:text-slate-400">{item.description}</span>
                     </a>

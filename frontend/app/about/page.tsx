@@ -71,9 +71,9 @@ export default function AboutPage() {
             { label: "High-quality conversions" },
             { label: "Multiple format support" },
             { label: "PDF compression" },
-            { label: "Smart PDF merging", upcoming: true },
-            { label: "Flexible page splitting", upcoming: true },
-            { label: "Page rotation tools", upcoming: true },
+            { label: "Smart PDF merging" },
+            { label: "Flexible page splitting" },
+            { label: "PDF to Word conversion" },
           ]}
         />
         <FeatureCard 
@@ -83,10 +83,10 @@ export default function AboutPage() {
           items={[
             { label: "All-format support" },
             { label: "Smart compression" },
+            { label: "HEIC to JPG converter" },
+            { label: "PNG/JPG/WEBP converters" },
             { label: "Batch processing", upcoming: true },
-            { label: "HEIC to JPG converter", upcoming: true },
-            { label: "Image resize & crop", upcoming: true },
-            { label: "Format conversion", upcoming: true }
+            { label: "Image resize & crop", upcoming: true }
           ]}
         />
         <FeatureCard 
@@ -94,11 +94,11 @@ export default function AboutPage() {
           icon="📚"
           colorClass="bg-violet-50 text-violet-600"
           items={[
+            { label: "Image to PDF conversion" },
             { label: "Word to PDF", upcoming: true },
             { label: "Excel to PDF", upcoming: true },
             { label: "PowerPoint conversion", upcoming: true },
             { label: "OCR text extraction", upcoming: true },
-            { label: "Document merging", upcoming: true },
             { label: "Watermark tools", upcoming: true }
           ]}
         />

@@ -4,26 +4,27 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { formatPages, getPageBySlug } from "@/app/lib/seo/seoData";
+import { getPageSeo, getAllSlugs } from "@/app/lib/seo/seoApi";
 import { buildMetadata, buildBreadcrumbSchema, buildArticleSchema } from "@/app/lib/seo/metadata";
 
 interface Props { params: { slug: string } }
 
-export function generateStaticParams() {
-  return formatPages.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs();
+  return slugs.filter(s => s.page_type === "format").map(s => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const {slug}=await params
-  const page = getPageBySlug(slug);
+  const { slug } = await params;
+  const page = await getPageSeo(slug, "format");
   if (!page) return {};
   return buildMetadata(page, "/formats");
 }
 
 export default async function FormatPage({ params }: Props) {
-  const {slug}=await params
-  const page = getPageBySlug(slug);
-  if (!page || page.type !== "format") notFound();
+  const { slug } = await params;
+  const page = await getPageSeo(slug, "format");
+  if (!page) notFound();
 
   const articleSchema = buildArticleSchema(page);
   const breadcrumbs   = buildBreadcrumbSchema([

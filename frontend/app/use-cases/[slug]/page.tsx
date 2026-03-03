@@ -4,26 +4,27 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import Link from "next/link";
 import { ArrowRight, CheckCircle } from "lucide-react";
-import { usecasePages, getPageBySlug } from "@/app/lib/seo/seoData";
+import { getPageSeo, getAllSlugs } from "@/app/lib/seo/seoApi";
 import { buildMetadata, buildBreadcrumbSchema } from "@/app/lib/seo/metadata";
 
 interface Props { params: { slug: string } }
 
-export function generateStaticParams() {
-  return usecasePages.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs();
+  return slugs.filter(s => s.page_type === "use_cases").map(s => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const {slug}=await params
-  const page = getPageBySlug(slug);
+  const { slug } = await params;
+  const page = await getPageSeo(slug, "use_cases");
   if (!page) return {};
   return buildMetadata(page, "/use-cases");
 }
 
 export default async function UseCasePage({ params }: Props) {
-  const {slug}=await params
-  const page = getPageBySlug(slug);
-  if (!page || page.type !== "usecase") notFound();
+  const { slug } = await params;
+  const page = await getPageSeo(slug, "use_cases");
+  if (!page) notFound();
 
   const breadcrumbs = buildBreadcrumbSchema([
     { name: "Home", href: "/" },
@@ -54,7 +55,7 @@ export default async function UseCasePage({ params }: Props) {
           <div className="border-t border-slate-200 dark:border-white/10 pt-10">
             <p className="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Recommended Tools</p>
             <div className="flex flex-wrap gap-3">
-              {page.related.map((r, i) => (
+              {page.related.map((r: any, i: number) => (
                 <Link key={i} href={r.href} className="px-5 py-3 rounded-2xl bg-brand-primary text-white font-black text-sm hover:scale-105 transition-transform">
                   {r.label} →
                 </Link>

@@ -5,6 +5,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
+    "db:setup": "mysql -u root -p < src/db/setup-mysql.sql",
+    "db:migrate": "node src/db/migrate.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -22,12 +24,14 @@
     "jimp": "^1.6.0",
     "mammoth": "^1.11.0",
     "multer": "^2.1.0",
+    "mysql2": "^3.14.0",
     "pdf-lib": "^1.17.1",
     "pdf-parse": "^2.4.5",
     "pdf-poppler": "^0.2.3",
     "pdf2pic": "^3.2.0",
     "pdfkit": "^0.17.2",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "winston": "^3.19.0"
   },
   "description": "",
   "devDependencies": {

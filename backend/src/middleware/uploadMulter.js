@@ -15,6 +15,7 @@ const storage = multer.diskStorage({
 
 const allowedExtensions = [
   ".jpg", ".jpeg", ".png", ".webp",   // images
+  ".heic", ".heif",                    // iPhone HEIC
   ".pdf",                              // PDF
   ".doc", ".docx",                     // Word
 ];

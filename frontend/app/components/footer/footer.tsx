@@ -1,9 +1,10 @@
 
 import Image from "next/image";
-import { tools } from "@/app/lib/seo/seoschema";
+import { getToolListings } from "@/app/lib/seo/seoApi";
 import { Globe } from "lucide-react";
 
-function Footer() {
+export default async function Footer() {
+  const tools = await getToolListings();
     return (
            <footer className="relative z-10 border-t border-slate-200 dark:border-white/5 pt-24 pb-12">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-20">
@@ -11,12 +12,26 @@ function Footer() {
                 <div className="flex flex-col md:flex-row justify-between items-start gap-12">
                   <div className="max-w-xl space-y-6">
                     <div className="flex items-center gap-3">
-                      <div className="relative w-32 md:w-40 h-auto aspect-square max-h-20 overflow-hidden flex items-center justify-start">
+                <div className="relative w-full h-12 overflow-hidden items-center justify-start flex gap-4">
+                  <Image
+                    src="/logo.svg"
+                    alt="weFixPDF Logo"
+                    width={38}
+                    height={38}
+                    className="dark:hidden"
+                  />
+                  <Image
+                    src="/darklogo.svg"
+                    alt="weFixPDF Logo"
+                    width={40}
+                    height={40}
+                    className="hidden dark:block"
+                  />
                         <Image
                           src="/wefixpdf.png"
                           alt="wefixPDF - Online File Converter Logo"
-                          width={340}
-                          height={340}
+                    width={140}
+                    height={38}
                           className="object-contain"
                         />
                       </div>
@@ -94,5 +109,3 @@ function Footer() {
             </footer>
     );
 }
-
-export default Footer;
