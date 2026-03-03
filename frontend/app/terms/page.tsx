@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import TermsContent from "./TermsContent";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | wefixPDF",
+  title: "Terms of Service | weFixPDF",
   description: "Terms of service for weFixPDF file conversion tools. Free to use, no registration required, complete privacy guaranteed.",
 };
 

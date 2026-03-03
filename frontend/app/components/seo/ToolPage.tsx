@@ -125,7 +125,7 @@ export default function ToolPage({ page }: ToolPageProps) {
             </div>
           </section>
         )}
-        {/* ── 3. FEATURES (WHY WEFIXPDF) ── */}
+        {/* ── 3. FEATURES (WHY weFixPDF) ── */}
         {page.features && page.features.length > 0 && (
           <section className="py-16 md:py-24 px-4 bg-slate-50 dark:bg-slate-900/20 border-y border-slate-100 dark:border-slate-900">
             <div className="max-w-5xl mx-auto">

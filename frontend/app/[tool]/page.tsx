@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
 
   if (!metadata) {
     return {
-      title: "File Converter | wefixPDF",
+      title: "File Converter | weFixPDF",
       description: "Fast, secure, and private file conversion tools.",
       alternates: {
         canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/${reqService.tool}`,
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
       title: metadata.title,
       description: metadata.description,
       url: `${metadata.url}`,
-      siteName: "wefixPDF",
+      siteName: "weFixPDF",
       type: "website",
     },
   };

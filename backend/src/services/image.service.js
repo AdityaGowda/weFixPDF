@@ -43,7 +43,7 @@ async function imageCompressor({ res, req, file }) {
     const uid = Date.now();
     const outputPath = `uploads/compressed-${uid}${ext}`;
     const fileBaseName = path.parse(file.originalname).name;
-    const downloadName = `${fileBaseName}_wefixPDF_compressed${ext}`;
+    const downloadName = `${fileBaseName}_weFixPDF_compressed${ext}`;
 
     let image = sharp(inputPath);
     const meta = await image.metadata();
@@ -108,19 +108,19 @@ async function imageConverter({ res, req, file }) {
     if (tool === "png-to-jpg" && inputExt === ".png") {
       outputExt = ".jpg";
       outputPath = `uploads/converted-${uid}${outputExt}`;
-      downloadName = `${fileBaseName}_wefixPDF_png-to-jpg.jpg`;
+      downloadName = `${fileBaseName}_weFixPDF_png-to-jpg.jpg`;
       await sharp(inputPath).jpeg({ quality: 80 }).toFile(outputPath);
 
     } else if (tool === "jpg-to-png" && (inputExt === ".jpg" || inputExt === ".jpeg")) {
       outputExt = ".png";
       outputPath = `uploads/converted-${uid}${outputExt}`;
-      downloadName = `${fileBaseName}_wefixPDF_jpg-to-png.png`;
+      downloadName = `${fileBaseName}_weFixPDF_jpg-to-png.png`;
       await sharp(inputPath).png().toFile(outputPath);
 
     } else if (tool === "png-to-webp" && inputExt === ".png") {
       outputExt = ".webp";
       outputPath = `uploads/converted-${uid}${outputExt}`;
-      downloadName = `${fileBaseName}_wefixPDF_png-to-webp.webp`;
+      downloadName = `${fileBaseName}_weFixPDF_png-to-webp.webp`;
       await sharp(inputPath).webp({ quality: 80 }).toFile(outputPath);
 
     } else {
@@ -168,7 +168,7 @@ async function heicToJpg({ res, req, file }) {
     const uid = Date.now();
     const fileBaseName = path.parse(file.originalname).name;
     const outputPath = `uploads/heic-to-jpg-${uid}.jpg`;
-    const downloadName = `${fileBaseName}_wefixPDF_heic-to-jpg.jpg`;
+    const downloadName = `${fileBaseName}_weFixPDF_heic-to-jpg.jpg`;
 
     await sharp(inputPath)
       .jpeg({ quality: 90, mozjpeg: true })

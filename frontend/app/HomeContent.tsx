@@ -172,7 +172,7 @@ export default function HomeContent() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-slate-500 dark:text-slate-400 leading-relaxed text-base md:text-lg font-medium">
             <p>
-              wefixPDF provides a secure, private, and lightning-fast way to handle your file conversion needs. Convert images, compress PDFs, and transform documents—all with zero data retention.
+              weFixPDF provides a secure, private, and lightning-fast way to handle your file conversion needs. Convert images, compress PDFs, and transform documents—all with zero data retention.
             </p>
             <p>
               Process your files instantly in your browser with complete privacy. Professional-grade conversion tools built with security and speed in mind.
