@@ -76,7 +76,7 @@ async function mergePdf({ res, req, files }) {
     fs.writeFileSync(outputPath, pdfBytes);
 
     inputPaths.forEach(safeDelete);
-    sendFile(res, outputPath, "application/pdf", `wefixPDF_merged-${uid}.pdf`);
+    sendFile(res, outputPath, "application/pdf", `weFixPDF_merged-${uid}.pdf`);
   } catch (err) {
     inputPaths.forEach(safeDelete);
     const error = new Error(`PDF Merge failed: ${err.message}`);
@@ -140,7 +140,7 @@ async function splitPdf({ res, req, file }) {
 
     // If single output — send directly
     if (outputPaths.length === 1) {
-      return sendFile(res, outputPaths[0], "application/pdf", `wefixPDF_split-part1.pdf`);
+      return sendFile(res, outputPaths[0], "application/pdf", `weFixPDF_split-part1.pdf`);
     }
 
     // Multiple outputs — zip them
@@ -151,7 +151,7 @@ async function splitPdf({ res, req, file }) {
 
     output.on("close", () => {
       outputPaths.forEach(safeDelete);
-      sendFile(res, zipPath, "application/zip", `wefixPDF_split-${uid}.zip`);
+      sendFile(res, zipPath, "application/zip", `weFixPDF_split-${uid}.zip`);
     });
 
     archive.on("error", (err) => {
@@ -248,7 +248,7 @@ async function compressPdf({ res, req, file }) {
 
       return res.download(
         inputPath,
-        `${fileBaseName}_wefixPDF.pdf`,
+        `${fileBaseName}_weFixPDF.pdf`,
         () => safeDelete(inputPath)
       );
     }
@@ -257,7 +257,7 @@ async function compressPdf({ res, req, file }) {
 
     res.download(
       outputPath,
-      `${fileBaseName}_wefixPDF_compressed.pdf`,
+      `${fileBaseName}_weFixPDF_compressed.pdf`,
       () => safeDelete(outputPath)
     );
 
@@ -320,7 +320,7 @@ async function pdfToJpg({ res, req, file }) {
 
     // Single page — send JPG directly
     if (imagePaths.length === 1) {
-      return sendFile(res, imagePaths[0], "image/jpeg", "wefixPDF_page1.jpg");
+      return sendFile(res, imagePaths[0], "image/jpeg", "weFixPDF_page1.jpg");
     }
 
     // Multiple pages — zip all JPGs
@@ -349,7 +349,7 @@ async function pdfToJpg({ res, req, file }) {
       res,
       zipPath,
       "application/zip",
-      `wefixPDF_pdf-to-jpg-${uid}.zip`
+      `weFixPDF_pdf-to-jpg-${uid}.zip`
     );
 
   } catch (err) {
@@ -406,7 +406,7 @@ async function jpgToPdf({ res, req,file, files }) {
     fs.writeFileSync(outputPath, await pdfDoc.save());
 
     inputPaths.forEach(safeDelete);
-    sendFile(res, outputPath, "application/pdf", `wefixPDF_images-to-pdf-${uid}.pdf`);
+    sendFile(res, outputPath, "application/pdf", `weFixPDF_images-to-pdf-${uid}.pdf`);
   } catch (err) {
     inputPaths.forEach(safeDelete);
     const error = new Error(`Image to PDF conversion failed: ${err.message}`);
@@ -452,7 +452,7 @@ async function wordToPdf({ res, req, file }) {
 
     const origBase = path.parse(file.originalname).name;
     safeDelete(inputPath);
-    sendFile(res, outputPath, "application/pdf", `${origBase}_wefixPDF.pdf`);
+    sendFile(res, outputPath, "application/pdf", `${origBase}_weFixPDF.pdf`);
   } catch (err) {
     safeDelete(inputPath);
     const error = new Error(`Word to PDF conversion failed: ${err.message}`);
@@ -515,7 +515,7 @@ async function pdfToWord({ res, req, file }) {
       res,
       outputPath,
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      `${origBase}_wefixPDF.docx`
+      `${origBase}_weFixPDF.docx`
     );
   } catch (err) {
     safeDelete(inputPath);
@@ -559,7 +559,7 @@ async function removeBackground({ res, req, file }) {
 
     const origBase = path.parse(file.originalname).name;
     safeDelete(inputPath);
-    sendFile(res, outputPath, "image/png", `${origBase}_wefixPDF_nobg.png`);
+    sendFile(res, outputPath, "image/png", `${origBase}_weFixPDF_nobg.png`);
   } catch (err) {
     safeDelete(inputPath);
     const error = new Error(`Background removal failed: ${err.message}`);
@@ -615,7 +615,7 @@ async function removeWatermark({ res, req, file }) {
       .toFile(outputPath);
 
     safeDelete(inputPath);
-    sendFile(res, outputPath, mimeTypes[ext] || "image/jpeg", `${origBase}_wefixPDF_nowatermark${ext}`);
+    sendFile(res, outputPath, mimeTypes[ext] || "image/jpeg", `${origBase}_weFixPDF_nowatermark${ext}`);
   } catch (err) {
     safeDelete(inputPath);
     const error = new Error(`Watermark removal failed: ${err.message}`);

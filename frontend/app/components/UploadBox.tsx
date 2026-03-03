@@ -141,8 +141,8 @@ export default function UploadBox({ service }: UploadBoxProps) {
         const base = files[0].name.split(".").slice(0, -1).join(".");
         const ext = files[0].name.split(".").pop();
         filename = isMulti
-          ? `wefixPDF_${service}.${service.includes("pdf") ? "pdf" : "zip"}`
-          : `${base}_wefixPDF_${service}.${ext}`;
+          ? `weFixPDF_${service}.${service.includes("pdf") ? "pdf" : "zip"}`
+          : `${base}_weFixPDF_${service}.${ext}`;
       }
 
       setSuggestedName(filename);

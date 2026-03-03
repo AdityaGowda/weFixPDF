@@ -12,7 +12,7 @@ export default function TermsContent() {
     },
     {
       title: "Intellectual Property",
-      content: "We do not claim ownership of any files you upload. Likewise, all design elements, code, and logos of wefixPDF are protected by intellectual property laws and may not be reused without permission."
+      content: "We do not claim ownership of any files you upload. Likewise, all design elements, code, and logos of weFixPDF are protected by intellectual property laws and may not be reused without permission."
     },
     {
       title: "User Obligations",
