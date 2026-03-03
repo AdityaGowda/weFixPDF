@@ -78,40 +78,7 @@ export default async function BlogIndexPage() {
             <p className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-400 mb-4">
               Featured Article
             </p>
-            <Link
-              href={`/blog/${featured.slug}`}
-              className="group grid grid-cols-1 md:grid-cols-2 gap-8 p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 hover:border-blue-500/40 dark:hover:border-blue-500/30 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300"
-            >
-              {/* Decorative gradient panel */}
-              <div className="aspect-[16/9] md:aspect-auto rounded-2xl bg-gradient-to-br from-blue-500 via-violet-500 to-purple-600 flex items-center justify-center overflow-hidden relative">
-                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_center,_white_0%,_transparent_70%)]" />
-                <span className="text-white font-black text-5xl opacity-30">✦</span>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/20 text-white text-[10px] font-black uppercase tracking-widest backdrop-blur-sm">
-                    {categoryTag(featured.slug).label}
-                  </span>
-                </div>
-              </div>
 
-              {/* Content */}
-              <div className="flex flex-col justify-center gap-4">
-                <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight">
-                  {featured.h1}
-                </h2>
-                <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium">
-                  {featured.description}
-                </p>
-                <div className="flex items-center gap-4 mt-2">
-                  <span className="flex items-center gap-1 text-xs text-slate-400 font-medium">
-                    <Clock className="w-3 h-3" />
-                    {readingTime(featured.bodyContent)}
-                  </span>
-                  <span className="flex items-center gap-1 text-xs font-bold text-blue-600 dark:text-blue-400 group-hover:gap-2 transition-all">
-                    Read Article <ArrowRight className="w-3 h-3" />
-                  </span>
-                </div>
-              </div>
-            </Link>
           </div>
         )}
 

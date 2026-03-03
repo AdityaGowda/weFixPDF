@@ -1,6 +1,6 @@
 /**
  * ─────────────────────────────────────────────────────────────
- * ConvertLite — Database Migration Script
+ * weFixPDF — Database Migration Script
  * ─────────────────────────────────────────────────────────────
  * Run:   node src/db/migrate.js
  *
@@ -16,7 +16,7 @@
 require("dotenv").config();
 const mysql = require("mysql2/promise");
 
-const DB_NAME = process.env.DB_NAME || "convertlite_db";
+const DB_NAME = process.env.DB_NAME || "wefixpdf_db";
 
 // ─────────────────────────────────────────────────────────────
 // Table definitions
@@ -206,13 +206,13 @@ const TABLES = [
 // ─────────────────────────────────────────────────────────────
 
 async function migrate() {
-  console.log("🔧  ConvertLite DB Migration — Starting...\n");
+  console.log("🔧  weFixPDF DB Migration — Starting...\n");
 
   // Step 1 — Connect WITHOUT selecting a database
   const rootConn = await mysql.createConnection({
     host: process.env.DB_HOST || "localhost",
     port: parseInt(process.env.DB_PORT, 10) || 3306,
-    user: process.env.DB_USER || "convertlite_user",
+    user: process.env.DB_USER || "wefixpdf_user",
     password: process.env.DB_PASSWORD || "",
     charset: "utf8mb4",
   });
@@ -228,7 +228,7 @@ async function migrate() {
   const conn = await mysql.createConnection({
     host: process.env.DB_HOST || "localhost",
     port: parseInt(process.env.DB_PORT, 10) || 3306,
-    user: process.env.DB_USER || "convertlite_user",
+    user: process.env.DB_USER || "wefixpdf_user",
     password: process.env.DB_PASSWORD || "",
     database: DB_NAME,
     charset: "utf8mb4",

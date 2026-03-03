@@ -20,7 +20,7 @@ CREATE DATABASE IF NOT EXISTS `wefixpdf`
 CREATE USER IF NOT EXISTS 'wefixpdf_user'@'localhost'
   IDENTIFIED WITH mysql_native_password BY 'wefixpdf@123';
 
--- 3. Grant privileges on the convertlite_db only
+-- 3. Grant privileges on the wefixpdf database only
 GRANT ALL PRIVILEGES ON `wefixpdf`.* TO 'wefixpdf_user'@'localhost';
 
 -- 4. Apply privilege changes

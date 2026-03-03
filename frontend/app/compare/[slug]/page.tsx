@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return buildMetadata(page, "/compare");
 }
 
-// Default comparison features for vs pages
+// Default comparison features — generic, no competitor names
 const DEFAULT_COMPARISON = [
   { feature: "100% Free", weFixPDF: true, other: false },
   { feature: "No daily task limits", weFixPDF: true, other: false },
@@ -51,11 +51,6 @@ export default async function CompareDetailPage({ params }: Props) {
 
   // Extract comparison_table from DB if available
   const dbComparisonTable = (page as any).comparison_table;
-
-  // Detect competitor name
-  const isVsPage = page.slug.includes("-vs-");
-  const h1Parts = page.h1.split(" vs ");
-  const competitor = h1Parts.length > 1 ? h1Parts[1] : null;
 
   // Use DB comparison_table rows if available, else use defaults
   let comparisonRows: { feature: string; weFixPDF: boolean | string; other: boolean | string }[] = DEFAULT_COMPARISON;
@@ -121,7 +116,7 @@ export default async function CompareDetailPage({ params }: Props) {
           )}
 
           {/* ── Comparison Table ── */}
-          {isVsPage && competitor && comparisonRows.length > 0 && (
+          {comparisonRows.length > 0 && (
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1 h-7 rounded-full bg-emerald-500" />
@@ -135,7 +130,7 @@ export default async function CompareDetailPage({ params }: Props) {
                     <tr className="border-b border-slate-200 dark:border-slate-700">
                       <th className="text-left px-6 py-4 font-black text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50">Feature</th>
                       <th className="px-6 py-4 font-black text-emerald-600 text-center bg-emerald-500/5">weFixPDF</th>
-                      <th className="px-6 py-4 font-black text-slate-500 text-center bg-slate-50 dark:bg-slate-800/50">{competitor}</th>
+                      <th className="px-6 py-4 font-black text-slate-500 text-center bg-slate-50 dark:bg-slate-800/50">Alternative</th>
                     </tr>
                   </thead>
                   <tbody>
