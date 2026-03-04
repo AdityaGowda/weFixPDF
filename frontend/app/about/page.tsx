@@ -176,11 +176,6 @@ export default function AboutPage() {
                 <td className="p-4 sm:p-8 text-brand-primary font-black bg-brand-primary/5">Native ✓</td>
                 <td className="p-4 sm:p-8">Limited</td>
               </tr>
-              <tr className="hover:bg-brand-primary/5 transition-colors group">
-                <td className="p-4 sm:p-8 font-bold text-slate-900 dark:text-white">Ads</td>
-                <td className="p-4 sm:p-8 text-brand-primary font-black bg-brand-primary/5">None ✓</td>
-                <td className="p-4 sm:p-8">Heavy</td>
-              </tr>
             </tbody>
           </table>
         </div>
