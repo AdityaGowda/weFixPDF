@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllSlugs, getPageSeo, type SeoPage } from "@/app/lib/seo/seoApi";
+import { buildBreadcrumbSchema } from "@/app/lib/seo/metadata";
 import { ArrowRight, Users, GraduationCap, Briefcase, Scale, Home, Camera, Code2, HeartHandshake } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -67,6 +68,11 @@ async function getUseCasePages(): Promise<SeoPage[]> {
 export default async function UseCasesIndexPage() {
   const pages = await getUseCasePages();
 
+  const breadcrumbs = buildBreadcrumbSchema([
+    { name: "Home", href: "/" },
+    { name: "Use Cases", href: "/use-cases" },
+  ]);
+
   const STATS = [
     { value: "1k+",   label: "Files processed" },
     { value: "100%",  label: "Free forever" },
@@ -76,6 +82,7 @@ export default async function UseCasesIndexPage() {
 
   return (
     <main className="min-h-screen">
+      <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       {/* ── Hero ── */}
       <section className="pt-16 pb-12 px-4 border-b border-slate-100 dark:border-slate-800">
         <div className="max-w-5xl mx-auto text-center">

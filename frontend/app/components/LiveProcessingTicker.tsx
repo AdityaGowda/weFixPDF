@@ -1,7 +1,47 @@
 'use client'
 import { useEffect, useState, useRef } from "react";
 
-const LOCATIONS = ["Mumbai", "New York", "London", "Tokyo", "Sydney", "Berlin", "Toronto", "Singapore"];
+const LOCATIONS = [
+  "Mumbai",
+  "Delhi",
+  "Bengaluru",
+  "Hyderabad",
+  "Chennai",
+  "Kolkata",
+  "Pune",
+  "Ahmedabad",
+  "New York",
+  "Los Angeles",
+  "Chicago",
+  "San Francisco",
+  "London",
+  "Manchester",
+  "Paris",
+  "Berlin",
+  "Rome",
+  "Madrid",
+  "Amsterdam",
+  "Zurich",
+  "Vienna",
+  "Stockholm",
+  "Dublin",
+  "Brussels",
+  "Prague",
+  "Warsaw",
+  "Lisbon",
+  "Toronto",
+  "Vancouver",
+  "Sydney",
+  "Melbourne",
+  "Auckland",
+  "Dubai",
+  "Doha",
+  "Riyadh",
+  "Singapore",
+  "Tokyo",
+  "Seoul",
+  "Bangkok"
+]
 const FILE_TYPES = ["PDF", "JPG", "PNG", "WEBP", "PDF"];
 
 function randomFrom<T>(arr: T[]): T {

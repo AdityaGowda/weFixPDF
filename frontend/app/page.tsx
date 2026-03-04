@@ -1,9 +1,10 @@
 import { Metadata } from "next";
 import HomeContent from "./HomeContent";
-import { getHomepageData } from "./lib/seo/seoApi";
+import { getHomepageData, getPageSeo } from "./lib/seo/seoApi";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getHomepageData();
+  const seo_content = await getPageSeo('home')
 
   // Use API data if available, otherwise fallback to static
   if (seo) {
