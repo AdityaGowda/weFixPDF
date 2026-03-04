@@ -4,6 +4,9 @@ import { useEffect, useState, useRef } from "react";
 import { Upload, FileText, CheckCircle, RefreshCcw, Download, Zap, Shield, Clock, Sliders, X, GripVertical } from "lucide-react";
 import CompressionSettings from "./compressLevel";
 import toast from "react-hot-toast";
+import dynamic from "next/dynamic";
+
+const PdfCropper = dynamic(() => import("./PdfCropper"), { ssr: false });
 
 interface UploadBoxProps {
   service: string;
@@ -22,6 +25,7 @@ const TOOL_CONFIG: Record<string, { multi?: boolean; max?: number; accept: strin
   "compress-pdf": { accept: ".pdf" },
   "pdf-to-png": { accept: ".pdf" },
   "pdf-to-webp": { accept: ".pdf" },
+  "pdf-crop": { accept: ".pdf" },
 };
 
 const DEFAULT_ACCEPT = "image/*,.jpg,.jpeg,.png,.webp";
@@ -42,6 +46,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const [quality, setQuality] = useState<CompressionLevel>("medium");
   const [errorVisible, setErrorVisible] = useState<string | null>(null);
+  const [showCropper, setShowCropper] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragItemIndex = useRef<number | null>(null);
@@ -299,10 +304,17 @@ export default function UploadBox({ service }: UploadBoxProps) {
             )}
 
             <button
-              onClick={(e) => { e.stopPropagation(); fileConversion(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (service === "pdf-crop") {
+                  setShowCropper(true);
+                } else {
+                  fileConversion();
+                }
+              }}
               className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 z-30 px-10 py-5 rounded-full bg-white text-brand-primary font-black text-xl shadow-2xl shadow-brand-primary/40 hover:scale-110 active:scale-95 transition-all duration-300 animate-in fade-in slide-in-from-bottom-10"
             >
-              {isMulti ? `${files.length > 1 ? "MERGE" : "CONVERT"}` : "INITIATE"}
+              {service === "pdf-crop" ? "CROP" : isMulti ? `${files.length > 1 ? "MERGE" : "CONVERT"}` : "INITIATE"}
             </button>
 
             <button
@@ -425,6 +437,18 @@ export default function UploadBox({ service }: UploadBoxProps) {
         .animate-spin-slow-reverse { animation: spin 25s linear infinite reverse; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       `}</style>
+
+      {showCropper && files[0] && (
+        <PdfCropper
+          file={files[0]}
+          onClose={() => setShowCropper(false)}
+          onComplete={(blob, fileName) => {
+            setSuggestedName(fileName);
+            setDownloadUrl(URL.createObjectURL(blob));
+            setShowCropper(false);
+          }}
+        />
+      )}
     </div>
   );
 }

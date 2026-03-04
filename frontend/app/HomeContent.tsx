@@ -14,6 +14,7 @@ export default function HomeContent() {
     { name: "Merge PDF", href: "/merge-pdf", icon: "📑", desc: "Combine multiple PDFs into one", cta: "Merge PDF Files Free" },
     { name: "Split PDF", href: "/split-pdf", icon: "✂️", desc: "Extract pages or split by range", cta: "Split PDF Free" },
     { name: "HEIC to JPG", href: "/heic-to-jpg", icon: "📱", desc: "Convert iPhone HEIC photos to JPG", cta: "Convert HEIC to JPG Free" },
+    { name: "PDF Crop", href: "/pdf-crop", icon: "✂️", desc: "Precision PDF cropping with preview", cta: "Crop PDF Online Free" },
   ];
 
   return (
