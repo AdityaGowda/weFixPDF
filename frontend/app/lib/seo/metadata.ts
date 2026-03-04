@@ -5,7 +5,7 @@
 // ─────────────────────────────────────────────────────────────
 
 import type { Metadata } from "next";
-import type { SeoPage } from "./seoApi";
+import type { SeoPage, ToolMetaData } from "./seoApi";
 
 const BASE_URL = "https://wefixpdf.com";
 
@@ -47,14 +47,15 @@ export function buildToolSchema(page: SeoPage) {
     "@type": "SoftwareApplication",
     name: page.h1,
     description: page.description,
-    url: `${BASE_URL}/${page.slug}`,
+    url: `${page.url}`,
     applicationCategory: "UtilitiesApplication",
-    operatingSystem: "Web",
+    operatingSystem: "All",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   };
 }
 
 export function buildFaqSchema(faqs: { q: string; a: string }[]) {
+
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -111,5 +112,20 @@ export function buildWebPageSchema(page: SeoPage) {
     name: page.schema_name || page.h1,
     description: page.schema_description || page.description,
     url: `${BASE_URL}/compare/${page.slug}`,
+  };
+}
+
+export function buildHowToSchema(page: { title: string, description: string, steps: { name: string, text: string }[] }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": page.title,
+    "description": page.description,
+    "step": page.steps.map((step: any, index: number) => ({
+      "@type": "HowToStep",
+      "position": index + 1,
+      "name": step.name,
+      "text": step.text
+    }))
   };
 }

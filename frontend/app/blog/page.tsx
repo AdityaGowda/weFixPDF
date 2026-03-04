@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllSlugs, getPageSeo, type SeoPage } from "@/app/lib/seo/seoApi";
+import { buildBreadcrumbSchema } from "@/app/lib/seo/metadata";
 import { ArrowRight, Clock, BookOpen } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -53,8 +54,14 @@ export default async function BlogIndexPage() {
   const featured = posts[0];
   const rest = posts.slice(1);
 
+  const breadcrumbs = buildBreadcrumbSchema([
+    { name: "Home", href: "/" },
+    { name: "Blog", href: "/blog" },
+  ]);
+
   return (
     <main className="min-h-screen">
+      <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       {/* ── Hero ── */}
       <section className="pt-16 pb-12 px-4 border-b border-slate-100 dark:border-slate-800">
         <div className="max-w-5xl mx-auto text-center">

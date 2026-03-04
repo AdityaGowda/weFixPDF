@@ -6,53 +6,6 @@ type ToolPageContentProps = {
 
 export default async function ToolPageContent({ metadata }: ToolPageContentProps) {
 
-  const structuredData = metadata ? {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "name": "weFixPDF",
-        "url": "https://wefixpdf.com",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://wefixpdf.com/logo.svg",
-        },
-      },
-      {
-        "@type": metadata.schema_type || "SoftwareApplication",
-        "name": metadata.schema_name || metadata.softwareSchema.name,
-        "url": metadata.url,
-        "description": metadata.schema_description || metadata.description,
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Web",
-        "browserRequirements": metadata.softwareSchema.browserRequirements,
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD",
-        },
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": metadata.faqs.map((faq: any) => ({
-          "@type": "Question",
-          "name": faq.q,
-          "acceptedAnswer": { "@type": "Answer", "text": faq.a },
-        })),
-      },
-      {
-        "@type": "HowTo",
-        "name": metadata.howTo.title,
-        "description": metadata.howTo.description,
-        "step": metadata.howTo.steps.map((step: HowItWorksStep, i: number) => ({
-          "@type": "HowToStep",
-          "position": i + 1,
-          "name": step.name,
-          "text": step.text,
-        })),
-      },
-    ],
-  } : null;
 
   return (
     <div className="space-y-20 mt-8">
@@ -206,12 +159,6 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
           ))}
         </div>
       </section>
-      {structuredData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-      )}
     </div>
   );
 }

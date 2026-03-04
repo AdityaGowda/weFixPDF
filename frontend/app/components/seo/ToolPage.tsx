@@ -19,7 +19,6 @@ import {
 
 import type { SeoPage } from "@/app/lib/seo/seoApi";
 import { buildToolSchema, buildFaqSchema, buildBreadcrumbSchema } from "@/app/lib/seo/metadata";
-import UploadBox from "@/app/components/UploadBox";
 import UploadBoxUI from "./UploadBoxUI";
 import MarkdownContent from "../markdowncontent";
 
