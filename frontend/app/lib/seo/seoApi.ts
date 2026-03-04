@@ -32,7 +32,7 @@ export type RelatedTool = {
 
 export type SeoPage = {
   type?: string;
-  slug?: string;
+  slug: string;
   title: string;
   description: string;
   h1: string;

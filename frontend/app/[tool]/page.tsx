@@ -81,6 +81,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
     description: metadata.description,
     title: metadata.h1,
     h1: metadata.h1,
+    slug: reqService.tool,
   }) : null;
   return (
     <main>
