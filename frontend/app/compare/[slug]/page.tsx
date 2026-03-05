@@ -246,6 +246,8 @@ export default async function CompareDetailPage({ params }: Props) {
           </div>
         </div>
       </main>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402"
+        crossOrigin="anonymous"></script>
     </>
   );
 }
