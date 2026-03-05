@@ -49,6 +49,7 @@ export default async function CompareIndexPage() {
   const pages = await getComparePages();
 
   return (
+    <>
     <main className="min-h-screen">
       {/* ── Hero ── */}
       <section className="pt-16 pb-12 px-4 border-b border-slate-100 dark:border-slate-800">
@@ -165,5 +166,8 @@ export default async function CompareIndexPage() {
         </section>
       </div>
     </main>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402"
+        crossOrigin="anonymous"></script>
+    </>
   );
 }

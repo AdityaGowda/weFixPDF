@@ -213,6 +213,18 @@ export default async function BlogArticlePage({ params }: Props) {
           </div>
         </div>
       </main>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402"
+        crossOrigin="anonymous"></script>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402"
+        crossOrigin="anonymous"></script>
+      <ins className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-format="autorelaxed"
+        data-ad-client="ca-pub-8668995301634402"
+        data-ad-slot="3174189444"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({ });
+      </script>
     </>
   );
 }

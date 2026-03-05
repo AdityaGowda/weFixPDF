@@ -60,6 +60,7 @@ export default async function BlogIndexPage() {
   ]);
 
   return (
+    <>
     <main className="min-h-screen">
       <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       {/* ── Hero ── */}
@@ -140,5 +141,8 @@ export default async function BlogIndexPage() {
         )}
       </div>
     </main>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402"
+        crossOrigin="anonymous"></script>
+    </>
   );
 }
