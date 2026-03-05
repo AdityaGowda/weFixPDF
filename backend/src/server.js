@@ -55,7 +55,7 @@ app.get("/", (req, res) => {
   res.status(200).send("Backend running");
 });
 
-app.get("/general/ping", (req, res) => {
+app.get("/api/general/ping", (req, res) => {
   res.status(200).send("OK");
 });
 
