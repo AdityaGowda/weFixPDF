@@ -14,7 +14,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { PDFDocument, rgb, StandardFonts } = require("pdf-lib");
+const { PDFDocument, rgb, StandardFonts, degrees } = require("pdf-lib");
 const mammoth = require("mammoth");
 const { Document, Packer, Paragraph, TextRun } = require("docx");
 const { execSync,spawnSync} = require("child_process");
@@ -624,6 +624,93 @@ async function removeWatermark({ res, req, file }) {
   }
 }
 
+async function rotatePdf({ res, req, file }) {
+  if (!file) return res.status(400).json({ error: "No PDF uploaded." });
+
+  const inputPath = file.path;
+  const angle = parseInt(req.body.angle) || 90;
+
+  try {
+    const bytes = fs.readFileSync(inputPath);
+    const pdfDoc = await PDFDocument.load(bytes);
+    const pages = pdfDoc.getPages();
+
+    pages.forEach((page) => {
+      const currentRotation = page.getRotation().angle;
+      page.setRotation(degrees(currentRotation + angle));
+    });
+
+    const uid = Date.now();
+    const outputPath = `uploads/rotated-${uid}.pdf`;
+    const pdfBytes = await pdfDoc.save();
+    fs.writeFileSync(outputPath, pdfBytes);
+
+    const origBase = path.parse(file.originalname).name;
+    safeDelete(inputPath);
+    sendFile(res, outputPath, "application/pdf", `${origBase}_rotated.pdf`);
+  } catch (err) {
+    safeDelete(inputPath);
+    const error = new Error(`PDF Rotate failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
+  }
+}
+
+async function protectPdf({ res, req, file }) {
+  if (!file) return res.status(400).json({ error: "No PDF uploaded." });
+  const password = req.body.password;
+  if (!password) {
+    safeDelete(file.path);
+    return res.status(400).json({ error: "Password is required to protect PDF." });
+  }
+
+  const inputPath = file.path;
+  const uid = Date.now();
+  const outputPath = `uploads/protected-${uid}.pdf`;
+
+  try {
+    // qpdf --encrypt user-password owner-password key-length [restrictions] -- input.pdf output.pdf
+    // Using 256-bit AES encryption
+    execSync(`qpdf --encrypt "${password}" "${password}" 256 -- "${inputPath}" "${outputPath}"`);
+
+    const origBase = path.parse(file.originalname).name;
+    safeDelete(inputPath);
+    sendFile(res, outputPath, "application/pdf", `${origBase}_protected.pdf`);
+  } catch (err) {
+    safeDelete(inputPath);
+    const error = new Error(`PDF Protect failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
+  }
+}
+
+async function unlockPdf({ res, req, file }) {
+  if (!file) return res.status(400).json({ error: "No PDF uploaded." });
+  const password = req.body.password;
+  if (!password) {
+    safeDelete(file.path);
+    return res.status(400).json({ error: "Password is required to unlock PDF." });
+  }
+
+  const inputPath = file.path;
+  const uid = Date.now();
+  const outputPath = `uploads/unlocked-${uid}.pdf`;
+
+  try {
+    // qpdf --password=pw --decrypt input.pdf output.pdf
+    execSync(`qpdf --password="${password}" --decrypt "${inputPath}" "${outputPath}"`);
+
+    const origBase = path.parse(file.originalname).name;
+    safeDelete(inputPath);
+    sendFile(res, outputPath, "application/pdf", `${origBase}_unlocked.pdf`);
+  } catch (err) {
+    safeDelete(inputPath);
+    const error = new Error(`PDF Unlock failed: ${err.message}`);
+    error.statusCode = 500;
+    throw error;
+  }
+}
+
 // ─────────────────────────────────────────
 // Exports
 // ─────────────────────────────────────────
@@ -637,4 +724,7 @@ module.exports = {
   pdfToWord,
   removeBackground,
   removeWatermark,
+  rotatePdf,
+  protectPdf,
+  unlockPdf,
 };

@@ -1,47 +1,14 @@
 'use client'
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 const LOCATIONS = [
-  "Mumbai",
-  "Delhi",
-  "Bengaluru",
-  "Hyderabad",
-  "Chennai",
-  "Kolkata",
-  "Pune",
-  "Ahmedabad",
-  "New York",
-  "Los Angeles",
-  "Chicago",
-  "San Francisco",
-  "London",
-  "Manchester",
-  "Paris",
-  "Berlin",
-  "Rome",
-  "Madrid",
-  "Amsterdam",
-  "Zurich",
-  "Vienna",
-  "Stockholm",
-  "Dublin",
-  "Brussels",
-  "Prague",
-  "Warsaw",
-  "Lisbon",
-  "Toronto",
-  "Vancouver",
-  "Sydney",
-  "Melbourne",
-  "Auckland",
-  "Dubai",
-  "Doha",
-  "Riyadh",
-  "Singapore",
-  "Tokyo",
-  "Seoul",
-  "Bangkok"
-]
+  "Mumbai", "Delhi", "Bengaluru", "Hyderabad", "Chennai", "Kolkata", "Pune",
+  "Ahmedabad", "New York", "Los Angeles", "Chicago", "San Francisco", "London",
+  "Manchester", "Paris", "Berlin", "Rome", "Madrid", "Amsterdam", "Zurich",
+  "Vienna", "Stockholm", "Dublin", "Brussels", "Prague", "Warsaw", "Lisbon",
+  "Toronto", "Vancouver", "Sydney", "Melbourne", "Auckland", "Dubai", "Doha",
+  "Riyadh", "Singapore", "Tokyo", "Seoul", "Bangkok"
+];
 const FILE_TYPES = ["PDF", "JPG", "PNG", "WEBP", "PDF"];
 
 function randomFrom<T>(arr: T[]): T {
@@ -57,7 +24,49 @@ function generateActivity() {
   };
 }
 
+// ── Skeleton ──────────────────────────────────────────────
+function TickerSkeleton() {
+  return (
+    <div className="w-full max-w-sm rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 shadow-xl shadow-slate-200/80 dark:shadow-none overflow-hidden shrink-0 animate-pulse">
+      {/* Header */}
+      <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex items-center gap-2">
+          <div className="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700" />
+          <div className="w-24 h-3 rounded-full bg-slate-200 dark:bg-slate-700" />
+        </div>
+        <div className="w-24 h-6 rounded-full bg-slate-200 dark:bg-slate-700" />
+      </div>
+
+      {/* Activity rows */}
+      <div className="px-5 py-3 space-y-3 h-[150px]">
+        {[1, 0.5, 0.25].map((opacity, i) => (
+          <div key={i} className="flex items-center gap-3" style={{ opacity }}>
+            <div className="w-9 h-9 rounded-xl bg-slate-200 dark:bg-slate-700 shrink-0" />
+            <div className="flex-1 space-y-1.5">
+              <div className="h-3 rounded-full bg-slate-200 dark:bg-slate-700 w-3/4" />
+              <div className="h-2.5 rounded-full bg-slate-100 dark:bg-slate-800 w-1/2" />
+            </div>
+            <div className="w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-700 shrink-0" />
+          </div>
+        ))}
+      </div>
+
+      {/* Footer */}
+      <div className="flex items-center justify-between px-5 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
+        {[0, 1, 2].map((i) => (
+          <div key={i} className="flex flex-col items-center gap-1">
+            <div className="w-12 h-4 rounded-full bg-slate-200 dark:bg-slate-700" />
+            <div className="w-16 h-2 rounded-full bg-slate-100 dark:bg-slate-800" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Main Component ────────────────────────────────────────
 export default function LiveProcessingTicker() {
+  const [mounted, setMounted] = useState(false);
   const [completedCount, setCompletedCount] = useState(1248);
   const [processingCount, setProcessingCount] = useState(7);
   const [activities, setActivities] = useState([
@@ -65,10 +74,11 @@ export default function LiveProcessingTicker() {
     generateActivity(),
     generateActivity(),
   ]);
-  // Track which id is "newest" to animate only it
   const [newestId, setNewestId] = useState<number | null>(null);
 
   useEffect(() => {
+    setMounted(true);
+
     const interval = setInterval(() => {
       setProcessingCount(prev => {
         const change = Math.floor(Math.random() * 5) - 2;
@@ -78,7 +88,6 @@ export default function LiveProcessingTicker() {
         return next;
       });
       setCompletedCount(prev => prev + Math.floor(Math.random() * 3));
-
       const newActivity = generateActivity();
       setNewestId(newActivity.id);
       setActivities(prev => [newActivity, ...prev].slice(0, 3));
@@ -87,29 +96,23 @@ export default function LiveProcessingTicker() {
     return () => clearInterval(interval);
   }, []);
 
-  return (
-    <div className="w-full max-w-sm rounded-3xl bg-white dark:bg-slate-900 
-  border border-slate-200 dark:border-slate-700/60 
-  shadow-xl shadow-slate-200/80 dark:shadow-none overflow-hidden shrink-0">
+  // Show skeleton until client is ready
+  if (!mounted) return <TickerSkeleton />;
 
-      {/* ── Slide-in animation style ── */}
+  return (
+    <div className="w-full max-w-sm rounded-3xl bg-white dark:bg-slate-900
+      border border-slate-200 dark:border-slate-700/60
+      shadow-xl shadow-slate-200/80 dark:shadow-none overflow-hidden shrink-0">
+
       <style>{`
         @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-12px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(-12px); }
+          to   { opacity: 1; transform: translateY(0);     }
         }
-        .activity-new {
-          animation: slideDown 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
+        .activity-new { animation: slideDown 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
       `}</style>
 
-      {/* ── Header ── */}
+      {/* Header */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-800">
         <div className="flex items-center gap-2">
           <div className="relative flex h-2.5 w-2.5">
@@ -130,38 +133,30 @@ export default function LiveProcessingTicker() {
         </div>
       </div>
 
-      {/* ── Activity Feed ── */}
+      {/* Activity Feed */}
       <div className="px-5 py-3 space-y-3 h-[150px] overflow-hidden">
         {activities.map((activity, i) => (
           <div
             key={activity.id}
-            // ✅ Only newest gets slide-in, rest just fade
             className={`flex items-center gap-3 transition-opacity duration-700
               ${activity.id === newestId ? "activity-new" : ""}
               ${i === 0 ? "opacity-100" : i === 1 ? "opacity-60" : "opacity-30"}
             `}
           >
-            {/* File type badge */}
             <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
               <span className="text-[9px] font-black text-emerald-600 dark:text-emerald-400">
                 {activity.fileType}
               </span>
             </div>
-
-            {/* Text */}
             <div className="flex-1 min-w-0">
               <p className="text-xs font-bold text-slate-700 dark:text-slate-300 truncate">
                 File converted from{" "}
-                <span className="text-slate-900 dark:text-white">
-                  {activity.location}
-                </span>
+                <span className="text-slate-900 dark:text-white">{activity.location}</span>
               </p>
               <p className="text-[10px] font-medium text-slate-400 mt-0.5">
                 {activity.timeAgo}s ago · processed & deleted from system ✓
               </p>
             </div>
-
-            {/* Check */}
             <div className="w-5 h-5 rounded-full bg-emerald-500/15 flex items-center justify-center shrink-0">
               <svg className="w-3 h-3 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -171,15 +166,13 @@ export default function LiveProcessingTicker() {
         ))}
       </div>
 
-      {/* ── Footer Stats ── */}
+      {/* Footer Stats */}
       <div className="flex items-center justify-between px-5 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
         <div className="text-center">
           <p className="text-base font-black text-slate-900 dark:text-white tabular-nums">
             {completedCount.toLocaleString()}
           </p>
-          <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">
-            Files Converted
-          </p>
+          <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Files Converted</p>
         </div>
         <div className="w-px h-8 bg-slate-200 dark:bg-slate-700" />
         <div className="text-center">
@@ -192,7 +185,6 @@ export default function LiveProcessingTicker() {
           <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Free Forever</p>
         </div>
       </div>
-
     </div>
   );
 }

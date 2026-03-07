@@ -1,19 +1,28 @@
-import { Shield, Zap, Lock, ArrowRight, Star, Users } from "lucide-react";
+import {
+  Shield, Zap, Lock, ArrowRight, Star, FileImage, Image, Minimize2, FileDown,
+  FileText, BookOpen, Layers, Scissors, Smartphone,
+  RotateCw, ShieldCheck, LockOpen
+} from "lucide-react";
 import Link from "next/link";
 import { LiveProcessingTicker } from "./components/clientDymaic";
 
-export default function HomeContent() {
+
+export default async function HomeContent() {
+
   const tools = [
-    { name: "JPG to PNG Converter", href: "/jpg-to-png", icon: "🖼️", desc: "Lossless quality, no watermarks", cta: "Convert JPG to PNG Free" },
-    { name: "PNG to JPG Converter", href: "/png-to-jpg", icon: "📸", desc: "Smaller files, optimized for web", cta: "Convert PNG to JPG Free" },
-    { name: "Image Compressor", href: "/image-compressor", icon: "🗜️", desc: "Reduce size up to 80%, keep quality", cta: "Compress Images Now" },
-    { name: "PNG to WEBP Converter", href: "/png-to-webp", icon: "🌐", desc: "Next-gen format, 30% smaller", cta: "Convert PNG to WEBP" },
-    { name: "Compress PDF", href: "/compress-pdf", icon: "📄", desc: "Reduce PDF file size instantly", cta: "Compress PDF" },
-    { name: "PDF to JPG", href: "/pdf-to-jpg", icon: "🖼️", desc: "Convert PDF pages to images", cta: "Convert PDF to JPG Free" },
-    { name: "PDF to Word", href: "/pdf-to-word", icon: "📚", desc: "Convert PDF to editable DOCX", cta: "Convert PDF to Word Free" },
-    { name: "Merge PDF", href: "/merge-pdf", icon: "📑", desc: "Combine multiple PDFs into one", cta: "Merge PDF Files Free" },
-    { name: "Split PDF", href: "/split-pdf", icon: "✂️", desc: "Extract pages or split by range", cta: "Split PDF Free" },
-    { name: "HEIC to JPG", href: "/heic-to-jpg", icon: "📱", desc: "Convert iPhone HEIC photos to JPG", cta: "Convert HEIC to JPG Free" },
+    { name: "JPG to PNG Converter", href: "/jpg-to-png", icon: FileImage, desc: "Convert JPG to PNG free with lossless quality — no watermarks, no sign-up, instant download.", cta: "Convert JPG to PNG Free" },
+    { name: "PNG to JPG Converter", href: "/png-to-jpg", icon: Image, desc: "Convert PNG to JPG online and reduce file size for faster web performance — free, no software needed.", cta: "Convert PNG to JPG Free" },
+    { name: "Image Compressor", href: "/image-compressor", icon: Minimize2, desc: "Compress images online by up to 80% without losing quality. Supports JPG, PNG, and WEBP — free.", cta: "Compress Image Free" },
+    { name: "PNG to WEBP Converter", href: "/png-to-webp", icon: Zap, desc: "Convert PNG to WEBP format and get up to 30% smaller file sizes. Boost page speed instantly.", cta: "Convert PNG to WEBP Free" },
+    { name: "Compress PDF", href: "/compress-pdf", icon: FileDown, desc: "Reduce PDF file size online without losing quality. Ideal for email, uploads, and sharing — free.", cta: "Compress PDF Free" },
+    { name: "PDF to JPG", href: "/pdf-to-jpg", icon: FileImage, desc: "Convert PDF pages to high-quality JPG images online — fast, free, and no software required.", cta: "Convert PDF to JPG Free" },
+    { name: "PDF to Word", href: "/pdf-to-word", icon: FileText, desc: "Convert PDF to editable Word DOCX files online. Preserves formatting — free, no sign-up needed.", cta: "Convert PDF to Word Free" },
+    { name: "Merge PDF", href: "/merge-pdf", icon: Layers, desc: "Combine multiple PDF files into one document online — fast, free, and secure. No sign-up required.", cta: "Merge PDF Files Free" },
+    { name: "Split PDF", href: "/split-pdf", icon: Scissors, desc: "Split PDF by page range or extract specific pages online — free tool, no software installation needed.", cta: "Split PDF Free" },
+    { name: "HEIC to JPG", href: "/heic-to-jpg", icon: Smartphone, desc: "Convert iPhone HEIC photos to JPG online instantly. Compatible with Windows & Mac — free, no app needed.", cta: "Convert HEIC to JPG Free" },
+    { name: "Rotate PDF", href: "/rotate-pdf", icon: RotateCw, desc: "Rotate PDF pages 90°, 180°, or 270° and save permanently — free online tool, no sign-up required.", cta: "Rotate PDF Pages Free" },
+    { name: "Protect PDF", href: "/protect-pdf", icon: ShieldCheck, desc: "Add password protection to your PDF files instantly. Keep sensitive documents safe and secure online.", cta: "Password Protect PDF Free" },
+    { name: "Unlock PDF", href: "/unlock-pdf", icon: LockOpen, desc: "Remove password from PDF files quickly and easily. Unlock protected PDFs online — no software needed.", cta: "Unlock PDF Online Free" },
   ];
 
   return (
@@ -31,39 +40,71 @@ export default function HomeContent() {
               All-in-one PDF tools and Image converter. <br className="hidden sm:block" />
               <span className="text-slate-900 dark:text-white font-black">100% Free & Secure.</span> Zero data retention.
             </p>
-            <div aria-hidden="true" role="presentation" className="flex justify-center">
+            <div aria-hidden="true" role="presentation" className="flex justify-center animate-in fade-in zoom-in-95 duration-1500 delay-700">
               <LiveProcessingTicker />
             </div>
+            {/* Marquee CTA Strip — full width edge to edge */}
+            <div className="relative overflow-hidden space-y-6 py-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 w-screen left-1/2 -translate-x-1/2">
 
-            <div className="flex flex-wrap justify-center gap-4 sm:gap-4 py-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
-              <Link
-                href="/compress-pdf"
-                title="Free Online PDF compressor"
-                aria-label="Free Online PDF compressor"
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-brand-primary text-white font-black hover:scale-105 transition-all shadow-xl shadow-brand-primary/20"
-              >Free Online PDF compressor
-              </Link>
-              <Link
-                href="/image-compressor"
-                title="Free Online Image Compressor"
-                aria-label="Free Online Image Compressor"
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black hover:scale-105 transition-all shadow-xl"
-              >Free Online Image Tools
-              </Link>
-              <Link
-                href="/image-to-pdf"
-                title="Convert Image to PDF Online Free"
-                aria-label="Convert Image to PDF Online Free"
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl glass dark:glass-dark border border-slate-200 dark:border-white/10 font-bold hover:bg-white/10 transition-all"
-              >Online Image to PDF converter
-              </Link>
-              <Link
-                href="/png-to-jpg"
-                title="Convert PNG to JPG Online Free"
-                aria-label="Convert PNG to JPG Online Free"
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl glass dark:glass-dark border border-slate-200 dark:border-white/10 font-bold hover:bg-white/10 transition-all"
-              >Convert PNG to JPG Online
-              </Link>
+              <div className="absolute left-0 top-0 h-full w-32 bg-gradient-to-r to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 h-full w-32 bg-gradient-to-l to-transparent z-10 pointer-events-none" />
+
+              {/* Row 1 — PDF tools, left to right */}
+              <div className="flex gap-3 w-max animate-marquee will-change-transform">
+                {[...Array(3)].map((_, d) => (
+                  <div key={d} className="flex gap-3 shrink-0">
+                    {tools.map((tool, i) => (
+                      <Link
+                        key={tool.href + d}
+                        href={tool.href}
+                        title={tool.name + " Free Online"}
+                        aria-label={tool.name}
+                        className={`
+              flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-bold whitespace-nowrap transition-all hover:scale-105
+              ${i === 0
+                            ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/25"
+                            : i === 3
+                              ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-lg"
+                              : "glass dark:glass-dark border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:border-brand-primary/30"
+                          }
+            `}
+                      >
+                        <tool.icon className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} />
+                        {tool.name}
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+              </div>
+
+              {/* Row 2 — Image tools, right to left */}
+              <div className="flex gap-3 w-max animate-marquee-reverse will-change-transform">
+                {[...Array(3)].map((_, d) => (
+                  <div key={d} className="flex gap-3 shrink-0">
+                    {tools.map((tool, i) => (
+                      <Link
+                        key={tool.href + d}
+                        href={tool.href}
+                        title={tool.name + " Free Online"}
+                        aria-label={tool.name}
+                        className={`
+              flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-bold whitespace-nowrap transition-all hover:scale-105
+              ${i === 0
+                            ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-lg"
+                            : i === 2
+                              ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/25"
+                              : "glass dark:glass-dark border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:border-brand-primary/30"
+                          }
+            `}
+                      >
+                        <tool.icon className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} />
+                        {tool.name}
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+              </div>
+
             </div>
           </div>
         </div>
@@ -72,32 +113,54 @@ export default function HomeContent() {
       {/* Tool Grid */}
       <section className="max-w-6xl mx-auto px-0 space-y-12">
         <div className="text-center space-y-4">
-          <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">All File Conversion Tools</h2>
-          <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Free • Instant • Private — No Sign-up Required</p>
+          <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+            All File Conversion Tools
+          </h2>
+          <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">
+            Free • Instant • Private — No Sign-up Required
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {tools.map((tool, i) => (
-            <a  
+            <a
               key={i}
               href={tool.href}
               aria-label={tool.name}
-              className="group glass dark:glass-dark rounded-[2rem] p-8 border border-white/5 hover:border-brand-primary/50 transition-all duration-500 relative overflow-hidden"
+              className="group relative glass dark:glass-dark rounded-3xl p-6 border border-slate-200/50 dark:border-white/5 hover:border-brand-primary/40 hover:shadow-xl hover:shadow-brand-primary/10 hover:-translate-y-1 transition-all duration-300 flex flex-col gap-4 overflow-hidden"
             >
-              <div className="absolute top-4 right-4 px-3 py-1 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-full border border-emerald-500/30">
-                Active
+              {/* Subtle hover glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl" />
+
+              {/* Top row: icon + badge */}
+              <div className="relative flex items-start justify-between">
+                <div className="w-11 h-11 rounded-2xl bg-brand-primary/10 group-hover:bg-brand-primary/20 flex items-center justify-center transition-colors duration-300">
+                  <tool.icon className="w-5 h-5 text-brand-primary" strokeWidth={1.75} />
+                </div>
+                <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[9px] font-black uppercase tracking-widest rounded-full border border-emerald-500/20">
+                  Free
+                </span>
               </div>
-              <div className="text-4xl mb-6 group-hover:scale-125 transition-transform duration-500 origin-left">{tool.icon}</div>
-              <h3 className="text-lg font-black text-slate-900 dark:text-white mb-2 group-hover:text-brand-primary transition-colors">{tool.name}</h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-6">{tool.desc}</p>
-              <div className="flex items-center gap-2 text-brand-primary font-black text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-                {tool.cta} <ArrowRight className="w-3 h-3" />
+
+              {/* Text */}
+              <div className="relative flex flex-col gap-1.5 flex-1">
+                <h3 className="text-sm font-black text-slate-900 dark:text-white group-hover:text-brand-primary transition-colors leading-snug">
+                  {tool.name}
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                  {tool.desc}
+                </p>
+              </div>
+
+              {/* CTA row */}
+              <div className="relative flex items-center gap-1.5 text-brand-primary font-black text-[10px] uppercase tracking-widest translate-y-1 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                {tool.cta}
+                <ArrowRight className="w-3 h-3" />
               </div>
             </a>
           ))}
         </div>
-      </section>
-
+      </section >
       {/* Social Proof */}
       <section className="max-w-6xl mx-auto px-0">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -172,10 +235,10 @@ export default function HomeContent() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-slate-500 dark:text-slate-400 leading-relaxed text-base md:text-lg font-medium">
             <p>
-              weFixPDF provides a secure, private, and lightning-fast way to handle your file conversion needs. Convert images, compress PDFs, and transform documents—all with zero data retention.
+              weFixPDF provides a secure, private, and lightning-fast way to handle your file conversion needs. From compressing PDFs and converting images to advanced features like <strong>protecting PDFs with passwords</strong>, <strong>unlocking secured files</strong>, and <strong>rotating PDF pages</strong> online.
             </p>
             <p>
-              Process your files instantly in your browser with complete privacy. Professional-grade conversion tools built with security and speed in mind.
+              Every tool is designed with a "privacy-first" mindset. We use industry-standard encryption and guarantee zero data retention. Your files are yours alone, processed instantly in your browser and deleted forever once you're done.
             </p>
           </div>
 

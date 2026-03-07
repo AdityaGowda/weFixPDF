@@ -9,6 +9,9 @@ const {
   pdfToWord,
   removeBackground,
   removeWatermark,
+  rotatePdf,
+  protectPdf,
+  unlockPdf,
 } = require("../services/pdf.service");
 
 // Tools that use req.files (array) instead of req.file (single)
@@ -31,7 +34,7 @@ async function convertFile(req, res, next) {
     }
 
     const ctx = { res, req, file, files };
-
+    console.log(tool, ":::::::::::::::::::::::::::::::::")
     switch (tool) {
       // ── Image tools ──────────────────────────────────────
       case "image-compressor":
@@ -62,7 +65,17 @@ async function convertFile(req, res, next) {
         return await wordToPdf(ctx);
 
       case "pdf-to-word":
+      case "pdf-to-doc":
         return await pdfToWord(ctx);
+
+      case "rotate-pdf":
+        return await rotatePdf(ctx);
+
+      case "protect-pdf":
+        return await protectPdf(ctx);
+
+      case "unlock-pdf":
+        return await unlockPdf(ctx);
 
       // ── AI tools ─────────────────────────────────────────
       case "remove-background":

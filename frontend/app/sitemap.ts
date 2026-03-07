@@ -40,8 +40,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       return {
         url: `${BASE_URL}${config.prefix}/${s.slug}`,
         lastModified: s.updated_at ? new Date(s.updated_at) : new Date(),
-        changeFrequency: config.changeFrequency,
-        priority: config.priority,
       };
     });
 
