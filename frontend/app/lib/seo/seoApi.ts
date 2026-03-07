@@ -108,6 +108,7 @@ export type ToolListing = {
   description: string;
   url: string;
   keywords: string[];
+  type: string;
 };
 
 export type SiteSchema = {

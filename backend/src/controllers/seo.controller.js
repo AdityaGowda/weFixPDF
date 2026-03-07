@@ -69,7 +69,6 @@ async function getBySlug(req, res, next) {
       err.statusCode = 404;
       throw err;
     }
-console.log(row)
     res.json({ success: true, data: row });
   } catch (err) {
     next(err);
@@ -191,7 +190,7 @@ async function deleteById(req, res, next) {
 async function getToolListings(req, res, next) {
   try {
     const [rows] = await db.execute(
-      "SELECT position, slug, name, description, url, keywords FROM tool_listings WHERE is_active = 1 ORDER BY position ASC"
+      "SELECT * FROM tool_listings WHERE is_active = 1 ORDER BY position ASC"
     );
     // Parse keywords JSON
     const parsed = rows.map((r) => ({

@@ -22,6 +22,10 @@ const TOOL_CONFIG: Record<string, { multi?: boolean; max?: number; accept: strin
   "compress-pdf": { accept: ".pdf" },
   "pdf-to-png": { accept: ".pdf" },
   "pdf-to-webp": { accept: ".pdf" },
+  "rotate-pdf": { accept: ".pdf" },
+  "protect-pdf": { accept: ".pdf" },
+  "unlock-pdf": { accept: ".pdf" },
+  "pdf-to-doc": { accept: ".pdf" },
 };
 
 const DEFAULT_ACCEPT = "image/*,.jpg,.jpeg,.png,.webp";
@@ -42,6 +46,8 @@ export default function UploadBox({ service }: UploadBoxProps) {
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const [quality, setQuality] = useState<CompressionLevel>("medium");
   const [errorVisible, setErrorVisible] = useState<string | null>(null);
+  const [password, setPassword] = useState("");
+  const [angle, setAngle] = useState(90);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragItemIndex = useRef<number | null>(null);
@@ -114,8 +120,11 @@ export default function UploadBox({ service }: UploadBoxProps) {
         formData.append("fileName", files[0].name);
       }
 
+      if (password) formData.append("password", password);
+      if (service === "rotate-pdf") formData.append("angle", angle.toString());
+
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/convert/${service}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/convert/${service === "pdf-to-doc" ? "pdf-to-word" : service}`,
         { method: "POST", body: formData }
       );
       if (!res.ok) {
@@ -296,6 +305,43 @@ export default function UploadBox({ service }: UploadBoxProps) {
               >
                 <Sliders className="w-8 h-8 rotate-90" />
               </button>
+            )}
+
+            {(service === "protect-pdf" || service === "unlock-pdf") && (
+              <div className="absolute top-[-80px] left-1/2 -translate-x-1/2 z-30 w-full max-w-[280px] animate-in fade-in slide-in-from-top-4">
+                <div className="glass dark:glass-dark border border-white/20 rounded-2xl p-4 shadow-2xl flex flex-col gap-2">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-white/50 text-center">Enter Password</p>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password..."
+                    className="bg-white/10 border border-white/10 rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-brand-primary/50 transition-all placeholder:text-white/20"
+                  />
+                </div>
+              </div>
+            )}
+
+            {service === "rotate-pdf" && (
+              <div className="absolute top-[-80px] left-1/2 -translate-x-1/2 z-30 w-full max-w-[280px] animate-in fade-in slide-in-from-top-4">
+                <div className="glass dark:glass-dark border border-white/20 rounded-2xl p-4 shadow-2xl flex flex-col gap-2 text-center">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-white/50">Rotation Angle</p>
+                  <div className="flex gap-2 justify-center">
+                    {[90, 180, 270].map((a) => (
+                      <button
+                        key={a}
+                        onClick={() => setAngle(a)}
+                        className={`
+                          flex-1 py-2 rounded-xl text-xs font-black transition-all
+                          ${angle === a ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20" : "bg-white/10 text-white/50 hover:bg-white/20"}
+                        `}
+                      >
+                        {a}°
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
             )}
 
             <button

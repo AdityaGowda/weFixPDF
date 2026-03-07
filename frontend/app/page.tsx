@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   // Fallback if API fails
   return {
     title: "Free Online File Converter — PDF, Images & Documents | weFixPDF",
-    description: "Compress PDF, convert PDF to JPG, merge PDF, JPG to PNG, compress images and more. 100% free, no sign-up, zero data retention.",
+    description: "Compress PDF, rotate PDF, password protect PDF, unlock PDF, convert PDF to JPG, merge PDF, JPG to PNG, compress images and more. 100% free, no sign-up, zero data retention.",
     robots: { index: true, follow: true },
   };
 }
