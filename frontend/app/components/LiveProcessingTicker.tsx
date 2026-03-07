@@ -96,8 +96,8 @@ export default function LiveProcessingTicker() {
     return () => clearInterval(interval);
   }, []);
 
-  // Show skeleton until client is ready
-  if (!mounted) return <TickerSkeleton />;
+  // Return null on initial client pass to match server's empty output (ssr:false)
+  if (!mounted) return null;
 
   return (
     <div className="w-full max-w-sm rounded-3xl bg-white dark:bg-slate-900

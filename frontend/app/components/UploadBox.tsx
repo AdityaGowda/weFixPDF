@@ -308,24 +308,24 @@ export default function UploadBox({ service }: UploadBoxProps) {
             )}
 
             {(service === "protect-pdf" || service === "unlock-pdf") && (
-              <div className="absolute top-[-80px] left-1/2 -translate-x-1/2 z-30 w-full max-w-[280px] animate-in fade-in slide-in-from-top-4">
-                <div className="glass dark:glass-dark border border-white/20 rounded-2xl p-4 shadow-2xl flex flex-col gap-2">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-white/50 text-center">Enter Password</p>
+              <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 z-30 w-full max-w-[280px] animate-in fade-in slide-in-from-top-4">
+                <div className="glass dark:glass-dark border border-slate-200 dark:border-white/20 rounded-2xl p-4 shadow-2xl flex flex-col gap-2">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-white/50 text-center">Enter Password</p>
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password..."
-                    className="bg-white/10 border border-white/10 rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-brand-primary/50 transition-all placeholder:text-white/20"
+                    className="bg-slate-50 dark:bg-white/10 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-brand-primary/50 transition-all placeholder:text-slate-400 dark:placeholder:text-white/20"
                   />
                 </div>
               </div>
             )}
 
             {service === "rotate-pdf" && (
-              <div className="absolute top-[-80px] left-1/2 -translate-x-1/2 z-30 w-full max-w-[280px] animate-in fade-in slide-in-from-top-4">
-                <div className="glass dark:glass-dark border border-white/20 rounded-2xl p-4 shadow-2xl flex flex-col gap-2 text-center">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-white/50">Rotation Angle</p>
+              <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 z-30 w-full max-w-[280px] animate-in fade-in slide-in-from-top-4">
+                <div className="glass dark:glass-dark border border-slate-200 dark:border-white/20 rounded-2xl p-4 shadow-2xl flex flex-col gap-2 text-center">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-white/50">Rotation Angle</p>
                   <div className="flex gap-2 justify-center">
                     {[90, 180, 270].map((a) => (
                       <button
@@ -333,7 +333,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
                         onClick={() => setAngle(a)}
                         className={`
                           flex-1 py-2 rounded-xl text-xs font-black transition-all
-                          ${angle === a ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20" : "bg-white/10 text-white/50 hover:bg-white/20"}
+                          ${angle === a ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20" : "bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-white/50 hover:bg-slate-200 dark:hover:bg-white/20"}
                         `}
                       >
                         {a}°
