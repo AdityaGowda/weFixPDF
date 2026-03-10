@@ -71,14 +71,13 @@ export default async function Footer() {
                     <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Platform</h5>
                     <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
                       <li><a href="/" className="hover:text-brand-primary transition-colors">Home</a></li>
-                      <li><a href="/about" className="hover:text-brand-primary transition-colors">About Us</a></li>
-                      <li><a href="/privacy" className="hover:text-brand-primary transition-colors">Privacy Policy</a></li>
+                <li><a href="/about" className="hover:text-brand-primary transition-colors">About Us</a></li>
                     </ul>
                   </div>
                   <div className="space-y-6">
                     <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Legal</h5>
                     <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
-                      <li><a href="/privacy" className="hover:text-brand-primary transition-colors">Privacy Policy</a></li>
+                <li><a href="/privacy-policy" className="hover:text-brand-primary transition-colors">Privacy Policy</a></li>
                       <li><a href="/terms" className="hover:text-brand-primary transition-colors">Terms of Service</a></li>
                     </ul>
                   </div>
