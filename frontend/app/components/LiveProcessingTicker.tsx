@@ -170,7 +170,7 @@ export default function LiveProcessingTicker() {
       <div className="flex items-center justify-between px-5 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
         <div className="text-center">
           <p className="text-base font-black text-slate-900 dark:text-white tabular-nums">
-            {completedCount.toLocaleString()}
+          1k+
           </p>
           <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Files Converted</p>
         </div>
