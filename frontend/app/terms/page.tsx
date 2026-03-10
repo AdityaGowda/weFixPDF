@@ -13,8 +13,9 @@ export default function TermsPage() {
         <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tighter">
           Terms of Service
         </h1>
-        <p className="subtitle text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
-          Simple, fair terms for using our free file conversion tools.
+        <p className="mt-4 text-slate-500 dark:text-slate-400">
+          Simple, fair terms for using the free file conversion tools
+          provided by <strong>weFixPDF</strong>.
         </p>
       </section>
       <TermsContent />
