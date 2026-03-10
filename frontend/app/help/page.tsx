@@ -185,9 +185,15 @@ export default function HelpCenterPage() {
         <section className="p-8 rounded-3xl bg-gradient-to-br from-blue-600 to-violet-700 text-white text-center">
           <h2 className="text-2xl font-black mb-3">Still Have Questions?</h2>
           <p className="text-blue-200 font-medium mb-6 max-w-md mx-auto">
-            Can't find an answer? Browse our tool guides or check the security page for detailed privacy information.
+            Can't find an answer? Email us at <a href="mailto:hello@wefixpdf.com" className="text-white underline decoration-white/30 hover:decoration-white transition-colors">hello@wefixpdf.com</a> or browse our tools.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
+            <a
+              href="mailto:hello@wefixpdf.com"
+              className="inline-flex items-center gap-2 bg-emerald-500 text-white font-black px-5 py-2.5 rounded-2xl text-sm hover:bg-emerald-600 transition-colors border border-emerald-400/20 shadow-lg shadow-emerald-500/20"
+            >
+              <FileText className="w-4 h-4" /> Contact Support
+            </a>
             <Link
               href="/security"
               className="inline-flex items-center gap-2 bg-white/20 text-white border border-white/30 font-bold px-5 py-2.5 rounded-2xl text-sm hover:bg-white/30 transition-colors"

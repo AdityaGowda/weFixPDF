@@ -197,8 +197,9 @@ export default function AboutPage() {
               Try It Now
             </a>
           </div>
-          <div className="pt-8 text-indigo-100/40 text-xs font-bold tracking-[0.3em] uppercase">
-            Built with privacy in mind • Secure • Fast
+          <div className="pt-8 text-indigo-100/40 text-[10px] font-black tracking-[0.3em] uppercase space-y-2">
+            <div>Built with privacy in mind • Secure • Fast</div>
+            <div className="text-white/60">Questions? <a href="mailto:hello@wefixpdf.com" className="text-white hover:text-white underline decoration-white/20 hover:decoration-white transition-colors">hello@wefixpdf.com</a></div>
           </div>
         </div>
       </section>

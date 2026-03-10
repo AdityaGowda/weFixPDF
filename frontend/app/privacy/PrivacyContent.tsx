@@ -43,15 +43,15 @@ export default function PrivacyContent() {
       </div>
 
       {/* Privacy Commitment */}
-      {/* <section className="glass dark:glass-dark rounded-[3rem] p-12 text-center border border-slate-200/50 dark:border-white/5 bg-slate-50/50 dark:bg-white/5">
+      <section className="glass dark:glass-dark rounded-[3rem] p-12 text-center border border-slate-200/50 dark:border-white/5 bg-slate-50/50 dark:bg-white/5">
         <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">Questions about your privacy?</h3>
         <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-xl mx-auto font-medium">
-          We are committed to transparency. If you have any concerns about how we handle your data, please contact us.
+          We are committed to transparency. If you have any concerns about how we handle your data, please contact us at <a href="mailto:hello@wefixpdf.com" className="text-slate-900 dark:text-white underline decoration-slate-300 dark:decoration-white/20 hover:decoration-slate-900 dark:hover:decoration-white transition-colors">hello@wefixpdf.com</a>.
         </p>
         <p className="text-sm text-slate-400 dark:text-slate-500 font-medium">
           Last updated: March 2026
         </p>
-      </section> */}
+      </section>
     </div>
   );
 }
