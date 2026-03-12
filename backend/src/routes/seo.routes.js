@@ -25,6 +25,7 @@ router.get("/",               seo.getAll);
 router.get("/slugs",          seo.getSlugs);
 router.get("/search",         seo.search);
 router.get("/tool-listings",  seo.getToolListings);
+router.get('/tool-exists/:slug', seo.checkToolExists);
 router.get("/site-schemas",   seo.getSiteSchemas);
 router.get("/homepage",       seo.getHomepage);
 router.get("/:slug",          seo.getBySlug);

@@ -3,6 +3,7 @@ import UploadBox from "../components/UploadBox";
 import { getToolSeo, ToolMetaData } from "../lib/seo/seoApi";
 import ToolPageContent from "../components/toolPagecontent";
 import { buildBreadcrumbSchema, buildFaqSchema, buildHowToSchema, buildToolSchema } from "../lib/seo/metadata";
+import { notFound } from 'next/navigation';
 
 type ToolPageProps = {
   params: Promise<{ tool: string }>;
@@ -23,14 +24,11 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
 
   if (!metadata) {
     return {
-      title: "File Converter | weFixPDF",
-      description: "Fast, secure, and private file conversion tools.",
-      alternates: {
-        canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/${reqService.tool}`,
-      },
+      title: "404Page not found",
+      description: "This page doesn't exist or may have been moved.",
       robots: {
-        index: true,
-        follow: true,
+        index: false,
+        follow: false,
       },
     }
   }
@@ -58,7 +56,9 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
 export default async function ToolPage({ params }: ToolPageProps) {
   const reqService = await params;
   const metadata = await getMetadata(reqService.tool);
-
+  if (!metadata) {
+    return notFound();
+  }
   // Build JSON-LD schemas for tool pages
   const breadcrumbSchema = metadata?.breadcrumb && metadata.breadcrumb.length > 0
     ? buildBreadcrumbSchema(
