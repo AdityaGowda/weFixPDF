@@ -203,6 +203,18 @@ async function getToolListings(req, res, next) {
   }
 }
 
+async function checkToolExists(req, res, next) {
+  try {
+    const { slug } = req.params;
+    const [rows] = await db.execute(
+      "SELECT COUNT(*) as count FROM tool_listings WHERE slug = ?",
+      [slug]
+    );
+    res.json({ success: true, exists: rows[0].count > 0 });
+  } catch (err) {
+    next(err);
+  }
+}
 // GET /api/seo/site-schemas — Get all JSON-LD schemas (homepage structured data)
 async function getSiteSchemas(req, res, next) {
   try {
@@ -270,4 +282,5 @@ module.exports = {
   getToolListings,
   getSiteSchemas,
   getHomepage,
+  checkToolExists
 };

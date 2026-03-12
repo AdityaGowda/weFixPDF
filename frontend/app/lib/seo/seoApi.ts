@@ -165,7 +165,6 @@ async function apiFetch<T>(path: string): Promise<T | null> {
 export async function getToolSeo(slug: string): Promise<ToolMetaData | null> {
   const raw = await apiFetch<Record<string, unknown>>(`/api/seo/${slug}?type=tool`);
   if (!raw) return null;
-console.log(raw,":::::::::::::::::")
   return {
     title: (raw.title as string) || "",
     description: (raw.description as string) || "",
@@ -192,6 +191,11 @@ console.log(raw,":::::::::::::::::")
 export async function getToolListings(): Promise<ToolListing[]> {
   const data = await apiFetch<ToolListing[]>("/api/seo/tool-listings");
   return data || [];
+}
+
+export async function checkToolExists(slug: string): Promise<boolean> {
+  const data = await apiFetch<{ exists: boolean }>(`/api/seo/tool-exists/${slug}`);
+  return data?.exists || false;
 }
 
 /**

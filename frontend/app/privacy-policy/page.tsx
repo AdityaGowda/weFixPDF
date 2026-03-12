@@ -2,8 +2,9 @@ import { Metadata } from "next";
 import PrivacyContent from "./PrivacyContent";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - Zero Data Retention | weFixPDF",
-  description: "weFixPDF privacy policy. We never store your files. Zero retention, in-memory processing, complete privacy protection.",
+  title: "Privacy Policy | weFixPDF",
+  description: "weFixPDF privacy policy. We never store your files. Zero retention, complete privacy protection, No Signup Required , unlimited free use",
+  alternates: { canonical: "https://wefixpdf.com/privacy-policy" },
 };
 
 export default function PrivacyPage() {
