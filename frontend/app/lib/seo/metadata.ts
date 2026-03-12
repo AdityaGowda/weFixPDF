@@ -17,25 +17,9 @@ export function buildMetadata(page: SeoPage, pathPrefix = ""): Metadata {
     description: page.description,
     keywords: page.keywords,
     alternates: { canonical: url },
-    openGraph: {
-      title: page.title,
-      description: page.description,
-      url,
-      siteName: "weFixPDF",
-      type: "website",
-      images: [
-        {
-          url: `${BASE_URL}/og/${page.slug}.png`,
-          width: 1200,
-          height: 630,
-          alt: page.h1,
-        },
-      ],
-    },
     robots: {
       index: true,
       follow: true,
-      googleBot: { index: true, follow: true },
     },
   };
 }
