@@ -218,9 +218,14 @@ export default async function HomeContent() {
             <p className="text-sm font-black text-slate-500 uppercase tracking-widest">Fast & Secure • Zero Retention • Privacy First</p>
             <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">The Easiest File Converter<br />on the Internet</h2>
             <p className="text-lg text-slate-500 dark:text-slate-400 font-medium">Convert images, compress PDFs, and transform documents — instantly and 100% private.</p>
-            <a href="/jpg-to-png" className="max-[950px]:text-sm inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black hover:scale-105 transition-all">
-              Start Converting <ArrowRight className="w-5 h-5" />
-            </a>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a href="/jpg-to-png" className="max-[950px]:text-sm inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black hover:scale-105 transition-all">
+                Start Converting <ArrowRight className="w-5 h-5" />
+              </a>
+              <a href="/blog" className="max-[950px]:text-sm inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-black hover:scale-105 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-white/10">
+                Read our Guides
+              </a>
+            </div>
           </div>
         </div>
       </section>
