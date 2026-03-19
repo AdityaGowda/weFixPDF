@@ -84,8 +84,9 @@ export default async function Footer() {
                   <div className="space-y-6">
                     <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Resources</h5>
                     <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
+                <li><a href="/blog" className="hover:text-brand-primary transition-colors">Blog</a></li>
                       <li><a href="/about" className="hover:text-brand-primary transition-colors">How It Works</a></li>
-                      <li><a href="/" className="hover:text-brand-primary transition-colors">All Tools</a></li>
+                <li><a href="/tools" className="hover:text-brand-primary transition-colors">All Tools</a></li>
                 <li><a href="mailto:hello@wefixpdf.com" className="hover:text-brand-primary transition-colors">Support: hello@wefixpdf.com</a></li>
                     </ul>
                   </div>

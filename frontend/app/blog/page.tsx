@@ -86,7 +86,31 @@ export default async function BlogIndexPage() {
             <p className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-400 mb-4">
               Featured Article
             </p>
-
+              <Link
+                href={`/blog/${featured.slug}`}
+                className="group flex flex-col sm:flex-row p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 hover:border-blue-500/50 dark:hover:border-blue-500/40 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 gap-6 sm:gap-10"
+              >
+                <div className="flex-1 space-y-4">
+                  <span className={`inline-flex px-3 py-1.5 rounded-lg border text-xs font-black uppercase tracking-widest ${categoryTag(featured.slug).color}`}>
+                    {categoryTag(featured.slug).label}
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight">
+                    {featured.h1}
+                  </h2>
+                  <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-3">
+                    {featured.description}
+                  </p>
+                </div>
+                <div className="sm:w-48 flex flex-col justify-end border-t sm:border-t-0 sm:border-l border-slate-100 dark:border-slate-800 pt-4 sm:pt-0 sm:pl-8">
+                  <span className="flex items-center gap-1.5 text-xs text-slate-400 font-medium mb-3">
+                    <Clock className="w-4 h-4" />
+                    {readingTime(featured.bodyContent)}
+                  </span>
+                  <span className="inline-flex items-center gap-2 text-sm font-black text-blue-600 dark:text-blue-400 group-hover:translate-x-1 transition-transform">
+                    Read Article <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
+              </Link>
           </div>
         )}
 

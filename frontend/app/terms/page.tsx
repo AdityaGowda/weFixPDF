@@ -4,6 +4,7 @@ import TermsContent from "./TermsContent";
 export const metadata: Metadata = {
   title: "Terms of Service | weFixPDF",
   description: "Terms of service for weFixPDF file conversion tools. Free to use, no registration required, complete privacy guaranteed.",
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {

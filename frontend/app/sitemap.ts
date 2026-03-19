@@ -26,10 +26,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/about",
     "/privacy-policy",
     "/terms",
+    "/tools",
   ];
 
   const staticPages: MetadataRoute.Sitemap = staticPaths.map((path) => ({
     url: `${BASE_URL}${path}`,
+    lastModified: new Date().toISOString().split('T')[0],
     changeFrequency: "daily",
   }));
 
@@ -42,6 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const prefix = PREFIX_MAP[s.page_type] || "";
       return {
         url: `${BASE_URL}${prefix}/${s.slug}`,
+        lastModified: new Date().toISOString().split('T')[0],
         changeFrequency: "daily",
       };
     });
