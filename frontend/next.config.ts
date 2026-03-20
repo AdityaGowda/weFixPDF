@@ -29,6 +29,12 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.wefixpdf.com" }],
+        destination: "https://wefixpdf.com/:path*",
+        permanent: true,
+      },
+      {
         source: "/privacy",
         destination: "/privacy-policy",
         permanent: true,
