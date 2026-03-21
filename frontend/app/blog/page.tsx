@@ -10,13 +10,21 @@ export const metadata: Metadata = {
   description:
     "Expert guides on compressing PDFs, converting images, protecting files, and choosing the right format for any task. Free tips from the weFixPDF team.",
   alternates: { canonical: "https://wefixpdf.com/blog" },
+  robots: { index: true, follow: true },
   openGraph: {
     title: "Blog — PDF & Image Guides | weFixPDF",
-    description:
-      "Expert guides on PDF and image conversion, compression, and security.",
+    description: "Expert guides on PDF and image conversion, compression, and security.",
     url: "https://wefixpdf.com/blog",
     siteName: "weFixPDF",
     type: "website",
+    images: [{ url: "https://wefixpdf.com/wfp.png", width: 1200, height: 630, alt: "weFixPDF Blog" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog — PDF & Image Guides | weFixPDF",
+    description: "Expert guides on PDF and image conversion, compression, and security.",
+    images: ["https://wefixpdf.com/wfp.png"],
+    site: "@wefixpdf",
   },
 };
 
@@ -61,7 +69,7 @@ export default async function BlogIndexPage() {
 
   return (
     <>
-    <main className="min-h-screen">
+    <div className="min-h-screen">
       <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       {/* ── Hero ── */}
       <section className="pt-16 pb-12 px-4 border-b border-slate-100 dark:border-slate-800">
@@ -164,7 +172,7 @@ export default async function BlogIndexPage() {
           </div>
         )}
       </div>
-    </main>
+    </div>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402"
         crossOrigin="anonymous"></script>
     </>

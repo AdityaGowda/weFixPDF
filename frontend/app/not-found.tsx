@@ -1,9 +1,16 @@
 // app/not-found.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Page Not Found | weFixPDF",
+  description: "This page doesn't exist or may have been moved.",
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (
-    <main className="flex flex-col items-center justify-center px-6 text-center mt-20 mb-20">
+    <div className="flex flex-col items-center justify-center px-6 text-center mt-20 mb-20">
       <div className="space-y-5 max-w-md w-full">
 
         <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-[0.2em] border border-emerald-500/20">
@@ -28,6 +35,6 @@ export default function NotFound() {
         </div>
 
       </div>
-    </main>
+    </div>
   );
 }

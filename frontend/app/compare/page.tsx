@@ -8,13 +8,22 @@ export const metadata: Metadata = {
   title: "Compare PDF Tools — Is weFixPDF Right for You? | weFixPDF",
   description:
     "See how weFixPDF stacks up on features, pricing, and privacy. Honest comparisons to help you choose the right PDF and image conversion tool.",
-  alternates: { canonical: "/compare" },
+  alternates: { canonical: "https://wefixpdf.com/compare" },
+  robots: { index: true, follow: true },
   openGraph: {
     title: "Compare PDF Tools | weFixPDF",
     description: "Honest comparisons to help you choose the right PDF and image tool.",
-    url: "/compare",
+    url: "https://wefixpdf.com/compare",
     siteName: "weFixPDF",
     type: "website",
+    images: [{ url: "https://wefixpdf.com/wfp.png", width: 1200, height: 630, alt: "Compare PDF Tools — weFixPDF" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Compare PDF Tools | weFixPDF",
+    description: "Honest comparisons to help you choose the right PDF and image tool.",
+    images: ["https://wefixpdf.com/wfp.png"],
+    site: "@wefixpdf",
   },
 };
 
@@ -50,7 +59,7 @@ export default async function CompareIndexPage() {
 
   return (
     <>
-    <main className="min-h-screen">
+    <div className="min-h-screen">
       {/* ── Hero ── */}
       <section className="pt-16 pb-12 px-4 border-b border-slate-100 dark:border-slate-800">
         <div className="max-w-5xl mx-auto text-center">
@@ -165,7 +174,7 @@ export default async function CompareIndexPage() {
           </Link>
         </section>
       </div>
-    </main>
+    </div>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402"
         crossOrigin="anonymous"></script>
     </>

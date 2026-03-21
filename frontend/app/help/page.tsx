@@ -9,9 +9,21 @@ export const metadata: Metadata = {
   description:
     "Find answers to common questions about compressing PDFs, converting images, file size limits, privacy, and using all of weFixPDF's free tools.",
   alternates: { canonical: "https://wefixpdf.com/help" },
-  robots: {
-    index: true,
-    follow: true,
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: "Help Center — FAQ & Support | weFixPDF",
+    description: "Answers to common questions about PDF compression, image conversion, privacy, and all weFixPDF tools.",
+    url: "https://wefixpdf.com/help",
+    siteName: "weFixPDF",
+    type: "website",
+    images: [{ url: "https://wefixpdf.com/wfp.png", width: 1200, height: 630, alt: "weFixPDF Help Center" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Help Center | weFixPDF",
+    description: "Answers to common questions about PDF compression, image conversion, and privacy.",
+    images: ["https://wefixpdf.com/wfp.png"],
+    site: "@wefixpdf",
   },
 };
 
@@ -104,7 +116,7 @@ export default function HelpCenterPage() {
     { name: "Help Center", href: "/help" },
   ]);
   return (
-    <main className="min-h-screen">
+    <div className="min-h-screen">
       <script id="faq-schema" type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       {/* Breadcrumb */}
@@ -209,6 +221,6 @@ export default function HelpCenterPage() {
           </div>
         </section>
       </div>
-    </main>
+    </div>
   );
 }

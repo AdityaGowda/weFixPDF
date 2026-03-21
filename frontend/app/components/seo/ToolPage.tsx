@@ -57,7 +57,7 @@ export default function ToolPage({ page }: ToolPageProps) {
         {JSON.stringify(breadcrumbs)}
       </script>
 
-      <main className=" dark:bg-slate-950 min-h-screen">
+      <div className=" dark:bg-slate-950 min-h-screen">
         {/* ── 1. HERO + UPLOAD ── */}
         <section className="relative pt-12 pb-6 px-4 border-b border-slate-100 dark:border-slate-900">
           <div className="max-w-5xl mx-auto text-center mb-6 md:mb-10">
@@ -215,7 +215,7 @@ export default function ToolPage({ page }: ToolPageProps) {
             </div>
           </section>
         )}
-      </main>
+      </div>
     </>
   );
 }

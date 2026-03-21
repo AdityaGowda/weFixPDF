@@ -7,13 +7,22 @@ export const metadata: Metadata = {
   title: "Security & Privacy — How weFixPDF Protects Your Files | weFixPDF",
   description:
     "Learn exactly how weFixPDF keeps your files private. Zero file storage, TLS encryption, no accounts, no tracking. Technical security details for privacy-conscious users.",
-  alternates: { canonical: "/security" },
+  alternates: { canonical: "https://wefixpdf.com/security" },
+  robots: { index: true, follow: true },
   openGraph: {
     title: "Security & Privacy | weFixPDF",
     description: "Zero file storage, TLS encryption, no accounts. How weFixPDF protects your documents.",
-    url: "/security",
+    url: "https://wefixpdf.com/security",
     siteName: "weFixPDF",
     type: "website",
+    images: [{ url: "https://wefixpdf.com/wfp.png", width: 1200, height: 630, alt: "weFixPDF Security & Privacy" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Security & Privacy | weFixPDF",
+    description: "Zero file storage, TLS encryption, no accounts or tracking.",
+    images: ["https://wefixpdf.com/wfp.png"],
+    site: "@wefixpdf",
   },
 };
 
@@ -98,7 +107,7 @@ const comparisons = [
 export default function SecurityPage() {
   return (
     <>
-    <main className="min-h-screen">
+    <div className="min-h-screen">
       {/* ── Hero ── */}
       <section className="relative pt-16 pb-12 px-4 border-b border-slate-100 dark:border-slate-800 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-blue-500/5 pointer-events-none" />
@@ -249,7 +258,7 @@ export default function SecurityPage() {
           </div>
         </section>
       </div>
-    </main>
+    </div>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402"
         crossOrigin="anonymous"></script>
     </>

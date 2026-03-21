@@ -2,10 +2,24 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About - Secure File Converter | weFixPDF",
+  title: "About weFixPDF — Free, Private File Conversion Tools",
   description: "Learn about weFixPDF's mission to provide secure, private file conversion tools. Zero data retention, encrypted processing, and instant results.",
-  alternates: {
-    canonical: "/about",
+  alternates: { canonical: "https://wefixpdf.com/about" },
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: "About weFixPDF — Free, Private File Conversion Tools",
+    description: "Zero data retention, encrypted processing, instant results. No sign-up ever.",
+    url: "https://wefixpdf.com/about",
+    siteName: "weFixPDF",
+    type: "website",
+    images: [{ url: "https://wefixpdf.com/wfp.png", width: 1200, height: 630, alt: "About weFixPDF" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About weFixPDF",
+    description: "Zero data retention, encrypted processing. No sign-up ever.",
+    images: ["https://wefixpdf.com/wfp.png"],
+    site: "@wefixpdf",
   },
 };
 
