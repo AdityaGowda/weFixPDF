@@ -51,6 +51,8 @@ export type SeoPage = {
   schema_type?: string;
   schema_name?: string;
   schema_description?: string;
+  author_name?: string;
+  author_bio?: string;
   cta?: {
     text: string;
     url: string;
@@ -64,6 +66,15 @@ export type SeoPage = {
     name: string;
     url: string;
   }[];
+  // Typed internal link buckets (parsed from tools_list)
+  relatedBlogs?: InternalLink[];
+  relatedUseCases?: InternalLink[];
+  relatedComparisons?: InternalLink[];
+};
+
+export type InternalLink = {
+  name: string;
+  url: string;
 };
 
 export type ToolMetaData = {
@@ -72,6 +83,7 @@ export type ToolMetaData = {
   h1: string;
   h2: string;
   intro: string;
+  bodyContent?: string;
   keywords: string[];
   url: string;
   softwareSchema: {
@@ -92,13 +104,15 @@ export type ToolMetaData = {
     name: string;
     url: string;
   }[];
-  relatedTools: {
-    name: string;
-    url: string;
-  }[];
+  relatedTools: InternalLink[];
+  relatedBlogs?: InternalLink[];
+  relatedUseCases?: InternalLink[];
+  relatedComparisons?: InternalLink[];
   schema_type?: string;
   schema_name?: string;
   schema_description?: string;
+  author_name?: string;
+  author_bio?: string;
 };
 
 export type ToolListing = {
@@ -139,7 +153,7 @@ export type HomepageData = {
 async function apiFetch<T>(path: string): Promise<T | null> {
   try {
     const res = await fetch(`${API_BASE}${path}`, {
-      next: { revalidate: 3600 }, // ISR: revalidate every hour
+      next: { revalidate: 60 }, // ISR: revalidate every 60 seconds
       headers: { "Content-Type": "application/json" },
     });
     if (!res.ok) {
@@ -165,12 +179,19 @@ async function apiFetch<T>(path: string): Promise<T | null> {
 export async function getToolSeo(slug: string): Promise<ToolMetaData | null> {
   const raw = await apiFetch<Record<string, unknown>>(`/api/seo/${slug}?type=tool`);
   if (!raw) return null;
+  // Parse tools_list into typed internal-link buckets
+  const toolsList = (raw.tools_list as { type: string; name: string; url: string }[]) || [];
+  const relatedBlogs      = toolsList.filter((t) => t.type === "blog").map(({ name, url }) => ({ name, url }));
+  const relatedUseCases   = toolsList.filter((t) => t.type === "use_case").map(({ name, url }) => ({ name, url }));
+  const relatedComparisons = toolsList.filter((t) => t.type === "compare").map(({ name, url }) => ({ name, url }));
+
   return {
     title: (raw.title as string) || "",
     description: (raw.description as string) || "",
     h1: (raw.h1 as string) || "",
     h2: (raw.h2 as string) || "",
     intro: (raw.intro as string) || "",
+    bodyContent: (raw.body_content as string) || undefined,
     keywords: (raw.keywords as string[]) || [],
     url: (raw.url as string) || "",
     softwareSchema: (raw.software_schema as ToolMetaData["softwareSchema"]) || { name: "", browserRequirements: "" },
@@ -179,9 +200,14 @@ export async function getToolSeo(slug: string): Promise<ToolMetaData | null> {
     faqs: (raw.faq as ToolMetaData["faqs"]) || [],
     breadcrumb: (raw.breadcrumb as ToolMetaData["breadcrumb"]) || [],
     relatedTools: (raw.related_tools as ToolMetaData["relatedTools"]) || [],
+    relatedBlogs:       relatedBlogs.length > 0 ? relatedBlogs : undefined,
+    relatedUseCases:    relatedUseCases.length > 0 ? relatedUseCases : undefined,
+    relatedComparisons: relatedComparisons.length > 0 ? relatedComparisons : undefined,
     schema_type: (raw.schema_type as string) || undefined,
     schema_name: (raw.schema_name as string) || undefined,
     schema_description: (raw.schema_description as string) || undefined,
+    author_name: (raw.author_name as string) || undefined,
+    author_bio:  (raw.author_bio  as string) || undefined,
   };
 }
 
@@ -222,9 +248,17 @@ export async function getPageSeo(slug: string, type?: string): Promise<SeoPage |
   const raw = await apiFetch<any>(`/api/seo/${slug}${query}`);
   if (!raw) return null;
 
-  // Map database keys (snake_case) to ToolPage (camelCase) and normalize items
+  // Parse tools_list into typed internal-link buckets
+  const toolsList = (raw.tools_list as { type: string; name: string; url: string }[]) || [];
+  const relatedBlogs       = toolsList.filter((t) => t.type === "blog").map(({ name, url }) => ({ name, url }));
+  const relatedUseCases    = toolsList.filter((t) => t.type === "use_case").map(({ name, url }) => ({ name, url }));
+  const relatedComparisons = toolsList.filter((t) => t.type === "compare").map(({ name, url }) => ({ name, url }));
+
+  // Map database keys (snake_case) to SeoPage (camelCase) and normalize items
   return {
     ...raw,
+    author_name: raw.author_name || undefined,
+    author_bio:  raw.author_bio  || undefined,
     howTo: {
       title: raw.how_to?.title || raw.howTo?.title || "",
       description: raw.how_to?.description || raw.howTo?.description || "",
@@ -238,6 +272,9 @@ export async function getPageSeo(slug: string, type?: string): Promise<SeoPage |
       href: r.href || r.url || "#",
     })),
     bodyContent: raw.body_content || raw.bodyContent,
+    relatedBlogs:       relatedBlogs.length > 0 ? relatedBlogs : undefined,
+    relatedUseCases:    relatedUseCases.length > 0 ? relatedUseCases : undefined,
+    relatedComparisons: relatedComparisons.length > 0 ? relatedComparisons : undefined,
   };
 }
 

@@ -8,6 +8,7 @@ import { ArrowRight, Clock, BookOpen, ArrowLeft, CheckCircle } from "lucide-reac
 import { getPageSeo, getAllSlugs } from "@/app/lib/seo/seoApi";
 import { buildMetadata, buildArticleSchema, buildFaqSchema, buildBreadcrumbSchema } from "@/app/lib/seo/metadata";
 import MarkdownContent from "@/app/components/markdowncontent";
+import InternalLinkGrid from "@/app/components/InternalLinkGrid";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -23,7 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const page = await getPageSeo(slug, "blog");
   if (!page) return {};
-  return buildMetadata(page, "/blog");
+  const meta = buildMetadata(page, "/blog");
+  return { ...meta, openGraph: { ...meta.openGraph as object, type: "article" } };
 }
 
 // Estimated reading time
@@ -54,7 +56,7 @@ export default async function BlogArticlePage({ params }: Props) {
       )}
       <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
 
-      <main className="min-h-screen">
+      <div className="min-h-screen">
         {/* ── Hero Banner ── */}
         <section className="relative pt-12 pb-10 px-4 border-b border-slate-100 dark:border-slate-800 overflow-hidden">
           {/* subtle bg gradient */}
@@ -102,6 +104,21 @@ export default async function BlogArticlePage({ params }: Props) {
 
         {/* ── Article Body ── */}
         <div className="max-w-3xl mx-auto px-4 py-14">
+
+          {/* ── Author / E-E-A-T ── */}
+          {page.author_name && (
+            <div className="flex items-start gap-4 mb-12 p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60">
+              <div className="w-11 h-11 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 text-blue-600 dark:text-blue-400 font-black text-lg">
+                {page.author_name.charAt(0)}
+              </div>
+              <div>
+                <p className="font-black text-slate-900 dark:text-white text-sm">{page.author_name}</p>
+                {page.author_bio && (
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1 leading-relaxed">{page.author_bio}</p>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Intro paragraph */}
           {page.intro && (
@@ -163,22 +180,33 @@ export default async function BlogArticlePage({ params }: Props) {
                   Frequently Asked Questions
                 </h2>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {page.faq.map((item, i) => (
-                  <details
-                    key={i}
-                    className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden"
-                  >
-                    <summary className="flex items-center justify-between px-6 py-5 cursor-pointer font-bold text-slate-800 dark:text-white list-none gap-4">
-                      <h3 className="text-sm leading-relaxed">{item.q}</h3>
-                      <span className="text-blue-600 text-xl font-light group-open:rotate-45 transition-transform duration-300 shrink-0">+</span>
-                    </summary>
-                    <div className="px-6 pb-6 text-slate-500 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-50 dark:border-slate-800/50 pt-4 font-medium">
+                  <div key={i} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden">
+                    <div className="px-6 pt-5 pb-3">
+                      <h3 className="font-bold text-slate-800 dark:text-white text-sm leading-relaxed">{item.q}</h3>
+                    </div>
+                    <div className="px-6 pb-5 border-t border-slate-50 dark:border-slate-800/50 pt-3 text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium">
                       {item.a}
                     </div>
-                  </details>
+                  </div>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* ── Internal Link Blocks (from tools_list) ── */}
+          {(page.relatedBlogs || page.relatedUseCases || page.relatedComparisons) && (
+            <div className="mb-14 space-y-10">
+              {page.relatedBlogs && page.relatedBlogs.length > 0 && (
+                <InternalLinkGrid title="Related Guides" badge="Blog" links={page.relatedBlogs} color="blue" />
+              )}
+              {page.relatedUseCases && page.relatedUseCases.length > 0 && (
+                <InternalLinkGrid title="Use Cases" badge="Workflows" links={page.relatedUseCases} color="violet" />
+              )}
+              {page.relatedComparisons && page.relatedComparisons.length > 0 && (
+                <InternalLinkGrid title="Compare & Learn" badge="vs Others" links={page.relatedComparisons} color="orange" />
+              )}
             </div>
           )}
 
@@ -212,9 +240,7 @@ export default async function BlogArticlePage({ params }: Props) {
             </Link>
           </div>
         </div>
-      </main>
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402"
-        crossOrigin="anonymous"></script>
+      </div>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402"
         crossOrigin="anonymous"></script>
       <ins className="adsbygoogle"

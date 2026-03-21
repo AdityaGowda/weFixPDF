@@ -7,6 +7,7 @@ import { ArrowRight, ArrowLeft, CheckCircle, Users, ExternalLink } from "lucide-
 import { getPageSeo, getAllSlugs } from "@/app/lib/seo/seoApi";
 import { buildMetadata, buildCollectionPageSchema, buildFaqSchema, buildBreadcrumbSchema } from "@/app/lib/seo/metadata";
 import MarkdownContent from "@/app/components/markdowncontent";
+import InternalLinkGrid from "@/app/components/InternalLinkGrid";
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -37,8 +38,9 @@ export default async function UseCasePage({ params }: Props) {
     { name: page.h1, href: `/use-cases/${page.slug}` },
   ]);
 
-  // Extract tools_list from the raw page if available
-  const toolsList: { name: string; url: string; use_case?: string }[] = (page as any).tools_list || [];
+  // Extract tools_list: typed items go to InternalLinkGrid, untyped → Recommended Tools
+  const rawToolsList: { type?: string; name: string; url: string; use_case?: string }[] = (page as any).tools_list || [];
+  const toolsList = rawToolsList.filter((t) => !t.type || t.type === "tool");
 
   return (
     <>
@@ -48,7 +50,7 @@ export default async function UseCasePage({ params }: Props) {
       )}
       <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
 
-      <main className="min-h-screen">
+      <div className="min-h-screen">
         {/* ── Hero ── */}
         <section className="relative pt-12 pb-10 px-4 border-b border-slate-100 dark:border-slate-800 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-indigo-500/5 pointer-events-none" />
@@ -82,6 +84,21 @@ export default async function UseCasePage({ params }: Props) {
         {/* ── Body ── */}
         <div className="max-w-4xl mx-auto px-4 py-14 space-y-14">
 
+          {/* ── Author / E-E-A-T ── */}
+          {page.author_name && (
+            <div className="flex items-start gap-4 p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60">
+              <div className="w-11 h-11 rounded-full bg-violet-500/10 border border-violet-500/20 flex items-center justify-center shrink-0 text-violet-600 dark:text-violet-400 font-black text-lg">
+                {page.author_name.charAt(0)}
+              </div>
+              <div>
+                <p className="font-black text-slate-900 dark:text-white text-sm">{page.author_name}</p>
+                {page.author_bio && (
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1 leading-relaxed">{page.author_bio}</p>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Intro */}
           {page.intro && (
             <div className="relative pl-6">
@@ -103,6 +120,23 @@ export default async function UseCasePage({ params }: Props) {
           {!page.bodyContent && !page.intro && (
             <div className="prose dark:prose-invert max-w-none">
               <p>{page.description}</p>
+            </div>
+          )}
+
+          {/* ── Features ── */}
+          {page.features && page.features.length > 0 && (
+            <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60">
+              <h2 className="text-lg font-black text-slate-900 dark:text-white mb-4 tracking-tight">
+                Why it works
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {page.features.map((f, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{f}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
@@ -142,20 +176,17 @@ export default async function UseCasePage({ params }: Props) {
             </div>
           )}
 
-          {/* ── Features ── */}
-          {page.features && page.features.length > 0 && (
-            <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60">
-              <h2 className="text-lg font-black text-slate-900 dark:text-white mb-4 tracking-tight">
-                Why it works
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {page.features.map((f, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{f}</span>
-                  </div>
-                ))}
-              </div>
+          {/* CTA */}
+          {page.cta && (
+            <div className="p-6 md:p-8 rounded-3xl bg-gradient-to-br from-violet-600 to-indigo-700 text-white">
+              <h2 className="text-xl font-black mb-2">{page.cta.text}</h2>
+              <p className="text-violet-200 text-sm mb-6">No account, no watermarks, no data stored.</p>
+              <a
+                href={page.cta.url}
+                className="inline-flex items-center gap-2 bg-white text-violet-700 font-black px-6 py-3 rounded-2xl text-sm hover:bg-violet-50 transition-colors"
+              >
+                Get Started Free <ArrowRight className="w-4 h-4" />
+              </a>
             </div>
           )}
 
@@ -168,33 +199,18 @@ export default async function UseCasePage({ params }: Props) {
                   Frequently Asked Questions
                 </h2>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {page.faq.map((item, i) => (
-                  <details key={i} className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden">
-                    <summary className="flex items-center justify-between px-6 py-5 cursor-pointer font-bold text-slate-800 dark:text-white list-none gap-4">
-                      <h3 className="text-sm leading-relaxed">{item.q}</h3>
-                      <span className="text-violet-600 text-xl font-light group-open:rotate-45 transition-transform duration-300 shrink-0">+</span>
-                    </summary>
-                    <div className="px-6 pb-6 text-slate-500 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-50 dark:border-slate-800/50 pt-4 font-medium">
+                  <div key={i} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden">
+                    <div className="px-6 pt-5 pb-3">
+                      <h3 className="font-bold text-slate-800 dark:text-white text-sm leading-relaxed">{item.q}</h3>
+                    </div>
+                    <div className="px-6 pb-5 border-t border-slate-50 dark:border-slate-800/50 pt-3 text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium">
                       {item.a}
                     </div>
-                  </details>
+                  </div>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* CTA */}
-          {page.cta && (
-            <div className="p-6 md:p-8 rounded-3xl bg-gradient-to-br from-violet-600 to-indigo-700 text-white">
-              <h2 className="text-xl font-black mb-2">{page.cta.text}</h2>
-              <p className="text-violet-200 text-sm mb-6">No account, no watermarks, no data stored.</p>
-              <a
-                href={page.cta.url}
-                className="inline-flex items-center gap-2 bg-white text-violet-700 font-black px-6 py-3 rounded-2xl text-sm hover:bg-violet-50 transition-colors"
-              >
-                Get Started Free <ArrowRight className="w-4 h-4" />
-              </a>
             </div>
           )}
 
@@ -212,13 +228,28 @@ export default async function UseCasePage({ params }: Props) {
             </div>
           )}
 
+          {/* ── Internal Link Blocks (from tools_list typed entries) ── */}
+          {(page.relatedBlogs || page.relatedUseCases || page.relatedComparisons) && (
+            <div className="space-y-10">
+              {page.relatedBlogs && page.relatedBlogs.length > 0 && (
+                <InternalLinkGrid title="Related Guides" badge="Blog" links={page.relatedBlogs} color="blue" />
+              )}
+              {page.relatedUseCases && page.relatedUseCases.length > 0 && (
+                <InternalLinkGrid title="Use Cases" badge="Workflows" links={page.relatedUseCases} color="violet" />
+              )}
+              {page.relatedComparisons && page.relatedComparisons.length > 0 && (
+                <InternalLinkGrid title="Compare & Learn" badge="vs Others" links={page.relatedComparisons} color="orange" />
+              )}
+            </div>
+          )}
+
           <div className="pt-8 border-t border-slate-100 dark:border-slate-800">
             <Link href="/use-cases" className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
               <ArrowLeft className="w-4 h-4" /> All Use Cases
             </Link>
           </div>
         </div>
-      </main>
+      </div>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402"
         crossOrigin="anonymous"></script>
     </>

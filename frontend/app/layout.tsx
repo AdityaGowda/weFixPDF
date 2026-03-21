@@ -24,7 +24,46 @@ export const metadata: Metadata = {
     ],
   },
   manifest: '/site.webmanifest',
+  openGraph: {
+    siteName: "weFixPDF",
+    locale: "en_US",
+    type: "website",
+    images: [{ url: "/wfp.png", width: 1200, height: 630, alt: "weFixPDF" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@wefixpdf",
+    images: ["/wfp.png"],
+  },
 }
+
+// Global structured data — injected once in <head>
+const WEBSITE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "weFixPDF",
+  url: "https://wefixpdf.com",
+  description: "Free online PDF and image tools — compress, convert, merge, split, protect. No sign-up, no watermarks, zero data stored.",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: { "@type": "EntryPoint", urlTemplate: "https://wefixpdf.com/blog?q={search_term_string}" },
+    "query-input": "required name=search_term_string",
+  },
+};
+
+const ORGANIZATION_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "weFixPDF",
+  url: "https://wefixpdf.com",
+  logo: "https://wefixpdf.com/logo.png",
+  sameAs: [],
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer support",
+    url: "https://wefixpdf.com/help",
+  },
+};
 
 
 export default function RootLayout({
@@ -34,6 +73,10 @@ export default function RootLayout({
   }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_SCHEMA) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_SCHEMA) }} />
+      </head>
       <body className={`${poppins.className} antialiased bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-500`}>
         <ThemeProvider
           attribute="class"
@@ -59,7 +102,7 @@ export default function RootLayout({
           />
           <Navbar />
           <main className="flex-1 w-full transition-all duration-500 overflow-x-hidden">
-            <div className="px-4 md:py-12 max-w-7xl mx-auto space-y-16 md:space-y-24">
+            <div className="px-4 sm:px-6 lg:px-12 md:py-12 max-w-7xl mx-auto space-y-16 md:space-y-24">
               <div className="relative">
                 {/* Premium Visual Decorations - Hidden on mobile for performance */}
                 <div className="hidden md:block absolute -top-40 -left-40 w-96 h-96 bg-brand-primary/20 rounded-full blur-[120px] pointer-events-none animate-pulse-slow" />

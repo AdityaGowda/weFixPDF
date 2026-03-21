@@ -10,12 +10,21 @@ export const metadata: Metadata = {
   description:
     "From students to lawyers, businesses to developers — discover how different people use weFixPDF's free PDF and image tools to get work done faster.",
   alternates: { canonical: "https://wefixpdf.com/use-cases" },
+  robots: { index: true, follow: true },
   openGraph: {
     title: "Use Cases | weFixPDF",
     description: "Discover how students, businesses, lawyers, and developers use weFixPDF.",
     url: "https://wefixpdf.com/use-cases",
     siteName: "weFixPDF",
     type: "website",
+    images: [{ url: "https://wefixpdf.com/wfp.png", width: 1200, height: 630, alt: "weFixPDF Use Cases" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Use Cases | weFixPDF",
+    description: "Discover how students, businesses, lawyers, and developers use weFixPDF.",
+    images: ["https://wefixpdf.com/wfp.png"],
+    site: "@wefixpdf",
   },
 };
 
@@ -82,7 +91,7 @@ export default async function UseCasesIndexPage() {
 
   return (
     <>
-    <main className="min-h-screen">
+    <div className="min-h-screen">
       <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       {/* ── Hero ── */}
       <section className="pt-16 pb-12 px-4 border-b border-slate-100 dark:border-slate-800">
@@ -171,7 +180,7 @@ export default async function UseCasesIndexPage() {
           </Link>
         </section>
       </div>
-    </main>
+    </div>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402"
         crossOrigin="anonymous"></script>
     </>
