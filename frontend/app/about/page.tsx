@@ -137,7 +137,7 @@ export default function AboutPage() {
             <div className="space-y-6">
               <div className="w-16 h-16 mx-auto rounded-2xl bg-white/5 flex items-center justify-center text-3xl">🔒</div>
               <h4 className="text-2xl font-bold">Secure Processing</h4>
-              <p className="text-slate-400 leading-relaxed font-medium">End-to-end encryption. Files automatically deleted after conversion.</p>
+              <p className="text-slate-400 leading-relaxed font-medium">TLS-encrypted transfers. Files automatically deleted after conversion.</p>
             </div>
             <div className="space-y-6">
               <div className="w-16 h-16 mx-auto rounded-2xl bg-white/5 flex items-center justify-center text-3xl">🎯</div>
@@ -172,7 +172,7 @@ export default function AboutPage() {
               </tr>
               <tr className="hover:bg-brand-primary/5 transition-colors group">
                 <td className="p-4 sm:p-8 font-bold text-slate-900 dark:text-white">File Encryption</td>
-                <td className="p-4 sm:p-8 text-brand-primary font-black bg-brand-primary/5">End-to-End ✓</td>
+                <td className="p-4 sm:p-8 text-brand-primary font-black bg-brand-primary/5">TLS 1.3 ✓</td>
                 <td className="p-4 sm:p-8">Partial</td>
               </tr>
               <tr className="hover:bg-brand-primary/5 transition-colors group">

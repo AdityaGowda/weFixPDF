@@ -186,7 +186,7 @@ export default function SecurityPage() {
           </p>
           <div className="relative">
             {[
-              { step: "1", title: "You upload your file",                  body: "Your file is sent via an encrypted HTTPS connection. The transfer is encrypted end-to-end." },
+              { step: "1", title: "You upload your file",                  body: "Your file is sent via an encrypted HTTPS connection using TLS 1.3. The transfer is secured in transit." },
               { step: "2", title: "Processing runs in isolated memory",    body: "The conversion runs in a short-lived server process. Your file data never touches permanent storage." },
               { step: "3", title: "Result is prepared for download",       body: "The converted file is placed in a temporary in-memory buffer and a download link is generated for you." },
               { step: "4", title: "You download the file",                 body: "You click download and receive your file directly. The download is served over HTTPS." },
