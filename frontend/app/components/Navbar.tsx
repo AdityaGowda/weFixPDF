@@ -91,7 +91,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between max-[950px]:py-1">
         {/* Logo */}
         <a href="/" className="flex items-center gap-3 group">
-          <div className="relative w-full h-12 overflow-hidden items-center justify-start flex transition-transform duration-300 gap-4 max-[950px]:pl-2">
+          <div className="relative w-full h-12 overflow-hidden items-center justify-start flex transition-transform duration-300 gap-4 max-[950px]:pl-1">
             <Image src="/logo.svg" alt="weFixPDF Logo" width={38} height={38} className="dark:hidden" priority />
             <Image src="/darklogo.svg" alt="weFixPDF Logo" width={40} height={40} className="hidden dark:block" priority />
             <Image

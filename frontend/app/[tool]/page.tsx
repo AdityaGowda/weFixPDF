@@ -107,7 +107,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
       {authorSchema && (
         <script id="author-schema" type="application/ld+json">{JSON.stringify(authorSchema)}</script>
       )}
-      <div className="space-y-16 md:space-y-20 max-[950px]:py-4 animate-fade-in sm:px-0 max-[950px]:mt-0">
+      <div className="space-y-10 md:space-y-15 max-[950px]:py-4 animate-fade-in sm:px-0 max-[950px]:mt-0">
         {/* ── Breadcrumbs ── */}
         {metadata?.breadcrumb && metadata.breadcrumb.length > 0 && (
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-slate-400 max-[950px]:mt-4 mt-2">

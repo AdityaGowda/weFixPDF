@@ -102,7 +102,7 @@ export default function RootLayout({
           />
           <Navbar />
           <main className="flex-1 w-full transition-all duration-500 overflow-x-hidden">
-            <div className="px-4 sm:px-6 lg:px-12 md:py-12 max-w-7xl mx-auto space-y-16 md:space-y-24">
+            <div className="px-4 sm:px-6 lg:px-0 md:py-12 max-w-7xl mx-auto space-y-16 md:space-y-24">
               <div className="relative">
                 {/* Premium Visual Decorations - Hidden on mobile for performance */}
                 <div className="hidden md:block absolute -top-40 -left-40 w-96 h-96 bg-brand-primary/20 rounded-full blur-[120px] pointer-events-none animate-pulse-slow" />

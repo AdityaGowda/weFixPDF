@@ -304,7 +304,7 @@ export default function HomeContent() {
           },
           {
             icon: Lock,
-            title: "End-to-End Encryption",
+            title: "Encrypted Transfers",
             desc: "All uploads and downloads use HTTPS/TLS encryption. Your files are never transmitted or processed in plain text."
           },
           {
@@ -391,7 +391,7 @@ export default function HomeContent() {
               Why Privacy Matters for File Conversion
             </h3>
             <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-base font-medium">
-              When you upload a PDF or image to an online converter, you are trusting that service with potentially sensitive information — contracts, invoices, personal photos, legal documents. weFixPDF uses end-to-end HTTPS encryption for all transfers and guarantees <strong className="text-slate-700 dark:text-slate-300">zero data retention</strong>: no file is ever stored on disk beyond the duration of your active conversion session.
+              When you upload a PDF or image to an online converter, you are trusting that service with potentially sensitive information — contracts, invoices, personal photos, legal documents. weFixPDF uses HTTPS/TLS encryption for all transfers and guarantees <strong className="text-slate-700 dark:text-slate-300">zero data retention</strong>: no file is ever stored on disk beyond the duration of your active conversion session.
             </p>
           </div>
 
