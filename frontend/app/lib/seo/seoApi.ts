@@ -193,7 +193,7 @@ export async function getToolSeo(slug: string): Promise<ToolMetaData | null> {
     intro: (raw.intro as string) || "",
     bodyContent: (raw.body_content as string) || undefined,
     keywords: (raw.keywords as string[]) || [],
-    url: (raw.url as string) || "",
+    url: (raw.url as string) || `https://wefixpdf.com/${slug}`,
     softwareSchema: (raw.software_schema as ToolMetaData["softwareSchema"]) || { name: "", browserRequirements: "" },
     howTo: (raw.how_to as ToolMetaData["howTo"]) || { title: "", description: "", steps: [] },
     features: (raw.features as string[]) || [],
