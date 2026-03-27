@@ -50,12 +50,14 @@ export default function PrivacyContent() {
       )
     },
     {
-      title: "Cookies",
+      title: "Cookies and Advertising",
       content: (
         <>
-          weFixPDF may use <strong>minimal technical cookies</strong> required for website functionality
-          and performance. These cookies <strong>do not track personal behavior</strong> or create
-          advertising profiles.
+          weFixPDF use cookies to improve your experience. <strong>Third-party vendors, including Google</strong>, use cookies to serve ads based on your prior visits to our website or other websites.
+          Google&apos;s use of advertising cookies enables it and its partners to serve ads to you based on your visit to weFixPDF and/or other sites on the Internet.
+          <br /><br />
+          You may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="underline hover:text-brand-primary transition-colors">Ads Settings</a>.
+          Alternatively, you can opt out of a third-party vendor&apos;s use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer" className="underline hover:text-brand-primary transition-colors">www.aboutads.info</a>.
         </>
       )
     },

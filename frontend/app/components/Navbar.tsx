@@ -92,8 +92,8 @@ export default function Navbar() {
         {/* Logo */}
         <a href="/" className="flex items-center gap-3 group">
           <div className="relative w-full h-12 overflow-hidden items-center justify-start flex transition-transform duration-300 gap-4 max-[950px]:pl-1">
-            <Image src="/logo.svg" alt="weFixPDF Logo" width={38} height={38} className="dark:hidden" priority />
-            <Image src="/darklogo.svg" alt="weFixPDF Logo" width={40} height={40} className="hidden dark:block" priority />
+            <Image src="/logo.svg" alt="weFixPDF Logo" width={38} height={38} className="dark:hidden" priority style={{ width: "38px", height: "auto" }} />
+            <Image src="/darklogo.svg" alt="weFixPDF Logo" width={40} height={40} className="hidden dark:block" priority style={{ width: "40px", height: "auto" }} />
             <Image
               src="/weFixPDF.png"
               alt="weFixPDF"
@@ -101,6 +101,7 @@ export default function Navbar() {
               height={38}
               className="object-contain max-[950px]:hidden md:block"
               priority
+              style={{ width: "140px", height: "auto" }}
             />
           </div>
         </a>

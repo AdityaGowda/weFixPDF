@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from 'next'
+import AdSenseLoader from "./components/AdSenseLoader";
 import Navbar from "./components/Navbar";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Toaster } from "react-hot-toast";
@@ -74,8 +75,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_SCHEMA) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_SCHEMA) }} />
+        <script id="website-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_SCHEMA) }} />
+        <script id="organization-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_SCHEMA) }} />
       </head>
       <body className={`${poppins.className} antialiased bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-500`}>
         <ThemeProvider
@@ -112,11 +113,9 @@ export default function RootLayout({
                   {children}
                 </div>
               </div>
-
-
             </div>
-
             <Footer />
+            <AdSenseLoader />
           </main>
         </ThemeProvider>
       </body>
