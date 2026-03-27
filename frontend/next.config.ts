@@ -5,12 +5,11 @@ const isDev = process.env.NODE_ENV === "development";
 // Shared CSP directives across dev and prod
 const baseCSP: string[] = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://adservice.google.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://static.cloudflareinsights.com",
+  "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://adservice.google.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://static.cloudflareinsights.com https://cloudflareinsights.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "img-src 'self' data: blob: https://googleads.g.doubleclick.net https://www.google.com https://tpc.googlesyndication.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://pagead2.googlesyndication.com",
   "font-src 'self' https://fonts.gstatic.com",
   "frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://www.google.com",
-  // Allow GTM/ad scripts to spawn workers
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",
@@ -19,14 +18,12 @@ const baseCSP: string[] = [
 
 const devCSP = [
   ...baseCSP,
-  // localhost backend only in dev
-  "connect-src 'self' http://localhost:5000 https://www.google.com https://pagead2.googlesyndication.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://cloudflareinsights.com",
+  "connect-src 'self' http://localhost:5000 https://www.google.com https://pagead2.googlesyndication.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://cloudflareinsights.com https://static.cloudflareinsights.com",
 ].join("; ");
 
 const prodCSP = [
   ...baseCSP,
-  "connect-src 'self' https://www.google.com https://pagead2.googlesyndication.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://cloudflareinsights.com",
-  // Force HTTP → HTTPS upgrades in prod
+  "connect-src 'self' https://www.google.com https://pagead2.googlesyndication.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://cloudflareinsights.com https://static.cloudflareinsights.com",
   "upgrade-insecure-requests",
 ].join("; ");
 

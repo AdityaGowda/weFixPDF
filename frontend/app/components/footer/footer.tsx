@@ -19,6 +19,7 @@ export default async function Footer() {
                     width={38}
                     height={38}
                     className="dark:hidden"
+                    style={{ width: "38px", height: "auto" }}
                   />
                   <Image
                     src="/darklogo.svg"
@@ -26,6 +27,7 @@ export default async function Footer() {
                     width={40}
                     height={40}
                     className="hidden dark:block"
+                    style={{ width: "40px", height: "auto" }}
                   />
                   <Image
                     src="/weFixPDF.png"
@@ -33,6 +35,7 @@ export default async function Footer() {
                     width={140}
                     height={38}
                     className="object-contain"
+                    style={{ width: "140px", height: "auto" }}
                   />
                       </div>
                     </div>
@@ -41,16 +44,6 @@ export default async function Footer() {
                     </p>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-6">
-                    <div className="px-6 py-3 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 flex items-center gap-3">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                      <span className="text-xs font-black text-emerald-600 uppercase tracking-widest">Global Engine Active</span>
-                    </div>
-                    <div className="px-6 py-3 rounded-2xl bg-brand-primary/5 border border-brand-primary/10 flex items-center gap-3">
-                      <Globe className="w-4 h-4 text-brand-primary" />
-                      <span className="text-xs font-black text-brand-primary uppercase tracking-widest">Global Processing</span>
-                    </div>
-                  </div>
                 </div>
 
                 {/* Middle Footer: Links */}
