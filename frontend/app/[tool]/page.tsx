@@ -145,21 +145,16 @@ export default async function ToolPage({ params }: ToolPageProps) {
         <ToolPageContent metadata={metadata} />
       </div>
 
-      {/* AdSense — loaded after interactive to avoid blocking LCP */}
-      <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402"
-        crossOrigin="anonymous"
-        strategy="afterInteractive"
-      />
+      {/* AdSense Unit */}
       <ins className="adsbygoogle"
         style={{ display: "block" }}
         data-ad-format="autorelaxed"
         data-ad-client="ca-pub-8668995301634402"
         data-ad-slot="3174189444" />
-      <Script id="adsense-init" strategy="afterInteractive">
-        {`(adsbygoogle = window.adsbygoogle || []).push({});`}
-      </Script>
+      <script
+        id="adsense-init"
+        dangerouslySetInnerHTML={{ __html: "(adsbygoogle = window.adsbygoogle || []).push({});" }}
+      />
     </>
   );
 }
