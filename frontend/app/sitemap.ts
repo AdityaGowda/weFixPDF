@@ -2,6 +2,8 @@
 import type { MetadataRoute } from "next";
 import { getAllSlugs } from "@/app/lib/seo/seoApi";
 
+export const dynamic = "force-dynamic";
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://wefixpdf.com";
 
 const PREFIX_MAP: Record<string, string> = {
@@ -38,6 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/help`,           lastModified: today, priority: 0.4 },
     { url: `${BASE_URL}/privacy-policy`, lastModified: today, priority: 0.3 },
     { url: `${BASE_URL}/terms`,          lastModified: today, priority: 0.3 },
+    { url: `${BASE_URL}/contact`,        lastModified: today, priority: 0.5 },
   ];
 
   // Dynamic pages from DB

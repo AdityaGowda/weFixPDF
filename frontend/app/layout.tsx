@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from 'next'
 import AdSenseLoader from "./components/AdSenseLoader";
+import CookieConsent from "./components/CookieConsent";
 import Navbar from "./components/Navbar";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Toaster } from "react-hot-toast";
@@ -116,6 +117,7 @@ export default function RootLayout({
             </div>
             <Footer />
             <AdSenseLoader />
+            <CookieConsent />
           </main>
         </ThemeProvider>
       </body>
