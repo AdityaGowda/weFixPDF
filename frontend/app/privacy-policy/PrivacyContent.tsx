@@ -80,6 +80,43 @@ export default function PrivacyContent() {
           page with a revised date.
         </>
       )
+    },
+    {
+      title: "Your Rights Under GDPR",
+      content: (
+        <>
+          If you are located in the EU or EEA, you have the right to: <strong>access your data</strong>, request deletion, restrict processing, data portability, and object to processing. Since weFixPDF collects no personal file data, these rights apply only to any technical logs (IP address, browser type) that may be retained for security purposes.
+          <br /><br />
+          To exercise any of these rights, contact us at{" "}
+          <a href="mailto:hello@wefixpdf.com" className="underline hover:text-brand-primary transition-colors">hello@wefixpdf.com</a>. We will respond within 30 days.
+        </>
+      )
+    },
+    {
+      title: "Data Controller",
+      content: (
+        <>
+          weFixPDF is operated by an <strong>independent developer based in India</strong>. For all privacy-related inquiries, contact:{" "}
+          <a href="mailto:hello@wefixpdf.com" className="underline hover:text-brand-primary transition-colors">hello@wefixpdf.com</a>.
+          <br /><br />
+          We do not have an EU establishment but <strong>voluntarily comply with GDPR principles</strong> for all users worldwide.
+        </>
+      )
+    },
+    {
+      title: "Cookies We Use",
+      content: (
+        <>
+          <strong>Essential cookies</strong> are required for the site to function correctly and do not require your consent.
+          <br /><br />
+          <strong>Analytics cookies</strong> collect anonymous page-view data via Cloudflare Web Analytics. No personal data is collected or stored.
+          <br /><br />
+          <strong>Advertising cookies</strong>: Google AdSense uses cookies to serve relevant ads based on your browsing. You can opt out at{" "}
+          <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="underline hover:text-brand-primary transition-colors">google.com/settings/ads</a>.
+          <br /><br />
+          We obtain your consent before setting non-essential cookies.
+        </>
+      )
     }
   ];
 
@@ -89,7 +126,7 @@ export default function PrivacyContent() {
       {/* Header */}
       <section className="max-w-3xl mx-auto text-center space-y-4">
         <p className="text-sm text-slate-400 dark:text-slate-500">
-          Last Updated: March 2026
+          Last Updated: April 2026
         </p>
       </section>
 
