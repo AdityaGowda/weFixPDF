@@ -52,7 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const prefix = PREFIX_MAP[s.page_type] ?? "";
       return {
         url:          `${BASE_URL}${prefix}/${s.slug}`,
-        lastModified: s.updated_at ? s.updated_at.split("T")[0] : today,
+        lastModified: new Date().toISOString().split("T")[0],
         priority:     PRIORITY_MAP[s.page_type] ?? 0.5,
       };
     });
