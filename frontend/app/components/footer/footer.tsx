@@ -47,24 +47,48 @@ export default async function Footer() {
                 </div>
 
                 {/* Middle Footer: Links */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 border-t border-slate-200 dark:border-white/5 pt-12">
-                  <div className="space-y-6">
-                    <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Image Tools</h5>
-                    <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
-                     {tools.map((tool:any) => (
-                       <li key={tool.name}>
-                         <a href={tool.url} className="hover:text-brand-primary transition-colors">
-                           {tool.name}
-                         </a>
-                       </li>
-                     ))}
-                    </ul>
-                  </div>
+                <div className="grid grid-cols-2 lg:grid-cols-5 gap-12 border-t border-slate-200 dark:border-white/5 pt-12">
+                  {(() => {
+                    const PDF_SLUGS = ["compress-pdf","merge-pdf","split-pdf","pdf-to-jpg","pdf-to-word","rotate-pdf","protect-pdf","unlock-pdf","word-to-pdf"];
+                    const pdfTools = tools.filter((t: any) => PDF_SLUGS.includes(t.slug));
+                    const imageTools = tools.filter((t: any) => !PDF_SLUGS.includes(t.slug));
+                    const ToolList = ({ items, allHref }: { items: any[], allHref: string }) => (
+                      <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
+                        {items.slice(0, 5).map((tool: any) => (
+                          <li key={tool.slug}>
+                            <a href={`/${tool.slug}`} className="hover:text-brand-primary transition-colors">
+                              {tool.name}
+                            </a>
+                          </li>
+                        ))}
+                        {items.length > 5 && (
+                          <li>
+                            <a href={allHref} className="text-brand-primary hover:underline transition-colors">
+                              +{items.length - 5} more tools →
+                            </a>
+                          </li>
+                        )}
+                      </ul>
+                    );
+                    return (
+                      <>
+                        <div className="space-y-6">
+                          <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">PDF Tools</h5>
+                          <ToolList items={pdfTools} allHref="/tools" />
+                        </div>
+                        <div className="space-y-6">
+                          <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Image Tools</h5>
+                          <ToolList items={imageTools} allHref="/tools" />
+                        </div>
+                      </>
+                    );
+                  })()}
                   <div className="space-y-6">
                     <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Platform</h5>
                     <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
                       <li><a href="/" className="hover:text-brand-primary transition-colors">Home</a></li>
                 <li><a href="/about" className="hover:text-brand-primary transition-colors">About Us</a></li>
+                <li><a href="/contact" className="hover:text-brand-primary transition-colors">Contact Us</a></li>
                     </ul>
                   </div>
                   <div className="space-y-6">

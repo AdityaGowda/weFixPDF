@@ -1,6 +1,6 @@
 import {
   Shield, Zap, Lock, ArrowRight, Star, FileImage, Image, Minimize2, FileDown,
-  FileText, Layers, Scissors, Smartphone,
+  Layers, Scissors, Smartphone,
   RotateCw, ShieldCheck, LockOpen, Upload, Settings, Download,
   CheckCircle2, ChevronDown
 } from "lucide-react";
@@ -10,7 +10,6 @@ import { LiveProcessingTicker } from "./components/clientDymaic";
 const pdfTools = [
   { name: "Compress PDF", href: "/compress-pdf", icon: FileDown, desc: "Reduce PDF file size by up to 90% without losing quality. Perfect for email attachments and uploads.", cta: "Compress PDF Free" },
   { name: "PDF to JPG", href: "/pdf-to-jpg", icon: FileImage, desc: "Convert PDF pages to high-quality JPG images instantly — no software, no watermarks, 100% free.", cta: "Convert PDF to JPG Free" },
-  { name: "PDF to Word", href: "/pdf-to-word", icon: FileText, desc: "Convert PDF to editable Word DOCX online. Preserves layout and formatting — free, no sign-up.", cta: "Convert PDF to Word Free" },
   { name: "Merge PDF", href: "/merge-pdf", icon: Layers, desc: "Combine multiple PDF files into one document in seconds — free, secure, no sign-up required.", cta: "Merge PDF Files Free" },
   { name: "Split PDF", href: "/split-pdf", icon: Scissors, desc: "Extract specific pages or split a PDF by page range — free online, no software installation needed.", cta: "Split PDF Free" },
   { name: "Rotate PDF", href: "/rotate-pdf", icon: RotateCw, desc: "Rotate PDF pages 90°, 180°, or 270° and save permanently — free tool, no account required.", cta: "Rotate PDF Pages Free" },
@@ -277,18 +276,19 @@ export default function HomeContent() {
         </div>
       </section>
 
-      {/* ── Social Proof Stats ── */}
+      {/* ── Stats ── */}
       <section className="max-w-6xl mx-auto px-0">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { stat: "13+", label: "Free Tools" },
-            { stat: "< 3s", label: "Average Conversion Time" },
-            { stat: "100%", label: "Free Forever" },
-            { stat: "0 bytes", label: "Data Retained After Use" },
+            { icon: CheckCircle2, stat: "100%", label: "Free" },
+            { icon: Shield, stat: "No", label: "Sign-up Required" },
+            { icon: Lock, stat: "100%", label: "Privacy Guaranteed" },
+            { icon: Zap, stat: "0 bytes", label: "Data Retained After Use" },
           ].map((item, i) => (
-            <div key={i} className="glass dark:glass-dark rounded-[2rem] p-8 text-center border border-white/5 flex items-center justify-center flex-col">
+            <div key={i} className="glass dark:glass-dark rounded-[2rem] p-8 text-center border border-white/5 flex items-center justify-center flex-col gap-3">
+              <item.icon className="w-6 h-6 text-brand-primary" />
               <p className="text-4xl font-black text-brand-primary">{item.stat}</p>
-              <p className="text-sm text-slate-500 dark:text-slate-400 font-bold mt-2">{item.label}</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400 font-bold">{item.label}</p>
             </div>
           ))}
         </div>

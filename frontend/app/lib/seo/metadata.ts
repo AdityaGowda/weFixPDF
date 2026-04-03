@@ -99,7 +99,7 @@ export function buildArticleSchema(page: SeoPage, pathPrefix = "/blog") {
     description: page.schema_description || page.description,
     url: `${BASE_URL}${pathPrefix}/${page.slug}`,
     image: DEFAULT_OG_IMAGE,
-    datePublished: "2024-01-01",
+    datePublished: new Date().toISOString().split("T")[0],
     dateModified: new Date().toISOString().split("T")[0],
     author: {
       "@type": "Organization",

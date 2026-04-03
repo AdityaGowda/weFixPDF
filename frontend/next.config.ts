@@ -48,15 +48,23 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // www → non-www
       {
         source: "/:path*",
         has: [{ type: "host", value: "www.wefixpdf.com" }],
         destination: "https://wefixpdf.com/:path*",
         permanent: true,
       },
+      // /privacy → /privacy-policy
       {
         source: "/privacy",
         destination: "/privacy-policy",
+        permanent: true,
+      },
+      // Numbered slug variants → clean slug (e.g. /split-pdf1 → /split-pdf)
+      {
+        source: "/:slug([a-z][a-z-]*[a-z])\\d",
+        destination: "/:slug",
         permanent: true,
       },
     ];

@@ -5,6 +5,22 @@ export const metadata: Metadata = {
   title: "Privacy Policy | weFixPDF",
   description: "weFixPDF privacy policy. We never store your files. Zero retention, complete privacy protection, No Signup Required , unlimited free use",
   alternates: { canonical: "https://wefixpdf.com/privacy-policy" },
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: "Privacy Policy | weFixPDF",
+    description: "weFixPDF never stores your files. Zero data retention, complete privacy protection.",
+    url: "https://wefixpdf.com/privacy-policy",
+    siteName: "weFixPDF",
+    type: "website",
+    images: [{ url: "https://wefixpdf.com/wfp.png", width: 1200, height: 630, alt: "Privacy Policy | weFixPDF" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy | weFixPDF",
+    description: "weFixPDF never stores your files. Zero data retention, complete privacy protection.",
+    images: ["https://wefixpdf.com/wfp.png"],
+    site: "@wefixpdf",
+  },
 };
 
 export default function PrivacyPage() {

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Script from "next/script";
 import UploadBox from "../components/UploadBox";
-import { getToolSeo, ToolMetaData } from "../lib/seo/seoApi";
+import { getToolSeo, getAllSlugs, ToolMetaData } from "../lib/seo/seoApi";
 import ToolPageContent from "../components/toolPagecontent";
 import { buildBreadcrumbSchema, buildFaqSchema, buildHowToSchema, buildToolSchema, buildAuthorSchema } from "../lib/seo/metadata";
 import { notFound } from 'next/navigation';
@@ -9,6 +9,13 @@ import { notFound } from 'next/navigation';
 type ToolPageProps = {
   params: Promise<{ tool: string }>;
 };
+
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs();
+  return slugs
+    .filter((s) => s.page_type === "tool")
+    .map((s) => ({ tool: s.slug }));
+}
 
 /**
  * Fetch tool metadata from API.

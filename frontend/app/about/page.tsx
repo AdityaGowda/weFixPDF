@@ -148,6 +148,37 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Meet the Team */}
+      <section className="space-y-12">
+        <div className="text-center space-y-3">
+          <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Meet the Team</h2>
+          <p className="text-slate-500 dark:text-slate-400 font-medium">Real developers who use weFixPDF every day</p>
+        </div>
+
+        <div className="flex justify-center">
+          <div className="glass dark:glass-dark rounded-4xl p-10 border border-slate-200/50 dark:border-white/5 max-w-md w-full space-y-6 hover:shadow-2xl transition-all duration-500 hover:-translate-y-1">
+            {/* Avatar */}
+            <div className="flex items-center gap-5">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center text-white font-black text-xl shadow-lg shadow-brand-primary/30 shrink-0">
+                AM
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Adithya M R</h3>
+                <p className="text-sm font-bold text-brand-primary">Founder &amp; Lead Developer</p>
+              </div>
+            </div>
+            {/* Bio */}
+            <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+              Full-stack developer with a passion for building tools that respect user privacy. Built weFixPDF after getting frustrated with watermarked, login-gated PDF tools during a client project.
+            </p>
+            {/* Location note */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 text-xs font-black uppercase tracking-widest">
+              Built in India 🇮🇳
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Feature Comparison */}
       <section className="space-y-16">
         <div className="text-center space-y-4">
