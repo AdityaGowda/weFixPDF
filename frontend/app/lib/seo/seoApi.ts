@@ -153,7 +153,7 @@ export type HomepageData = {
 async function apiFetch<T>(path: string): Promise<T | null> {
   try {
     const res = await fetch(`${API_BASE}${path}`, {
-      next: { revalidate: 60 }, // ISR: revalidate every 60 seconds
+      next: { revalidate: 3600 }, // ISR: revalidate every hour
       headers: { "Content-Type": "application/json" },
     });
     if (!res.ok) {
