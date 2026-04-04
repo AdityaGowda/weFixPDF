@@ -14,19 +14,6 @@ const STATIC_CATEGORIES: NavCategory[] = [
   { label: "Image Tools", items: [], loading: true },
 ];
 
-// Same map as tools/page.tsx — maps type='tool' slugs to their display category
-const TOOL_CATEGORY_MAP: Record<string, string> = {
-  'pdf-to-epub':        'PDF Tools',
-  'auto-rotate-pdf':    'PDF Tools',
-  'scan-to-pdf':        'PDF Tools',
-  'pdf-to-html':        'PDF Tools',
-  'remove-pdf-metadata':'PDF Tools',
-  'extract-text-pdf':   'PDF Tools',
-  'compare-pdf':        'PDF Tools',
-  'redact-pdf':         'PDF Tools',
-  'epub-to-pdf':        'PDF Tools',
-  'resize-image':       'Image Tools',
-};
 
 const RESOURCES = [
   { label: "Blog",          href: "/blog",      desc: "Guides & tutorials" },
@@ -64,12 +51,7 @@ export default function Navbar() {
             ...cat,
             loading: false,
             items: res
-              .filter((t) => {
-                const resolved = (t.type === 'PDF Tools' || t.type === 'Image Tools')
-                  ? t.type
-                  : TOOL_CATEGORY_MAP[t.slug] ?? 'PDF Tools';
-                return resolved === cat.label;
-              })
+              .filter((t) => t.type === cat.label)
               .map((t) => ({ label: t.name, href: t.url, description: t.description })),
           }))
         );

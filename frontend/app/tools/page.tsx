@@ -45,19 +45,6 @@ const iconNameMap: Record<string, any> = {
 
 const popularSlugs = new Set(['compress-pdf', 'image-compressor', 'png-to-jpg']);
 
-// For tools with type='tool' in DB, map to their display category
-const toolCategoryMap: Record<string, 'PDF Tools' | 'Image Tools'> = {
-  'pdf-to-epub':        'PDF Tools',
-  'auto-rotate-pdf':    'PDF Tools',
-  'scan-to-pdf':        'PDF Tools',
-  'pdf-to-html':        'PDF Tools',
-  'remove-pdf-metadata':'PDF Tools',
-  'extract-text-pdf':   'PDF Tools',
-  'compare-pdf':        'PDF Tools',
-  'redact-pdf':         'PDF Tools',
-  'epub-to-pdf':        'PDF Tools',
-  'resize-image':       'Image Tools',
-};
 
 function FreeBadge({ popular }: { popular?: boolean }) {
   if (popular) {
@@ -106,10 +93,8 @@ function ToolCard({ tool, variant = 'blue' }: { tool: Tool; variant?: 'blue' | '
 export default async function ToolsPage() {
   const allTools = await getToolListings();
 
-  const resolveCategory = (t: { type: string; slug: string }) =>
-    t.type === 'PDF Tools' || t.type === 'Image Tools'
-      ? t.type
-      : toolCategoryMap[t.slug] ?? 'PDF Tools';
+  const resolveCategory = (t: { type: string }) =>
+    t.type === 'Image Tools' ? 'Image Tools' : 'PDF Tools';
 
   const toTool = (t: { slug: string; name: string; description: string; icon_name?: string }, fallback: any): Tool => ({
     href:    `/${t.slug}`,
