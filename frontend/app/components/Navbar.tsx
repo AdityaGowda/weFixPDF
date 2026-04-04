@@ -14,6 +14,20 @@ const STATIC_CATEGORIES: NavCategory[] = [
   { label: "Image Tools", items: [], loading: true },
 ];
 
+// Same map as tools/page.tsx — maps type='tool' slugs to their display category
+const TOOL_CATEGORY_MAP: Record<string, string> = {
+  'pdf-to-epub':        'PDF Tools',
+  'auto-rotate-pdf':    'PDF Tools',
+  'scan-to-pdf':        'PDF Tools',
+  'pdf-to-html':        'PDF Tools',
+  'remove-pdf-metadata':'PDF Tools',
+  'extract-text-pdf':   'PDF Tools',
+  'compare-pdf':        'PDF Tools',
+  'redact-pdf':         'PDF Tools',
+  'epub-to-pdf':        'PDF Tools',
+  'resize-image':       'Image Tools',
+};
+
 const RESOURCES = [
   { label: "Blog",          href: "/blog",      desc: "Guides & tutorials" },
   { label: "Compare Tools", href: "/compare",   desc: "weFixPDF vs alternatives" },
@@ -50,7 +64,12 @@ export default function Navbar() {
             ...cat,
             loading: false,
             items: res
-              .filter((t) => t.type === cat.label)
+              .filter((t) => {
+                const resolved = (t.type === 'PDF Tools' || t.type === 'Image Tools')
+                  ? t.type
+                  : TOOL_CATEGORY_MAP[t.slug] ?? 'PDF Tools';
+                return resolved === cat.label;
+              })
               .map((t) => ({ label: t.name, href: t.url, description: t.description })),
           }))
         );
@@ -62,11 +81,11 @@ export default function Navbar() {
 
   const toggleTheme = () => setTheme(resolvedTheme === "dark" ? "light" : "dark");
 
-  /* Shared dropdown panel styles */
-  const dropdownPanel = "absolute top-full left-1/2 -translate-x-1/2 z-50 pt-2 " +
-    "opacity-0 scale-[0.98] translate-y-1 pointer-events-none " +
+  /* Shared dropdown panel animation */
+  const dropdownAnim = "opacity-0 scale-[0.98] translate-y-1 pointer-events-none " +
     "group-hover/item:opacity-100 group-hover/item:scale-100 group-hover/item:translate-y-0 " +
     "group-hover/item:pointer-events-auto transition-all duration-150 origin-top";
+  const dropdownBase = "absolute top-full left-1/2 -translate-x-1/2 z-50 pt-2 " + dropdownAnim;
 
   return (
     <nav className="sticky top-0 z-50 bg-white dark:bg-[#09090b] border-b border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] h-[60px] flex items-center">
@@ -81,39 +100,54 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-1">
 
           {/* Tool category dropdowns */}
-          {categories.map((cat) => (
-            <div key={cat.label} className="relative group/item">
-              <button
-                className="flex items-center gap-1 px-3 py-2 text-[14px] font-medium text-[#4B5563] dark:text-[#94A3B8] hover:text-[#0F0F0F] dark:hover:text-white transition-colors rounded-md hover:bg-[rgba(0,0,0,0.04)] dark:hover:bg-[rgba(255,255,255,0.06)]"
-              >
-                {cat.label}
-                <ChevronDown className="w-3.5 h-3.5 transition-transform duration-150 group-hover/item:rotate-180" />
-              </button>
+          {categories.map((cat) => {
+            const cols = cat.label === "PDF Tools" ? 3 : 2;
+            const width = cat.label === "PDF Tools" ? "w-[660px]" : "w-[480px]";
+            const viewAllHref = cat.label === "PDF Tools" ? "/tools#pdf" : "/tools#image";
+            return (
+              <div key={cat.label} className="relative group/item">
+                <button className="flex items-center gap-1 px-3 py-2 text-[14px] font-medium text-[#4B5563] dark:text-[#94A3B8] hover:text-[#0F0F0F] dark:hover:text-white transition-colors rounded-md hover:bg-[rgba(0,0,0,0.04)] dark:hover:bg-[rgba(255,255,255,0.06)]">
+                  {cat.label}
+                  <ChevronDown className="w-3.5 h-3.5 transition-transform duration-150 group-hover/item:rotate-180" aria-hidden="true" />
+                </button>
 
-              <div className={`${dropdownPanel} w-[480px]`}>
-                <div className="bg-white dark:bg-[#111113] border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.4)] p-2 grid grid-cols-2 gap-0.5">
-                  {cat.loading ? (
-                    <SkeletonItems />
-                  ) : cat.items.length === 0 ? (
-                    <p className="col-span-2 py-4 text-center text-[13px] text-[#6B7280]">No tools available</p>
-                  ) : (
-                    cat.items.map((item) => (
-                      <a
-                        key={item.href}
-                        href={item.href}
-                        className="flex flex-col gap-0.5 px-3 py-2.5 rounded-lg hover:bg-[rgba(45,91,227,0.06)] dark:hover:bg-[rgba(91,130,255,0.08)] transition-colors group/link"
-                      >
-                        <span className="text-[13px] font-medium text-[#0F0F0F] dark:text-[#F8FAFC] group-hover/link:text-[#2D5BE3] dark:group-hover/link:text-[#5B82FF] transition-colors">
-                          {item.label}
-                        </span>
-                        <span className="text-[11px] text-[#6B7280] dark:text-[#64748B] leading-snug">{item.description}</span>
-                      </a>
-                    ))
-                  )}
+                <div className={`${dropdownBase} ${width}`}>
+                  <div className="bg-white dark:bg-[#111113] border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.4)] overflow-hidden">
+                    {/* Scrollable grid */}
+                    <div className={`p-2 grid gap-0.5 max-h-[420px] overflow-y-auto`} style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
+                      {cat.loading ? (
+                        <SkeletonItems />
+                      ) : cat.items.length === 0 ? (
+                        <p className={`col-span-${cols} py-4 text-center text-[13px] text-[#6B7280]`}>No tools available</p>
+                      ) : (
+                        cat.items.map((item) => (
+                          <a
+                            key={item.href}
+                            href={item.href}
+                            className="flex flex-col gap-0.5 px-3 py-2.5 rounded-lg hover:bg-[rgba(45,91,227,0.06)] dark:hover:bg-[rgba(91,130,255,0.08)] transition-colors group/link"
+                          >
+                            <span className="text-[13px] font-medium text-[#0F0F0F] dark:text-[#F8FAFC] group-hover/link:text-[#2D5BE3] dark:group-hover/link:text-[#5B82FF] transition-colors leading-snug">
+                              {item.label}
+                            </span>
+                            <span className="text-[11px] text-[#6B7280] dark:text-[#64748B] leading-snug line-clamp-1">{item.description}</span>
+                          </a>
+                        ))
+                      )}
+                    </div>
+                    {/* Footer link */}
+                    {!cat.loading && cat.items.length > 0 && (
+                      <div className="border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] px-4 py-2.5 flex items-center justify-between">
+                        <span className="text-[11px] text-[#6B7280]">{cat.items.length} tools available</span>
+                        <a href="/tools" className="text-[12px] font-medium text-[#2D5BE3] dark:text-[#5B82FF] hover:underline">
+                          View all →
+                        </a>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           {/* Resources dropdown */}
           <div className="relative group/item">
@@ -121,7 +155,7 @@ export default function Navbar() {
               Resources
               <ChevronDown className="w-3.5 h-3.5 transition-transform duration-150 group-hover/item:rotate-180" />
             </button>
-            <div className={`${dropdownPanel} w-52`}>
+            <div className={`${dropdownBase} w-52`}>
               <div className="bg-white dark:bg-[#111113] border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.4)] p-2 flex flex-col gap-0.5">
                 {RESOURCES.map((r) => (
                   <a
@@ -205,20 +239,22 @@ export default function Navbar() {
                 </button>
 
                 {openCategory === cat.label && (
-                  <div className="pl-3 pb-2 space-y-0.5">
+                  <div className="pl-3 pb-2">
                     {cat.loading ? (
                       <div className="px-3 py-2 text-[13px] text-[#6B7280]">Loading…</div>
                     ) : (
-                      cat.items.map((item) => (
-                        <a
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setMobileOpen(false)}
-                          className="block px-3 py-2 text-[13px] font-medium text-[#4B5563] dark:text-[#94A3B8] hover:text-[#2D5BE3] dark:hover:text-[#5B82FF] rounded-lg hover:bg-[rgba(45,91,227,0.04)] dark:hover:bg-[rgba(91,130,255,0.08)] transition-colors"
-                        >
-                          {item.label}
-                        </a>
-                      ))
+                      <div className="grid grid-cols-2 gap-0.5">
+                        {cat.items.map((item) => (
+                          <a
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setMobileOpen(false)}
+                            className="block px-3 py-2 text-[13px] font-medium text-[#4B5563] dark:text-[#94A3B8] hover:text-[#2D5BE3] dark:hover:text-[#5B82FF] rounded-lg hover:bg-[rgba(45,91,227,0.04)] dark:hover:bg-[rgba(91,130,255,0.08)] transition-colors"
+                          >
+                            {item.label}
+                          </a>
+                        ))}
+                      </div>
                     )}
                   </div>
                 )}

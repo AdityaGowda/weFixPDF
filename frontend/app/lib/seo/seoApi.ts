@@ -123,6 +123,8 @@ export type ToolListing = {
   url: string;
   keywords: string[];
   type: string;
+  icon_name?: string;
+  accept_types?: string;
 };
 
 export type SiteSchema = {

@@ -3,12 +3,13 @@ import Link from 'next/link';
 import { getToolListings } from '@/app/lib/seo/seoApi';
 import {
   FileDown, Image, FileText, Layers, Scissors, RotateCw,
-  ShieldCheck, LockOpen, Minimize2, Zap, Smartphone, ArrowRight, FileImage
+  ShieldCheck, LockOpen, Minimize2, Zap, Smartphone, ArrowRight, FileImage,
+  BookOpen, Camera, Code, Type, ShieldX, Expand, Shield, Columns2
 } from "lucide-react";
 
 export async function generateMetadata(): Promise<Metadata> {
   const tools = await getToolListings();
-  const count = tools.filter((t) => t.type === 'PDF Tools' || t.type === 'Image Tools').length || 14;
+  const count = tools.length || 14;
   const desc = `${count}+ free online tools: compress PDF, merge PDF, split PDF, convert PDF to JPG or Word — plus compress images, convert JPG to PNG, HEIC to JPG, PNG to WebP. No sign-up, no watermarks, files deleted instantly.`;
   return {
     title: 'Free PDF & Image Converter Tools Online — No Sign-Up | weFixPDF',
@@ -35,21 +36,27 @@ export async function generateMetadata(): Promise<Metadata> {
 
 type Tool = { href: string; icon: any; label: string; desc: string; popular?: boolean };
 
-const toolsUIConfig: Record<string, { icon: any; popular?: boolean }> = {
-  'compress-pdf':     { icon: FileDown,    popular: true },
-  'pdf-to-jpg':       { icon: FileImage },
-  'pdf-to-word':      { icon: FileText },
-  'merge-pdf':        { icon: Layers },
-  'split-pdf':        { icon: Scissors },
-  'rotate-pdf':       { icon: RotateCw },
-  'protect-pdf':      { icon: ShieldCheck },
-  'unlock-pdf':       { icon: LockOpen },
-  'image-compressor': { icon: Minimize2,   popular: true },
-  'png-to-jpg':       { icon: Image,       popular: true },
-  'jpg-to-png':       { icon: Image },
-  'png-to-webp':      { icon: Zap },
-  'heic-to-jpg':      { icon: Smartphone },
-  'image-to-pdf':     { icon: FileText },
+// Map icon_name strings (stored in DB) to Lucide components
+const iconNameMap: Record<string, any> = {
+  FileDown, FileImage, FileText, Layers, Scissors, RotateCw,
+  ShieldCheck, LockOpen, Minimize2, Zap, Smartphone, Image,
+  BookOpen, Camera, Code, Type, ShieldX, Expand, Shield, Columns2,
+};
+
+const popularSlugs = new Set(['compress-pdf', 'image-compressor', 'png-to-jpg']);
+
+// For tools with type='tool' in DB, map to their display category
+const toolCategoryMap: Record<string, 'PDF Tools' | 'Image Tools'> = {
+  'pdf-to-epub':        'PDF Tools',
+  'auto-rotate-pdf':    'PDF Tools',
+  'scan-to-pdf':        'PDF Tools',
+  'pdf-to-html':        'PDF Tools',
+  'remove-pdf-metadata':'PDF Tools',
+  'extract-text-pdf':   'PDF Tools',
+  'compare-pdf':        'PDF Tools',
+  'redact-pdf':         'PDF Tools',
+  'epub-to-pdf':        'PDF Tools',
+  'resize-image':       'Image Tools',
 };
 
 function FreeBadge({ popular }: { popular?: boolean }) {
@@ -99,27 +106,28 @@ function ToolCard({ tool, variant = 'blue' }: { tool: Tool; variant?: 'blue' | '
 export default async function ToolsPage() {
   const allTools = await getToolListings();
 
+  const resolveCategory = (t: { type: string; slug: string }) =>
+    t.type === 'PDF Tools' || t.type === 'Image Tools'
+      ? t.type
+      : toolCategoryMap[t.slug] ?? 'PDF Tools';
+
+  const toTool = (t: { slug: string; name: string; description: string; icon_name?: string }, fallback: any): Tool => ({
+    href:    `/${t.slug}`,
+    icon:    iconNameMap[t.icon_name ?? ''] ?? fallback,
+    label:   t.name,
+    desc:    t.description,
+    popular: popularSlugs.has(t.slug),
+  });
+
   const pdfTools: Tool[] = allTools
-    .filter((t) => t.type === 'PDF Tools')
+    .filter((t) => resolveCategory(t) === 'PDF Tools')
     .sort((a, b) => a.position - b.position)
-    .map((t) => ({
-      href:    `/${t.slug}`,
-      icon:    toolsUIConfig[t.slug]?.icon ?? FileDown,
-      label:   t.name,
-      desc:    t.description,
-      popular: toolsUIConfig[t.slug]?.popular,
-    }));
+    .map((t) => toTool(t, FileDown));
 
   const imageTools: Tool[] = allTools
-    .filter((t) => t.type === 'Image Tools')
+    .filter((t) => resolveCategory(t) === 'Image Tools')
     .sort((a, b) => a.position - b.position)
-    .map((t) => ({
-      href:    `/${t.slug}`,
-      icon:    toolsUIConfig[t.slug]?.icon ?? Image,
-      label:   t.name,
-      desc:    t.description,
-      popular: toolsUIConfig[t.slug]?.popular,
-    }));
+    .map((t) => toTool(t, Image));
 
   const itemListSchema = {
     '@context': 'https://schema.org',

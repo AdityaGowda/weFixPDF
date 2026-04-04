@@ -6,7 +6,7 @@ const { convertFile } = require("../controllers/convert.controller");
 // ─────────────────────────────────────────────────────────────
 // Tools that accept MULTIPLE files
 // ─────────────────────────────────────────────────────────────
-const MULTI_FILE_TOOLS = ["image-to-pdf", "merge-pdf"];
+const MULTI_FILE_TOOLS = ["image-to-pdf", "merge-pdf", "compare-pdf"];
 
 // ─────────────────────────────────────────────────────────────
 // Dynamic middleware selector:

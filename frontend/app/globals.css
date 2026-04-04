@@ -46,10 +46,7 @@
 
 /* ─── Base ──────────────────────────────────────────────────── */
 @layer base {
-  html {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-  }
+
 
   body {
     @apply antialiased overflow-x-hidden;

@@ -112,9 +112,17 @@ export default async function BlogArticlePage({ params }: Props) {
                 {page.author_name.charAt(0)}
               </div>
               <div>
-                <p className="font-black text-slate-900 dark:text-white text-sm">{page.author_name}</p>
+                <Link href="/authors/wefixpdf-team" className="hover:text-blue-600 transition-colors">
+                  <p className="font-black text-slate-900 dark:text-white text-sm">{page.author_name}</p>
+                </Link>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 font-medium text-[10px] text-slate-400 uppercase tracking-widest">
+                  <span>Published {new Date(page.created_at || "2026-04-01").toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
+                  {page.updated_at && page.updated_at !== page.created_at && (
+                    <span>Updated {new Date(page.updated_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
+                  )}
+                </div>
                 {page.author_bio && (
-                  <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1 leading-relaxed">{page.author_bio}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-2 leading-relaxed">{page.author_bio}</p>
                 )}
               </div>
             </div>

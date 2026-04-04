@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllSlugs, getPageSeo, type SeoPage } from "@/app/lib/seo/seoApi";
 import { buildBreadcrumbSchema } from "@/app/lib/seo/metadata";
-import { ArrowRight, Clock, BookOpen } from "lucide-react";
+import { ArrowRight, Clock, BookOpen, Calendar } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Blog — PDF, Image & File Conversion Guides | weFixPDF",
