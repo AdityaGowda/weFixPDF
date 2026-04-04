@@ -192,8 +192,56 @@ async function heicToJpg({ res, req, file }) {
   }
 }
 
+async function resizeImage({ res, req, file }) {
+  try {
+    const inputPath = file.path;
+    const ext = path.extname(file.originalname).toLowerCase();
+
+    if (!validateFile(ext)) {
+      safeDelete(inputPath);
+      return res.status(400).json({ error: "Unsupported file type" });
+    }
+
+    let image = sharp(inputPath);
+    const { width, height, cropX, cropY, cropWidth, cropHeight } = req.body;
+
+    if (cropWidth && cropHeight && cropX !== undefined && cropY !== undefined) {
+      image = image.extract({ left: parseInt(cropX), top: parseInt(cropY), width: parseInt(cropWidth), height: parseInt(cropHeight) });
+    }
+
+    if (width || height) {
+      image = image.resize(width ? parseInt(width) : null, height ? parseInt(height) : null, { fit: 'inside' });
+    }
+
+    const uid = Date.now();
+    const outputPath = `uploads/resized-${uid}${ext}`;
+    const fileBaseName = path.parse(file.originalname).name;
+    const downloadName = `${fileBaseName}_weFixPDF_resized${ext}`;
+
+    await image.toFile(outputPath);
+
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    res.setHeader("Content-Type", mimeTypes[ext]);
+    res.setHeader("Content-Disposition", `attachment; filename="${downloadName}"`);
+
+    const fileStream = fs.createReadStream(outputPath);
+    fileStream.pipe(res);
+
+    fileStream.on("close", () => {
+      safeDelete(inputPath);
+      safeDelete(outputPath);
+    });
+
+  } catch (err) {
+    console.error("Resize image error:", err);
+    safeDelete(file.path);
+    return res.status(500).json({ error: "Image resize failed." });
+  }
+}
+
 module.exports = {
   imageCompressor,
   imageConverter,
-  heicToJpg
+  heicToJpg,
+  resizeImage
 };

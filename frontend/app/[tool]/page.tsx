@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Script from "next/script";
 import UploadBox from "../components/UploadBox";
+import CustomUploadBoxScanToPdf from "../components/CustomUploadBoxScanToPdf";
 import { getToolSeo, getAllSlugs, ToolMetaData } from "../lib/seo/seoApi";
 import ToolPageContent from "../components/toolPagecontent";
 import { buildBreadcrumbSchema, buildFaqSchema, buildHowToSchema, buildToolSchema, buildAuthorSchema } from "../lib/seo/metadata";
@@ -72,21 +73,26 @@ export default async function ToolPage({ params }: ToolPageProps) {
     return notFound();
   }
   // Build JSON-LD schemas for tool pages
+  const fallbackBreadcrumbs = [
+    { name: "Home", href: "/" },
+    { name: "All Tools", href: "/tools" },
+    { name: metadata?.h1 || reqService.tool, href: `/${reqService.tool}` },
+  ];
   const breadcrumbSchema = metadata?.breadcrumb && metadata.breadcrumb.length > 0
     ? buildBreadcrumbSchema(
       metadata.breadcrumb.map((b) => ({ name: b.name, href: b.url }))
     )
-    : buildBreadcrumbSchema([
-      { name: "Home", href: "/" },
-      { name: metadata?.h1 || reqService.tool, href: `/${reqService.tool}` },
-    ]);
+    : buildBreadcrumbSchema(fallbackBreadcrumbs);
 
   const faqSchema = metadata?.faqs && metadata.faqs.length > 0
     ? buildFaqSchema(metadata.faqs)
     : null;
 
   const howToSchema = metadata?.howTo && metadata.howTo.steps.length > 0
-    ? buildHowToSchema(metadata.howTo)
+    ? buildHowToSchema({
+        ...metadata.howTo,
+        description: metadata.howTo.description || metadata.description || '',
+      })
     : null;
   const softwareApplicationSchema = metadata ? buildToolSchema({
     url: metadata.url,
@@ -121,21 +127,29 @@ export default async function ToolPage({ params }: ToolPageProps) {
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-6">
           {/* Breadcrumbs */}
-          {metadata?.breadcrumb && metadata.breadcrumb.length > 0 && (
-            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px]" style={{ color: 'var(--text-muted)' }}>
-              <a href="/" className="transition-colors hover:underline">Home</a>
-              {metadata.breadcrumb.filter(b => b.name !== "Home").map((crumb, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <span style={{ color: 'var(--text-subtle)' }}>/</span>
-                  {i === metadata.breadcrumb.length - 2 ? (
-                    <span style={{ color: 'var(--text)' }}>{crumb.name}</span>
-                  ) : (
-                    <a href={crumb.url} className="hover:underline transition-colors">{crumb.name}</a>
-                  )}
-                </div>
-              ))}
-            </nav>
-          )}
+          {(() => {
+            const crumbs = metadata?.breadcrumb && metadata.breadcrumb.length > 0
+              ? metadata.breadcrumb
+              : [
+                  { name: "Home", url: "/" },
+                  { name: "All Tools", url: "/tools" },
+                  { name: metadata?.h1 || reqService.tool, url: `/${reqService.tool}` },
+                ];
+            return (
+              <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px]" style={{ color: 'var(--text-muted)' }}>
+                {crumbs.map((crumb, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    {i > 0 && <span style={{ color: 'var(--text-subtle)' }}>/</span>}
+                    {i === crumbs.length - 1 ? (
+                      <span style={{ color: 'var(--text)' }}>{crumb.name}</span>
+                    ) : (
+                      <a href={crumb.url} className="transition-colors hover:underline">{crumb.name}</a>
+                    )}
+                  </div>
+                ))}
+              </nav>
+            );
+          })()}
           {/* Tool hero */}
           <div className="space-y-3">
             <span
@@ -151,7 +165,10 @@ export default async function ToolPage({ params }: ToolPageProps) {
               {metadata?.h2 || "Fast, secure, and privacy-shielded conversion."}
             </p>
           </div>
-          <UploadBox service={reqService.tool} />
+          {reqService.tool === "scan-to-pdf"
+            ? <CustomUploadBoxScanToPdf />
+            : <UploadBox service={reqService.tool} />
+          }
         </div>
       </section>
 

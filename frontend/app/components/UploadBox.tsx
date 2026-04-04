@@ -31,6 +31,16 @@ const TOOL_CONFIG: Record<string, { multi?: boolean; max?: number; accept: strin
   "protect-pdf": { accept: ".pdf" },
   "unlock-pdf": { accept: ".pdf" },
   "pdf-to-doc": { accept: ".pdf" },
+  "pdf-to-epub": { accept: ".pdf" },
+  "epub-to-pdf": { accept: ".epub" },
+  "auto-rotate-pdf": { accept: ".pdf" },
+  "scan-to-pdf": { accept: "image/*" },
+  "pdf-to-html": { accept: ".pdf" },
+  "remove-pdf-metadata": { accept: ".pdf" },
+  "extract-text-pdf": { accept: ".pdf" },
+  "compare-pdf": { multi: true, max: 2, accept: ".pdf" },
+  "redact-pdf": { accept: ".pdf" },
+  "resize-image": { accept: "image/*,.jpg,.jpeg,.png,.webp" },
 };
 
 // ── Human-readable service labels ───────────────────
@@ -49,6 +59,16 @@ const SERVICE_LABELS: Record<string, { verb: string; result: string; acceptLabel
   "protect-pdf": { verb: "Protect PDF", result: "password-protected PDF", acceptLabel: "PDF" },
   "unlock-pdf": { verb: "Unlock PDF", result: "unlocked PDF", acceptLabel: "Password-protected PDF" },
   "pdf-to-doc": { verb: "Convert to Word", result: "DOC file", acceptLabel: "PDF" },
+  "pdf-to-epub": { verb: "Convert to EPUB", result: "EPUB ebook", acceptLabel: "PDF" },
+  "epub-to-pdf": { verb: "Convert to PDF", result: "PDF file", acceptLabel: "EPUB" },
+  "auto-rotate-pdf": { verb: "Auto Rotate", result: "fixed PDF", acceptLabel: "PDF" },
+  "scan-to-pdf": { verb: "Convert to PDF", result: "PDF file", acceptLabel: "Image" },
+  "pdf-to-html": { verb: "Convert to HTML", result: "HTML file", acceptLabel: "PDF" },
+  "remove-pdf-metadata": { verb: "Clean Metadata", result: "clean PDF", acceptLabel: "PDF" },
+  "extract-text-pdf": { verb: "Extract Text", result: "text file", acceptLabel: "PDF" },
+  "compare-pdf": { verb: "Compare", result: "comparison report", acceptLabel: "2 PDFs" },
+  "redact-pdf": { verb: "Redact", result: "redacted PDF", acceptLabel: "PDF" },
+  "resize-image": { verb: "Resize", result: "resized image", acceptLabel: "Image" },
 };
 
 const QUALITY_LABELS: Record<CompressionLevel, { label: string; hint: string }> = {

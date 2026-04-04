@@ -1,4 +1,4 @@
-const { imageCompressor, imageConverter, heicToJpg } = require("../services/image.service");
+const { imageCompressor, imageConverter, heicToJpg, resizeImage } = require("../services/image.service");
 const {
   mergePdf,
   splitPdf,
@@ -11,11 +11,22 @@ const {
   removeWatermark,
   rotatePdf,
   protectPdf,
-  unlockPdf,
+  unlockPdf
 } = require("../services/pdf.service");
 
+const {
+  pdfToEpub,
+  autoRotatePdf,
+  pdfToHtml,
+  removeMetadata,
+  extractText,
+  comparePdf,
+  redactPdf,
+  epubToPdf
+} = require("../services/newPdf.service");
+
 // Tools that use req.files (array) instead of req.file (single)
-const MULTI_FILE_TOOLS = ["merge-pdf", "image-to-pdf"];
+const MULTI_FILE_TOOLS = ["merge-pdf", "image-to-pdf", "compare-pdf"];
 
 async function convertFile(req, res, next) {
   try {
@@ -71,13 +82,36 @@ async function convertFile(req, res, next) {
       case "rotate-pdf":
         return await rotatePdf(ctx);
 
+      case "auto-rotate-pdf":
+        return await autoRotatePdf(ctx);
+
       case "protect-pdf":
         return await protectPdf(ctx);
 
       case "unlock-pdf":
         return await unlockPdf(ctx);
 
-      // ── AI tools ─────────────────────────────────────────
+      case "pdf-to-epub":
+        return await pdfToEpub(ctx);
+
+      case "epub-to-pdf":
+        return await epubToPdf(ctx);
+
+      case "pdf-to-html":
+        return await pdfToHtml(ctx);
+
+      case "remove-pdf-metadata":
+        return await removeMetadata(ctx);
+
+      case "extract-text-pdf":
+        return await extractText(ctx);
+
+      case "compare-pdf":
+        return await comparePdf(ctx);
+
+      case "redact-pdf":
+        return await redactPdf(ctx);
+
       case "remove-background":
         return await removeBackground(ctx);
 
@@ -86,6 +120,9 @@ async function convertFile(req, res, next) {
 
       case "heic-to-jpg":
         return await heicToJpg(ctx);
+
+      case "resize-image":
+        return await resizeImage(ctx);
 
       // ── Unknown tool ─────────────────────────────────────
       default:
