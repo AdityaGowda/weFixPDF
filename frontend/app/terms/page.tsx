@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import Link from "next/link";
+import { FileText } from "lucide-react";
 import TermsContent from "./TermsContent";
 
 export const metadata: Metadata = {
@@ -25,17 +27,36 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="space-y-12">
-      <section className="text-center space-y-6">
-        <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tighter">
-          Terms of Service
-        </h1>
-        <p className="mt-4 text-slate-500 dark:text-slate-400">
-          Simple, fair terms for using the free file conversion tools
-          provided by <strong>weFixPDF</strong>.
-        </p>
+    <div className="min-h-screen">
+      {/* Hero */}
+      <section className="pt-10 pb-12 border-b border-slate-100 dark:border-slate-800">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-xs text-slate-400 mb-8 font-medium">
+            <Link href="/" className="hover:text-brand-primary transition-colors">Home</Link>
+            <span>/</span>
+            <span className="text-slate-600 dark:text-slate-300">Terms of Service</span>
+          </nav>
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-[11px] font-black uppercase tracking-[0.2em] mb-6">
+              <FileText className="w-3 h-3" /> Terms of Service
+            </div>
+            <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-4 leading-[1.1]">
+              Simple, Fair Terms
+            </h1>
+            <p className="text-lg text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+              Plain-language terms for using the free file conversion tools provided by{" "}
+              <strong className="text-slate-700 dark:text-slate-300">weFixPDF</strong>.
+            </p>
+            <p className="text-xs text-slate-400 mt-4 font-medium">Last Updated: April 2026</p>
+          </div>
+        </div>
       </section>
-      <TermsContent />
+
+      {/* Content */}
+      <div className="max-w-3xl mx-auto px-4 py-14">
+        <TermsContent />
+      </div>
     </div>
   );
 }

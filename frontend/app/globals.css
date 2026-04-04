@@ -2,173 +2,201 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Design Tokens — Light ─────────────────────────────────── */
 :root {
-  --brand-primary: 235 86% 65%;
-  --brand-secondary: 262 83% 58%;
-  --core-glow: rgba(99, 102, 241, 0.5);
-}
-@layer base {
-  body {
-    @apply transition-colors duration-500 ease-in-out antialiased overflow-x-hidden;
-      background:
-        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.05) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.05) 0px, transparent 50%),
-        #f8fafc;
-    }
-    }
-    
-    .dark body {
-      background:
-        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.1) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.1) 0px, transparent 50%),
-        #020617;
-    }
-    
-    /* --- THE ORGANIC CORE UTILITIES --- */
-    
-    .gooey-container {
-      filter: url("#gooey");
-    }
-    
-    .core-blob {
-      background: linear-gradient(135deg, hsl(var(--brand-primary)), hsl(var(--brand-secondary)));
-      filter: blur(10px);
-      animation: core-morph 15s ease-in-out infinite;
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: transform, border-radius;
-    }
+  --blue:           #2D5BE3;
+  --blue-dark:      #1E4BC8;
+  --blue-light:     #E6F1FB;
+  --blue-chip-text: #185FA5;
+  --text:           #0F0F0F;
+  --text-muted:     #6B7280;
+  --text-subtle:    #9CA3AF;
+  --surface:        #F7F7F5;
+  --border:         rgba(0, 0, 0, 0.08);
+  --border-faint:   rgba(0, 0, 0, 0.06);
+  --border-blue:    rgba(45, 91, 227, 0.35);
+  --green-chip:     #EAF3DE;
+  --green-text:     #3B6D11;
+  --bg-page:        #ffffff;
+  --bg-card:        #ffffff;
 
-    /* Performance optimization for mobile */
-    @media (max-width: 768px) {
-      .gooey-container {
-        filter: none !important;
-      }
-      .core-blob {
-        filter: blur(5px); /* Reduced blur */
-      }
-      .glass, .glass-dark {
-        backdrop-filter: blur(10px) !important; /* Reduced backdrop blur */
-        -webkit-backdrop-filter: blur(10px) !important;
-      }
-    }
-    
-    @keyframes core-morph {
-    
-      0%,
-      100% {
-        border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
-        transform: scale(1) rotate(0deg);
-      }
-    
-      33% {
-        border-radius: 70% 30% 46% 54% / 30% 39% 61% 70%;
-        transform: scale(1.05) rotate(5deg);
-      }
-    
-      66% {
-        border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
-        transform: scale(0.95) rotate(-5deg);
-      }
-    }
-    
-    .core-pulse {
-      animation: core-pulse-glow 4s ease-in-out infinite;
-    }
-    
-    @keyframes core-pulse-glow {
-    
-      0%,
-      100% {
-        box-shadow: 0 0 40px 10px rgba(99, 102, 241, 0.2);
-      }
-    
-      50% {
-        box-shadow: 0 0 80px 20px rgba(99, 102, 241, 0.4);
-      }
-    }
-    
-    .orbital-path {
-      position: absolute;
-      border: 1px dashed rgba(99, 102, 241, 0.2);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    
-    .orbital-node {
-      @apply rounded-full p-2 border transition-all duration-500 backdrop-blur-md;
-    }
-    
-    /* Light mode orbital node */
-    .orbital-node {
-      @apply bg-white/40 border-white/50 shadow-xl;
-    }
-    
-    /* Dark mode orbital node */
-    .dark .orbital-node {
-      background: rgba(15, 23, 42, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .orbital-node:hover {
-      @apply scale-110 shadow-lg shadow-brand-primary/30 border-brand-primary/50;
-    }
-    
-    /* Glassmorphism Refinements */
-    @layer components {
-      .glass {
-        @apply bg-white/40 backdrop-blur-2xl border border-white/50 shadow-xl;
-      }
-    
-      .glass-dark {
-        background: rgba(15, 23, 42, 0.3);
-        backdrop-filter: blur(30px) saturate(200%);
-        -webkit-backdrop-filter: blur(30px) saturate(200%);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-      }
-    
-      .btn-premium {
-        @apply relative overflow-hidden transition-all duration-500 font-extrabold text-white shadow-xl active:scale-95 px-8 py-4 rounded-3xl;
-        background: linear-gradient(135deg, hsl(var(--brand-primary)) 0%, hsl(var(--brand-secondary)) 100%);
-      }
-    
-      .btn-premium:hover {
-        @apply -translate-y-1 shadow-2xl scale-[1.02];
-        box-shadow: 0 10px 40px -10px hsl(var(--brand-primary) / 0.5);
-      }
-    }
-    
-    /* Scroll Customization */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    
-    ::-webkit-scrollbar-track {
-      @apply bg-transparent;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      @apply bg-slate-200 dark:bg-white/10 rounded-full hover:bg-brand-primary/50 transition-colors;
-    }
-    
-    /* Hero Typography Animation */
-    .text-reveal {
-      background: linear-gradient(to right, #6366f1, #a855f7);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: text-shine 5s linear infinite;
-    }
-    
-    @keyframes text-shine {
-      to {
-        background-position: 200% center;
+  /* Legacy vars so existing UploadBox / tool pages still compile */
+  --brand-primary:   239 84% 67%;
+  --brand-secondary: 220 80% 45%;
+}
+
+/* ─── Design Tokens — Dark ──────────────────────────────────── */
+.dark {
+  --blue:           #5B82FF;
+  --blue-dark:      #4A6FE8;
+  --blue-light:     rgba(91, 130, 255, 0.15);
+  --blue-chip-text: #93B8FF;
+  --text:           #F8FAFC;
+  --text-muted:     #94A3B8;
+  --text-subtle:    #64748B;
+  --surface:        #111113;
+  --border:         rgba(255, 255, 255, 0.08);
+  --border-faint:   rgba(255, 255, 255, 0.06);
+  --border-blue:    rgba(91, 130, 255, 0.30);
+  --green-chip:     rgba(20, 83, 45, 0.6);
+  --green-text:     #86EFAC;
+  --bg-page:        #09090b;
+  --bg-card:        #111113;
+}
+
+/* ─── Base ──────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply antialiased overflow-x-hidden;
+    background-color: var(--bg-page);
+    color: var(--text);
+    font-feature-settings: "cv11", "ss01", "cv02", "cv03";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-html {
-  scroll-behavior: smooth;
+/* ─── Typography helpers ────────────────────────────────────── */
+.text-hero {
+  font-size: clamp(36px, 4.5vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
 }
+
+.text-section {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.text-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+/* ─── Semantic background helpers ───────────────────────────── */
+/* Use these classes instead of hardcoded bg-white / bg-[#F7F7F5] */
+.bg-page    { background-color: var(--bg-page) !important; }
+.bg-surface { background-color: var(--surface) !important; }
+.bg-card    { background-color: var(--bg-card) !important; }
+
+/* ─── Buttons ───────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background 120ms ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-primary:hover { background: var(--blue-dark); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  background: transparent;
+  color: var(--text);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 120ms ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-ghost:hover { background: var(--border); }
+
+/* ─── Upload Zone ───────────────────────────────────────────── */
+.upload-zone {
+  border: 1.5px dashed var(--blue);
+  border-radius: 16px;
+  padding: 48px 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-style 200ms ease, background-color 200ms ease;
+  user-select: none;
+  background-color: transparent;
+}
+.upload-zone:hover,
+.upload-zone.dragging {
+  border-style: solid;
+  background-color: color-mix(in srgb, var(--blue) 4%, transparent);
+}
+
+/* ─── Tool Cards ────────────────────────────────────────────── */
+.tool-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+  text-decoration: none;
+  color: var(--text);
+}
+.tool-card:hover {
+  border-color: var(--border-blue);
+  box-shadow: 0 2px 8px rgba(45, 91, 227, 0.10);
+  transform: translateY(-1px);
+}
+
+/* ─── Feature blocks ────────────────────────────────────────── */
+.feature-block {
+  padding: 20px 20px 20px 24px;
+  border-left: 2px solid var(--blue);
+}
+
+/* ─── Dividers & borders ────────────────────────────────────── */
+.border-base   { border-color: var(--border) !important; }
+.border-faint  { border-color: var(--border-faint) !important; }
+
+/* ─── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar           { width: 6px; }
+::-webkit-scrollbar-track     { background: transparent; }
+::-webkit-scrollbar-thumb     { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ─── Legacy glass shims (so UploadBox / tool pages compile) ── */
+.glass {
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+.dark .glass {
+  background: rgba(17,17,19,0.8);
+}
+.glass-dark {
+  background: rgba(17,17,19,0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+/* ─── Legacy text-reveal ────────────────────────────────────── */
+.text-reveal { color: var(--blue); }
