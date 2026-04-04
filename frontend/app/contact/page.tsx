@@ -6,8 +6,7 @@ import ContactForm from "./ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact Us | weFixPDF",
-  description:
-    "Get in touch with the weFixPDF team. Report bugs, ask privacy questions, submit feature requests, or inquire about business opportunities.",
+  description: "Get in touch with the weFixPDF team. Report bugs, ask privacy questions, submit feature requests, or inquire about business opportunities.",
   alternates: { canonical: "https://wefixpdf.com/contact" },
   robots: { index: true, follow: true },
   openGraph: {
@@ -28,10 +27,10 @@ export const metadata: Metadata = {
 };
 
 const topics = [
-  { icon: Bug, label: "Tool bugs", color: "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20", desc: "Something not working as expected? Let us know." },
-  { icon: Shield, label: "Privacy questions", color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20", desc: "Questions about how we handle your data." },
-  { icon: Briefcase, label: "Business inquiries", color: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20", desc: "Partnership, sponsorship, or API access." },
-  { icon: Lightbulb, label: "Feature requests", color: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20", desc: "Have an idea for a new tool or improvement?" },
+  { icon: Bug,       label: "Tool bugs",          desc: "Something not working? Let us know exactly what happened.", color: "#EF4444", bg: "#FEF2F2" },
+  { icon: Shield,    label: "Privacy questions",  desc: "Questions about how we handle your files and data.",        color: "#10B981", bg: "#ECFDF5" },
+  { icon: Briefcase, label: "Business inquiries", desc: "Partnerships, sponsorship, or API access.",                 color: "#2D5BE3", bg: "#E6F1FB" },
+  { icon: Lightbulb, label: "Feature requests",   desc: "Have an idea for a new tool or improvement?",               color: "#F59E0B", bg: "#FFFBEB" },
 ];
 
 export default function ContactPage() {
@@ -41,95 +40,95 @@ export default function ContactPage() {
   ]);
 
   return (
-    <div className="min-h-screen">
+    <div className="bg-page">
       <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
 
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-xs text-slate-400 mb-0 max-[950px]:mt-8 font-medium">
-        <Link href="/" className="hover:text-brand-primary transition-colors">Home</Link>
-        <ArrowRight className="w-3 h-3 text-slate-300" />
-        <span className="text-slate-600 dark:text-slate-300">Contact</span>
-      </nav>
-
-      {/* Hero */}
-      <section className="pt-10 pb-12 px-4 border-b border-slate-100 dark:border-slate-800">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-[11px] font-black uppercase tracking-[0.2em] mb-6">
-            <Mail className="w-3 h-3" /> Contact Us
-          </div>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-4 leading-[1.1]">
-            Get in Touch
-          </h1>
-          <p className="text-lg text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-            Have a question, found a bug, or want to share feedback? We'd love to hear from you.
+      {/* ── Hero ── */}
+      <section className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] py-14 md:py-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <nav className="flex items-center gap-2 text-[12px] mb-8" style={{ color: 'var(--text-muted)' }}>
+            <Link href="/" className="transition-colors hover:underline">Home</Link>
+            <span>/</span>
+            <span style={{ color: 'var(--text)' }}>Contact</span>
+          </nav>
+          <p className="text-label mb-4">Contact</p>
+          <h1 className="text-section mb-3" style={{ color: 'var(--text)' }}>Get in touch</h1>
+          <p className="text-[16px] leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
+            Have a question, found a bug, or want to share feedback? We&apos;d love to hear from you.
           </p>
         </div>
       </section>
 
-      <div className="max-w-4xl mx-auto px-4 py-14 space-y-16">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 space-y-12">
 
-        {/* Contact Cards */}
-        <section className="grid sm:grid-cols-2 gap-6">
-          <div className="glass dark:glass-dark rounded-[2.5rem] p-8 border border-slate-200/50 dark:border-white/5 space-y-4 hover:shadow-2xl transition-all duration-500 hover:-translate-y-1">
-            <div className="w-12 h-12 rounded-2xl bg-brand-primary/10 flex items-center justify-center">
-              <Mail className="w-6 h-6 text-brand-primary" />
+        {/* ── Contact info ── */}
+        <div className="grid sm:grid-cols-2 gap-3">
+          <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] p-6 bg-card space-y-3">
+            <div
+              className="w-9 h-9 rounded-lg flex items-center justify-center"
+              style={{ background: '#E6F1FB' }}
+            >
+              <Mail className="w-4 h-4" color="#2D5BE3" strokeWidth={1.75} />
             </div>
-            <h2 className="text-xl font-black text-slate-900 dark:text-white">Email Us</h2>
-            <p className="text-slate-500 dark:text-slate-400 font-medium text-sm leading-relaxed">
-              Send us a message and we'll get back to you as soon as possible.
+            <h2 className="text-[15px] font-medium" style={{ color: 'var(--text)' }}>Email us</h2>
+            <p className="text-[13px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+              Send us a message and we&apos;ll get back to you as soon as possible.
             </p>
             <a
               href="mailto:hello@wefixpdf.com"
-              className="inline-flex items-center gap-2 text-brand-primary font-black text-sm hover:underline"
+              className="inline-flex items-center gap-1.5 text-[13px] font-medium"
+              style={{ color: '#2D5BE3' }}
             >
-              hello@wefixpdf.com <ArrowRight className="w-4 h-4" />
+              hello@wefixpdf.com <ArrowRight className="w-3.5 h-3.5" />
             </a>
           </div>
 
-          <div className="glass dark:glass-dark rounded-[2.5rem] p-8 border border-slate-200/50 dark:border-white/5 space-y-4 hover:shadow-2xl transition-all duration-500 hover:-translate-y-1">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center">
-              <Clock className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+          <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] p-6 bg-card space-y-3">
+            <div
+              className="w-9 h-9 rounded-lg flex items-center justify-center"
+              style={{ background: '#EAF3DE' }}
+            >
+              <Clock className="w-4 h-4" color="#3B6D11" strokeWidth={1.75} />
             </div>
-            <h2 className="text-xl font-black text-slate-900 dark:text-white">Response Time</h2>
-            <p className="text-slate-500 dark:text-slate-400 font-medium text-sm leading-relaxed">
+            <h2 className="text-[15px] font-medium" style={{ color: 'var(--text)' }}>Response time</h2>
+            <p className="text-[13px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>
               We aim to respond to all inquiries promptly.
             </p>
-            <p className="text-emerald-600 dark:text-emerald-400 font-black text-sm">
-              We reply within 24–48 hours
+            <p className="text-[13px] font-medium" style={{ color: '#3B6D11' }}>
+              Within 24–48 hours
             </p>
           </div>
-        </section>
+        </div>
 
-        {/* Topics */}
-        <section className="space-y-6">
-          <div className="space-y-2">
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">What can we help with?</h2>
-            <p className="text-slate-500 dark:text-slate-400 font-medium text-sm">Feel free to reach out about any of these topics.</p>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {topics.map((topic, i) => (
+        {/* ── Topics ── */}
+        <section>
+          <h2 className="text-[18px] font-medium mb-2" style={{ color: 'var(--text)' }}>What can we help with?</h2>
+          <p className="text-[13px] mb-6" style={{ color: 'var(--text-muted)' }}>Feel free to reach out about any of these topics.</p>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {topics.map((topic) => (
               <div
-                key={i}
-                className={`flex items-start gap-4 p-5 rounded-2xl border ${topic.color}`}
+                key={topic.label}
+                className="flex items-start gap-4 p-4 rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] bg-card"
               >
-                <div className={`w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 ${topic.color}`}>
-                  <topic.icon className="w-5 h-5" />
+                <div
+                  className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                  style={{ background: topic.bg }}
+                >
+                  <topic.icon className="w-4 h-4" color={topic.color} strokeWidth={1.75} />
                 </div>
                 <div>
-                  <p className="font-black text-sm">{topic.label}</p>
-                  <p className="text-xs font-medium mt-1 opacity-80">{topic.desc}</p>
+                  <p className="text-[13px] font-medium" style={{ color: 'var(--text)' }}>{topic.label}</p>
+                  <p className="text-[12px] mt-0.5" style={{ color: 'var(--text-muted)' }}>{topic.desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Contact Form */}
-        <section className="glass dark:glass-dark rounded-[2.5rem] p-8 md:p-12 border border-slate-200/50 dark:border-white/5 space-y-8">
-          <div className="space-y-2">
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Send a Message</h2>
-            <p className="text-slate-500 dark:text-slate-400 font-medium text-sm">Fill in the form below and we'll get back to you.</p>
-          </div>
+        {/* ── Contact form ── */}
+        <section className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] p-6 md:p-8 bg-card">
+          <h2 className="text-[18px] font-medium mb-1" style={{ color: 'var(--text)' }}>Send a message</h2>
+          <p className="text-[13px] mb-6" style={{ color: 'var(--text-muted)' }}>Fill in the form below and we&apos;ll get back to you.</p>
           <ContactForm />
         </section>
 

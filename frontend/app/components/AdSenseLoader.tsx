@@ -9,17 +9,19 @@ import { useEffect } from "react";
  */
 export default function AdSenseLoader() {
   useEffect(() => {
+    const consent = localStorage.getItem("cookie_consent");
+
+    // Don't load AdSense at all if user hasn't consented yet
+    if (!consent) return;
+
     // Check if script already exists to avoid duplicate injection
-    const existingScript = document.getElementById("adsense-global-dynamic");
-    if (existingScript) return;
+    if (document.getElementById("adsense-global-dynamic")) return;
 
     const script = document.createElement("script");
     script.id = "adsense-global-dynamic";
     script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8668995301634402";
     script.async = true;
     script.crossOrigin = "anonymous";
-    
-    // Append to head (standard AdSense practice)
     document.head.appendChild(script);
   }, []);
 

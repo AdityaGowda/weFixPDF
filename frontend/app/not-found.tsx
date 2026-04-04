@@ -1,6 +1,6 @@
-// app/not-found.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Page Not Found | weFixPDF",
@@ -10,27 +10,28 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center px-6 text-center mt-20 mb-20">
-      <div className="space-y-5 max-w-md w-full">
+    <div className="min-h-[60vh] flex items-center justify-center px-4">
+      <div className="text-center space-y-6 max-w-md">
 
-        <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-[0.2em] border border-emerald-500/20">
+        <span
+          className="inline-flex items-center px-3 py-1.5 rounded text-[12px] font-medium border-base bg-surface"
+          style={{ color: 'var(--text-muted)' }}
+        >
           404 Error
-        </div>
+        </span>
 
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight">
-          Page not found
-        </h1>
+        <h1 className="text-section" style={{ color: 'var(--text)' }}>Page not found</h1>
 
-        <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-          This page doesn't exist or may have been moved.
+        <p className="text-[15px] leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
+          This page doesn&apos;t exist or may have been moved.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-          <Link
-            href="/"
-            className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm transition-colors"
-          >
-            Go Home
+          <Link href="/" className="btn-primary">
+            Go home <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link href="/tools" className="btn-ghost">
+            Browse tools
           </Link>
         </div>
 

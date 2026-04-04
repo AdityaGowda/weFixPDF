@@ -1,412 +1,466 @@
 import {
-  Shield, Zap, Lock, ArrowRight, Star, FileImage, Image, Minimize2, FileDown,
-  Layers, Scissors, Smartphone,
-  RotateCw, ShieldCheck, LockOpen, Upload, Settings, Download,
-  CheckCircle2, ChevronDown
+  FileDown, FileImage, Layers, Scissors, RotateCw, ShieldCheck, LockOpen,
+  Image, Minimize2, Zap, Smartphone, CheckCircle2, ChevronDown, ArrowRight,
+  FileText
 } from "lucide-react";
-import Link from "next/link";
-import { LiveProcessingTicker } from "./components/clientDymaic";
+import HeroDropzone from "./components/HeroDropzone";
+import { type ToolListing } from "@/app/lib/seo/seoApi";
 
-const pdfTools = [
-  { name: "Compress PDF", href: "/compress-pdf", icon: FileDown, desc: "Reduce PDF file size by up to 90% without losing quality. Perfect for email attachments and uploads.", cta: "Compress PDF Free" },
-  { name: "PDF to JPG", href: "/pdf-to-jpg", icon: FileImage, desc: "Convert PDF pages to high-quality JPG images instantly — no software, no watermarks, 100% free.", cta: "Convert PDF to JPG Free" },
-  { name: "Merge PDF", href: "/merge-pdf", icon: Layers, desc: "Combine multiple PDF files into one document in seconds — free, secure, no sign-up required.", cta: "Merge PDF Files Free" },
-  { name: "Split PDF", href: "/split-pdf", icon: Scissors, desc: "Extract specific pages or split a PDF by page range — free online, no software installation needed.", cta: "Split PDF Free" },
-  { name: "Rotate PDF", href: "/rotate-pdf", icon: RotateCw, desc: "Rotate PDF pages 90°, 180°, or 270° and save permanently — free tool, no account required.", cta: "Rotate PDF Pages Free" },
-  { name: "Protect PDF", href: "/protect-pdf", icon: ShieldCheck, desc: "Password protect PDF files instantly. Keep sensitive documents safe and encrypted online.", cta: "Password Protect PDF Free" },
-  { name: "Unlock PDF", href: "/unlock-pdf", icon: LockOpen, desc: "Remove password from PDF files quickly and easily — unlock protected PDFs online, free.", cta: "Unlock PDF Online Free" },
+/* ─── Icon map (slug → lucide icon) ────────────────────────── */
+
+const ICON_MAP: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number; color?: string }>> = {
+  "compress-pdf": FileDown,
+  "pdf-to-jpg": FileImage,
+  "merge-pdf": Layers,
+  "split-pdf": Scissors,
+  "rotate-pdf": RotateCw,
+  "protect-pdf": ShieldCheck,
+  "unlock-pdf": LockOpen,
+  "pdf-to-word": FileText,
+  "jpg-to-png": FileImage,
+  "png-to-jpg": Image,
+  "image-compressor": Minimize2,
+  "png-to-webp": Zap,
+  "heic-to-jpg": Smartphone,
+};
+
+/* ─── Fallback data (used when DB returns nothing) ──────────── */
+
+const FALLBACK_PDF_TOOLS = [
+  { name: "Compress PDF", href: "/compress-pdf", icon: FileDown, desc: "Reduce file size by up to 90%, losslessly." },
+  { name: "PDF to JPG", href: "/pdf-to-jpg", icon: FileImage, desc: "Convert every page to a high-quality image." },
+  { name: "Merge PDF", href: "/merge-pdf", icon: Layers, desc: "Combine multiple PDFs into one document." },
+  { name: "Split PDF", href: "/split-pdf", icon: Scissors, desc: "Extract pages or split by page range." },
+  { name: "Rotate PDF", href: "/rotate-pdf", icon: RotateCw, desc: "Rotate pages 90°, 180°, or 270° permanently." },
+  { name: "Protect PDF", href: "/protect-pdf", icon: ShieldCheck, desc: "Password-protect sensitive documents." },
+  { name: "Unlock PDF", href: "/unlock-pdf", icon: LockOpen, desc: "Remove passwords from PDF files." },
+  { name: "PDF to Word", href: "/pdf-to-word", icon: FileText, desc: "Convert PDF to an editable .docx file." },
 ];
 
-const imageTools = [
-  { name: "JPG to PNG Converter", href: "/jpg-to-png", icon: FileImage, desc: "Convert JPG to PNG free with lossless quality — no watermarks, no sign-up, instant download.", cta: "Convert JPG to PNG Free" },
-  { name: "PNG to JPG Converter", href: "/png-to-jpg", icon: Image, desc: "Convert PNG to JPG online and reduce file size for faster web performance — free, no software.", cta: "Convert PNG to JPG Free" },
-  { name: "Image Compressor", href: "/image-compressor", icon: Minimize2, desc: "Compress JPG, PNG, and WEBP images by up to 80% without visible quality loss — 100% free.", cta: "Compress Image Free" },
-  { name: "PNG to WEBP Converter", href: "/png-to-webp", icon: Zap, desc: "Convert PNG to WEBP for up to 30% smaller files. Boost page speed and Core Web Vitals instantly.", cta: "Convert PNG to WEBP Free" },
-  { name: "HEIC to JPG", href: "/heic-to-jpg", icon: Smartphone, desc: "Convert iPhone HEIC photos to JPG online. Works on Windows & Mac — free, no app needed.", cta: "Convert HEIC to JPG Free" },
+const FALLBACK_IMAGE_TOOLS = [
+  { name: "JPG to PNG", href: "/jpg-to-png", icon: FileImage, desc: "Lossless conversion, no watermarks." },
+  { name: "PNG to JPG", href: "/png-to-jpg", icon: Image, desc: "Smaller files for faster web pages." },
+  { name: "Image Compressor", href: "/image-compressor", icon: Minimize2, desc: "Shrink JPG, PNG, WEBP by up to 80%." },
+  { name: "PNG to WEBP", href: "/png-to-webp", icon: Zap, desc: "Modern format, 30% smaller files." },
+  { name: "HEIC to JPG", href: "/heic-to-jpg", icon: Smartphone, desc: "Convert iPhone photos anywhere." },
 ];
-
-const allTools = [...pdfTools, ...imageTools];
 
 const faqs = [
   {
     q: "Is weFixPDF really 100% free?",
-    a: "Yes — every tool on weFixPDF is completely free with no hidden fees, no subscription, and no sign-up required. All features are available to everyone at no cost.",
+    a: "Yes. Every tool is completely free — no hidden fees, no subscription, no sign-up required. All features are available to everyone at no cost."
   },
   {
     q: "Are my files safe and private?",
-    a: "Absolutely. All uploads are encrypted with HTTPS/TLS. Files are processed on our servers and permanently deleted immediately after conversion — we never store, read, or share your files.",
+    a: "All uploads use TLS 1.3 encryption. Files are permanently deleted immediately after conversion — we never store, read, or share your files."
   },
   {
     q: "Do I need to create an account?",
-    a: "No account or sign-up is needed. Just open any tool, upload your file, and download the result. No email address, no registration, no software to install.",
+    a: "No. Open a tool, upload your file, download your result. No email, no registration, no software to install."
   },
   {
-    q: "What file formats does weFixPDF support?",
-    a: "We support PDF, JPG, PNG, WEBP, HEIC, and DOCX formats. You can compress PDFs, convert between image formats, merge/split PDF files, and protect or unlock PDFs.",
+    q: "What file formats are supported?",
+    a: "We support PDF, JPG, PNG, WEBP, HEIC, and DOCX. Compress, convert, merge, split, protect, and unlock these formats."
   },
   {
-    q: "How long does file conversion take?",
-    a: "Most conversions complete in under 3 seconds. Large files (over 50MB) may take slightly longer, but the process is always fast and runs entirely server-side.",
+    q: "How fast is the conversion?",
+    a: "Most conversions complete in under 3 seconds. Processing runs on cloud servers — your device isn't burdened."
   },
   {
     q: "Is there a file size limit?",
-    a: "You can upload files up to 100MB per conversion. For larger documents, try splitting the PDF first, then processing individual sections.",
+    a: "Files up to 100 MB. For larger PDFs, try splitting first, then processing individual sections."
   },
   {
-    q: "How does weFixPDF compare to Adobe Acrobat or iLovePDF?",
-    a: "weFixPDF is 100% free with no usage limits, unlike Adobe Acrobat which requires a paid subscription. Compared to iLovePDF or Smallpdf, we offer the same core tools with stricter zero-retention privacy — files are deleted immediately, not after 1–2 hours.",
+    q: "How does weFixPDF compare to Smallpdf or Adobe?",
+    a: "We're 100% free with no daily limits. Adobe requires a paid subscription. Smallpdf caps free users at 2 tasks/day and keeps files for 1–2 hours. We delete files the moment your download begins."
   },
   {
     q: "Can I compress a PDF without losing quality?",
-    a: "Yes. Our smart compression algorithm reduces PDF file size by removing redundant data and optimizing embedded images while preserving text clarity and document fidelity.",
+    a: "Yes. Our compression removes redundant data and optimises embedded images while preserving text sharpness and visual fidelity."
   },
 ];
 
-// Uses native <details>/<summary> so answer text is always in the DOM —
-// Google reads it on every crawl, satisfying FAQPage schema requirements.
+/* ─── Sub-components ────────────────────────────────────────── */
+
+function FreeBadge() {
+  return (
+    <span
+      className="inline-block text-[11px] font-medium px-2 py-0.5 rounded"
+      style={{ background: '#EAF3DE', color: '#3B6D11' }}
+    >
+      Free
+    </span>
+  );
+}
+
+function ToolCard({ name, href, icon: Icon, desc, variant = 'blue' }: {
+  name: string; href: string;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number; color?: string }>;
+  desc: string;
+  variant?: 'blue' | 'emerald';
+}) {
+  const iconBg = variant === 'emerald' ? '#ECFDF5' : 'var(--blue-light)';
+  const iconColor = variant === 'emerald' ? '#059669' : 'var(--blue)';
+  return (
+    <a href={href} className="tool-card group" aria-label={name}>
+      <div className="flex items-start justify-between gap-2">
+        <div
+          className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+          style={{ background: iconBg }}
+        >
+          <Icon className="w-[18px] h-[18px]" color={iconColor} strokeWidth={1.75} />
+        </div>
+        <FreeBadge />
+      </div>
+      <div>
+        <p className="text-[14px] font-medium leading-snug" style={{ color: 'var(--text)' }}>{name}</p>
+        <p className="text-[12px] mt-0.5 leading-relaxed" style={{ color: 'var(--text-muted)' }}>{desc}</p>
+      </div>
+    </a>
+  );
+}
+
 function FaqItem({ q, a }: { q: string; a: string }) {
   return (
-    <details className="group border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden">
-      <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
-        <span className="font-bold text-slate-900 dark:text-white text-sm md:text-base pr-4">{q}</span>
-        <ChevronDown className="w-4 h-4 text-slate-400 group-open:text-brand-primary group-open:rotate-180 transition-transform flex-shrink-0" />
+    <details className="group border-b border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] last:border-0">
+      <summary className="flex items-center justify-between py-5 cursor-pointer list-none gap-4">
+        <span className="text-[15px] font-medium leading-snug" style={{ color: 'var(--text)' }}>{q}</span>
+        <ChevronDown
+          className="w-4 h-4 flex-shrink-0 transition-transform duration-200 group-open:rotate-180"
+          style={{ color: 'var(--text-muted)' }}
+        />
       </summary>
-      <div className="px-6 pb-5 pt-4 text-slate-500 dark:text-slate-400 text-sm md:text-base leading-relaxed font-medium border-t border-slate-100 dark:border-white/5">
+      <div
+        className="pb-5 text-[15px] leading-relaxed"
+        style={{ color: 'var(--text-muted)' }}
+      >
         {a}
       </div>
     </details>
   );
 }
 
-export default function HomeContent() {
+function SectionLabel({ children, color = 'blue' }: { children: React.ReactNode; color?: 'blue' | 'emerald' | 'purple' }) {
+  const dotColor = color === 'emerald' ? '#10B981' : color === 'purple' ? '#8B5CF6' : 'var(--blue)';
   return (
-    <div className="space-y-20 md:space-y-32 pb-20 px-0 sm:px-2 md:px-12">
+    <p className="text-label mb-4 flex items-center gap-1.5">
+      <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: dotColor }} />
+      {children}
+    </p>
+  );
+}
 
-      {/* ── Hero ── */}
-      <section className="relative pt-20 pb-10 text-center space-y-12">
-        <div className="space-y-8 max-w-4xl mx-auto px-0">
-          <h1 className="text-5xl sm:text-7xl md:text-8xl font-black text-slate-900 dark:text-white tracking-tighter leading-[0.95] text-reveal flex flex-col gap-2">
-            Free Online
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary via-white to-brand-secondary animate-shine">File Converter</span>
-          </h1>
+/* ─── Page ──────────────────────────────────────────────────── */
 
-          <div className="space-y-8">
-            <p className="text-lg md:text-2xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed px-4">
-              PDF tools &amp; image converter — all in one place.<br className="hidden sm:block" />
-              <span className="text-slate-900 dark:text-white font-black">100% Free. No sign-up. Zero data retention.</span>
-            </p>
-            <div aria-hidden="true" role="presentation" className="flex justify-center animate-in fade-in zoom-in-95 duration-1500 delay-700">
-              <LiveProcessingTicker />
-            </div>
+export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
+  const dbPdfTools = tools
+    .filter((t) => t.type === "PDF Tools")
+    .sort((a, b) => a.position - b.position)
+    .map((t) => ({ name: t.name, href: `/${t.slug}`, icon: ICON_MAP[t.slug] ?? FileText, desc: t.description }));
 
-            {/* Marquee CTA Strip */}
-            <div className="relative overflow-hidden space-y-6 py-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 w-screen left-1/2 -translate-x-1/2">
-              <div className="absolute left-0 top-0 h-full w-32 bg-gradient-to-r to-transparent z-10 pointer-events-none" />
-              <div className="absolute right-0 top-0 h-full w-32 bg-gradient-to-l to-transparent z-10 pointer-events-none" />
+  const dbImageTools = tools
+    .filter((t) => t.type === "Image Tools")
+    .sort((a, b) => a.position - b.position)
+    .map((t) => ({ name: t.name, href: `/${t.slug}`, icon: ICON_MAP[t.slug] ?? FileImage, desc: t.description }));
 
-              <div className="flex gap-3 w-max animate-marquee will-change-transform">
-                {[...Array(3)].map((_, d) => (
-                  <div key={d} className="flex gap-3 shrink-0">
-                    {allTools.map((tool, i) => (
-                      <Link
-                        key={tool.href + d}
-                        href={tool.href}
-                        title={tool.name + " — Free Online"}
-                        aria-label={tool.name}
-                        className={`flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-bold whitespace-nowrap transition-all hover:scale-105 ${
-                          i === 0
-                            ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/25"
-                            : i === 3
-                              ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-lg"
-                              : "glass dark:glass-dark border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:border-brand-primary/30"
-                        }`}
-                      >
-                        <tool.icon className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} />
-                        {tool.name}
-                      </Link>
-                    ))}
-                  </div>
-                ))}
+  const pdfTools = dbPdfTools.length > 0 ? dbPdfTools : FALLBACK_PDF_TOOLS;
+  const imageTools = dbImageTools.length > 0 ? dbImageTools : FALLBACK_IMAGE_TOOLS;
+
+  return (
+    <div>
+
+      {/* ══ 1. HERO ═══════════════════════════════════════════ */}
+      <section
+        className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]"
+        style={{
+          background: 'radial-gradient(ellipse 80% 60% at 60% 0%, rgba(45,91,227,0.07) 0%, transparent 70%), var(--bg-page)',
+        }}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-16">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+            {/* Left — copy */}
+            <div className="space-y-6 max-w-lg">
+              {/* Eyebrow badge */}
+              <div
+                className="inline-flex items-center gap-2 px-3 py-1.5 text-[12px] font-medium rounded-[20px]"
+                style={{ background: 'var(--blue-light)', color: 'var(--blue-chip-text)' }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full animate-pulse"
+                  style={{ background: 'var(--blue)' }}
+                />
+                Zero data retention — files deleted instantly
               </div>
 
-              <div className="flex gap-3 w-max animate-marquee-reverse will-change-transform">
-                {[...Array(3)].map((_, d) => (
-                  <div key={d} className="flex gap-3 shrink-0">
-                    {[...allTools].reverse().map((tool, i) => (
-                      <Link
-                        key={tool.href + d}
-                        href={tool.href}
-                        title={tool.name + " — Free Online"}
-                        aria-label={tool.name}
-                        className={`flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-bold whitespace-nowrap transition-all hover:scale-105 ${
-                          i === 0
-                            ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-lg"
-                            : i === 2
-                              ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/25"
-                              : "glass dark:glass-dark border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:border-brand-primary/30"
-                        }`}
-                      >
-                        <tool.icon className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} />
-                        {tool.name}
-                      </Link>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              {/* Headline */}
+              <h1 className="text-hero" style={{ color: 'var(--text)' }}>
+                Free Online{' '}
+                <span style={{ color: 'var(--blue)' }}>PDF &amp; Image Tools</span>
+                {' '}— Compress, Convert, Merge &amp; More
+              </h1>
 
-      {/* ── How It Works ── */}
-      <section className="max-w-4xl mx-auto px-4 text-center space-y-12">
-        <div className="space-y-3">
-          <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-            Convert Any File in 3 Simple Steps
-          </h2>
-          <p className="text-slate-500 dark:text-slate-400 font-medium">
-            No software. No account. Just upload and download.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { icon: Upload, step: "1", title: "Upload Your File", desc: "Select a PDF or image from your device. Files up to 100MB supported." },
-            { icon: Settings, step: "2", title: "Convert or Edit", desc: "Our servers process your file instantly with high-quality results." },
-            { icon: Download, step: "3", title: "Download Instantly", desc: "Get your converted file in seconds. Original file is deleted immediately." },
-          ].map((item) => (
-            <div key={item.step} className="glass dark:glass-dark rounded-3xl p-8 border border-slate-200/50 dark:border-white/5 space-y-4 relative">
-              <div className="absolute -top-4 left-6 w-8 h-8 rounded-full bg-brand-primary text-white text-sm font-black flex items-center justify-center shadow-lg shadow-brand-primary/30">
-                {item.step}
-              </div>
-              <div className="w-12 h-12 rounded-2xl bg-brand-primary/10 flex items-center justify-center mt-2">
-                <item.icon className="w-6 h-6 text-brand-primary" strokeWidth={1.75} />
-              </div>
-              <h3 className="text-lg font-black text-slate-900 dark:text-white">{item.title}</h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── PDF Tools Grid ── */}
-      <section className="max-w-6xl mx-auto px-0 space-y-10">
-        <div className="text-center space-y-3">
-          <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-            Free PDF Tools
-          </h2>
-          <p className="text-slate-500 dark:text-slate-400 font-medium text-sm max-w-xl mx-auto">
-            Compress, convert, merge, split, protect and unlock PDF files — all completely free, no account needed.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {pdfTools.map((tool, i) => (
-            <a
-              key={i}
-              href={tool.href}
-              aria-label={tool.name}
-              className="group relative glass dark:glass-dark rounded-3xl p-6 border border-slate-200/50 dark:border-white/5 hover:border-brand-primary/40 hover:shadow-xl hover:shadow-brand-primary/10 hover:-translate-y-1 transition-all duration-300 flex flex-col gap-4 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl" />
-              <div className="relative flex items-start justify-between">
-                <div className="w-11 h-11 rounded-2xl bg-brand-primary/10 group-hover:bg-brand-primary/20 flex items-center justify-center transition-colors duration-300">
-                  <tool.icon className="w-5 h-5 text-brand-primary" strokeWidth={1.75} />
-                </div>
-                <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[9px] font-black uppercase tracking-widest rounded-full border border-emerald-500/20">
-                  Free
-                </span>
-              </div>
-              <div className="relative flex flex-col gap-1.5 flex-1">
-                <h3 className="text-sm font-black text-slate-900 dark:text-white group-hover:text-brand-primary transition-colors leading-snug">
-                  {tool.name}
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-                  {tool.desc}
-                </p>
-              </div>
-              <div className="relative flex items-center gap-1.5 text-brand-primary font-black text-[10px] uppercase tracking-widest translate-y-1 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                {tool.cta}
-                <ArrowRight className="w-3 h-3" />
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Image Tools Grid ── */}
-      <section className="max-w-6xl mx-auto px-0 space-y-10">
-        <div className="text-center space-y-3">
-          <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-            Free Image Converter &amp; Compressor
-          </h2>
-          <p className="text-slate-500 dark:text-slate-400 font-medium text-sm max-w-xl mx-auto">
-            Convert JPG to PNG, PNG to WEBP, compress images, and convert HEIC photos — free, instant, no watermarks.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {imageTools.map((tool, i) => (
-            <a
-              key={i}
-              href={tool.href}
-              aria-label={tool.name}
-              className="group relative glass dark:glass-dark rounded-3xl p-6 border border-slate-200/50 dark:border-white/5 hover:border-brand-primary/40 hover:shadow-xl hover:shadow-brand-primary/10 hover:-translate-y-1 transition-all duration-300 flex flex-col gap-4 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl" />
-              <div className="relative flex items-start justify-between">
-                <div className="w-11 h-11 rounded-2xl bg-brand-primary/10 group-hover:bg-brand-primary/20 flex items-center justify-center transition-colors duration-300">
-                  <tool.icon className="w-5 h-5 text-brand-primary" strokeWidth={1.75} />
-                </div>
-                <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[9px] font-black uppercase tracking-widest rounded-full border border-emerald-500/20">
-                  Free
-                </span>
-              </div>
-              <div className="relative flex flex-col gap-1.5 flex-1">
-                <h3 className="text-sm font-black text-slate-900 dark:text-white group-hover:text-brand-primary transition-colors leading-snug">
-                  {tool.name}
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-                  {tool.desc}
-                </p>
-              </div>
-              <div className="relative flex items-center gap-1.5 text-brand-primary font-black text-[10px] uppercase tracking-widest translate-y-1 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                {tool.cta}
-                <ArrowRight className="w-3 h-3" />
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Stats ── */}
-      <section className="max-w-6xl mx-auto px-0">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            { icon: CheckCircle2, stat: "100%", label: "Free" },
-            { icon: Shield, stat: "No", label: "Sign-up Required" },
-            { icon: Lock, stat: "100%", label: "Privacy Guaranteed" },
-            { icon: Zap, stat: "0 bytes", label: "Data Retained After Use" },
-          ].map((item, i) => (
-            <div key={i} className="glass dark:glass-dark rounded-[2rem] p-8 text-center border border-white/5 flex items-center justify-center flex-col gap-3">
-              <item.icon className="w-6 h-6 text-brand-primary" />
-              <p className="text-4xl font-black text-brand-primary">{item.stat}</p>
-              <p className="text-sm text-slate-500 dark:text-slate-400 font-bold">{item.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Trust Features ── */}
-      <section className="max-w-6xl mx-auto px-0 grid md:grid-cols-3 gap-8">
-        {[
-          {
-            icon: Shield,
-            title: "Files Deleted Immediately",
-            desc: "Your files are permanently deleted right after conversion. Nothing is stored, logged, or retained on our servers — ever."
-          },
-          {
-            icon: Lock,
-            title: "Encrypted Transfers",
-            desc: "All uploads and downloads use HTTPS/TLS encryption. Your files are never transmitted or processed in plain text."
-          },
-          {
-            icon: Zap,
-            title: "Blazing Fast Processing",
-            desc: "Cloud-native architecture delivers sub-3-second conversions. No queues, no waiting — instant results every time."
-          }
-        ].map((feature, i) => (
-          <div key={i} className="glass dark:glass-dark rounded-[2.5rem] p-10 border border-white/5 space-y-6 hover:-translate-y-2 transition-transform duration-500">
-            <div className="w-14 h-14 rounded-2xl bg-brand-primary/10 flex items-center justify-center">
-              <feature.icon className="w-7 h-7 text-brand-primary" />
-            </div>
-            <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{feature.title}</h3>
-            <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{feature.desc}</p>
-          </div>
-        ))}
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="max-w-4xl mx-auto px-0">
-        <div className="glass dark:glass-dark rounded-[3rem] p-16 text-center relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/10 to-brand-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="relative z-10 space-y-8">
-            <div className="flex justify-center gap-1 text-amber-400">
-              {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-5 h-5 fill-current" />)}
-            </div>
-            <p className="text-sm font-black text-slate-500 uppercase tracking-widest">Fast &amp; Secure • Zero Retention • Privacy First</p>
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-              The Easiest Free File Converter<br />on the Internet
-            </h2>
-            <p className="text-lg text-slate-500 dark:text-slate-400 font-medium">
-              Compress PDFs, convert images, merge documents — instantly and 100% private. No account. No limits.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a href="/compress-pdf" className="max-[950px]:text-sm inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-brand-primary text-white font-black hover:scale-105 transition-all shadow-lg shadow-brand-primary/25">
-                Compress PDF Free <ArrowRight className="w-5 h-5" />
-              </a>
-              <a href="/jpg-to-png" className="max-[950px]:text-sm inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-black hover:scale-105 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-white/10">
-                Convert Images Free
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── FAQ Section ── */}
-      <section className="max-w-3xl mx-auto px-4 space-y-10">
-        <div className="text-center space-y-3">
-          <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-slate-500 dark:text-slate-400 font-medium text-sm">
-            Everything you need to know about weFixPDF.
-          </p>
-        </div>
-        <div className="space-y-3">
-          {faqs.map((faq, i) => (
-            <FaqItem key={i} q={faq.q} a={faq.a} />
-          ))}
-        </div>
-      </section>
-
-      {/* ── SEO Content ── */}
-      <section className="glass dark:glass-dark rounded-3xl md:rounded-[4rem] p-6 sm:p-12 md:p-20 space-y-10 relative overflow-hidden group border border-slate-200/50 dark:border-white/5">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-[100px] transition-transform duration-1000 group-hover:scale-150" />
-
-        <div className="relative z-10 space-y-10">
-          <div className="space-y-4">
-            <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tighter">
-              Your All-in-One <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-secondary">Free File Converter</span>
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-slate-500 dark:text-slate-400 leading-relaxed text-base md:text-lg font-medium">
-              <p>
-                weFixPDF is a free online file converter built around one principle: <strong className="text-slate-700 dark:text-slate-300">your files are your business, not ours</strong>. Every tool — from compressing PDFs and converting images to merging documents, rotating pages, and protecting files with passwords — is available to everyone for free, with no account required and no usage limits.
+              {/* Sub-headline */}
+              <p className="text-[16px] leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
+                Compress PDF, convert PDF to JPG or Word, merge &amp; split PDFs — plus compress images, convert JPG to PNG, HEIC to JPG, PNG to WebP. All free, no sign-up, files deleted instantly.
               </p>
-              <p>
-                Unlike Adobe Acrobat Online (which locks features behind a monthly subscription) or Smallpdf (which limits free users to two tasks per day), weFixPDF imposes no restrictions. Files are processed instantly using cloud-native servers and <strong className="text-slate-700 dark:text-slate-300">deleted permanently the moment your download is ready</strong> — not hours later.
+
+              {/* Trust chips */}
+              <div className="flex flex-wrap gap-2 pt-2">
+                {[
+                  '100% Free',
+                  'No sign-up',
+                  'HTTPS Encrypted',
+                  'Files deleted instantly',
+                  'No watermarks',
+                ].map((label) => (
+                  <span
+                    key={label}
+                    className="inline-flex items-center gap-1.5 text-[12px] font-medium px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} />
+                    {label}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Right — upload dropzone (the real CTA) */}
+            <div>
+              <HeroDropzone />
+              <p className="mt-3 text-center text-[12px]" style={{ color: 'var(--text-muted)' }}>
+                Or scroll down to pick a specific tool
               </p>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="space-y-4">
-            <h3 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white">
-              Why Privacy Matters for File Conversion
-            </h3>
-            <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-base font-medium">
-              When you upload a PDF or image to an online converter, you are trusting that service with potentially sensitive information — contracts, invoices, personal photos, legal documents. weFixPDF uses HTTPS/TLS encryption for all transfers and guarantees <strong className="text-slate-700 dark:text-slate-300">zero data retention</strong>: no file is ever stored on disk beyond the duration of your active conversion session.
-            </p>
+      {/* ══ 2. PDF TOOL GRID ══════════════════════════════════ */}
+      <section id="pdf-tools" className="py-16 md:py-20" style={{ background: 'var(--surface)' }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <SectionLabel>PDF Tools</SectionLabel>
+          <h2 className="text-section mb-8" style={{ color: 'var(--text)' }}>
+            Everything you need for <span style={{ color: 'var(--blue)' }}>PDFs</span>
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {pdfTools.map((tool) => (
+              <ToolCard key={tool.href} {...tool} />
+            ))}
           </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* ══ 3. IMAGE TOOL GRID ════════════════════════════════ */}
+      <section id="image-tools" className="py-16 md:py-20 bg-page border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <SectionLabel color="emerald">Image Tools</SectionLabel>
+          <h2 className="text-section mb-8" style={{ color: 'var(--text)' }}>
+            Convert &amp; compress <span style={{ color: '#10B981' }}>images</span>
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {imageTools.map((tool) => (
+              <ToolCard key={tool.href} {...tool} variant="emerald" />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 4. HOW IT WORKS ═══════════════════════════════════ */}
+      <section className="py-16 md:py-20 border-t border-[rgba(0,0,0,0.06)]" style={{ background: 'var(--surface)' }}>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <SectionLabel>How it works</SectionLabel>
+          <h2 className="text-section mb-12" style={{ color: 'var(--text)' }}>Three steps. That&apos;s it.</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { title: "PDF Tools", items: ["Compress PDF", "PDF to JPG", "PDF to Word", "Merge PDF", "Split PDF", "Rotate PDF", "Protect PDF", "Unlock PDF"] },
-              { title: "Image Converters", items: ["JPG to PNG", "PNG to JPG", "PNG to WEBP", "Image Compressor", "HEIC to JPG"] },
-              { title: "Why weFixPDF", items: ["100% Free", "No Sign-up", "No Watermarks", "Zero Data Retention", "HTTPS Encryption", "No Usage Limits", "Instant Processing"] },
+              {
+                n: '1',
+                title: 'Upload your file',
+                body: 'Select a PDF or image from your device. Files up to 100 MB supported.',
+                color: '#2D5BE3',
+                bg: '#E6F1FB',
+              },
+              {
+                n: '2',
+                title: 'We process it',
+                body: 'Our servers convert your file instantly. No queue, no waiting.',
+                color: '#10B981',
+                bg: '#ECFDF5',
+              },
+              {
+                n: '3',
+                title: 'Download instantly',
+                body: 'Your file downloads immediately. Original deleted from servers.',
+                color: '#8B5CF6',
+                bg: '#F5F3FF',
+              },
+            ].map((step) => (
+              <div
+                key={step.n}
+                className="rounded-xl p-6 space-y-4 bg-card border border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]"
+              >
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-[18px] font-bold"
+                  style={{ background: step.bg, color: step.color }}
+                >
+                  {step.n}
+                </div>
+                <h3 className="text-[16px] font-semibold" style={{ color: 'var(--text)' }}>{step.title}</h3>
+                <p className="text-[14px] leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
+                  {step.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 5. TRUST & SECURITY ═══════════════════════════════ */}
+      <section className="py-16 md:py-24 bg-page border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-20">
+
+            {/* Left */}
+            <div className="space-y-5">
+              <SectionLabel>Privacy &amp; Security</SectionLabel>
+              <h2 className="text-section" style={{ color: 'var(--text)' }}>
+                Built for privacy.<br />Designed for speed.
+              </h2>
+              <p className="text-[16px] leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
+                When you upload a contract, invoice, or personal photo, you&apos;re
+                trusting that service with sensitive information. weFixPDF was built
+                around a single rule: process the file and delete it immediately.
+                Nothing stored, nothing shared, nothing logged.
+              </p>
+              <a
+                href="/security"
+                className="inline-flex items-center gap-1.5 text-[14px] font-medium"
+                style={{ color: 'var(--blue)' }}
+              >
+                How we protect your files
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
+            {/* Right — feature blocks */}
+            <div className="space-y-4">
+              {[
+                {
+                  title: 'Files Deleted Immediately',
+                  body: 'Your files are permanently removed the moment your download is ready. Nothing is stored, logged, or retained — not for a minute, not ever.',
+                  accent: '#10B981',
+                },
+                {
+                  title: 'End-to-End Encryption',
+                  body: 'All uploads and downloads use HTTPS/TLS 1.3. Files are never transmitted in plain text between your browser and our servers.',
+                  accent: '#2D5BE3',
+                },
+                {
+                  title: 'No Account Required',
+                  body: 'Open a tool, upload your file, get your result. No email, no password, no tracking — just the tool doing its job.',
+                  accent: '#8B5CF6',
+                },
+              ].map((f) => (
+                <div key={f.title} className="feature-block" style={{ borderLeftColor: f.accent, background: `${f.accent}08` }}>
+                  <h3 className="text-[15px] font-medium mb-1.5" style={{ color: f.accent }}>{f.title}</h3>
+                  <p className="text-[14px] leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
+                    {f.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 6. STATS BAR ══════════════════════════════════════ */}
+      <section className="py-12 border-t border-[rgba(0,0,0,0.06)]" style={{ background: 'var(--surface)' }}>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {[
+              { stat: '100%', label: 'Free', sub: 'No hidden fees, ever', accent: '#2D5BE3' },
+              { stat: '<3 sec', label: 'Speed', sub: 'Average processing time', accent: '#10B981' },
+              { stat: '0 bytes', label: 'Retained', sub: 'Data stored after use', accent: '#8B5CF6' },
+              { stat: '12+', label: 'Tools', sub: 'Free tools available', accent: '#F59E0B' },
+            ].map(({ stat, label, sub, accent }) => (
+              <div
+                key={label}
+                className="rounded-lg p-5 text-center border-base bg-card overflow-hidden relative"
+                style={{ borderTop: `2.5px solid ${accent}` }}
+              >
+                <p className="text-[22px] font-medium tabular-nums" style={{ color: accent }}>{stat}</p>
+                <p className="text-[12px] font-medium mt-0.5" style={{ color: 'var(--text)' }}>{label}</p>
+                <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>{sub}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 7. FAQ ════════════════════════════════════════════ */}
+      <section className="py-16 md:py-20 bg-page border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <SectionLabel>FAQ</SectionLabel>
+          <h2 className="text-section mb-10" style={{ color: 'var(--text)' }}>Common questions</h2>
+          <div>
+            {faqs.map((faq, i) => (
+              <FaqItem key={i} q={faq.q} a={faq.a} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 8. FINAL CTA ══════════════════════════════════════ */}
+      <section
+        className="py-16 md:py-24 border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]"
+        style={{ background: 'linear-gradient(135deg, rgba(45,91,227,0.06) 0%, rgba(139,92,246,0.05) 100%), var(--bg-page)' }}
+      >
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center space-y-6">
+          <h2 className="text-section" style={{ color: 'var(--text)' }}>
+            Your files are your business — <span style={{ color: 'var(--blue)' }}>not ours.</span>
+          </h2>
+          <p className="text-[16px] leading-[1.7] max-w-xl mx-auto" style={{ color: 'var(--text-muted)' }}>
+            Every tool on weFixPDF is free, private, and instant. No account,
+            no watermarks, no limits. Your files are processed and deleted — full
+            stop. We exist to do the job and get out of the way.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <a href="/compress-pdf" className="btn-primary">
+              Compress PDF Free
+              <ArrowRight className="w-4 h-4" />
+            </a>
+            <a href="/image-compressor" className="btn-ghost">
+              Convert an Image
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 9. SEO CONTENT (hidden from primary view) ════════ */}
+      <section className="py-12 bg-page border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: 'PDF Tools',
+                items: ['Compress PDF', 'PDF to JPG', 'Merge PDF', 'Split PDF', 'Rotate PDF', 'Protect PDF', 'Unlock PDF', 'PDF to Word'],
+              },
+              {
+                title: 'Image Converters',
+                items: ['JPG to PNG', 'PNG to JPG', 'PNG to WEBP', 'Image Compressor', 'HEIC to JPG'],
+              },
+              {
+                title: 'Why weFixPDF',
+                items: ['100% Free', 'No Sign-up', 'No Watermarks', 'Zero Data Retention', 'TLS Encryption', 'No Usage Limits'],
+              },
             ].map((col) => (
-              <div key={col.title} className="space-y-3">
-                <h4 className="font-black text-slate-900 dark:text-white text-sm uppercase tracking-widest">{col.title}</h4>
-                <ul className="space-y-1.5">
+              <div key={col.title}>
+                <h4 className="text-[13px] font-medium mb-3" style={{ color: 'var(--text)' }}>{col.title}</h4>
+                <ul className="space-y-2">
                   {col.items.map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 font-medium">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
+                    <li key={item} className="flex items-center gap-2 text-[13px]" style={{ color: 'var(--text-muted)' }}>
+                      <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" color="#3B6D11" strokeWidth={2} />
                       {item}
                     </li>
                   ))}
@@ -414,23 +468,9 @@ export default function HomeContent() {
               </div>
             ))}
           </div>
-
-          {/* Trust badges */}
-          <div className="flex flex-wrap gap-3 sm:gap-4 pt-4 sm:pt-8">
-            {[
-              { label: 'E2E Encryption', color: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20' },
-              { label: 'Cloud-Native Speed', color: 'bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20' },
-              { label: 'Zero Retention', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20' },
-              { label: 'No Watermarks', color: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20' },
-              { label: 'No Limits', color: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20' },
-            ].map((badge) => (
-              <span key={badge.label} className={`${badge.color} px-4 sm:px-8 py-2 sm:py-3 rounded-xl sm:rounded-2xl border text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] shadow-2xl transition-all hover:-translate-y-1 hover:bg-black/5 dark:hover:bg-white/5`}>
-                {badge.label}
-              </span>
-            ))}
-          </div>
         </div>
       </section>
+
     </div>
   );
 }

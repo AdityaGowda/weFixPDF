@@ -39,33 +39,40 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   return {
-    title: "Free Online PDF & Image Converter — No Sign-Up | weFixPDF",
+    title: "Compress PDF & Image Converter Free Online — No Sign-Up | weFixPDF",
     description:
-      "Compress PDF, merge PDF, split PDF, convert PDF to JPG, PDF to Word, JPG to PNG, PNG to WEBP, compress images and more. 100% free, no account, zero data retention.",
+      "Free online tools: compress PDF, convert PDF to JPG or Word, merge PDF, split PDF, protect & unlock PDF. Compress images, convert JPG to PNG, HEIC to JPG, PNG to WebP. No account. Files deleted instantly.",
     alternates: { canonical: "https://wefixpdf.com" },
     keywords: [
-      "free pdf converter",
-      "compress pdf",
-      "merge pdf",
-      "split pdf",
+      "compress pdf free",
+      "compress pdf online",
+      "convert pdf free",
+      "merge pdf free",
+      "split pdf free",
       "pdf to jpg",
       "pdf to word",
       "rotate pdf",
       "protect pdf",
       "unlock pdf",
-      "jpg to png",
-      "png to jpg",
-      "image compressor",
-      "png to webp",
-      "heic to jpg",
-      "free online file converter",
-      "no sign up pdf tool",
+      "free pdf tools online",
+      "compress image free",
+      "compress image online",
+      "jpg to png converter",
+      "png to jpg converter",
+      "heic to jpg converter",
+      "png to webp converter",
+      "image compressor online",
+      "free image converter",
+      "free online file converter no sign up",
+      "smallpdf alternative",
+      "ilovepdf alternative",
+      "adobe acrobat alternative free",
     ],
     robots: { index: true, follow: true },
     openGraph: {
-      title: "Free Online PDF & Image Converter — No Sign-Up | weFixPDF",
+      title: "Compress PDF & Image Converter Free Online | weFixPDF",
       description:
-        "Compress PDF, convert images, merge PDF and more. 100% free, no account required, zero data retention.",
+        "Free PDF & image tools: compress PDF, merge, split, convert PDF to JPG or Word. Plus compress images, JPG↔PNG, HEIC to JPG, PNG to WebP. No account, files deleted instantly.",
       url: "https://wefixpdf.com",
       siteName: "weFixPDF",
       type: "website",
@@ -74,9 +81,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: "weFixPDF — Free Online PDF & Image Tools",
+      title: "Free PDF & Image Tools Online — weFixPDF",
       description:
-        "Compress PDF, convert images, merge PDF — free, no sign-up, zero data retention.",
+        "Compress PDF, convert images, merge & split PDFs, JPG↔PNG, HEIC to JPG — free, no sign-up, files deleted instantly.",
       images: ["https://wefixpdf.com/wfp.png"],
       site: "@wefixpdf",
     },
@@ -180,7 +187,7 @@ const fallbackSchemas = [
 ];
 
 export default async function Home() {
-  const { schemas: apiSchemas } = await getHomepageData();
+  const { schemas: apiSchemas, tools } = await getHomepageData();
 
   const schemas =
     apiSchemas.length > 0
@@ -196,7 +203,7 @@ export default async function Home() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-      <HomeContent />
+      <HomeContent tools={tools} />
     </>
   );
 }
