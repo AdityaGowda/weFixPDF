@@ -70,6 +70,8 @@ export type SeoPage = {
   relatedBlogs?: InternalLink[];
   relatedUseCases?: InternalLink[];
   relatedComparisons?: InternalLink[];
+  created_at?: string;
+  updated_at?: string;
 };
 
 export type InternalLink = {
