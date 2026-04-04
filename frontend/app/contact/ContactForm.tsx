@@ -3,40 +3,34 @@
 import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
 
+const inputClass =
+  "w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-[#1a1a1e] border border-[rgba(0,0,0,0.12)] dark:border-[rgba(255,255,255,0.12)] text-[#0F0F0F] dark:text-[#F8FAFC] placeholder-[#9CA3AF] dark:placeholder-[#64748B] text-[14px] " +
+  "focus:outline-none focus:border-[#2D5BE3] focus:ring-2 focus:ring-[#2D5BE3] focus:ring-offset-0 transition-colors";
+
+const labelClass = "block text-[12px] font-medium text-[#374151] dark:text-[#94A3B8] mb-1.5";
+
 export default function ContactForm() {
-  const nameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
+  const nameRef    = useRef<HTMLInputElement>(null);
+  const emailRef   = useRef<HTMLInputElement>(null);
   const subjectRef = useRef<HTMLSelectElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    const name = nameRef.current?.value ?? "";
-    const email = emailRef.current?.value ?? "";
+    const name    = nameRef.current?.value    ?? "";
+    const email   = emailRef.current?.value   ?? "";
     const subject = subjectRef.current?.value ?? "";
     const message = messageRef.current?.value ?? "";
-
-    const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-
-    const mailto =
-      `mailto:hello@wefixpdf.com` +
-      `?subject=${encodeURIComponent(subject)}` +
-      `&body=${encodeURIComponent(body)}`;
-
-    window.location.href = mailto;
+    const body    = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+    window.location.href =
+      `mailto:hello@wefixpdf.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid sm:grid-cols-2 gap-6">
-        <div className="space-y-2">
-          <label
-            htmlFor="name"
-            className="block text-sm font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest text-[10px]"
-          >
-            Your Name
-          </label>
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid sm:grid-cols-2 gap-5">
+        <div>
+          <label htmlFor="name" className={labelClass}>Your name</label>
           <input
             ref={nameRef}
             id="name"
@@ -44,16 +38,11 @@ export default function ContactForm() {
             type="text"
             required
             placeholder="Jane Smith"
-            className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary transition-colors"
+            className={inputClass}
           />
         </div>
-        <div className="space-y-2">
-          <label
-            htmlFor="email"
-            className="block text-sm font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest text-[10px]"
-          >
-            Email Address
-          </label>
+        <div>
+          <label htmlFor="email" className={labelClass}>Email address</label>
           <input
             ref={emailRef}
             id="email"
@@ -61,24 +50,19 @@ export default function ContactForm() {
             type="email"
             required
             placeholder="jane@example.com"
-            className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary transition-colors"
+            className={inputClass}
           />
         </div>
       </div>
 
-      <div className="space-y-2">
-        <label
-          htmlFor="subject"
-          className="block text-sm font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest text-[10px]"
-        >
-          Subject
-        </label>
+      <div>
+        <label htmlFor="subject" className={labelClass}>Subject</label>
         <select
           ref={subjectRef}
           id="subject"
           name="subject"
           required
-          className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary transition-colors appearance-none"
+          className={`${inputClass} appearance-none`}
         >
           <option value="">Select a topic…</option>
           <option value="Tool bug">Tool bug</option>
@@ -89,13 +73,8 @@ export default function ContactForm() {
         </select>
       </div>
 
-      <div className="space-y-2">
-        <label
-          htmlFor="message"
-          className="block text-sm font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest text-[10px]"
-        >
-          Message
-        </label>
+      <div>
+        <label htmlFor="message" className={labelClass}>Message</label>
         <textarea
           ref={messageRef}
           id="message"
@@ -103,15 +82,12 @@ export default function ContactForm() {
           required
           rows={5}
           placeholder="Describe your question or issue in detail…"
-          className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary transition-colors resize-none"
+          className={`${inputClass} resize-none`}
         />
       </div>
 
-      <button
-        type="submit"
-        className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-brand-primary text-white font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-lg shadow-brand-primary/25"
-      >
-        Send Message <ArrowRight className="w-4 h-4" />
+      <button type="submit" className="btn-primary">
+        Send message <ArrowRight className="w-4 h-4" />
       </button>
     </form>
   );

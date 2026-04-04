@@ -114,41 +114,49 @@ export default async function ToolPage({ params }: ToolPageProps) {
       {authorSchema && (
         <script id="author-schema" type="application/ld+json">{JSON.stringify(authorSchema)}</script>
       )}
-      <div className="space-y-10 md:space-y-15 max-[950px]:py-4 animate-fade-in sm:px-0 max-[950px]:mt-0">
-        {/* ── Breadcrumbs ── */}
-        {metadata?.breadcrumb && metadata.breadcrumb.length > 0 && (
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-slate-400 max-[950px]:mt-4 mt-2">
-            <a href="/" className="hover:text-emerald-500 transition-colors">Home</a>
-            {metadata.breadcrumb.filter(b => b.name !== "Home").map((crumb, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <svg className="w-3 h-3 text-slate-300 dark:text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-                {i === metadata.breadcrumb.length - 2 ? (
-                  <span className="text-slate-600 dark:text-slate-300 font-medium">{crumb.name}</span>
-                ) : (
-                  <a href={crumb.url} className="hover:text-emerald-500 transition-colors">{crumb.name}</a>
-                )}
-              </div>
-            ))}
-          </nav>
-        )}
-
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-4 md:space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-[0.2em] border border-emerald-500/20">
-              Free Tool
-            </div>
-            <h1 className="text-4xl max-[950px]:text-2xl font-black text-slate-900 dark:text-white tracking-tighter transition-all duration-300">
+      {/* ── Hero section with homepage gradient ── */}
+      <section
+        className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]"
+        style={{ background: 'radial-gradient(ellipse 80% 60% at 60% 0%, rgba(45,91,227,0.07) 0%, transparent 70%), var(--bg-page)' }}
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-6">
+          {/* Breadcrumbs */}
+          {metadata?.breadcrumb && metadata.breadcrumb.length > 0 && (
+            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px]" style={{ color: 'var(--text-muted)' }}>
+              <a href="/" className="transition-colors hover:underline">Home</a>
+              {metadata.breadcrumb.filter(b => b.name !== "Home").map((crumb, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <span style={{ color: 'var(--text-subtle)' }}>/</span>
+                  {i === metadata.breadcrumb.length - 2 ? (
+                    <span style={{ color: 'var(--text)' }}>{crumb.name}</span>
+                  ) : (
+                    <a href={crumb.url} className="hover:underline transition-colors">{crumb.name}</a>
+                  )}
+                </div>
+              ))}
+            </nav>
+          )}
+          {/* Tool hero */}
+          <div className="space-y-3">
+            <span
+              className="inline-flex items-center text-[11px] font-medium px-2.5 py-1 rounded"
+              style={{ background: '#EAF3DE', color: '#3B6D11' }}
+            >
+              Free Tool · No signup required
+            </span>
+            <h1 className="text-hero" style={{ color: 'var(--text)' }}>
               {metadata?.h1 || "File Converter"}
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+            <p className="text-[16px] leading-[1.7] max-w-xl" style={{ color: 'var(--text-muted)' }}>
               {metadata?.h2 || "Fast, secure, and privacy-shielded conversion."}
             </p>
           </div>
+          <UploadBox service={reqService.tool} />
         </div>
+      </section>
 
-        <UploadBox service={reqService.tool} />
+      {/* ── Content ── */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 md:py-14">
         <ToolPageContent metadata={metadata} />
       </div>
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
+import { CheckCircle2, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About weFixPDF — Free, Private File Conversion Tools",
@@ -23,231 +24,222 @@ export const metadata: Metadata = {
   },
 };
 
-const FeatureItem = ({ children, upcoming }: { children: React.ReactNode; upcoming?: boolean }) => (
-  <li className={`flex items-start justify-between gap-3 text-slate-500 dark:text-slate-400 ${upcoming ? 'opacity-60 grayscale' : ''}`}>
-    <div className="flex items-start gap-3">
-      <span className={`${upcoming ? 'text-amber-500' : 'text-emerald-500'} font-bold mt-0.5`}>✓</span>
-      <span>{children}</span>
-    </div>
-    {upcoming ? (
-      <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 whitespace-nowrap">
-        Soon
-      </span>
-    ) : (
-      <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 whitespace-nowrap">
-        Active
-      </span>
-    )}
-  </li>
-);
-
-const FeatureCard = ({ title, icon, items, colorClass }: { title: string; icon: string; items: { label: string; upcoming?: boolean }[]; colorClass: string }) => (
-  <div className={`glass dark:glass-dark rounded-4xl p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl border border-slate-200/50 dark:border-white/5`}>
-    <div className={`w-14 h-14 ${colorClass} rounded-2xl flex items-center justify-center text-3xl mb-8 shadow-inner`}>
-      {icon}
-    </div>
-    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">{title}</h3>
-    <ul className="space-y-4 font-medium">
-      {items.map((item, i) => (
-        <FeatureItem key={i} upcoming={item.upcoming}>{item.label}</FeatureItem>
-      ))}
-    </ul>
-  </div>
-);
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[11px] font-medium uppercase tracking-[0.06em] mb-4" style={{ color: 'var(--text-muted)' }}>
+      {children}
+    </p>
+  );
+}
 
 export default function AboutPage() {
   return (
-    <div className="max-w-6xl mx-auto py-20 px-0 sm:px-6 space-y-32">
-      {/* Hero Section */}
-      <section className="text-center space-y-8">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-bold tracking-widest uppercase">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-primary"></span>
-          </span>
-          Secure File Processing
-        </div>
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tighter leading-[1.05] px-4">
-          About weFixPDF
-        </h1>
-        <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium px-4">
-          We build fast, secure and private file conversion tools. Your files are never stored. Once processed, they are instantly deleted from our system.
-        </p>
-      </section>
+    <div className="bg-page">
 
-      {/* Tools Grid */}
-      <section className="grid md:grid-cols-3 gap-10">
-        <FeatureCard 
-          title="PDF Suite"
-          icon="📄"
-          colorClass="bg-rose-50 text-rose-600"
-          items={[
-            { label: "High-quality conversions" },
-            { label: "Multiple format support" },
-            { label: "PDF compression" },
-            { label: "Smart PDF merging" },
-            { label: "Flexible page splitting" },
-            { label: "PDF to Word conversion" },
-          ]}
-        />
-        <FeatureCard 
-          title="Image Tools"
-          icon="🖼️"
-          colorClass="bg-brand-primary/10 text-brand-primary"
-          items={[
-            { label: "All-format support" },
-            { label: "Smart compression" },
-            { label: "HEIC to JPG converter" },
-            { label: "PNG/JPG/WEBP converters" },
-            { label: "Batch processing", upcoming: true },
-            { label: "Image resize & crop", upcoming: true }
-          ]}
-        />
-        <FeatureCard 
-          title="Document Tools"
-          icon="📚"
-          colorClass="bg-violet-50 text-violet-600"
-          items={[
-            { label: "Image to PDF conversion" },
-            { label: "Word to PDF", upcoming: true },
-            { label: "Excel to PDF", upcoming: true },
-            { label: "PowerPoint conversion", upcoming: true },
-            { label: "OCR text extraction", upcoming: true },
-            { label: "Watermark tools", upcoming: true }
-          ]}
-        />
-      </section>
-
-      {/* Advantage Section */}
-      <section className="glass dark:glass-dark rounded-[4rem] p-10 md:p-20 text-slate-900 dark:text-white relative overflow-hidden text-center group border border-slate-200/50 dark:border-white/5">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-primary/10 rounded-full blur-[120px] -mr-[250px] -mt-[250px] transition-transform duration-1000 group-hover:scale-150" />
-        
-        <div className="relative z-10 space-y-16">
-          <div className="space-y-4">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">The weFixPDF Difference</h2>
-            <p className="text-slate-500 dark:text-slate-400 text-lg font-medium">Privacy, security, and speed—built in.</p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-16">
-            <div className="space-y-6">
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-white/5 flex items-center justify-center text-3xl">⚡</div>
-              <h4 className="text-2xl font-bold">Lightning Fast</h4>
-              <p className="text-slate-400 leading-relaxed font-medium">Optimized servers process most files in under a second.</p>
-            </div>
-            <div className="space-y-6">
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-white/5 flex items-center justify-center text-3xl">🔒</div>
-              <h4 className="text-2xl font-bold">Secure Processing</h4>
-              <p className="text-slate-400 leading-relaxed font-medium">TLS-encrypted transfers. Files automatically deleted after conversion.</p>
-            </div>
-            <div className="space-y-6">
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-white/5 flex items-center justify-center text-3xl">🎯</div>
-              <h4 className="text-2xl font-bold">Simple Interface</h4>
-              <p className="text-slate-400 leading-relaxed font-medium">Clean design with no clutter. Just the tools you need.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Meet the Team */}
-      <section className="space-y-12">
-        <div className="text-center space-y-3">
-          <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Meet the Team</h2>
-          <p className="text-slate-500 dark:text-slate-400 font-medium">Real developers who use weFixPDF every day</p>
-        </div>
-
-        <div className="flex justify-center">
-          <div className="glass dark:glass-dark rounded-4xl p-10 border border-slate-200/50 dark:border-white/5 max-w-md w-full space-y-6 hover:shadow-2xl transition-all duration-500 hover:-translate-y-1">
-            {/* Avatar */}
-            <div className="flex items-center gap-5">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center text-white font-black text-xl shadow-lg shadow-brand-primary/30 shrink-0">
-                AM
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Adithya M R</h3>
-                <p className="text-sm font-bold text-brand-primary">Founder &amp; Lead Developer</p>
-              </div>
-            </div>
-            {/* Bio */}
-            <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-              Full-stack developer with a passion for building tools that respect user privacy. Built weFixPDF after getting frustrated with watermarked, login-gated PDF tools during a client project.
-            </p>
-            {/* Location note */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 text-xs font-black uppercase tracking-widest">
-              Built in India 🇮🇳
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Feature Comparison */}
-      <section className="space-y-16">
-        <div className="text-center space-y-4">
-          <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Why Choose weFixPDF</h2>
-          <p className="text-slate-500 dark:text-slate-400 font-medium">What makes us different from other file converters.</p>
-        </div>
-
-        <div className="overflow-x-auto rounded-[2rem] sm:rounded-[3rem] glass dark:glass-dark shadow-2xl border border-slate-200/50 dark:border-white/5 mx-[-1rem] sm:mx-0">
-          <table className="w-full text-left border-collapse bg-slate-50/50 dark:bg-white/5 min-w-[600px] sm:min-w-0">
-            <thead>
-              <tr className="bg-slate-100/50 dark:bg-white/5">
-                <th className="p-4 sm:p-8 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Feature</th>
-                <th className="p-4 sm:p-8 text-xs sm:text-sm font-black text-brand-primary uppercase tracking-[0.2em] bg-brand-primary/5">weFixPDF</th>
-                <th className="p-4 sm:p-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Others</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-200/50 dark:divide-white/5 font-medium text-slate-600 dark:text-slate-400">
-              <tr className="hover:bg-brand-primary/5 transition-colors group">
-                <td className="p-4 sm:p-8 font-bold text-slate-900 dark:text-white">Data Retention</td>
-                <td className="p-4 sm:p-8 text-brand-primary font-black bg-brand-primary/5">Zero ★</td>
-                <td className="p-4 sm:p-8">Varies</td>
-              </tr>
-              <tr className="hover:bg-brand-primary/5 transition-colors group">
-                <td className="p-4 sm:p-8 font-bold text-slate-900 dark:text-white">File Encryption</td>
-                <td className="p-4 sm:p-8 text-brand-primary font-black bg-brand-primary/5">TLS 1.3 ✓</td>
-                <td className="p-4 sm:p-8">Partial</td>
-              </tr>
-              <tr className="hover:bg-brand-primary/5 transition-colors group">
-                <td className="p-4 sm:p-8 font-bold text-slate-900 dark:text-white">Processing Speed</td>
-                <td className="p-4 sm:p-8 text-brand-primary font-black bg-brand-primary/5">Sub-Second</td>
-                <td className="p-4 sm:p-8">2-5 Seconds</td>
-              </tr>
-              <tr className="hover:bg-brand-primary/5 transition-colors group">
-                <td className="p-4 sm:p-8 font-bold text-slate-900 dark:text-white">Interface</td>
-                <td className="p-4 sm:p-8 text-brand-primary font-black bg-brand-primary/5">Clean & Modern</td>
-                <td className="p-4 sm:p-8">Cluttered</td>
-              </tr>
-              <tr className="hover:bg-brand-primary/5 transition-colors group">
-                <td className="p-4 sm:p-8 font-bold text-slate-900 dark:text-white">Dark Mode</td>
-                <td className="p-4 sm:p-8 text-brand-primary font-black bg-brand-primary/5">Native ✓</td>
-                <td className="p-4 sm:p-8">Limited</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* Call to action */}
-      <section className="relative text-center bg-brand-primary rounded-[4rem] p-16 md:p-32 text-white shadow-3xl shadow-brand-primary/30 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-brand-secondary/40 to-transparent pointer-events-none" />
-        <div className="relative z-10 max-w-3xl mx-auto space-y-12">
-          <h2 className="text-4xl md:text-7xl font-black tracking-tighter leading-none">Ready to start <br />converting?</h2>
-          <p className="text-indigo-100 text-xl font-medium">
-            Experience secure, private file conversion <br className="hidden md:block" /> with zero data retention.
+      {/* ── Hero ── */}
+      <section className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] py-16 md:py-24">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <SectionLabel>About</SectionLabel>
+          <h1 className="text-hero mb-5" style={{ color: 'var(--text)' }}>
+            Built for privacy.<br />Designed for everyone.
+          </h1>
+          <p className="text-[16px] leading-[1.7] max-w-xl" style={{ color: 'var(--text-muted)' }}>
+            weFixPDF provides fast, secure file conversion tools — PDF, images, documents.
+            Every file is encrypted in transit, processed, and deleted immediately.
+            No account. No watermarks. No limits.
           </p>
-          <div className="pt-6">
-            <a 
-              href="/" 
-              className="inline-flex items-center justify-center px-12 py-6 rounded-3xl bg-white text-brand-primary font-black text-2xl hover:bg-slate-50 hover:scale-110 active:scale-90 transition-all duration-500 shadow-2xl"
-            >
-              Try It Now
-            </a>
-          </div>
-          <div className="pt-8 text-indigo-100/40 text-[10px] font-black tracking-[0.3em] uppercase space-y-2">
-            <div>Built with privacy in mind • Secure • Fast</div>
-            <div className="text-white/60">Questions? <a href="mailto:hello@wefixpdf.com" className="text-white hover:text-white underline decoration-white/20 hover:decoration-white transition-colors">hello@wefixpdf.com</a></div>
+        </div>
+      </section>
+
+      {/* ── Tool Suite Cards ── */}
+      <section className="py-16 md:py-20 bg-surface">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <SectionLabel>What we offer</SectionLabel>
+          <h2 className="text-section mb-10" style={{ color: 'var(--text)' }}>Three toolsets. All free.</h2>
+
+          <div className="grid md:grid-cols-3 gap-4">
+            {[
+              {
+                label: "PDF Suite",
+                desc: "Everything you need to work with PDF files.",
+                items: [
+                  "High-quality compression",
+                  "PDF to JPG conversion",
+                  "Smart PDF merging",
+                  "Flexible page splitting",
+                  "Rotation & protection",
+                  "PDF to Word conversion",
+                ],
+                accent: "#2D5BE3",
+              },
+              {
+                label: "Image Tools",
+                desc: "Convert and compress any image format.",
+                items: [
+                  "JPG, PNG, WEBP, HEIC support",
+                  "Smart compression (up to 80%)",
+                  "HEIC to JPG converter",
+                  "PNG to WEBP converter",
+                  "Lossless quality option",
+                  "Batch processing (coming soon)",
+                ],
+                accent: "#10B981",
+              },
+              {
+                label: "Document Tools",
+                desc: "Go beyond PDFs.",
+                items: [
+                  "Image to PDF conversion",
+                  "Word to PDF (coming soon)",
+                  "Excel to PDF (coming soon)",
+                  "OCR text extraction (coming soon)",
+                  "PowerPoint conversion (coming soon)",
+                  "Watermark tools (coming soon)",
+                ],
+                accent: "#8B5CF6",
+              },
+            ].map((suite) => (
+              <div
+                key={suite.label}
+                className="bg-card rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] p-6"
+                style={{ borderTop: `2px solid ${suite.accent}` }}
+              >
+                <h3 className="text-[15px] font-medium mb-1" style={{ color: 'var(--text)' }}>{suite.label}</h3>
+                <p className="text-[13px] mb-5" style={{ color: 'var(--text-muted)' }}>{suite.desc}</p>
+                <ul className="space-y-2">
+                  {suite.items.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-[13px]" style={{ color: 'var(--text-muted)' }}>
+                      <CheckCircle2
+                        className="w-3.5 h-3.5 mt-0.5 flex-shrink-0"
+                        color={suite.accent}
+                        strokeWidth={2}
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* ── Why weFixPDF ── */}
+      <section className="py-16 md:py-20 border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-20">
+            <div>
+              <SectionLabel>Our approach</SectionLabel>
+              <h2 className="text-section mb-5" style={{ color: 'var(--text)' }}>
+                The weFixPDF difference
+              </h2>
+              <p className="text-[15px] leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
+                Built after frustration with watermarked, login-gated PDF tools. The
+                goal was simple: make every common file operation free, instant, and
+                private — with no strings attached.
+              </p>
+            </div>
+            <div className="space-y-4">
+              {[
+                { title: "Lightning fast",   body: "Optimized cloud servers process most files in under 3 seconds.",              accent: "#F59E0B" },
+                { title: "Secure by design", body: "TLS 1.3 encrypted transfers. Files are deleted the moment you download.",    accent: "#10B981" },
+                { title: "Zero friction",    body: "No account, no email, no password. Open a tool and use it.",                 accent: "#2D5BE3" },
+              ].map((f) => (
+                <div key={f.title} className="feature-block" style={{ borderLeftColor: f.accent }}>
+                  <h3 className="text-[15px] font-medium mb-1" style={{ color: 'var(--text)' }}>{f.title}</h3>
+                  <p className="text-[14px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>{f.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Meet the builder ── */}
+      <section className="py-16 md:py-20 border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] bg-surface">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <SectionLabel>The team</SectionLabel>
+          <h2 className="text-section mb-10" style={{ color: 'var(--text)' }}>Who built this</h2>
+          <div className="bg-card rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] p-6 flex flex-col sm:flex-row gap-6 items-start">
+            <div
+              className="w-14 h-14 rounded-xl flex items-center justify-center text-white text-[18px] font-medium flex-shrink-0"
+              style={{ background: '#2D5BE3' }}
+            >
+              AM
+            </div>
+            <div className="space-y-2">
+              <div>
+                <h3 className="text-[15px] font-medium" style={{ color: 'var(--text)' }}>Adithya M R</h3>
+                <p className="text-[13px] text-[#2D5BE3]">Founder &amp; Lead Developer</p>
+              </div>
+              <p className="text-[14px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                Full-stack developer with a passion for tools that respect user privacy.
+                Built weFixPDF after getting frustrated with watermarked, login-gated
+                PDF tools during a client project.
+              </p>
+              <span
+                className="inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 rounded-md"
+                style={{ background: '#E6F1FB', color: '#185FA5' }}
+              >
+                Built in India 🇮🇳
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Comparison table ── */}
+      <section className="py-16 md:py-20 border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <SectionLabel>Why choose weFixPDF</SectionLabel>
+          <h2 className="text-section mb-8" style={{ color: 'var(--text)' }}>How we compare</h2>
+          <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] overflow-hidden">
+            <table className="w-full text-[14px]">
+              <thead>
+                <tr className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] bg-surface dark:bg-[#111113]">
+                  <th className="text-left px-5 py-3.5 font-medium" style={{ color: 'var(--text-muted)' }}>Feature</th>
+                  <th className="px-5 py-3.5 font-medium text-center" style={{ color: '#2D5BE3' }}>weFixPDF</th>
+                  <th className="px-5 py-3.5 font-medium text-center" style={{ color: 'var(--text-muted)' }}>Others</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[rgba(0,0,0,0.06)] dark:divide-[rgba(255,255,255,0.06)]">
+                {[
+                  { label: "Data retention",    us: "Zero",              them: "Minutes to hours" },
+                  { label: "File encryption",   us: "TLS 1.3",           them: "Partial" },
+                  { label: "Account required",  us: "Never",             them: "Often required" },
+                  { label: "Processing speed",  us: "Under 3 seconds",   them: "2–5 seconds" },
+                  { label: "Daily limits",      us: "None",              them: "2–5 tasks/day (free tier)" },
+                  { label: "Price",             us: "100% free",         them: "Freemium / paid" },
+                ].map((row) => (
+                  <tr key={row.label} className="bg-card">
+                    <td className="px-5 py-3.5 font-medium" style={{ color: 'var(--text)' }}>{row.label}</td>
+                    <td className="px-5 py-3.5 text-center font-medium" style={{ color: '#2D5BE3' }}>{row.us}</td>
+                    <td className="px-5 py-3.5 text-center" style={{ color: 'var(--text-muted)' }}>{row.them}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section className="py-16 md:py-20 border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] bg-surface">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center space-y-6">
+          <h2 className="text-section" style={{ color: 'var(--text)' }}>Ready to start converting?</h2>
+          <p className="text-[15px] leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
+            Free. Private. No account needed. Just pick a tool and get started.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 pt-2">
+            <a href="/compress-pdf" className="btn-primary">
+              Compress PDF Free
+              <ArrowRight className="w-4 h-4" />
+            </a>
+            <a href="/tools" className="btn-ghost">Browse All Tools</a>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
