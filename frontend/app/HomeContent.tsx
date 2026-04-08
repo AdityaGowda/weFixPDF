@@ -1,7 +1,7 @@
 import {
   FileDown, FileImage, Layers, Scissors, RotateCw, ShieldCheck, LockOpen,
   Image, Minimize2, Zap, Smartphone, CheckCircle2, ChevronDown, ArrowRight,
-  FileText
+  FileText, Palette, Braces, KeyRound, ArrowLeftRight, GitCompare, FileCode, Code,
 } from "lucide-react";
 import HeroDropzone from "./components/HeroDropzone";
 import { type ToolListing } from "@/app/lib/seo/seoApi";
@@ -22,6 +22,16 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string; strokeW
   "image-compressor": Minimize2,
   "png-to-webp": Zap,
   "heic-to-jpg": Smartphone,
+  // Dev tools
+  "csv-json-converter":      ArrowLeftRight,
+  "color-palette-generator": Palette,
+  "text-diff-checker":       GitCompare,
+  "json-to-yaml":            FileCode,
+  "yaml-to-json":            FileCode,
+  "json-to-xml":             Code,
+  "xml-to-json":             Code,
+  "json-formatter":          Braces,
+  "jwt-decoder":             KeyRound,
 };
 
 /* ─── Fallback data (used when DB returns nothing) ──────────── */
@@ -43,6 +53,15 @@ const FALLBACK_IMAGE_TOOLS = [
   { name: "Image Compressor", href: "/image-compressor", icon: Minimize2, desc: "Shrink JPG, PNG, WEBP by up to 80%." },
   { name: "PNG to WEBP", href: "/png-to-webp", icon: Zap, desc: "Modern format, 30% smaller files." },
   { name: "HEIC to JPG", href: "/heic-to-jpg", icon: Smartphone, desc: "Convert iPhone photos anywhere." },
+];
+
+const FALLBACK_DEV_TOOLS = [
+  { name: "CSV ↔ JSON Converter",    href: "/csv-json-converter",      icon: ArrowLeftRight, desc: "Convert CSV to JSON or JSON to CSV with live preview." },
+  { name: "JSON Formatter",          href: "/json-formatter",           icon: Braces,         desc: "Pretty-print, minify, and validate any JSON." },
+  { name: "JWT Decoder",             href: "/jwt-decoder",              icon: KeyRound,       desc: "Decode JWT header & payload — stays in your browser." },
+  { name: "Text Diff Checker",       href: "/text-diff-checker",        icon: GitCompare,     desc: "Compare two texts and highlight every change." },
+  { name: "JSON to YAML",            href: "/json-to-yaml",             icon: FileCode,       desc: "Convert JSON to clean, indented YAML instantly." },
+  { name: "Color Palette Generator", href: "/color-palette-generator",  icon: Palette,        desc: "Generate palettes and export as CSS, Tailwind, or JSON." },
 ];
 
 const faqs = [
@@ -97,10 +116,10 @@ function ToolCard({ name, href, icon: Icon, desc, variant = 'blue' }: {
   name: string; href: string;
   icon: React.ComponentType<{ className?: string; strokeWidth?: number; color?: string }>;
   desc: string;
-  variant?: 'blue' | 'emerald';
+  variant?: 'blue' | 'emerald' | 'violet';
 }) {
-  const iconBg = variant === 'emerald' ? '#ECFDF5' : 'var(--blue-light)';
-  const iconColor = variant === 'emerald' ? '#059669' : 'var(--blue)';
+  const iconBg    = variant === 'emerald' ? '#ECFDF5' : variant === 'violet' ? '#F3EFFE' : 'var(--blue-light)';
+  const iconColor = variant === 'emerald' ? '#059669' : variant === 'violet' ? '#7C3AED' : 'var(--blue)';
   return (
     <a href={href} className="tool-card group" aria-label={name}>
       <div className="flex items-start justify-between gap-2">
@@ -163,8 +182,14 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
     .sort((a, b) => a.position - b.position)
     .map((t) => ({ name: t.name, href: `/${t.slug}`, icon: ICON_MAP[t.slug] ?? FileImage, desc: t.description }));
 
-  const pdfTools = dbPdfTools.length > 0 ? dbPdfTools : FALLBACK_PDF_TOOLS;
+  const dbDevTools = tools
+    .filter((t) => t.type === "Dev Tools")
+    .sort((a, b) => a.position - b.position)
+    .map((t) => ({ name: t.name, href: `/${t.slug}`, icon: ICON_MAP[t.slug] ?? Code, desc: t.description }));
+
+  const pdfTools   = dbPdfTools.length   > 0 ? dbPdfTools   : FALLBACK_PDF_TOOLS;
   const imageTools = dbImageTools.length > 0 ? dbImageTools : FALLBACK_IMAGE_TOOLS;
+  const devTools   = dbDevTools.length   > 0 ? dbDevTools   : FALLBACK_DEV_TOOLS;
 
   return (
     <div>
@@ -266,8 +291,31 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
         </div>
       </section>
 
-      {/* ══ 4. HOW IT WORKS ═══════════════════════════════════ */}
-      <section className="py-16 md:py-20 border-t border-[rgba(0,0,0,0.06)]" style={{ background: 'var(--surface)' }}>
+      {/* ══ 4. DEV TOOLS GRID ════════════════════════════════ */}
+      <section id="dev-tools" className="py-16 md:py-20 border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]" style={{ background: 'var(--surface)' }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <SectionLabel color="purple">Developer Tools</SectionLabel>
+          <h2 className="text-section mb-2" style={{ color: 'var(--text)' }}>
+            Browser-based <span style={{ color: '#7C3AED' }}>dev utilities</span>
+          </h2>
+          <p className="text-[15px] mb-8 max-w-lg" style={{ color: 'var(--text-muted)' }}>
+            JSON, YAML, CSV, XML, JWT — all processed locally in your browser. Nothing sent to a server.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {devTools.map((tool) => (
+              <ToolCard key={tool.href} {...tool} variant="violet" />
+            ))}
+          </div>
+          <div className="mt-6">
+            <a href="/tools#dev-tools" className="inline-flex items-center gap-1.5 text-[13px] font-medium" style={{ color: '#7C3AED' }}>
+              See all developer tools <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 5. HOW IT WORKS ═══════════════════════════════════ */}
+      <section className="py-16 md:py-20 bg-page border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <SectionLabel>How it works</SectionLabel>
           <h2 className="text-section mb-12" style={{ color: 'var(--text)' }}>Three steps. That&apos;s it.</h2>

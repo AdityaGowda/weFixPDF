@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import Script from "next/script";
 import UploadBox from "../components/UploadBox";
 import CustomUploadBoxScanToPdf from "../components/CustomUploadBoxScanToPdf";
+import DevToolBox from "../components/dev-tools/DevToolBox";
+import { DEV_TOOL_SLUGS } from "../components/dev-tools/devToolSlugs";
 import { getToolSeo, getAllSlugs, ToolMetaData } from "../lib/seo/seoApi";
 import ToolPageContent from "../components/toolPagecontent";
 import { buildBreadcrumbSchema, buildFaqSchema, buildHowToSchema, buildToolSchema, buildAuthorSchema } from "../lib/seo/metadata";
@@ -165,7 +167,9 @@ export default async function ToolPage({ params }: ToolPageProps) {
               {metadata?.h2 || "Fast, secure, and privacy-shielded conversion."}
             </p>
           </div>
-          {reqService.tool === "scan-to-pdf"
+          {DEV_TOOL_SLUGS.has(reqService.tool)
+            ? <DevToolBox slug={reqService.tool} />
+            : reqService.tool === "scan-to-pdf"
             ? <CustomUploadBoxScanToPdf />
             : <UploadBox service={reqService.tool} />
           }
