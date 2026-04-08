@@ -191,6 +191,8 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
   const imageTools = dbImageTools.length > 0 ? dbImageTools : FALLBACK_IMAGE_TOOLS;
   const devTools   = dbDevTools.length   > 0 ? dbDevTools   : FALLBACK_DEV_TOOLS;
 
+  const totalTools = pdfTools.length + imageTools.length + devTools.length;
+
   return (
     <div>
 
@@ -430,7 +432,7 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
               { stat: '100%', label: 'Free', sub: 'No hidden fees, ever', accent: '#2D5BE3' },
               { stat: '<3 sec', label: 'Speed', sub: 'Average processing time', accent: '#10B981' },
               { stat: '0 bytes', label: 'Retained', sub: 'Data stored after use', accent: '#8B5CF6' },
-              { stat: '12+', label: 'Tools', sub: 'Free tools available', accent: '#F59E0B' },
+              { stat: `${totalTools}+`, label: 'Tools', sub: 'Free tools available', accent: '#F59E0B' },
             ].map(({ stat, label, sub, accent }) => (
               <div
                 key={label}
@@ -488,7 +490,7 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
       {/* ══ 9. SEO CONTENT (hidden from primary view) ════════ */}
       <section className="py-12 bg-page border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
             {[
               {
                 title: 'PDF Tools',
@@ -497,6 +499,10 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
               {
                 title: 'Image Converters',
                 items: ['JPG to PNG', 'PNG to JPG', 'PNG to WEBP', 'Image Compressor', 'HEIC to JPG'],
+              },
+              {
+                title: 'Developer Tools',
+                items: ['CSV ↔ JSON', 'JSON Formatter', 'JWT Decoder', 'Text Diff Checker', 'JSON to YAML', 'Color Palette'],
               },
               {
                 title: 'Why weFixPDF',

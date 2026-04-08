@@ -111,10 +111,16 @@ export default async function Footer() {
             © 2026 weFixPDF — All rights reserved
           </p>
           <div className="flex flex-wrap items-center gap-4">
-            <a href="/privacy-policy" className="text-[12px] transition-colors" style={{ color: 'var(--text-subtle)' }}>
+            <a href="/sitemap.xml" className="text-[12px] hover:text-foreground transition-colors" style={{ color: 'var(--text-subtle)' }}>
+              Sitemap
+            </a>
+            <a href="https://www.instagram.com/wefixpdf" target="_blank" rel="noopener noreferrer" className="text-[12px] hover:text-foreground transition-colors" style={{ color: 'var(--text-subtle)' }}>
+              Instagram
+            </a>
+            <a href="/privacy-policy" className="text-[12px] hover:text-foreground transition-colors" style={{ color: 'var(--text-subtle)' }}>
               Privacy Policy
             </a>
-            <a href="/terms" className="text-[12px] transition-colors" style={{ color: 'var(--text-subtle)' }}>
+            <a href="/terms" className="text-[12px] hover:text-foreground transition-colors" style={{ color: 'var(--text-subtle)' }}>
               Terms
             </a>
             <span className="text-[12px]" style={{ color: 'var(--text-subtle)' }}>No sign-up · No watermarks · No limits</span>
