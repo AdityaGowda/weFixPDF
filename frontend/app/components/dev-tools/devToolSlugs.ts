@@ -31,4 +31,9 @@ export const DEV_TOOL_SLUGS = new Set([
   'env-file-parser',
   'markdown-to-html',
   'ip-subnet-calculator',
+  // Batch 3 — in-browser computation only
+  'text-to-ascii-art',
+  'wasm-analyzer',
+  'llm-token-counter',
+  'api-ping-tester',
 ]);
