@@ -16,13 +16,20 @@ const app = express();
 
 app.use(
   helmet({
+    /*
     hsts: {
       maxAge: 31536000,
       includeSubDomains: true,
       preload: true,
     },
     referrerPolicy: { policy: "strict-origin-when-cross-origin" },
-    contentSecurityPolicy: false, // Let nginx / frontend handle CSP
+    */
+    hsts: false,
+    referrerPolicy: false,
+    contentSecurityPolicy: false,
+    xssFilter: false,
+    frameguard: false,
+    contentTypeOptions: false,
   })
 );
 
