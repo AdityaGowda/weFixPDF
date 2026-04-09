@@ -15,6 +15,12 @@ const ColorPaletteGenerator = dynamic(() => import('./ColorPaletteGenerator'));
 const JsonYamlConverter     = dynamic(() => import('./JsonYamlConverter'));
 const JsonXmlConverter      = dynamic(() => import('./JsonXmlConverter'));
 
+// New tools — batch 3 (in-browser computation)
+const TextToAsciiArt  = dynamic(() => import('./TextToAsciiArt'));
+const WasmAnalyzer    = dynamic(() => import('./WasmAnalyzer'));
+const LlmTokenCounter = dynamic(() => import('./LlmTokenCounter'));
+const ApiPingTester   = dynamic(() => import('./ApiPingTester'));
+
 // New tools — batch 2
 const CronExpressionBuilder = dynamic(() => import('./CronExpressionBuilder'));
 const ChmodCalculator       = dynamic(() => import('./ChmodCalculator'));
@@ -72,6 +78,11 @@ export default function DevToolBox({ slug }: DevToolBoxProps) {
     case 'env-file-parser':         return <EnvFileParser />;
     case 'markdown-to-html':        return <MarkdownToHtml />;
     case 'ip-subnet-calculator':    return <IpSubnetCalculator />;
+    // New — batch 3
+    case 'text-to-ascii-art':      return <TextToAsciiArt />;
+    case 'wasm-analyzer':          return <WasmAnalyzer />;
+    case 'llm-token-counter':      return <LlmTokenCounter />;
+    case 'api-ping-tester':        return <ApiPingTester />;
     default:                        return null;
   }
 }
