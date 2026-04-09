@@ -88,16 +88,16 @@ export default function PrivacyContent() {
       title: "7. Cookies We Use",
       content: (
         <>
-          <strong>Essential cookies</strong> are required for the site to function and do not
-          require consent.
+          <strong>Essential cookies</strong> are required for the site to function (e.g. theme
+          preference). No consent is needed for these.
           <br />
           <br />
           <strong>Analytics cookies</strong> collect anonymous page-view data via Cloudflare Web
           Analytics. No personal data is collected or stored.
           <br />
           <br />
-          <strong>Advertising cookies</strong>: Google AdSense uses cookies to serve relevant ads.
-          You can opt out at{" "}
+          <strong>Advertising cookies</strong>: Google AdSense sets cookies to serve relevant ads
+          based on your browsing activity. You can opt out of personalised advertising at{" "}
           <a
             href="https://www.google.com/settings/ads"
             target="_blank"
@@ -105,8 +105,18 @@ export default function PrivacyContent() {
             className="text-brand-primary underline hover:opacity-80 transition-opacity"
           >
             google.com/settings/ads
+          </a>{" "}
+          or via{" "}
+          <a
+            href="https://www.aboutads.info"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand-primary underline hover:opacity-80 transition-opacity"
+          >
+            aboutads.info
           </a>
-          . We obtain your consent before setting non-essential cookies.
+          . By continuing to use weFixPDF you agree to the use of these cookies as described in
+          this policy.
         </>
       ),
     },

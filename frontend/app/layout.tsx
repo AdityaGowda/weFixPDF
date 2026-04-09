@@ -1,7 +1,6 @@
 import "./globals.css";
 import type { Metadata } from 'next';
 import AdSenseLoader from "./components/AdSenseLoader";
-import CookieBanner from "./components/CookieBanner";
 import Navbar from "./components/Navbar";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Toaster } from "react-hot-toast";
@@ -89,7 +88,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </main>
           <Footer />
           <AdSenseLoader />
-          <CookieBanner />
         </ThemeProvider>
       </body>
     </html>
