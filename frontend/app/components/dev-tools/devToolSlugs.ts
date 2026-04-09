@@ -2,6 +2,7 @@
 // Must NOT have 'use client' — plain module only
 
 export const DEV_TOOL_SLUGS = new Set([
+  // Existing
   'csv-json-converter',
   'color-palette-generator',
   'text-diff-checker',
@@ -11,4 +12,23 @@ export const DEV_TOOL_SLUGS = new Set([
   'xml-to-json',
   'json-formatter',
   'jwt-decoder',
+  // New — batch 2
+  'cron-expression-builder',
+  'chmod-calculator',
+  'unix-timestamp-converter',
+  'og-meta-tag-previewer',
+  'hash-generator',
+  'http-header-analyzer',
+  'sql-formatter',
+  'favicon-generator',
+  'number-base-converter',
+  'base64-encoder-decoder',
+  'url-parser-builder',
+  'regex-tester',
+  'css-unit-converter',
+  'color-contrast-checker',
+  'mock-json-generator',
+  'env-file-parser',
+  'markdown-to-html',
+  'ip-subnet-calculator',
 ]);
