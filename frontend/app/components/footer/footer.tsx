@@ -46,7 +46,7 @@ export default async function Footer() {
               {pdfTools.slice(0, 6).map((t: any) => (
                 <li key={t.slug}>
                   <a
-                    href={`/${t.slug}`}
+                    href={`/tools/${t.slug}`}
                     className="text-[13px] hover:text-[#2D5BE3] dark:hover:text-[#5B82FF] transition-colors" style={{ color: 'var(--text-muted)' }}
                   >
                     {t.name}
@@ -70,7 +70,7 @@ export default async function Footer() {
               {imageTools.slice(0, 6).map((t: any) => (
                 <li key={t.slug}>
                   <a
-                    href={`/${t.slug}`}
+                    href={`/tools/${t.slug}`}
                     className="text-[13px] hover:text-[#2D5BE3] dark:hover:text-[#5B82FF] transition-colors" style={{ color: 'var(--text-muted)' }}
                   >
                     {t.name}

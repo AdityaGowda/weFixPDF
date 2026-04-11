@@ -231,7 +231,7 @@ export default function AboutPage() {
             Free. Private. No account needed. Just pick a tool and get started.
           </p>
           <div className="flex flex-wrap justify-center gap-3 pt-2">
-            <a href="/compress-pdf" className="btn-primary">
+            <a href="/tools/compress-pdf" className="btn-primary">
               Compress PDF Free
               <ArrowRight className="w-4 h-4" />
             </a>
