@@ -83,7 +83,7 @@ export default function AboutPage() {
                   "Lossless quality option",
                   "Batch processing (coming soon)",
                 ],
-                accent: "#10B981",
+                accent: "#163863",
               },
               {
                 label: "Document Tools",
@@ -142,7 +142,7 @@ export default function AboutPage() {
             <div className="space-y-4">
               {[
                 { title: "Lightning fast",   body: "Optimized cloud servers process most files in under 3 seconds.",              accent: "#F59E0B" },
-                { title: "Secure by design", body: "TLS 1.3 encrypted transfers. Files are deleted the moment you download.",    accent: "#10B981" },
+                { title: "Secure by design", body: "TLS 1.3 encrypted transfers. Files are deleted the moment you download.",    accent: "#163863" },
                 { title: "Zero friction",    body: "No account, no email, no password. Open a tool and use it.",                 accent: "#2D5BE3" },
               ].map((f) => (
                 <div key={f.title} className="feature-block" style={{ borderLeftColor: f.accent }}>

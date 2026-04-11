@@ -129,7 +129,7 @@ export default function SqlFormatterTool() {
         {/* Output */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden flex flex-col">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
-            <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-[#10B981]" /><span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Formatted SQL</span></div>
+            <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-[#163863]" /><span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Formatted SQL</span></div>
             {output && <CopyButton text={output} />}
           </div>
           <pre className="flex-1 font-mono text-[12px] p-4 overflow-auto" style={{ minHeight: 320, color: 'var(--text)' }}>{output || <span style={{ color: 'var(--text-subtle)' }}>Formatted output appears here after clicking Format SQL…</span>}</pre>

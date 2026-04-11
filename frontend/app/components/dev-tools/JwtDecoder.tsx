@@ -140,7 +140,7 @@ export default function JwtDecoder() {
           {/* Payload */}
           <SectionCard
             title="Payload"
-            accent="#10B981"
+            accent="#163863"
             icon={Clock}
             raw={JSON.stringify(parts.payload, null, 2)}
           >

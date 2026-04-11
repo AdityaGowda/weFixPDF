@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
 const topics = [
   { icon: Bug,       label: "Tool bugs",          desc: "Something not working? Let us know exactly what happened.", color: "#EF4444", bg: "#FEF2F2" },
-  { icon: Shield,    label: "Privacy questions",  desc: "Questions about how we handle your files and data.",        color: "#10B981", bg: "#ECFDF5" },
+  { icon: Shield,    label: "Privacy questions",  desc: "Questions about how we handle your files and data.",        color: "#163863", bg: "#ECFDF5" },
   { icon: Briefcase, label: "Business inquiries", desc: "Partnerships, sponsorship, or API access.",                 color: "#2D5BE3", bg: "#E6F1FB" },
   { icon: Lightbulb, label: "Feature requests",   desc: "Have an idea for a new tool or improvement?",               color: "#F59E0B", bg: "#FFFBEB" },
 ];

@@ -146,7 +146,7 @@ export default function NumberBaseConverter() {
                 <>
                   <div className="flex items-center gap-3">
                     <span className="text-[11px] w-24 font-medium uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>2&apos;s compl.</span>
-                    <code className="text-[12px] font-mono tracking-widest break-all" style={{ color: '#10B981' }}>
+                    <code className="text-[12px] font-mono tracking-widest break-all" style={{ color: '#163863' }}>
                       {twosStr.match(/.{1,4}/g)?.join(' ')}
                     </code>
                   </div>

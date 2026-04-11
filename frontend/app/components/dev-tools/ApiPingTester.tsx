@@ -73,7 +73,7 @@ function fmtMs(ms: number): string { return `${ms.toFixed(0)} ms`; }
 
 function statusColor(status: number | null): string {
   if (!status) return '#EF4444';
-  if (status < 300) return '#10B981';
+  if (status < 300) return '#163863';
   if (status < 400) return '#F59E0B';
   return '#EF4444';
 }
@@ -245,11 +245,11 @@ function EndpointPanel({
             {stats && (
               <div className="flex flex-wrap gap-4 text-[11px] pt-1 border-t border-[rgba(0,0,0,0.04)] dark:border-[rgba(255,255,255,0.04)]">
                 {[
-                  ['Min', fmtMs(stats.min), '#10B981'],
+                  ['Min', fmtMs(stats.min), '#163863'],
                   ['Avg', fmtMs(stats.avg), '#7C3AED'],
                   ['P95', fmtMs(stats.p95), '#F59E0B'],
                   ['Max', fmtMs(stats.max), '#EF4444'],
-                  ['Errors', `${stats.errors}/${stats.total}`, stats.errors > 0 ? '#EF4444' : '#10B981'],
+                  ['Errors', `${stats.errors}/${stats.total}`, stats.errors > 0 ? '#EF4444' : '#163863'],
                 ].map(([label, value, color]) => (
                   <span key={label as string} style={{ color: 'var(--text-muted)' }}>
                     {label}: <strong style={{ color: color as string }}>{value}</strong>
@@ -305,7 +305,7 @@ export default function ApiPingTester() {
     setEndpoints(eps => eps.filter((_, i) => i !== idx));
   };
 
-  const ACCENTS = ['#7C3AED', '#10B981'];
+  const ACCENTS = ['#7C3AED', '#163863'];
 
   return (
     <ToolShell>

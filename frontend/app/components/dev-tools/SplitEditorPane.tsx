@@ -151,7 +151,7 @@ function StatusBar({ error, outputLen }: { error: string | null; outputLen: numb
   if (outputLen > 0) {
     return (
       <div className="flex items-center gap-2 px-3 py-1.5 text-[11px] text-[var(--text-muted)] bg-[var(--surface)] border-t border-[rgba(0,0,0,0.05)] dark:border-[rgba(255,255,255,0.05)]">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] flex-shrink-0" />
+        <span className="w-1.5 h-1.5 rounded-full bg-[#163863] flex-shrink-0" />
         {outputLen.toLocaleString()} chars
       </div>
     );
@@ -275,7 +275,7 @@ export default function SplitEditorPane({
         {/* ── RIGHT: Output ── */}
         <Panel
           label={rightLabel}
-          accent="#10B981"
+          accent="#163863"
           toolbar={
             <>
               {output && <CopyButton text={output} />}
@@ -295,7 +295,7 @@ export default function SplitEditorPane({
           />
           {output && (
             <div className="px-3 py-1.5 text-[11px] text-[var(--text-muted)] bg-[var(--surface)] border-t border-[rgba(0,0,0,0.05)] dark:border-[rgba(255,255,255,0.05)] flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] flex-shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#163863] flex-shrink-0" />
               {output.length.toLocaleString()} chars · {output.split('\n').length.toLocaleString()} lines
             </div>
           )}

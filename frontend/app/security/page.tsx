@@ -61,7 +61,7 @@ const securityPillars = [
   {
     icon: Lock,
     title: "No Accounts or Tracking",
-    color: "#10B981", bg: "#ECFDF5",
+    color: "#163863", bg: "#ECFDF5",
     points: [
       "No account creation means no password or personal data breach risk",
       "No persistent cookies or cross-site tracking",
@@ -177,7 +177,7 @@ export default function SecurityPage() {
                 <ul className="space-y-2">
                   {pillar.points.map((point) => (
                     <li key={point} className="flex items-start gap-2.5">
-                      <CheckCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" color="#10B981" strokeWidth={2} />
+                      <CheckCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" color="#163863" strokeWidth={2} />
                       <span className="text-[13px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>{point}</span>
                     </li>
                   ))}

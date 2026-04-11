@@ -116,7 +116,7 @@ export default function TextDiffChecker() {
 
         <Panel
           label="Changed"
-          accent="#10B981"
+          accent="#163863"
           toolbar={
             <>
               {textB && <button onClick={() => setTextB('')} className={iconBtn}><Trash2 className="w-3 h-3" /></button>}
