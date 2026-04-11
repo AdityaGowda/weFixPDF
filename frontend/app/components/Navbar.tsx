@@ -91,7 +91,7 @@ export default function Navbar() {
           {categories.map((cat) => {
             const cols = cat.label === "PDF Tools" ? 3 : 2;
             const width = cat.label === "PDF Tools" ? "w-[660px]" : "w-[480px]";
-            const viewAllHref = cat.label === "PDF Tools" ? "/tools#pdf-tools" : cat.label === "Image Tools" ? "/tools#image-tools" : "/tools#dev-tools";
+            const viewAllHref = cat.label === "PDF Tools" ? "/tools/pdf" : cat.label === "Image Tools" ? "/tools/image" : "/tools/developer";
             return (
               <div key={cat.label} className="relative group/item">
                 <button className="flex items-center gap-1 px-3 py-2 text-[14px] font-medium text-[#4B5563] dark:text-[#94A3B8] hover:text-[#0F0F0F] dark:hover:text-white transition-colors rounded-md hover:bg-[rgba(0,0,0,0.04)] dark:hover:bg-[rgba(255,255,255,0.06)]">
@@ -112,9 +112,9 @@ export default function Navbar() {
                           <a
                             key={item.href}
                             href={item.href}
-                            className="flex flex-col gap-0.5 px-3 py-2.5 rounded-lg hover:bg-[rgba(45,91,227,0.06)] dark:hover:bg-[rgba(91,130,255,0.08)] transition-colors group/link"
+                            className="flex flex-col gap-0.5 px-3 py-2.5 rounded-lg hover:bg-[rgba(79,110,219,0.06)] dark:hover:bg-[rgba(123,154,255,0.08)] transition-colors group/link"
                           >
-                            <span className="text-[13px] font-medium text-[#0F0F0F] dark:text-[#F8FAFC] group-hover/link:text-[#2D5BE3] dark:group-hover/link:text-[#5B82FF] transition-colors leading-snug">
+                            <span className="text-[13px] font-medium text-[#0F0F0F] dark:text-[#F8FAFC] group-hover/link:text-[#4f6edb] dark:group-hover/link:text-[#7B9AFF] transition-colors leading-snug">
                               {item.label}
                             </span>
                             <span className="text-[11px] text-[#6B7280] dark:text-[#64748B] leading-snug line-clamp-1">{item.description}</span>
@@ -126,8 +126,8 @@ export default function Navbar() {
                     {!cat.loading && cat.items.length > 0 && (
                       <div className="border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] px-4 py-2.5 flex items-center justify-between">
                         <span className="text-[11px] text-[#6B7280]">{cat.items.length} tools available</span>
-                        <a href="/tools" className="text-[12px] font-medium text-[#2D5BE3] dark:text-[#5B82FF] hover:underline">
-                          View all →
+                        <a href={viewAllHref} className="text-[12px] font-medium text-[#4f6edb] dark:text-[#7B9AFF] hover:underline">
+                          View all {cat.label} →
                         </a>
                       </div>
                     )}
@@ -149,9 +149,9 @@ export default function Navbar() {
                   <a
                     key={r.href}
                     href={r.href}
-                    className="flex flex-col gap-0.5 px-3 py-2 rounded-lg hover:bg-[rgba(45,91,227,0.06)] dark:hover:bg-[rgba(91,130,255,0.08)] transition-colors group/link"
+                    className="flex flex-col gap-0.5 px-3 py-2 rounded-lg hover:bg-[rgba(79,110,219,0.06)] dark:hover:bg-[rgba(123,154,255,0.08)] transition-colors group/link"
                   >
-                    <span className="text-[13px] font-medium text-[#0F0F0F] dark:text-[#F8FAFC] group-hover/link:text-[#2D5BE3] dark:group-hover/link:text-[#5B82FF] transition-colors">
+                    <span className="text-[13px] font-medium text-[#0F0F0F] dark:text-[#F8FAFC] group-hover/link:text-[#4f6edb] dark:group-hover/link:text-[#7B9AFF] transition-colors">
                       {r.label}
                     </span>
                     <span className="text-[11px] text-[#6B7280] dark:text-[#64748B]">{r.desc}</span>
@@ -231,18 +231,27 @@ export default function Navbar() {
                     {cat.loading ? (
                       <div className="px-3 py-2 text-[13px] text-[#6B7280]">Loading…</div>
                     ) : (
-                      <div className="grid grid-cols-2 gap-0.5">
-                        {cat.items.map((item) => (
-                          <a
-                            key={item.href}
-                            href={item.href}
-                            onClick={() => setMobileOpen(false)}
-                            className="block px-3 py-2 text-[13px] font-medium text-[#4B5563] dark:text-[#94A3B8] hover:text-[#2D5BE3] dark:hover:text-[#5B82FF] rounded-lg hover:bg-[rgba(45,91,227,0.04)] dark:hover:bg-[rgba(91,130,255,0.08)] transition-colors"
-                          >
-                            {item.label}
-                          </a>
-                        ))}
-                      </div>
+                      <>
+                        <div className="grid grid-cols-2 gap-0.5">
+                          {cat.items.map((item) => (
+                            <a
+                              key={item.href}
+                              href={item.href}
+                              onClick={() => setMobileOpen(false)}
+                              className="block px-3 py-2 text-[13px] font-medium text-[#4B5563] dark:text-[#94A3B8] hover:text-[#4f6edb] dark:hover:text-[#7B9AFF] rounded-lg hover:bg-[rgba(79,110,219,0.04)] dark:hover:bg-[rgba(123,154,255,0.08)] transition-colors"
+                            >
+                              {item.label}
+                            </a>
+                          ))}
+                        </div>
+                        <a
+                          href={cat.label === "PDF Tools" ? "/tools/pdf" : cat.label === "Image Tools" ? "/tools/image" : "/tools/developer"}
+                          onClick={() => setMobileOpen(false)}
+                          className="block px-3 pt-2.5 pb-1 text-[12px] font-semibold text-[#4f6edb] dark:text-[#7B9AFF] hover:underline"
+                        >
+                          View all {cat.label} →
+                        </a>
+                      </>
                     )}
                   </div>
                 )}
@@ -265,7 +274,7 @@ export default function Navbar() {
               <a
                 href="/tools"
                 onClick={() => setMobileOpen(false)}
-                className="block px-3 py-2.5 text-[14px] font-medium text-[#2D5BE3] rounded-lg hover:bg-[rgba(45,91,227,0.04)] transition-colors"
+                className="block px-3 py-2.5 text-[14px] font-medium text-[#4f6edb] rounded-lg hover:bg-[rgba(79,110,219,0.04)] transition-colors"
               >
                 All Tools →
               </a>

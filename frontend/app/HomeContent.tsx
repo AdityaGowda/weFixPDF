@@ -118,8 +118,8 @@ function ToolCard({ name, href, icon: Icon, desc, variant = 'blue' }: {
   desc: string;
   variant?: 'blue' | 'emerald' | 'violet';
 }) {
-  const iconBg    = variant === 'emerald' ? '#ECFDF5' : variant === 'violet' ? '#F3EFFE' : 'var(--blue-light)';
-  const iconColor = variant === 'emerald' ? '#059669' : variant === 'violet' ? '#7C3AED' : 'var(--blue)';
+  const iconBg    = variant === 'emerald' ? '#ECFDF5' : variant === 'violet' ? '#F7EEFF' : 'var(--blue-light)';
+  const iconColor = variant === 'emerald' ? '#059669' : variant === 'violet' ? '#B44CFF' : 'var(--blue)';
   return (
     <a href={href} className="tool-card group" aria-label={name}>
       <div className="flex items-start justify-between gap-2">
@@ -159,12 +159,19 @@ function FaqItem({ q, a }: { q: string; a: string }) {
   );
 }
 
-function SectionLabel({ children, color = 'blue' }: { children: React.ReactNode; color?: 'blue' | 'emerald' | 'purple' }) {
-  const dotColor = color === 'emerald' ? '#10B981' : color === 'purple' ? '#8B5CF6' : 'var(--blue)';
+function SectionLabel({ children, color = 'blue', href }: { children: React.ReactNode; color?: 'blue' | 'emerald' | 'purple'; href?: string }) {
+  const dotColor = color === 'emerald' ? '#10B981' : color === 'purple' ? '#B44CFF' : 'var(--blue)';
+  const dot = <span className="w-1.5 h-1.5 rounded-full inline-block flex-shrink-0" style={{ background: dotColor }} />;
+  if (href) {
+    return (
+      <a href={href} className="text-label mb-4 flex items-center gap-1.5 w-fit hover:underline" style={{ color: dotColor }}>
+        {dot}{children}
+      </a>
+    );
+  }
   return (
     <p className="text-label mb-4 flex items-center gap-1.5">
-      <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: dotColor }} />
-      {children}
+      {dot}{children}
     </p>
   );
 }
@@ -191,7 +198,7 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
   const imageTools = dbImageTools.length > 0 ? dbImageTools : FALLBACK_IMAGE_TOOLS;
   const devTools   = dbDevTools.length   > 0 ? dbDevTools   : FALLBACK_DEV_TOOLS;
 
-  const totalTools = pdfTools.length + imageTools.length + devTools.length;
+  const totalTools = tools.length;
 
   return (
     <div>
@@ -200,7 +207,7 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
       <section
         className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]"
         style={{
-          background: 'radial-gradient(ellipse 80% 60% at 60% 0%, rgba(45,91,227,0.07) 0%, transparent 70%), var(--bg-page)',
+          background: 'radial-gradient(ellipse 80% 60% at 60% 0%, rgba(79,110,219,0.07) 0%, transparent 70%), var(--bg-page)',
         }}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-16">
@@ -208,48 +215,38 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
 
             {/* Left — copy */}
             <div className="space-y-6 max-w-lg">
-              {/* Eyebrow badge */}
-              <div
-                className="inline-flex items-center gap-2 px-3 py-1.5 text-[12px] font-medium rounded-[20px]"
-                style={{ background: 'var(--blue-light)', color: 'var(--blue-chip-text)' }}
-              >
-                <span
-                  className="w-1.5 h-1.5 rounded-full animate-pulse"
-                  style={{ background: 'var(--blue)' }}
-                />
-                Zero data retention — files deleted instantly
-              </div>
 
               {/* Headline */}
               <h1 className="text-hero" style={{ color: 'var(--text)' }}>
                 Free Online{' '}
-                <span style={{ color: 'var(--blue)' }}>PDF &amp; Image Tools</span>
+                <span style={{ color: 'var(--blue)' }}>PDF, Image &amp; Developer Tools</span>
                 {' '}— Compress, Convert, Merge &amp; More
               </h1>
 
-              {/* Sub-headline */}
-              <p className="text-[16px] leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
-                Compress PDF, convert PDF to JPG or Word, merge &amp; split PDFs — plus compress images, convert JPG to PNG, HEIC to JPG, PNG to WebP. All free, no sign-up, files deleted instantly.
-              </p>
-
-              {/* Trust chips */}
-              <div className="flex flex-wrap gap-2 pt-2">
+              {/* Trust pills */}
+              <div className="flex flex-wrap gap-2">
                 {[
-                  '100% Free',
-                  'No sign-up',
-                  'HTTPS Encrypted',
-                  'Files deleted instantly',
-                  'No watermarks',
-                ].map((label) => (
+                  { label: 'Always free — no credit card' },
+                  { label: 'No account or email needed' },
+                  { label: 'No watermarks on output' },
+                  { label: 'Files deleted after processing' },
+                  { label: '50+ tools in one place' },
+                ].map(({ label }) => (
                   <span
                     key={label}
-                    className="inline-flex items-center gap-1.5 text-[12px] font-medium px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
+                    className="inline-flex items-center gap-2 text-[12px] font-medium px-3 py-1.5 rounded-full border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)]"
+                    style={{ color: 'var(--text-muted)', background: 'var(--surface)' }}
                   >
-                    <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} />
+                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#163863' }} />
                     {label}
                   </span>
                 ))}
               </div>
+
+              {/* Sub-headline */}
+              <p className="text-[15px] leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
+                Compress a PDF before sending it, convert an iPhone photo to JPG, format a JWT or JSON response — all in one place, no account, nothing stored once you download.
+              </p>
             </div>
 
             {/* Right — upload dropzone (the real CTA) */}
@@ -266,7 +263,7 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
       {/* ══ 2. PDF TOOL GRID ══════════════════════════════════ */}
       <section id="pdf-tools" className="py-16 md:py-20" style={{ background: 'var(--surface)' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <SectionLabel>PDF Tools</SectionLabel>
+          <SectionLabel href="/tools/pdf">PDF Tools</SectionLabel>
           <h2 className="text-section mb-8" style={{ color: 'var(--text)' }}>
             Everything you need for <span style={{ color: 'var(--blue)' }}>PDFs</span>
           </h2>
@@ -275,13 +272,18 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
               <ToolCard key={tool.href} {...tool} />
             ))}
           </div>
+          <div className="mt-6">
+            <a href="/tools/pdf" className="inline-flex items-center gap-1.5 text-[13px] font-medium" style={{ color: 'var(--blue)' }}>
+              Browse all PDF tools <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
       </section>
 
       {/* ══ 3. IMAGE TOOL GRID ════════════════════════════════ */}
       <section id="image-tools" className="py-16 md:py-20 bg-page border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <SectionLabel color="emerald">Image Tools</SectionLabel>
+          <SectionLabel color="emerald" href="/tools/image">Image Tools</SectionLabel>
           <h2 className="text-section mb-8" style={{ color: 'var(--text)' }}>
             Convert &amp; compress <span style={{ color: '#10B981' }}>images</span>
           </h2>
@@ -290,15 +292,20 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
               <ToolCard key={tool.href} {...tool} variant="emerald" />
             ))}
           </div>
+          <div className="mt-6">
+            <a href="/tools/image" className="inline-flex items-center gap-1.5 text-[13px] font-medium" style={{ color: '#10B981' }}>
+              Browse all image tools <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
       </section>
 
       {/* ══ 4. DEV TOOLS GRID ════════════════════════════════ */}
       <section id="dev-tools" className="py-16 md:py-20 border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]" style={{ background: 'var(--surface)' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <SectionLabel color="purple">Developer Tools</SectionLabel>
+          <SectionLabel color="purple" href="/tools/developer">Developer Tools</SectionLabel>
           <h2 className="text-section mb-2" style={{ color: 'var(--text)' }}>
-            Browser-based <span style={{ color: '#7C3AED' }}>dev utilities</span>
+            Browser-based <span style={{ color: '#B44CFF' }}>dev utilities</span>
           </h2>
           <p className="text-[15px] mb-8 max-w-lg" style={{ color: 'var(--text-muted)' }}>
             JSON, YAML, CSV, XML, JWT — all processed locally in your browser. Nothing sent to a server.
@@ -309,8 +316,8 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
             ))}
           </div>
           <div className="mt-6">
-            <a href="/tools#dev-tools" className="inline-flex items-center gap-1.5 text-[13px] font-medium" style={{ color: '#7C3AED' }}>
-              See all developer tools <ArrowRight className="w-3.5 h-3.5" />
+            <a href="/tools/developer" className="inline-flex items-center gap-1.5 text-[13px] font-medium" style={{ color: '#B44CFF' }}>
+              Browse all developer tools <ArrowRight className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>
@@ -328,7 +335,7 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
                 n: '1',
                 title: 'Upload your file',
                 body: 'Select a PDF or image from your device. Files up to 100 MB supported.',
-                color: '#2D5BE3',
+                color: '#4f6edb',
                 bg: '#E6F1FB',
               },
               {
@@ -342,7 +349,7 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
                 n: '3',
                 title: 'Download instantly',
                 body: 'Your file downloads immediately. Original deleted from servers.',
-                color: '#8B5CF6',
+                color: '#B44CFF',
                 bg: '#F5F3FF',
               },
             ].map((step) => (
@@ -404,12 +411,12 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
                 {
                   title: 'End-to-End Encryption',
                   body: 'All uploads and downloads use HTTPS/TLS 1.3. Files are never transmitted in plain text between your browser and our servers.',
-                  accent: '#2D5BE3',
+                  accent: '#4f6edb',
                 },
                 {
                   title: 'No Account Required',
                   body: 'Open a tool, upload your file, get your result. No email, no password, no tracking — just the tool doing its job.',
-                  accent: '#8B5CF6',
+                  accent: '#B44CFF',
                 },
               ].map((f) => (
                 <div key={f.title} className="feature-block" style={{ borderLeftColor: f.accent, background: `${f.accent}08` }}>
@@ -429,10 +436,10 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
-              { stat: '100%', label: 'Free', sub: 'No hidden fees, ever', accent: '#2D5BE3' },
+              { stat: '100%', label: 'Free', sub: 'No hidden fees, ever', accent: '#4f6edb' },
               { stat: '<3 sec', label: 'Speed', sub: 'Average processing time', accent: '#10B981' },
-              { stat: '0 bytes', label: 'Retained', sub: 'Data stored after use', accent: '#8B5CF6' },
-              { stat: `50+`, label: 'Tools', sub: 'Free tools available', accent: '#F59E0B' },
+              { stat: '0 bytes', label: 'Retained', sub: 'Data stored after use', accent: '#B44CFF' },
+              { stat: `${totalTools}+`, label: 'Tools', sub: 'Free tools available', accent: '#F59E0B' },
             ].map(({ stat, label, sub, accent }) => (
               <div
                 key={label}
