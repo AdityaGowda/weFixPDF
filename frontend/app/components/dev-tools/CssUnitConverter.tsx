@@ -113,7 +113,7 @@ export default function CssUnitConverter() {
         {conversions.length > 0 && (
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
-              <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+              <span className="w-2 h-2 rounded-full bg-[#163863]" />
               <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>
                 {inputValue} {inputUnit} in all other units
               </span>

@@ -105,7 +105,7 @@ export default function ColorContrastChecker() {
               <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Contrast Ratio</span>
             </div>
             <div className="px-4 py-4 flex items-center gap-3">
-              <span className="text-[36px] font-bold font-mono" style={{ color: ratio >= 4.5 ? '#10B981' : ratio >= 3 ? '#F59E0B' : '#EF4444' }}>
+              <span className="text-[36px] font-bold font-mono" style={{ color: ratio >= 4.5 ? '#163863' : ratio >= 3 ? '#F59E0B' : '#EF4444' }}>
                 {ratio.toFixed(2)}
               </span>
               <span className="text-[18px] font-semibold" style={{ color: 'var(--text-muted)' }}>:1</span>

@@ -169,7 +169,7 @@ function pct(part: number, total: number): string {
 
 const SECTION_COLORS: Record<number, string> = {
   0: '#94A3B8', 1: '#7C3AED', 2: '#2563EB', 3: '#059669',
-  4: '#D97706', 5: '#DC2626', 6: '#7C3AED', 7: '#10B981',
+  4: '#D97706', 5: '#DC2626', 6: '#7C3AED', 7: '#163863',
   10: '#F59E0B', 11: '#EF4444',
 };
 
@@ -322,7 +322,7 @@ export default function WasmAnalyzer() {
               {/* Exports */}
               <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
                 <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
-                  <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+                  <span className="w-2 h-2 rounded-full bg-[#163863]" />
                   <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Exports ({analysis.exports.length})</span>
                 </div>
                 <div className="overflow-auto" style={{ maxHeight: 200 }}>
@@ -335,7 +335,7 @@ export default function WasmAnalyzer() {
                           <tr key={i} className="border-t border-[rgba(0,0,0,0.04)] dark:border-[rgba(255,255,255,0.04)] first:border-0">
                             <td className="px-4 py-2 font-mono" style={{ color: 'var(--text)' }}>{ex.name}</td>
                             <td className="px-4 py-2">
-                              <span className="text-[10px] px-1.5 py-0.5 rounded font-medium bg-[rgba(16,185,129,0.1)] text-[#10B981]">{ex.kind}</span>
+                              <span className="text-[10px] px-1.5 py-0.5 rounded font-medium bg-[rgba(16,185,129,0.1)] text-[#163863]">{ex.kind}</span>
                             </td>
                             <td className="px-4 py-2 text-[11px]" style={{ color: 'var(--text-muted)' }}>#{ex.index}</td>
                           </tr>

@@ -23,7 +23,7 @@ const symbolic = (ps: PermSet) => toSym(ps.owner) + toSym(ps.group) + toSym(ps.o
 const ENTITIES: { key: Entity; label: string; color: string }[] = [
   { key: 'owner', label: 'Owner', color: '#7C3AED' },
   { key: 'group', label: 'Group', color: '#2563EB' },
-  { key: 'other', label: 'Other', color: '#10B981' },
+  { key: 'other', label: 'Other', color: '#163863' },
 ];
 
 const COMMON: { label: string; value: string }[] = [

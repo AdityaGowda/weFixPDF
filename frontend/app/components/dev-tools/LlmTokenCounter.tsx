@@ -205,7 +205,7 @@ export default function LlmTokenCounter() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
             { label: 'Input tokens',  value: inputTokens.toLocaleString(),   color: '#7C3AED' },
-            { label: 'Context used',  value: `${ctxPct.toFixed(1)}%`,        color: ctxPct > 90 ? '#EF4444' : ctxPct > 70 ? '#F59E0B' : '#10B981' },
+            { label: 'Context used',  value: `${ctxPct.toFixed(1)}%`,        color: ctxPct > 90 ? '#EF4444' : ctxPct > 70 ? '#F59E0B' : '#163863' },
             { label: 'Input cost',    value: formatCost(inputCost),           color: '#2563EB' },
             { label: 'Total cost',    value: formatCost(totalCost),           color: '#059669' },
           ].map(({ label, value, color }) => (
@@ -293,7 +293,7 @@ export default function LlmTokenCounter() {
         {/* Output tokens + cost breakdown */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
-            <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+            <span className="w-2 h-2 rounded-full bg-[#163863]" />
             <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Cost Breakdown</span>
           </div>
           <div className="p-4 space-y-3">
@@ -332,7 +332,7 @@ export default function LlmTokenCounter() {
                   <td className="px-3 py-2 text-[11px] font-semibold" style={{ color: 'var(--text)' }}>Total</td>
                   <td className="px-3 py-2 font-mono" style={{ color: 'var(--text)' }}>{(inputTokens + outTokens).toLocaleString()}</td>
                   <td className="px-3 py-2" />
-                  <td className="px-3 py-2 font-mono text-[#10B981]">{formatCost(totalCost)}</td>
+                  <td className="px-3 py-2 font-mono text-[#163863]">{formatCost(totalCost)}</td>
                 </tr>
               </tbody>
             </table>
