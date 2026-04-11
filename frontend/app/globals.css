@@ -2,19 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Brand Colors ───────────────────────────────────────────── */
+/* weFixPDF wordmark: #163863 "we" · #4f6edb "Fix" · #B44CFF "PDF" */
+:root {
+  --brand-we:     #163863;   /* dark navy   — logo "we", deep anchors  */
+  --brand-fix:    #4f6edb;   /* brand blue  — logo "Fix", primary CTA  */
+  --brand-pdf:    #B44CFF;   /* brand purple— logo "PDF", dev tools     */
+}
+
 /* ─── Design Tokens — Light ─────────────────────────────────── */
 :root {
-  --blue:           #2D5BE3;
-  --blue-dark:      #1E4BC8;
-  --blue-light:     #E6F1FB;
-  --blue-chip-text: #185FA5;
+  --blue:           #4f6edb;
+  --blue-dark:      #163863;
+  --blue-light:     #EBF0FA;
+  --blue-chip-text: #163863;
+  --purple:         #B44CFF;
+  --purple-dark:    #9333EA;
+  --purple-light:   #F7EEFF;
   --text:           #0F0F0F;
   --text-muted:     #6B7280;
   --text-subtle:    #9CA3AF;
   --surface:        #F7F7F5;
   --border:         rgba(0, 0, 0, 0.08);
   --border-faint:   rgba(0, 0, 0, 0.06);
-  --border-blue:    rgba(45, 91, 227, 0.35);
+  --border-blue:    rgba(79, 110, 219, 0.35);
+  --border-purple:  rgba(180, 76, 255, 0.30);
   --green-chip:     #EAF3DE;
   --green-text:     #3B6D11;
   --bg-page:        #ffffff;
@@ -27,17 +39,21 @@
 
 /* ─── Design Tokens — Dark ──────────────────────────────────── */
 .dark {
-  --blue:           #5B82FF;
-  --blue-dark:      #4A6FE8;
-  --blue-light:     rgba(91, 130, 255, 0.15);
-  --blue-chip-text: #93B8FF;
+  --blue:           #7B9AFF;
+  --blue-dark:      #5B7FE5;
+  --blue-light:     rgba(79, 110, 219, 0.15);
+  --blue-chip-text: #A8C0FF;
+  --purple:         #C970FF;
+  --purple-dark:    #A855F7;
+  --purple-light:   rgba(180, 76, 255, 0.15);
   --text:           #F8FAFC;
   --text-muted:     #94A3B8;
   --text-subtle:    #64748B;
   --surface:        #111113;
   --border:         rgba(255, 255, 255, 0.08);
   --border-faint:   rgba(255, 255, 255, 0.06);
-  --border-blue:    rgba(91, 130, 255, 0.30);
+  --border-blue:    rgba(123, 154, 255, 0.30);
+  --border-purple:  rgba(201, 112, 255, 0.25);
   --green-chip:     rgba(20, 83, 45, 0.6);
   --green-text:     #86EFAC;
   --bg-page:        #09090b;

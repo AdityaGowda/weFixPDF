@@ -118,7 +118,7 @@ export default async function ToolsPage() {
     .sort((a, b) => a.position - b.position)
     .map((t) => toTool(t, Code));
 
-  const totalTools = pdfTools.length + imageTools.length + devTools.length;
+  const totalTools = allTools.length;
 
   const itemListSchema = {
     '@context': 'https://schema.org',
@@ -174,10 +174,12 @@ export default async function ToolsPage() {
             <div className="flex items-center gap-3 mb-6">
               <div className="flex items-center gap-2">
                 <span className="w-3 h-3 rounded-sm" style={{ background: '#2D5BE3' }} />
-                <p className="text-label">PDF Tools</p>
+                <Link href="/tools/pdf" className="text-label hover:underline" style={{ color: '#2D5BE3' }}>PDF Tools</Link>
               </div>
               <div className="h-px flex-1 bg-[rgba(0,0,0,0.06)] dark:bg-[rgba(255,255,255,0.06)]" />
-              <span className="text-[12px]" style={{ color: 'var(--text-muted)' }}>{pdfTools.length} tools</span>
+              <Link href="/tools/pdf" className="text-[12px] font-medium hover:underline" style={{ color: '#2D5BE3' }}>
+                {pdfTools.length} tools — hub page →
+              </Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {pdfTools.map((t) => <ToolCard key={t.href} tool={t} variant="blue" />)}
@@ -189,10 +191,12 @@ export default async function ToolsPage() {
             <div className="flex items-center gap-3 mb-6">
               <div className="flex items-center gap-2">
                 <span className="w-3 h-3 rounded-sm" style={{ background: '#10B981' }} />
-                <p className="text-label">Image Tools</p>
+                <Link href="/tools/image" className="text-label hover:underline" style={{ color: '#10B981' }}>Image Tools</Link>
               </div>
               <div className="h-px flex-1 bg-[rgba(0,0,0,0.06)] dark:bg-[rgba(255,255,255,0.06)]" />
-              <span className="text-[12px]" style={{ color: 'var(--text-muted)' }}>{imageTools.length} tools</span>
+              <Link href="/tools/image" className="text-[12px] font-medium hover:underline" style={{ color: '#10B981' }}>
+                {imageTools.length} tools — hub page →
+              </Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {imageTools.map((t) => <ToolCard key={t.href} tool={t} variant="emerald" />)}
@@ -205,10 +209,12 @@ export default async function ToolsPage() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-sm" style={{ background: '#8B5CF6' }} />
-                  <p className="text-label">Developer Tools</p>
+                  <Link href="/tools/developer" className="text-label hover:underline" style={{ color: '#8B5CF6' }}>Developer Tools</Link>
                 </div>
                 <div className="h-px flex-1 bg-[rgba(0,0,0,0.06)] dark:bg-[rgba(255,255,255,0.06)]" />
-                <span className="text-[12px]" style={{ color: 'var(--text-muted)' }}>{devTools.length} tools</span>
+                <Link href="/tools/developer" className="text-[12px] font-medium hover:underline" style={{ color: '#8B5CF6' }}>
+                  {devTools.length} tools — hub page →
+                </Link>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {devTools.map((t) => <ToolCard key={t.href} tool={t} variant="violet" />)}
