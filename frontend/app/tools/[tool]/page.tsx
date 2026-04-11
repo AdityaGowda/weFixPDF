@@ -1,12 +1,11 @@
 import { Metadata } from "next";
-import Script from "next/script";
-import UploadBox from "../components/UploadBox";
-import CustomUploadBoxScanToPdf from "../components/CustomUploadBoxScanToPdf";
-import DevToolBox from "../components/dev-tools/DevToolBox";
-import { DEV_TOOL_SLUGS } from "../components/dev-tools/devToolSlugs";
-import { getToolSeo, getAllSlugs, ToolMetaData } from "../lib/seo/seoApi";
-import ToolPageContent from "../components/toolPagecontent";
-import { buildBreadcrumbSchema, buildFaqSchema, buildHowToSchema, buildToolSchema, buildAuthorSchema } from "../lib/seo/metadata";
+import UploadBox from "@/app/components/UploadBox";
+import CustomUploadBoxScanToPdf from "@/app/components/CustomUploadBoxScanToPdf";
+import DevToolBox from "@/app/components/dev-tools/DevToolBox";
+import { DEV_TOOL_SLUGS } from "@/app/components/dev-tools/devToolSlugs";
+import { getToolSeo, getAllSlugs, ToolMetaData } from "@/app/lib/seo/seoApi";
+import ToolPageContent from "@/app/components/toolPagecontent";
+import { buildBreadcrumbSchema, buildFaqSchema, buildHowToSchema, buildToolSchema, buildAuthorSchema } from "@/app/lib/seo/metadata";
 import { notFound } from 'next/navigation';
 
 type ToolPageProps = {
@@ -20,9 +19,6 @@ export async function generateStaticParams() {
     .map((s) => ({ tool: s.slug }));
 }
 
-/**
- * Fetch tool metadata from API.
- */
 async function getMetadata(slug: string): Promise<ToolMetaData | undefined> {
   const apiData = await getToolSeo(slug);
   if (apiData) return apiData;
@@ -74,17 +70,19 @@ export default async function ToolPage({ params }: ToolPageProps) {
   if (!metadata) {
     return notFound();
   }
-  // Build JSON-LD schemas for tool pages
-  const fallbackBreadcrumbs = [
-    { name: "Home", href: "/" },
-    { name: "All Tools", href: "/tools" },
-    { name: metadata?.h1 || reqService.tool, href: `/${reqService.tool}` },
+
+  const slug = reqService.tool;
+  // Always build breadcrumbs from known-good values — DB breadcrumb URLs
+  // can contain stale paths (e.g. "#tools", "/compress-pdf") so we ignore them.
+  const breadcrumbs = [
+    { name: "Home",             url: "/"              },
+    { name: "Tools",            url: "/tools"         },
+    { name: metadata.h1 || slug, url: `/tools/${slug}` },
   ];
-  const breadcrumbSchema = metadata?.breadcrumb && metadata.breadcrumb.length > 0
-    ? buildBreadcrumbSchema(
-      metadata.breadcrumb.map((b) => ({ name: b.name, href: b.url }))
-    )
-    : buildBreadcrumbSchema(fallbackBreadcrumbs);
+
+  const breadcrumbSchema = buildBreadcrumbSchema(
+    breadcrumbs.map((b) => ({ name: b.name, href: b.url }))
+  );
 
   const faqSchema = metadata?.faqs && metadata.faqs.length > 0
     ? buildFaqSchema(metadata.faqs)
@@ -96,6 +94,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
         description: metadata.howTo.description || metadata.description || '',
       })
     : null;
+
   const softwareApplicationSchema = metadata ? buildToolSchema({
     url: metadata.url,
     description: metadata.description,
@@ -122,36 +121,27 @@ export default async function ToolPage({ params }: ToolPageProps) {
       {authorSchema && (
         <script id="author-schema" type="application/ld+json">{JSON.stringify(authorSchema)}</script>
       )}
-      {/* ── Hero section with homepage gradient ── */}
+
+      {/* ── Hero section ── */}
       <section
         className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]"
         style={{ background: 'radial-gradient(ellipse 80% 60% at 60% 0%, rgba(45,91,227,0.07) 0%, transparent 70%), var(--bg-page)' }}
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-6">
           {/* Breadcrumbs */}
-          {(() => {
-            const crumbs = metadata?.breadcrumb && metadata.breadcrumb.length > 0
-              ? metadata.breadcrumb
-              : [
-                  { name: "Home", url: "/" },
-                  { name: "All Tools", url: "/tools" },
-                  { name: metadata?.h1 || reqService.tool, url: `/${reqService.tool}` },
-                ];
-            return (
-              <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px]" style={{ color: 'var(--text-muted)' }}>
-                {crumbs.map((crumb, i) => (
-                  <div key={i} className="flex items-center gap-2">
-                    {i > 0 && <span style={{ color: 'var(--text-subtle)' }}>/</span>}
-                    {i === crumbs.length - 1 ? (
-                      <span style={{ color: 'var(--text)' }}>{crumb.name}</span>
-                    ) : (
-                      <a href={crumb.url} className="transition-colors hover:underline">{crumb.name}</a>
-                    )}
-                  </div>
-                ))}
-              </nav>
-            );
-          })()}
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px]" style={{ color: 'var(--text-muted)' }}>
+            {breadcrumbs.map((crumb, i) => (
+              <div key={i} className="flex items-center gap-2">
+                {i > 0 && <span style={{ color: 'var(--text-subtle)' }}>/</span>}
+                {i === breadcrumbs.length - 1 ? (
+                  <span style={{ color: 'var(--text)' }}>{crumb.name}</span>
+                ) : (
+                  <a href={crumb.url} className="transition-colors hover:underline">{crumb.name}</a>
+                )}
+              </div>
+            ))}
+          </nav>
+
           {/* Tool hero */}
           <div className="space-y-3">
             <span
@@ -167,6 +157,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
               {metadata?.h2 || "Fast, secure, and privacy-shielded conversion."}
             </p>
           </div>
+
           {DEV_TOOL_SLUGS.has(reqService.tool)
             ? <DevToolBox slug={reqService.tool} />
             : reqService.tool === "scan-to-pdf"

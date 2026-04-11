@@ -2,7 +2,6 @@
 
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Script from "next/script";
 import Link from "next/link";
 import { ArrowRight, Clock, BookOpen, ArrowLeft, CheckCircle } from "lucide-react";
 import { getPageSeo, getAllSlugs } from "@/app/lib/seo/seoApi";
@@ -228,7 +227,7 @@ export default async function BlogArticlePage({ params }: Props) {
                 {page.related.map((r, i) => (
                   <a
                     key={i}
-                    href={r.href ?? "#"}
+                    href={r.href || "#"}
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-700 dark:text-slate-300 hover:border-blue-500/40 hover:text-blue-600 dark:hover:text-blue-400 hover:shadow-md transition-all duration-200"
                   >
                     {r.label} <ArrowRight className="w-3.5 h-3.5" />

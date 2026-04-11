@@ -1,7 +1,6 @@
 // app/use-cases/[slug]/page.tsx — Rich use-case detail page
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Script from "next/script";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft, CheckCircle, Users, ExternalLink } from "lucide-react";
 import { getPageSeo, getAllSlugs } from "@/app/lib/seo/seoApi";

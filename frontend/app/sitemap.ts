@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://wefixpdf.com";
 
 const PREFIX_MAP: Record<string, string> = {
-  tool:      "",
+  tool:      "/tools",
   blog:      "/blog",
   compare:   "/compare",
   use_cases: "/use-cases",

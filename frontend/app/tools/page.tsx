@@ -96,7 +96,7 @@ export default async function ToolsPage() {
   const allTools = await getToolListings();
 
   const toTool = (t: { slug: string; name: string; description: string; icon_name?: string }, fallback: any): Tool => ({
-    href:    `/${t.slug}`,
+    href: `/tools/${t.slug}`,
     icon:    iconNameMap[t.icon_name ?? ''] ?? fallback,
     label:   t.name,
     desc:    t.description,
@@ -144,7 +144,7 @@ export default async function ToolsPage() {
             <nav className="flex items-center gap-2 text-[12px] mb-8" style={{ color: 'var(--text-muted)' }}>
               <Link href="/" className="transition-colors hover:underline">Home</Link>
               <span>/</span>
-              <span style={{ color: 'var(--text)' }}>All Tools</span>
+              <span style={{ color: 'var(--text)' }}>Tools</span>
             </nav>
 
             <p className="text-label mb-4">{totalTools} Free tools · No account required</p>

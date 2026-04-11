@@ -10,9 +10,15 @@ interface NavItem     { label: string; href: string; description: string }
 interface NavCategory { label: string; items: NavItem[]; loading?: boolean }
 
 const STATIC_CATEGORIES: NavCategory[] = [
-  { label: "PDF Tools",   items: [], loading: true },
+  { label: "PDF Tools", items: [], loading: true },
   { label: "Image Tools", items: [], loading: true },
+  { label: "Developer Tools", items: [], loading: true },
 ];
+
+/* DB type value may differ from display label */
+const DB_TYPE: Record<string, string> = {
+  "Developer Tools": "Dev Tools",
+};
 
 
 const RESOURCES = [
@@ -51,8 +57,8 @@ export default function Navbar() {
             ...cat,
             loading: false,
             items: res
-              .filter((t) => t.type === cat.label)
-              .map((t) => ({ label: t.name, href: t.url, description: t.description })),
+              .filter((t) => t.type === (DB_TYPE[cat.label] ?? cat.label))
+              .map((t) => ({ label: t.name, href: `/tools/${t.slug}`, description: t.description })),
           }))
         );
       })
@@ -85,7 +91,7 @@ export default function Navbar() {
           {categories.map((cat) => {
             const cols = cat.label === "PDF Tools" ? 3 : 2;
             const width = cat.label === "PDF Tools" ? "w-[660px]" : "w-[480px]";
-            const viewAllHref = cat.label === "PDF Tools" ? "/tools#pdf" : "/tools#image";
+            const viewAllHref = cat.label === "PDF Tools" ? "/tools#pdf-tools" : cat.label === "Image Tools" ? "/tools#image-tools" : "/tools#dev-tools";
             return (
               <div key={cat.label} className="relative group/item">
                 <button className="flex items-center gap-1 px-3 py-2 text-[14px] font-medium text-[#4B5563] dark:text-[#94A3B8] hover:text-[#0F0F0F] dark:hover:text-white transition-colors rounded-md hover:bg-[rgba(0,0,0,0.04)] dark:hover:bg-[rgba(255,255,255,0.06)]">

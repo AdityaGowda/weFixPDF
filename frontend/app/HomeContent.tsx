@@ -37,31 +37,31 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string; strokeW
 /* ─── Fallback data (used when DB returns nothing) ──────────── */
 
 const FALLBACK_PDF_TOOLS = [
-  { name: "Compress PDF", href: "/compress-pdf", icon: FileDown, desc: "Reduce file size by up to 90%, losslessly." },
-  { name: "PDF to JPG", href: "/pdf-to-jpg", icon: FileImage, desc: "Convert every page to a high-quality image." },
-  { name: "Merge PDF", href: "/merge-pdf", icon: Layers, desc: "Combine multiple PDFs into one document." },
-  { name: "Split PDF", href: "/split-pdf", icon: Scissors, desc: "Extract pages or split by page range." },
-  { name: "Rotate PDF", href: "/rotate-pdf", icon: RotateCw, desc: "Rotate pages 90°, 180°, or 270° permanently." },
-  { name: "Protect PDF", href: "/protect-pdf", icon: ShieldCheck, desc: "Password-protect sensitive documents." },
-  { name: "Unlock PDF", href: "/unlock-pdf", icon: LockOpen, desc: "Remove passwords from PDF files." },
-  { name: "PDF to Word", href: "/pdf-to-word", icon: FileText, desc: "Convert PDF to an editable .docx file." },
+  { name: "Compress PDF", href: "/tools/compress-pdf", icon: FileDown, desc: "Reduce file size by up to 90%, losslessly." },
+  { name: "PDF to JPG", href: "/tools/pdf-to-jpg", icon: FileImage, desc: "Convert every page to a high-quality image." },
+  { name: "Merge PDF", href: "/tools/merge-pdf", icon: Layers, desc: "Combine multiple PDFs into one document." },
+  { name: "Split PDF", href: "/tools/split-pdf", icon: Scissors, desc: "Extract pages or split by page range." },
+  { name: "Rotate PDF", href: "/tools/rotate-pdf", icon: RotateCw, desc: "Rotate pages 90°, 180°, or 270° permanently." },
+  { name: "Protect PDF", href: "/tools/protect-pdf", icon: ShieldCheck, desc: "Password-protect sensitive documents." },
+  { name: "Unlock PDF", href: "/tools/unlock-pdf", icon: LockOpen, desc: "Remove passwords from PDF files." },
+  { name: "PDF to Word", href: "/tools/pdf-to-word", icon: FileText, desc: "Convert PDF to an editable .docx file." },
 ];
 
 const FALLBACK_IMAGE_TOOLS = [
-  { name: "JPG to PNG", href: "/jpg-to-png", icon: FileImage, desc: "Lossless conversion, no watermarks." },
-  { name: "PNG to JPG", href: "/png-to-jpg", icon: Image, desc: "Smaller files for faster web pages." },
-  { name: "Image Compressor", href: "/image-compressor", icon: Minimize2, desc: "Shrink JPG, PNG, WEBP by up to 80%." },
-  { name: "PNG to WEBP", href: "/png-to-webp", icon: Zap, desc: "Modern format, 30% smaller files." },
-  { name: "HEIC to JPG", href: "/heic-to-jpg", icon: Smartphone, desc: "Convert iPhone photos anywhere." },
+  { name: "JPG to PNG", href: "/tools/jpg-to-png", icon: FileImage, desc: "Lossless conversion, no watermarks." },
+  { name: "PNG to JPG", href: "/tools/png-to-jpg", icon: Image, desc: "Smaller files for faster web pages." },
+  { name: "Image Compressor", href: "/tools/image-compressor", icon: Minimize2, desc: "Shrink JPG, PNG, WEBP by up to 80%." },
+  { name: "PNG to WEBP", href: "/tools/png-to-webp", icon: Zap, desc: "Modern format, 30% smaller files." },
+  { name: "HEIC to JPG", href: "/tools/heic-to-jpg", icon: Smartphone, desc: "Convert iPhone photos anywhere." },
 ];
 
 const FALLBACK_DEV_TOOLS = [
-  { name: "CSV ↔ JSON Converter",    href: "/csv-json-converter",      icon: ArrowLeftRight, desc: "Convert CSV to JSON or JSON to CSV with live preview." },
-  { name: "JSON Formatter",          href: "/json-formatter",           icon: Braces,         desc: "Pretty-print, minify, and validate any JSON." },
-  { name: "JWT Decoder",             href: "/jwt-decoder",              icon: KeyRound,       desc: "Decode JWT header & payload — stays in your browser." },
-  { name: "Text Diff Checker",       href: "/text-diff-checker",        icon: GitCompare,     desc: "Compare two texts and highlight every change." },
-  { name: "JSON to YAML",            href: "/json-to-yaml",             icon: FileCode,       desc: "Convert JSON to clean, indented YAML instantly." },
-  { name: "Color Palette Generator", href: "/color-palette-generator",  icon: Palette,        desc: "Generate palettes and export as CSS, Tailwind, or JSON." },
+  { name: "CSV ↔ JSON Converter", href: "/tools/csv-json-converter", icon: ArrowLeftRight, desc: "Convert CSV to JSON or JSON to CSV with live preview." },
+  { name: "JSON Formatter", href: "/tools/json-formatter", icon: Braces, desc: "Pretty-print, minify, and validate any JSON." },
+  { name: "JWT Decoder", href: "/tools/jwt-decoder", icon: KeyRound, desc: "Decode JWT header & payload — stays in your browser." },
+  { name: "Text Diff Checker", href: "/tools/text-diff-checker", icon: GitCompare, desc: "Compare two texts and highlight every change." },
+  { name: "JSON to YAML", href: "/tools/json-to-yaml", icon: FileCode, desc: "Convert JSON to clean, indented YAML instantly." },
+  { name: "Color Palette Generator", href: "/tools/color-palette-generator", icon: Palette, desc: "Generate palettes and export as CSS, Tailwind, or JSON." },
 ];
 
 const faqs = [
@@ -175,17 +175,17 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
   const dbPdfTools = tools
     .filter((t) => t.type === "PDF Tools")
     .sort((a, b) => a.position - b.position)
-    .map((t) => ({ name: t.name, href: `/${t.slug}`, icon: ICON_MAP[t.slug] ?? FileText, desc: t.description }));
+    .map((t) => ({ name: t.name, href: `/tools/${t.slug}`, icon: ICON_MAP[t.slug] ?? FileText, desc: t.description }));
 
   const dbImageTools = tools
     .filter((t) => t.type === "Image Tools")
     .sort((a, b) => a.position - b.position)
-    .map((t) => ({ name: t.name, href: `/${t.slug}`, icon: ICON_MAP[t.slug] ?? FileImage, desc: t.description }));
+    .map((t) => ({ name: t.name, href: `/tools/${t.slug}`, icon: ICON_MAP[t.slug] ?? FileImage, desc: t.description }));
 
   const dbDevTools = tools
     .filter((t) => t.type === "Dev Tools")
     .sort((a, b) => a.position - b.position)
-    .map((t) => ({ name: t.name, href: `/${t.slug}`, icon: ICON_MAP[t.slug] ?? Code, desc: t.description }));
+    .map((t) => ({ name: t.name, href: `/tools/${t.slug}`, icon: ICON_MAP[t.slug] ?? Code, desc: t.description }));
 
   const pdfTools   = dbPdfTools.length   > 0 ? dbPdfTools   : FALLBACK_PDF_TOOLS;
   const imageTools = dbImageTools.length > 0 ? dbImageTools : FALLBACK_IMAGE_TOOLS;
@@ -432,7 +432,7 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
               { stat: '100%', label: 'Free', sub: 'No hidden fees, ever', accent: '#2D5BE3' },
               { stat: '<3 sec', label: 'Speed', sub: 'Average processing time', accent: '#10B981' },
               { stat: '0 bytes', label: 'Retained', sub: 'Data stored after use', accent: '#8B5CF6' },
-              { stat: `${totalTools}+`, label: 'Tools', sub: 'Free tools available', accent: '#F59E0B' },
+              { stat: `50+`, label: 'Tools', sub: 'Free tools available', accent: '#F59E0B' },
             ].map(({ stat, label, sub, accent }) => (
               <div
                 key={label}
@@ -476,11 +476,11 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
             stop. We exist to do the job and get out of the way.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <a href="/compress-pdf" className="btn-primary">
+            <a href="/tools/compress-pdf" className="btn-primary">
               Compress PDF Free
               <ArrowRight className="w-4 h-4" />
             </a>
-            <a href="/image-compressor" className="btn-ghost">
+            <a href="/tools/image-compressor" className="btn-ghost">
               Convert an Image
             </a>
           </div>
