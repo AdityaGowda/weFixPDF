@@ -8,6 +8,8 @@ import { getPageSeo, getAllSlugs } from "@/app/lib/seo/seoApi";
 import { buildMetadata, buildArticleSchema, buildFaqSchema, buildBreadcrumbSchema } from "@/app/lib/seo/metadata";
 import MarkdownContent from "@/app/components/markdowncontent";
 import InternalLinkGrid from "@/app/components/InternalLinkGrid";
+import Breadcrumbs from "@/app/components/Breadcrumbs";
+
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -41,11 +43,11 @@ export default async function BlogArticlePage({ params }: Props) {
 
   const articleSchema = buildArticleSchema(page);
   const faqSchema = page.faq && page.faq.length > 0 ? buildFaqSchema(page.faq) : null;
-  const breadcrumbs = buildBreadcrumbSchema([
-    { name: "Home", href: "/" },
+  const breadcrumbsData = [
     { name: "Blog", href: "/blog" },
     { name: page.h1, href: `/blog/${page.slug}` },
-  ]);
+  ];
+
 
   return (
     <>
@@ -53,7 +55,7 @@ export default async function BlogArticlePage({ params }: Props) {
       {faqSchema && (
         <script id="faq-schema" type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       )}
-      <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+
 
       <div className="min-h-screen">
         {/* ── Hero Banner ── */}
@@ -62,14 +64,9 @@ export default async function BlogArticlePage({ params }: Props) {
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-violet-500/5 pointer-events-none" />
 
           <div className="max-w-3xl mx-auto relative">
-            {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-xs text-slate-400 mb-8 font-medium">
-              <Link href="/" className="hover:text-blue-600 transition-colors">Home</Link>
-              <ArrowRight className="w-3 h-3 text-slate-300" />
-              <Link href="/blog" className="hover:text-blue-600 transition-colors">Blog</Link>
-              <ArrowRight className="w-3 h-3 text-slate-300" />
-              <span className="text-slate-600 dark:text-slate-300 truncate max-w-[200px]">{page.h1}</span>
-            </nav>
+            {/* Breadcrumbs */}
+            <Breadcrumbs items={breadcrumbsData} />
+
 
             {/* Category badge */}
             <div className="flex items-center gap-3 mb-5">

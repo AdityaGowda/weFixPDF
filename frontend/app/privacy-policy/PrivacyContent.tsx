@@ -92,8 +92,9 @@ export default function PrivacyContent() {
           preference). No consent is needed for these.
           <br />
           <br />
-          <strong>Analytics cookies</strong> collect anonymous page-view data via Cloudflare Web
-          Analytics. No personal data is collected or stored.
+          <strong>Analytics cookies</strong> collect anonymous page-view data via Google Analytics 4
+          to help us improve our service. No personal data or file content is shared.
+
           <br />
           <br />
           <strong>Advertising cookies</strong>: Google AdSense sets cookies to serve relevant ads
@@ -115,8 +116,9 @@ export default function PrivacyContent() {
           >
             aboutads.info
           </a>
-          . By continuing to use weFixPDF you agree to the use of these cookies as described in
-          this policy.
+          . Your consent for these cookies is managed via our Cookie Consent banner, and
+          you can change your preferences at any time.
+
         </>
       ),
     },

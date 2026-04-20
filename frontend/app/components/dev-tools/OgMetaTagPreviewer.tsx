@@ -17,7 +17,7 @@ const DEFAULT: OGData = {
 function ImgOrPlaceholder({ src, h }: { src: string; h: string }) {
   return src ? (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={src} alt="" className={`w-full ${h} object-cover`} onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+    <img src={src} alt="Social media preview" className={`w-full ${h} object-cover`} onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
   ) : (
     <div className={`w-full ${h} flex items-center justify-center bg-gray-100 dark:bg-gray-800`}>
       <ImageIcon className="w-8 h-8 text-gray-400" />

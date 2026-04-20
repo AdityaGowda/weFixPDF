@@ -36,4 +36,9 @@ export const DEV_TOOL_SLUGS = new Set([
   'wasm-analyzer',
   'llm-token-counter',
   'api-ping-tester',
+  // Batch 4 — utility tools
+  'uuid-generator',
+  'password-generator',
+  'lorem-ipsum-generator',
+  'word-counter',
 ]);

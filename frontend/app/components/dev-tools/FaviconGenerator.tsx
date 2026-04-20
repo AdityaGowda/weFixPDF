@@ -137,7 +137,7 @@ export default function FaviconGenerator() {
               {previews.map(({ size, dataUrl }) => (
                 <div key={size} className="flex items-center gap-4 rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] px-4 py-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={dataUrl} alt={`${size}px`}
+                  <img src={dataUrl} alt={`Favicon preview ${size}x${size} pixels`}
                     style={{ width: Math.min(size, 64), height: Math.min(size, 64) }}
                     className="rounded border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] bg-white"
                   />

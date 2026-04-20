@@ -69,7 +69,11 @@ module.exports = {
         marquee:          'marquee 35s linear infinite',
         'marquee-reverse': 'marquee-reverse 35s linear infinite',
       },
+      maxWidth: {
+        '4xl': '71rem',
+      },
     },
   },
+
   plugins: [require('@tailwindcss/typography')],
 };

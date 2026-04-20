@@ -64,7 +64,7 @@ const securityPillars = [
     color: "#163863", bg: "#ECFDF5",
     points: [
       "No account creation means no password or personal data breach risk",
-      "No persistent cookies or cross-site tracking",
+      "No tracking cookies without your explicit consent",
       "No user profiles or activity history stored",
       "Standard server access logs are anonymized and not linked to file content",
     ],
@@ -97,7 +97,7 @@ const comparisons = [
   { label: "File storage after conversion",  us: "Never stored",         them: "Minutes to hours" },
   { label: "Human file access",              us: "Impossible by design", them: "Varies by provider" },
   { label: "Account required",               us: "Never",                them: "Often required" },
-  { label: "Tracking cookies",               us: "None",                 them: "Common" },
+  { label: "Tracking cookies", us: "Only if accepted", them: "Common" },
   { label: "Data breach risk (files)",       us: "Zero (no storage)",    them: "Possible" },
   { label: "Transfer encryption",            us: "TLS 1.3",              them: "Usually TLS" },
 ];

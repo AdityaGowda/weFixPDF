@@ -188,6 +188,60 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ── Experience & Authority (E-A-T) ── */}
+      <section className="py-16 md:py-20 border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <SectionLabel>Authority & Trust</SectionLabel>
+          <h2 className="text-section mb-10" style={{ color: 'var(--text)' }}>Why trust weFixPDF?</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <h3 className="text-[16px] font-bold mb-2" style={{ color: 'var(--text)' }}>Technical Expertise</h3>
+                <p className="text-[14px] leading-relaxed text-slate-500 dark:text-slate-400">
+                  Our core processing engine is built on top of battle-tested open-source libraries used by millions of developers worldwide. 
+                  We implement enterprise-grade logic for PDF manipulation and image optimization to ensure 99.9% conversion accuracy.
+                </p>
+              </div>
+              <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <h3 className="text-[16px] font-bold mb-2" style={{ color: 'var(--text)' }}>Verified Security</h3>
+                <p className="text-[14px] leading-relaxed text-slate-500 dark:text-slate-400">
+                  Every tool on weFixPDF runs on isolated, ephemeral cloud instances. 
+                  We use TLS 1.3 for all data in transit and adhere to a strict "No Data Retention" policy, meaning your files don&apos;t just get hidden — they are physically wiped from memory after download.
+                </p>
+              </div>
+            </div>
+            <div className="p-8 rounded-2xl bg-indigo-50/50 dark:bg-indigo-500/5 border border-indigo-100 dark:border-indigo-500/20">
+              <h3 className="text-[18px] font-bold mb-4" style={{ color: 'var(--text)' }}>A Mission for Privacy</h3>
+              <div className="space-y-4 text-[14px] leading-relaxed text-slate-600 dark:text-slate-400">
+                <p>
+                  weFixPDF was founded in 2024 with a clear goal: to provide an alternative to the increasingly monetized and invasive PDF tool market. 
+                  Unlike larger competitors, we do not treat your documents as data to be mined.
+                </p>
+                <p>
+                  Our founder, Adithya M R, is an advocate for the open web and privacy-first software. 
+                  The site remains free because we believe basic file utilities should be as accessible and private as a standard calculator.
+                </p>
+                <ul className="space-y-2 pt-2">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-indigo-500" />
+                    <span>Independent & Self-funded</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-indigo-500" />
+                    <span>Global CDN for fast access</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-indigo-500" />
+                    <span>No third-party data selling</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       {/* ── Comparison table ── */}
       <section className="py-16 md:py-20 border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">

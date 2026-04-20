@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function WeFixPDFLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   const fontSize = size === 'sm' ? 24 : size === 'lg' ? 44 : 30;
   const imgSize  = size === 'sm' ? 40 : size === 'lg' ? 64 : 52;
@@ -8,20 +10,22 @@ export default function WeFixPDFLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg
       style={{ fontSize, fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1 }}
     >
       {/* dark mode logo */}
-      <img
+      <Image
         src="/logo.png"
-        alt=""
+        alt="weFixPDF Logo"
         width={imgSize}
         height={imgSize}
+        priority
         className="hidden dark:block"
         style={{ width: imgSize, height: imgSize, objectFit: 'contain' }}
       />
       {/* light mode — swap with your light logo once available */}
-      <img
+      <Image
         src="/logo.png"
-        alt=""
+        alt="weFixPDF Logo"
         width={imgSize}
         height={imgSize}
+        priority
         className="block dark:hidden"
         style={{ width: imgSize, height: imgSize, objectFit: 'contain' }}
       />
@@ -31,3 +35,4 @@ export default function WeFixPDFLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg
     </span>
   );
 }
+
