@@ -26,7 +26,7 @@ const {
 } = require("../services/newPdf.service");
 
 // Tools that use req.files (array) instead of req.file (single)
-const MULTI_FILE_TOOLS = ["merge-pdf", "image-to-pdf", "compare-pdf"];
+const MULTI_FILE_TOOLS = ["merge-pdf", "image-to-pdf", "jpg-to-pdf", "compare-pdf"];
 
 async function convertFile(req, res, next) {
   try {
@@ -70,6 +70,7 @@ async function convertFile(req, res, next) {
         return await pdfToJpg(ctx);
 
       case "image-to-pdf":
+      case "jpg-to-pdf":
         return await jpgToPdf(ctx);
 
       case "word-to-pdf":

@@ -69,9 +69,10 @@ const categories = [
       { q: "Are my files stored on weFixPDF servers?", a: "No. Files are processed in memory and permanently deleted immediately after you download your result. There is no server-side storage." },
       { q: "Is it safe to upload confidential documents?", a: "Yes. All transfers use TLS encryption. Files are never stored, logged, or accessed by our team. They are deleted the moment you download." },
       { q: "Does anyone at weFixPDF read my files?", a: "No. Processing is fully automated. No human ever accesses your uploaded files." },
-      { q: "What data does weFixPDF collect?", a: "We collect standard anonymous analytics (page views, tool usage counts) and use third-party advertising cookies through Google AdSense. We never collect file content or personally identifiable information." },
+      { q: "What data does weFixPDF collect?", a: "We collect anonymous analytics via Google Analytics 4 and use third-party advertising cookies through Google AdSense. These are only enabled if you provide explicit consent via our cookie banner. We never collect file content or personally identifiable information." },
       { q: "Can I use weFixPDF for confidential legal or medical documents?", a: "Yes. The zero-storage, zero-retention architecture makes weFixPDF appropriate for sensitive documents. We process files in-memory and delete them immediately." },
-      { q: "Is weFixPDF GDPR compliant?", a: "Yes. We do not store personal data or file contents. While we use third-party advertising cookies, you can manage your consent via Google's Ad Settings." },
+      { q: "Is weFixPDF GDPR compliant?", a: "Yes. We do not store personal data or file contents. Non-essential cookies (Analytics and Advertising) are blocked by default and only load after you click 'Accept' on our consent banner." },
+
     ],
   },
   {

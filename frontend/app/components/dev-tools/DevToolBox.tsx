@@ -21,6 +21,12 @@ const WasmAnalyzer    = dynamic(() => import('./WasmAnalyzer'));
 const LlmTokenCounter = dynamic(() => import('./LlmTokenCounter'));
 const ApiPingTester   = dynamic(() => import('./ApiPingTester'));
 
+// New tools — batch 4 (utility tools)
+const UuidGenerator       = dynamic(() => import('./UuidGenerator'));
+const PasswordGenerator   = dynamic(() => import('./PasswordGenerator'));
+const LoremIpsumGenerator = dynamic(() => import('./LoremIpsumGenerator'));
+const WordCounter         = dynamic(() => import('./WordCounter'));
+
 // New tools — batch 2
 const CronExpressionBuilder = dynamic(() => import('./CronExpressionBuilder'));
 const ChmodCalculator       = dynamic(() => import('./ChmodCalculator'));
@@ -83,6 +89,11 @@ export default function DevToolBox({ slug }: DevToolBoxProps) {
     case 'wasm-analyzer':          return <WasmAnalyzer />;
     case 'llm-token-counter':      return <LlmTokenCounter />;
     case 'api-ping-tester':        return <ApiPingTester />;
+    // New — batch 4
+    case 'uuid-generator':         return <UuidGenerator />;
+    case 'password-generator':     return <PasswordGenerator />;
+    case 'lorem-ipsum-generator':  return <LoremIpsumGenerator />;
+    case 'word-counter':           return <WordCounter />;
     default:                        return null;
   }
 }

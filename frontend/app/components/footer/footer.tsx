@@ -109,10 +109,15 @@ export default async function Footer() {
           </div>
 
           <div className="flex flex-wrap justify-center md:justify-end items-center gap-x-6 gap-y-3">
-            <a href="/sitemap.xml" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Sitemap</a>
+            <a href="/" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Home</a>
+            <a href="/blog" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Blog</a>
+            <a href="/sitemap-page" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Sitemap</a>
+            <a href="/about" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>About</a>
+            <a href="/contact" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Contact</a>
             <a href="/privacy-policy" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Privacy</a>
             <a href="/terms" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Terms</a>
           </div>
+
         </div>
       </div>
     </footer>

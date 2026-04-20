@@ -7,6 +7,8 @@ import { getToolSeo, getAllSlugs, ToolMetaData } from "@/app/lib/seo/seoApi";
 import ToolPageContent from "@/app/components/toolPagecontent";
 import { buildBreadcrumbSchema, buildFaqSchema, buildHowToSchema, buildToolSchema, buildAuthorSchema } from "@/app/lib/seo/metadata";
 import { notFound } from 'next/navigation';
+import Breadcrumbs from "@/app/components/Breadcrumbs";
+
 
 type ToolPageProps = {
   params: Promise<{ tool: string }>;
@@ -74,15 +76,13 @@ export default async function ToolPage({ params }: ToolPageProps) {
   const slug = reqService.tool;
   // Always build breadcrumbs from known-good values — DB breadcrumb URLs
   // can contain stale paths (e.g. "#tools", "/compress-pdf") so we ignore them.
-  const breadcrumbs = [
-    { name: "Home",             url: "/"              },
-    { name: "Tools",            url: "/tools"         },
-    { name: metadata.h1 || slug, url: `/tools/${slug}` },
+  const breadcrumbsData = [
+    { name: "Tools", href: "/tools" },
+    { name: metadata.h1 || slug, href: `/tools/${slug}` },
   ];
 
-  const breadcrumbSchema = buildBreadcrumbSchema(
-    breadcrumbs.map((b) => ({ name: b.name, href: b.url }))
-  );
+
+
 
   const faqSchema = metadata?.faqs && metadata.faqs.length > 0
     ? buildFaqSchema(metadata.faqs)
@@ -111,7 +111,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
     <>
       {/* JSON-LD Structured Data */}
       <script id="software-application-schema" type="application/ld+json">{JSON.stringify(softwareApplicationSchema)}</script>
-      <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+
       {faqSchema && (
         <script id="faq-schema" type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       )}
@@ -127,20 +127,9 @@ export default async function ToolPage({ params }: ToolPageProps) {
         className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]"
         style={{ background: 'radial-gradient(ellipse 80% 60% at 60% 0%, rgba(45,91,227,0.07) 0%, transparent 70%), var(--bg-page)' }}
       >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-6">
-          {/* Breadcrumbs */}
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px]" style={{ color: 'var(--text-muted)' }}>
-            {breadcrumbs.map((crumb, i) => (
-              <div key={i} className="flex items-center gap-2">
-                {i > 0 && <span style={{ color: 'var(--text-subtle)' }}>/</span>}
-                {i === breadcrumbs.length - 1 ? (
-                  <span style={{ color: 'var(--text)' }}>{crumb.name}</span>
-                ) : (
-                  <a href={crumb.url} className="transition-colors hover:underline">{crumb.name}</a>
-                )}
-              </div>
-            ))}
-          </nav>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-5 md:py-14 space-y-5">
+          <Breadcrumbs items={breadcrumbsData} />
+
 
           {/* Tool hero */}
           <div className="space-y-3">
