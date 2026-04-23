@@ -8,21 +8,22 @@ import ToolPageContent from "@/app/components/toolPagecontent";
 import { buildBreadcrumbSchema, buildFaqSchema, buildHowToSchema, buildToolSchema, buildAuthorSchema } from "@/app/lib/seo/metadata";
 import { notFound } from 'next/navigation';
 import Breadcrumbs from "@/app/components/Breadcrumbs";
-
+import { getToolConfig } from "@/lib/config";
 
 type ToolPageProps = {
   params: Promise<{ tool: string }>;
 };
 
 export async function generateStaticParams() {
-  const slugs = await getAllSlugs();
+  const slugs = await getAllSlugs().catch(() => null);
+  if (!slugs) return [];
   return slugs
     .filter((s) => s.page_type === "tool")
     .map((s) => ({ tool: s.slug }));
 }
 
 async function getMetadata(slug: string): Promise<ToolMetaData | undefined> {
-  const apiData = await getToolSeo(slug);
+  const apiData = await getToolSeo(slug).catch(() => null);
   if (apiData) return apiData;
   return undefined;
 }
@@ -74,15 +75,14 @@ export default async function ToolPage({ params }: ToolPageProps) {
   }
 
   const slug = reqService.tool;
+  const config = getToolConfig(slug);
+
   // Always build breadcrumbs from known-good values — DB breadcrumb URLs
   // can contain stale paths (e.g. "#tools", "/compress-pdf") so we ignore them.
   const breadcrumbsData = [
     { name: "Tools", href: "/tools" },
     { name: metadata.h1 || slug, href: `/tools/${slug}` },
   ];
-
-
-
 
   const faqSchema = metadata?.faqs && metadata.faqs.length > 0
     ? buildFaqSchema(metadata.faqs)
@@ -151,7 +151,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
             ? <DevToolBox slug={reqService.tool} />
             : reqService.tool === "scan-to-pdf"
             ? <CustomUploadBoxScanToPdf />
-            : <UploadBox service={reqService.tool} />
+            : <UploadBox {...config} />
           }
         </div>
       </section>
