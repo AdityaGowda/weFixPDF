@@ -66,11 +66,6 @@ export type SeoPage = {
     name: string;
     url: string;
   }[];
-  // Typed internal link buckets (parsed from tools_list)
-  relatedBlogs?: InternalLink[];
-  relatedUseCases?: InternalLink[];
-  relatedComparisons?: InternalLink[];
-  created_at?: string;
   updated_at?: string;
 };
 
@@ -107,9 +102,6 @@ export type ToolMetaData = {
     url: string;
   }[];
   relatedTools: InternalLink[];
-  relatedBlogs?: InternalLink[];
-  relatedUseCases?: InternalLink[];
-  relatedComparisons?: InternalLink[];
   schema_type?: string;
   schema_name?: string;
   schema_description?: string;
@@ -185,9 +177,6 @@ export async function getToolSeo(slug: string): Promise<ToolMetaData | null> {
   if (!raw) return null;
   // Parse tools_list into typed internal-link buckets
   const toolsList = (raw.tools_list as { type: string; name: string; url: string }[]) || [];
-  const relatedBlogs      = toolsList.filter((t) => t.type === "blog").map(({ name, url }) => ({ name, url }));
-  const relatedUseCases   = toolsList.filter((t) => t.type === "use_case").map(({ name, url }) => ({ name, url }));
-  const relatedComparisons = toolsList.filter((t) => t.type === "compare").map(({ name, url }) => ({ name, url }));
 
   return {
     title: (raw.title as string) || "",
@@ -204,9 +193,6 @@ export async function getToolSeo(slug: string): Promise<ToolMetaData | null> {
     faqs: (raw.faq as ToolMetaData["faqs"]) || [],
     breadcrumb: (raw.breadcrumb as ToolMetaData["breadcrumb"]) || [],
     relatedTools: (raw.related_tools as ToolMetaData["relatedTools"]) || [],
-    relatedBlogs:       relatedBlogs.length > 0 ? relatedBlogs : undefined,
-    relatedUseCases:    relatedUseCases.length > 0 ? relatedUseCases : undefined,
-    relatedComparisons: relatedComparisons.length > 0 ? relatedComparisons : undefined,
     schema_type: (raw.schema_type as string) || undefined,
     schema_name: (raw.schema_name as string) || undefined,
     schema_description: (raw.schema_description as string) || undefined,
@@ -254,9 +240,6 @@ export async function getPageSeo(slug: string, type?: string): Promise<SeoPage |
 
   // Parse tools_list into typed internal-link buckets
   const toolsList = (raw.tools_list as { type: string; name: string; url: string }[]) || [];
-  const relatedBlogs       = toolsList.filter((t) => t.type === "blog").map(({ name, url }) => ({ name, url }));
-  const relatedUseCases    = toolsList.filter((t) => t.type === "use_case").map(({ name, url }) => ({ name, url }));
-  const relatedComparisons = toolsList.filter((t) => t.type === "compare").map(({ name, url }) => ({ name, url }));
 
   // Map database keys (snake_case) to SeoPage (camelCase) and normalize items
   return {
@@ -276,9 +259,6 @@ export async function getPageSeo(slug: string, type?: string): Promise<SeoPage |
       href: r.href || r.url || "#",
     })),
     bodyContent: raw.body_content || raw.bodyContent,
-    relatedBlogs:       relatedBlogs.length > 0 ? relatedBlogs : undefined,
-    relatedUseCases:    relatedUseCases.length > 0 ? relatedUseCases : undefined,
-    relatedComparisons: relatedComparisons.length > 0 ? relatedComparisons : undefined,
   };
 }
 

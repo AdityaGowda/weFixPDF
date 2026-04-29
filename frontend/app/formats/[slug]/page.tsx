@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft, FileText } from "lucide-react";
 import { getPageSeo, getAllSlugs } from "@/app/lib/seo/seoApi";
-import { buildMetadata, buildBreadcrumbSchema, buildArticleSchema } from "@/app/lib/seo/metadata";
+import { buildMetadata, buildBreadcrumbSchema } from "@/app/lib/seo/metadata";
 import MarkdownContent from "@/app/components/markdowncontent";
 import InternalLinkGrid from "@/app/components/InternalLinkGrid";
 
@@ -29,7 +29,6 @@ export default async function FormatPage({ params }: Props) {
   const page = await getPageSeo(slug, "format");
   if (!page) notFound();
 
-  const articleSchema = buildArticleSchema(page);
   const breadcrumbs = buildBreadcrumbSchema([
     { name: "Home", href: "/" },
     { name: "File Formats", href: "/formats" },
@@ -38,7 +37,6 @@ export default async function FormatPage({ params }: Props) {
 
   return (
     <>
-      <script id="article-schema" type="application/ld+json">{JSON.stringify(articleSchema)}</script>
       <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
 
       <div className="min-h-screen">
@@ -140,21 +138,6 @@ export default async function FormatPage({ params }: Props) {
                   </a>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* ── Internal Links (from tools_list) ── */}
-          {(page.relatedBlogs || page.relatedUseCases || page.relatedComparisons) && (
-            <div className="space-y-10 pt-4">
-              {page.relatedBlogs && page.relatedBlogs.length > 0 && (
-                <InternalLinkGrid title="Related Guides" badge="Blog" links={page.relatedBlogs} color="blue" />
-              )}
-              {page.relatedUseCases && page.relatedUseCases.length > 0 && (
-                <InternalLinkGrid title="Use Cases" badge="Workflows" links={page.relatedUseCases} color="violet" />
-              )}
-              {page.relatedComparisons && page.relatedComparisons.length > 0 && (
-                <InternalLinkGrid title="Compare & Learn" badge="vs Others" links={page.relatedComparisons} color="orange" />
-              )}
             </div>
           )}
 

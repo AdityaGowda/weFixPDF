@@ -76,14 +76,7 @@ const faqs = [
   },
 ];
 
-const relatedLinks = [
-  { label: 'How to Compress Images Without Losing Quality', href: '/blog/how-to-compress-images-online' },
-  { label: 'HEIC vs JPG: Which Format Should You Use?', href: '/blog/heic-vs-jpg' },
-  { label: 'PNG vs JPG: When to Use Each Format', href: '/blog/png-vs-jpg' },
-  { label: 'How to Resize Images for Web — Best Practices', href: '/blog/how-to-resize-images-for-web' },
-  { label: 'Compress Image to 100 KB for Government Portals', href: '/use-cases/compress-image-to-100kb' },
-  { label: 'Convert HEIC to JPG on Windows — Step by Step', href: '/use-cases/heic-to-jpg-windows' },
-];
+
 
 function ToolCard({ href, label, desc, icon: Icon, popular }: {
   href: string; label: string; desc: string; icon: any; popular?: boolean;
@@ -323,23 +316,7 @@ export default async function ImageHubPage() {
             </Link>
           </section>
 
-          {/* ── Related reading ── */}
-          <section className="space-y-4">
-            <h2 className="text-[20px] font-bold" style={{ color: 'var(--text)' }}>Guides &amp; Related Reading</h2>
-            <div className="grid sm:grid-cols-2 gap-2">
-              {relatedLinks.map(({ label, href }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="flex items-center gap-2 p-3 rounded-lg border border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] bg-card hover:border-emerald-400/30 transition-colors text-[13px] font-medium group"
-                  style={{ color: 'var(--text)' }}
-                >
-                  <ChevronRight className="w-3.5 h-3.5 flex-shrink-0 group-hover:translate-x-0.5 transition-transform" style={{ color: '#10B981' }} />
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </section>
+
 
           {/* ── FAQ ── */}
           <section>

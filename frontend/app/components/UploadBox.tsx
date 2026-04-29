@@ -8,68 +8,8 @@ import {
 } from "lucide-react";
 import CompressionSettings from "./compressLevel";
 import toast from "react-hot-toast";
-
-interface UploadBoxProps {
-  service: string;
-}
-
-type CompressionLevel = "high" | "medium" | "low";
-
-// ── Tool Configuration ───────────────────────────────
-const TOOL_CONFIG: Record<string, { multi?: boolean; max?: number; accept: string }> = {
-  "image-to-pdf": { multi: true, max: 20, accept: "image/*,.jpg,.jpeg,.png,.webp,.heic,.heif" },
-  "merge-pdf": { multi: true, max: 20, accept: ".pdf" },
-  "heic-to-jpg": { accept: ".heic,.heif" },
-  "word-to-pdf": { accept: ".doc,.docx" },
-  "pdf-to-jpg": { accept: ".pdf" },
-  "pdf-to-word": { accept: ".pdf" },
-  "split-pdf": { accept: ".pdf" },
-  "compress-pdf": { accept: ".pdf" },
-  "pdf-to-png": { accept: ".pdf" },
-  "pdf-to-webp": { accept: ".pdf" },
-  "rotate-pdf": { accept: ".pdf" },
-  "protect-pdf": { accept: ".pdf" },
-  "unlock-pdf": { accept: ".pdf" },
-  "pdf-to-doc": { accept: ".pdf" },
-  "pdf-to-epub": { accept: ".pdf" },
-  "epub-to-pdf": { accept: ".epub" },
-  "auto-rotate-pdf": { accept: ".pdf" },
-  "scan-to-pdf": { accept: "image/*" },
-  "pdf-to-html": { accept: ".pdf" },
-  "remove-pdf-metadata": { accept: ".pdf" },
-  "extract-text-pdf": { accept: ".pdf" },
-  "compare-pdf": { multi: true, max: 2, accept: ".pdf" },
-  "redact-pdf": { accept: ".pdf" },
-  "resize-image": { accept: "image/*,.jpg,.jpeg,.png,.webp" },
-};
-
-// ── Human-readable service labels ───────────────────
-const SERVICE_LABELS: Record<string, { verb: string; result: string; acceptLabel: string }> = {
-  "image-to-pdf": { verb: "Convert to PDF", result: "PDF file", acceptLabel: "JPG, PNG, WEBP, HEIC" },
-  "merge-pdf": { verb: "Merge PDFs", result: "merged PDF", acceptLabel: "PDF files" },
-  "heic-to-jpg": { verb: "Convert to JPG", result: "JPG image", acceptLabel: "HEIC or HEIF" },
-  "word-to-pdf": { verb: "Convert to PDF", result: "PDF file", acceptLabel: "DOC or DOCX" },
-  "pdf-to-jpg": { verb: "Convert to JPG", result: "JPG image(s)", acceptLabel: "PDF" },
-  "pdf-to-word": { verb: "Convert to Word", result: "DOCX file", acceptLabel: "PDF" },
-  "split-pdf": { verb: "Split PDF", result: "split PDF pages", acceptLabel: "PDF" },
-  "compress-pdf": { verb: "Compress PDF", result: "smaller PDF", acceptLabel: "PDF" },
-  "pdf-to-png": { verb: "Convert to PNG", result: "PNG image(s)", acceptLabel: "PDF" },
-  "pdf-to-webp": { verb: "Convert to WebP", result: "WebP image(s)", acceptLabel: "PDF" },
-  "rotate-pdf": { verb: "Rotate PDF", result: "rotated PDF", acceptLabel: "PDF" },
-  "protect-pdf": { verb: "Protect PDF", result: "password-protected PDF", acceptLabel: "PDF" },
-  "unlock-pdf": { verb: "Unlock PDF", result: "unlocked PDF", acceptLabel: "Password-protected PDF" },
-  "pdf-to-doc": { verb: "Convert to Word", result: "DOC file", acceptLabel: "PDF" },
-  "pdf-to-epub": { verb: "Convert to EPUB", result: "EPUB ebook", acceptLabel: "PDF" },
-  "epub-to-pdf": { verb: "Convert to PDF", result: "PDF file", acceptLabel: "EPUB" },
-  "auto-rotate-pdf": { verb: "Auto Rotate", result: "fixed PDF", acceptLabel: "PDF" },
-  "scan-to-pdf": { verb: "Convert to PDF", result: "PDF file", acceptLabel: "Image" },
-  "pdf-to-html": { verb: "Convert to HTML", result: "HTML file", acceptLabel: "PDF" },
-  "remove-pdf-metadata": { verb: "Clean Metadata", result: "clean PDF", acceptLabel: "PDF" },
-  "extract-text-pdf": { verb: "Extract Text", result: "text file", acceptLabel: "PDF" },
-  "compare-pdf": { verb: "Compare", result: "comparison report", acceptLabel: "2 PDFs" },
-  "redact-pdf": { verb: "Redact", result: "redacted PDF", acceptLabel: "PDF" },
-  "resize-image": { verb: "Resize", result: "resized image", acceptLabel: "Image" },
-};
+import { ToolConfig, CompressionLevel } from "@/types";
+import { convertFile } from "@/lib/api";
 
 const QUALITY_LABELS: Record<CompressionLevel, { label: string; hint: string }> = {
   high: { label: "Maximum", hint: "Smallest file — slight quality loss" },
@@ -77,14 +17,32 @@ const QUALITY_LABELS: Record<CompressionLevel, { label: string; hint: string }> 
   low: { label: "Minimal", hint: "Highest quality — less compression" },
 };
 
-const DEFAULT_MAX_FILES = 1;
+export default function UploadBox({
+  service,
+  isMulti = false,
+  maxFiles = 1,
+  acceptedTypes,
+  maxFileSizeMb,
+  verb,
+  result
+}: ToolConfig) {
+  const accept = acceptedTypes.join(',');
 
-export default function UploadBox({ service }: UploadBoxProps) {
-  const config = TOOL_CONFIG[service];
-  const isMulti = config?.multi ?? false;
-  const maxFiles = config?.max ?? DEFAULT_MAX_FILES;
-  const accept = config?.accept ?? "image/*,.jpg,.jpeg,.png,.webp";
-  const meta = SERVICE_LABELS[service] ?? { verb: "Convert", result: "output file", acceptLabel: "file" };
+  const typeToLabelMap: Record<string, string> = {
+    "application/pdf": "PDF",
+    "image/jpeg": "JPG",
+    "image/png": "PNG",
+    "image/webp": "WEBP",
+    "image/heic": "HEIC",
+    "image/heif": "HEIF",
+    "application/msword": "DOC",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "DOCX",
+    "application/epub+zip": "EPUB",
+  };
+
+  const acceptLabel = acceptedTypes
+    .map(t => typeToLabelMap[t] || t.split('/')[1]?.toUpperCase() || t)
+    .join(', ');
 
   const [files, setFiles] = useState<File[]>([]);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
@@ -105,10 +63,8 @@ export default function UploadBox({ service }: UploadBoxProps) {
   const isCompressService = service === "compress-pdf";
   const isRotateService = service === "rotate-pdf";
 
-  // Current step: 1 = upload, 2 = configure/ready, 3 = done
   const step = downloadUrl ? 3 : hasFiles ? 2 : 1;
 
-  // ── File selection ──────────────────────────────────
   function addFiles(incoming: FileList | null) {
     if (!incoming) return;
     const arr = Array.from(incoming);
@@ -130,7 +86,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
     setPassword("");
   }
 
-  // ── Drag-to-reorder (multi only) ────────────────────
   function onDragStart(index: number) { dragItemIndex.current = index; }
   function onDragEnterItem(index: number) { setDragOverIndex(index); }
   function onDropItem(index: number) {
@@ -143,7 +98,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
     setDragOverIndex(null);
   }
 
-  // ── Conversion ──────────────────────────────────────
   async function fileConversion() {
     if (!hasFiles) return;
 
@@ -172,10 +126,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
       if (password) formData.append("password", password);
       if (service === "rotate-pdf") formData.append("angle", angle.toString());
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/convert/${service === "pdf-to-doc" ? "pdf-to-word" : service}`,
-        { method: "POST", body: formData }
-      );
+      const res = await convertFile(service, formData);
 
       if (!res.ok) {
         let errorText = `Error ${res.status}`;
@@ -204,7 +155,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
       setSuggestedName(filename);
       const blob = await res.blob();
       setDownloadUrl(URL.createObjectURL(blob));
-    } catch (err: any) {
+    } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       setErrorMsg(msg);
       toast.error(msg);
@@ -213,11 +164,8 @@ export default function UploadBox({ service }: UploadBoxProps) {
     }
   }
 
-  // ── Render ───────────────────────────────────────────
   return (
     <div className="w-full max-w-xl mx-auto px-4 pb-16 flex flex-col gap-6">
-
-      {/* ── Step Indicator ── */}
       <div className="flex items-center justify-center gap-2 pt-4">
         {[
           { n: 1, label: "Upload" },
@@ -244,7 +192,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
         ))}
       </div>
 
-      {/* ── Upload Zone ── */}
       <div className="relative">
         <label
           onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
@@ -271,7 +218,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
             onChange={(e) => addFiles(e.target.files)}
           />
 
-          {/* Loading state */}
           {loading && (
             <div className="flex flex-col items-center gap-4 py-8 animate-in fade-in duration-300">
               <div className="relative">
@@ -285,20 +231,18 @@ export default function UploadBox({ service }: UploadBoxProps) {
             </div>
           )}
 
-          {/* Done state */}
           {!loading && downloadUrl && (
             <div className="flex flex-col items-center gap-4 py-8 animate-in fade-in zoom-in duration-400">
               <div className="w-16 h-16 rounded-2xl bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center">
                 <CheckCircle className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div className="text-center">
-                <p className="text-slate-800 dark:text-white font-bold text-xl">Your {meta.result} is ready!</p>
+                <p className="text-slate-800 dark:text-white font-bold text-xl">Your {result} is ready!</p>
                 <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Click the download button below</p>
               </div>
             </div>
           )}
 
-          {/* Files selected state */}
           {!loading && !downloadUrl && hasFiles && (
             <div className="flex flex-col items-center gap-3 py-8 px-6 animate-in fade-in duration-300">
               <div className="w-14 h-14 rounded-2xl bg-indigo-100 dark:bg-brand-primary/15 flex items-center justify-center">
@@ -320,7 +264,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
                     <p className="text-slate-800 dark:text-white font-bold text-base truncate">{files[0].name}</p>
                     <p className="text-slate-500 dark:text-slate-400 text-sm mt-0.5">
                       {(files[0].size / (1024 * 1024)).toFixed(2)} MB
-                      {files[0].size > 20 * 1024 * 1024 && (
+                      {files[0].size > maxFileSizeMb * 1024 * 1024 && (
                         <span className="ml-1 text-amber-500">· Large file, may take longer</span>
                       )}
                     </p>
@@ -330,7 +274,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
             </div>
           )}
 
-          {/* Empty state */}
           {!loading && !downloadUrl && !hasFiles && (
             <div className="flex flex-col items-center gap-5 py-10 px-6 text-center animate-in fade-in duration-300">
               <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-white/5 flex items-center justify-center border border-slate-200 dark:border-white/10">
@@ -339,8 +282,8 @@ export default function UploadBox({ service }: UploadBoxProps) {
               <div>
                 <p className="text-slate-700 dark:text-white font-bold text-lg">
                   {isMulti
-                    ? `Drop your ${meta.acceptLabel} files here`
-                    : `Drop your ${meta.acceptLabel} file here`}
+                    ? `Drop your ${acceptLabel} files here`
+                    : `Drop your ${acceptLabel} file here`}
                 </p>
                 <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
                   or <span className="text-brand-primary font-semibold underline underline-offset-2">click to browse</span> your files
@@ -349,15 +292,15 @@ export default function UploadBox({ service }: UploadBoxProps) {
               <div className="flex items-center gap-2 bg-slate-100 dark:bg-white/5 rounded-xl px-3 py-2">
                 <Info className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
                 <p className="text-slate-500 text-xs">
-                  Accepts: <span className="text-slate-600 dark:text-slate-400 font-medium">{meta.acceptLabel}</span>
+                  Accepts: <span className="text-slate-600 dark:text-slate-400 font-medium">{acceptLabel}</span>
                   {isMulti && <> &nbsp;·&nbsp; Up to <span className="text-slate-600 dark:text-slate-400 font-medium">{maxFiles} files</span></>}
+                  &nbsp;·&nbsp; Files up to <span className="text-slate-600 dark:text-slate-400 font-medium">{maxFileSizeMb} MB</span>
                 </p>
               </div>
             </div>
           )}
         </label>
 
-        {/* Remove / reset button — top-right corner of the drop zone */}
         {hasFiles && !loading && !downloadUrl && (
           <button
             onClick={clearAll}
@@ -369,7 +312,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
         )}
       </div>
 
-      {/* ── Error Message ── */}
       {errorMsg && (
         <div className="flex items-start gap-3 p-4 rounded-2xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 animate-in fade-in slide-in-from-top-2 duration-300">
           <AlertCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
@@ -386,11 +328,8 @@ export default function UploadBox({ service }: UploadBoxProps) {
         </div>
       )}
 
-      {/* ── Configuration Panel ── */}
       {hasFiles && !loading && !downloadUrl && (
         <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-3 duration-400">
-
-          {/* Compress quality settings */}
           {isCompressService && (
             <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] p-4">
               <div className="flex items-center gap-2 mb-3">
@@ -418,7 +357,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
             </div>
           )}
 
-          {/* Password for protect-pdf */}
           {service === "protect-pdf" && (
             <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] p-4">
               <div className="flex items-center gap-2 mb-1">
@@ -440,14 +378,13 @@ export default function UploadBox({ service }: UploadBoxProps) {
                 className="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-brand-primary/60 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600"
               />
               {password.length > 0 && password.length < 6 && (
-                <p className="text-amber-500 text-xs mt-2 flex items-center gap-1">
+               <p className="text-amber-500 text-xs mt-2 flex items-center gap-1">
                   <AlertCircle className="w-3 h-3" /> Use at least 6 characters for a stronger password
                 </p>
               )}
             </div>
           )}
 
-          {/* Password for unlock-pdf */}
           {service === "unlock-pdf" && (
             <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] p-4">
               <div className="flex items-center gap-2 mb-1">
@@ -471,7 +408,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
             </div>
           )}
 
-          {/* Rotation angle */}
           {isRotateService && (
             <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] p-4">
               <div className="flex items-center gap-2 mb-3">
@@ -503,7 +439,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
             </div>
           )}
 
-          {/* Action Button */}
           <button
             onClick={fileConversion}
             className="w-full py-4 rounded-2xl bg-brand-primary text-white font-black text-base uppercase tracking-wider shadow-xl shadow-brand-primary/30 hover:brightness-110 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2"
@@ -511,15 +446,14 @@ export default function UploadBox({ service }: UploadBoxProps) {
             <Zap className="w-5 h-5" />
             {isMulti
               ? files.length > 1 ? `Merge ${files.length} files` : `Convert 1 file`
-              : meta.verb}
+              : verb}
           </button>
           <p className="text-center text-slate-400 dark:text-slate-500 text-xs">
-            Your {meta.result} will be ready to download instantly · No account needed
+            Your {result} will be ready to download instantly · No account needed
           </p>
         </div>
       )}
 
-      {/* ── Download Button ── */}
       {downloadUrl && !loading && (
         <div className="flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-3 duration-400">
           <a
@@ -528,7 +462,7 @@ export default function UploadBox({ service }: UploadBoxProps) {
             className="w-full py-4 rounded-2xl bg-emerald-500 text-white font-black text-base uppercase tracking-wider shadow-xl shadow-emerald-500/30 hover:brightness-110 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2"
           >
             <Download className="w-5 h-5" />
-            Download {meta.result}
+            Download {result}
           </a>
           <button
             onClick={clearAll}
@@ -540,7 +474,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
         </div>
       )}
 
-      {/* ── Multi-file List ── */}
       {isMulti && files.length > 0 && !loading && (
         <div className="flex flex-col gap-2 animate-in fade-in duration-400">
           <div className="flex items-center justify-between px-1">
@@ -603,7 +536,6 @@ export default function UploadBox({ service }: UploadBoxProps) {
         </div>
       )}
 
-      {/* ── Trust Badges ── */}
       <div className="flex items-center justify-center gap-6 pt-2">
         {[
           { Icon: Shield, label: "Files deleted instantly" },

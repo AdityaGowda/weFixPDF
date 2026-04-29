@@ -35,7 +35,6 @@ export default async function Footer() {
         { label: 'About weFixPDF', href: '/about' },
         { label: 'Privacy & Security', href: '/security' },
         { label: 'Help Center', href: '/help' },
-        { label: 'Blog & Guides', href: '/blog' },
         { label: 'Contact Support', href: '/contact' },
       ],
     },
@@ -110,7 +109,6 @@ export default async function Footer() {
 
           <div className="flex flex-wrap justify-center md:justify-end items-center gap-x-6 gap-y-3">
             <a href="/" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Home</a>
-            <a href="/blog" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Blog</a>
             <a href="/sitemap-page" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Sitemap</a>
             <a href="/about" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>About</a>
             <a href="/contact" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Contact</a>

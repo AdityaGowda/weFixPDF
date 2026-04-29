@@ -16,7 +16,6 @@ export default async function SitemapPage() {
   const pdfTools = tools.filter(t => t.type === "PDF Tools");
   const imageTools = tools.filter(t => t.type === "Image Tools");
   const devTools = tools.filter(t => t.type === "Dev Tools");
-  const blogPosts = allSlugs.filter(s => s.page_type === "blog");
 
   const sections = [
     {
@@ -33,14 +32,6 @@ export default async function SitemapPage() {
       title: "Developer Tools",
       icon: <Settings className="w-5 h-5 text-purple-500" />,
       links: devTools.map(t => ({ label: t.name, href: `/tools/${t.slug}` })),
-    },
-    {
-      title: "Blog & Guides",
-      icon: <BookOpen className="w-5 h-5 text-orange-500" />,
-      links: [
-        { label: "Main Blog Page", href: "/blog" },
-        ...blogPosts.map(p => ({ label: p.slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" "), href: `/blog/${p.slug}` }))
-      ],
     },
     {
       title: "Company & Legal",
