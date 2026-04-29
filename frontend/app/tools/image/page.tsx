@@ -5,6 +5,7 @@ import {
   FileImage, Image, Minimize2, Zap, Smartphone, Expand,
   ArrowRight, CheckCircle2, ChevronRight,
 } from 'lucide-react';
+import ToolRating from '@/app/components/ToolRating';
 
 export const metadata: Metadata = {
   title: 'Free Image Converter & Compressor Tools Online | weFixPDF',
@@ -327,6 +328,9 @@ export default async function ImageHubPage() {
               {faqs.map((f, i) => <FaqItem key={i} q={f.q} a={f.a} i={i} />)}
             </div>
           </section>
+
+          {/* ── Rating ── */}
+          <ToolRating toolSlug="image-hub" />
 
           {/* ── Other categories ── */}
           <section>

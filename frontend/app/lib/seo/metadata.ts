@@ -39,11 +39,12 @@ export function buildMetadata(page: SeoPage, pathPrefix = ""): Metadata {
 }
 
 // JSON-LD schema builders
-export function buildToolSchema(page: SeoPage) {
+export function buildToolSchema(page: SeoPage, rating?: { averageRating: string; totalRatings: number }) {
   const absoluteUrl = page.url?.startsWith("http")
     ? page.url
     : `${BASE_URL}${page.url}`;
-  return {
+  
+  const schema: any = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: page.h1,
@@ -53,6 +54,18 @@ export function buildToolSchema(page: SeoPage) {
     operatingSystem: "All",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   };
+
+  if (rating && rating.totalRatings > 0) {
+    schema.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: rating.averageRating,
+      ratingCount: rating.totalRatings,
+      bestRating: "5",
+      worstRating: "1",
+    };
+  }
+
+  return schema;
 }
 
 export function buildAuthorSchema(author_name: string, author_bio?: string) {

@@ -8,6 +8,7 @@ import {
   AlignLeft, Network, Type, Calculator, Contrast, Database,
   FileJson, Cog,
 } from 'lucide-react';
+import ToolRating from '@/app/components/ToolRating';
 
 export const metadata: Metadata = {
   title: 'Free Developer Tools Online — JSON, YAML, JWT, CSS & More | weFixPDF',
@@ -354,6 +355,9 @@ export default async function DeveloperHubPage() {
               {faqs.map((f, i) => <FaqItem key={i} q={f.q} a={f.a} />)}
             </div>
           </section>
+
+          {/* ── Rating ── */}
+          <ToolRating toolSlug="developer-hub" />
 
           {/* ── Other categories ── */}
           <section>

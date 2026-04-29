@@ -6,6 +6,8 @@ const helmet = require("helmet");
 
 const convertRoutes = require("./routes/convert.routes");
 const seoRoutes = require("./routes/seo.routes");
+const ratingRoutes = require("./routes/ratingRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 const db = require("./config/db.config");
 
 const app = express();
@@ -57,6 +59,8 @@ app.use(express.json());
 
 app.use("/api/convert", convertRoutes);
 app.use("/api/seo", seoRoutes);
+app.use("/api/rating", ratingRoutes);
+app.use("/api/contact", contactRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).send("Backend running");
@@ -91,15 +95,4 @@ app.use(errorHandler);
 
 app.listen(5000, async () => {
   console.log("Secure backend running on port 5000");
-
-  // Database connection health check
-  try {
-    const [rows] = await db.query("SELECT 1 AS ok");
-    if (rows[0].ok === 1) {
-      console.log("✅  MySQL database connected successfully");
-    }
-  } catch (err) {
-    console.warn("⚠️  MySQL not connected:", err.message);
-    console.warn("   Server running without database. Run migrations first.");
-  }
 });

@@ -9,6 +9,8 @@ import { buildBreadcrumbSchema, buildFaqSchema, buildHowToSchema, buildToolSchem
 import { notFound } from 'next/navigation';
 import Breadcrumbs from "@/app/components/Breadcrumbs";
 import { getToolConfig } from "@/lib/config";
+import ToolRating from "@/app/components/ToolRating";
+import CompactRating from "@/app/components/CompactRating";
 
 type ToolPageProps = {
   params: Promise<{ tool: string }>;
@@ -95,13 +97,24 @@ export default async function ToolPage({ params }: ToolPageProps) {
       })
     : null;
 
+  // Fetch rating stats for schema
+  let ratingStats = null;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/rating/${slug}/stats`, { next: { revalidate: 3600 } });
+    if (res.ok) {
+      ratingStats = await res.json();
+    }
+  } catch (err) {
+    console.error("Failed to fetch rating stats for schema", err);
+  }
+
   const softwareApplicationSchema = metadata ? buildToolSchema({
     url: metadata.url,
     description: metadata.description,
     title: metadata.h1,
     h1: metadata.h1,
     slug: reqService.tool,
-  }) : null;
+  }, ratingStats) : null;
 
   const authorSchema = metadata.author_name
     ? buildAuthorSchema(metadata.author_name, metadata.author_bio)
@@ -133,12 +146,15 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
           {/* Tool hero */}
           <div className="space-y-3">
-            <span
-              className="inline-flex items-center text-[11px] font-medium px-2.5 py-1 rounded"
-              style={{ background: '#EAF3DE', color: '#3B6D11' }}
-            >
-              Free Tool · No signup required
-            </span>
+            <div className="flex flex-wrap items-center gap-3">
+              <span
+                className="inline-flex items-center text-[11px] font-medium px-2.5 py-1 rounded-lg border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] shadow-sm"
+                style={{ background: '#EAF3DE', color: '#3B6D11' }}
+              >
+                Free Tool · No signup required
+              </span>
+              <CompactRating toolSlug={slug} />
+            </div>
             <h1 className="text-hero" style={{ color: 'var(--text)' }}>
               {metadata?.h1 || "File Converter"}
             </h1>
@@ -157,8 +173,9 @@ export default async function ToolPage({ params }: ToolPageProps) {
       </section>
 
       {/* ── Content ── */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 md:py-14">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-16">
         <ToolPageContent metadata={metadata} />
+        <ToolRating toolSlug={slug} />
       </div>
 
       {/* AdSense Unit */}

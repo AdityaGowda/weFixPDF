@@ -40,6 +40,7 @@ export default async function SitemapPage() {
         { label: "Home", href: "/" },
         { label: "About Us", href: "/about" },
         { label: "Privacy Policy", href: "/privacy-policy" },
+        { label: "Disclaimer", href: "/disclaimer" },
         { label: "Terms of Service", href: "/terms" },
         { label: "Security & Privacy", href: "/security" },
         { label: "Help Center", href: "/help" },
