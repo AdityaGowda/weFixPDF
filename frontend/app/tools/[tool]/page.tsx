@@ -97,13 +97,24 @@ export default async function ToolPage({ params }: ToolPageProps) {
       })
     : null;
 
+  // Fetch rating stats for schema
+  let ratingStats = null;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/rating/${slug}/stats`, { next: { revalidate: 3600 } });
+    if (res.ok) {
+      ratingStats = await res.json();
+    }
+  } catch (err) {
+    console.error("Failed to fetch rating stats for schema", err);
+  }
+
   const softwareApplicationSchema = metadata ? buildToolSchema({
     url: metadata.url,
     description: metadata.description,
     title: metadata.h1,
     h1: metadata.h1,
     slug: reqService.tool,
-  }) : null;
+  }, ratingStats) : null;
 
   const authorSchema = metadata.author_name
     ? buildAuthorSchema(metadata.author_name, metadata.author_bio)
