@@ -113,6 +113,7 @@ export default async function Footer() {
             <a href="/about" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>About</a>
             <a href="/contact" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Contact</a>
             <a href="/privacy-policy" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Privacy</a>
+            <a href="/disclaimer" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Disclaimer</a>
             <a href="/terms" className="text-[12px] hover:text-[#4f6edb] transition-colors" style={{ color: 'var(--text-muted)' }}>Terms</a>
           </div>
 

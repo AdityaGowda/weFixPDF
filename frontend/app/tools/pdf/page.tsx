@@ -6,6 +6,7 @@ import {
   ShieldCheck, LockOpen, BookOpen, Camera, Code, Type, ShieldX,
   Expand, Shield, Columns2, ArrowRight, Image, CheckCircle2, ChevronRight,
 } from 'lucide-react';
+import ToolRating from '@/app/components/ToolRating';
 
 export const metadata: Metadata = {
   title: 'Free PDF Tools Online — Compress, Convert, Merge, Split & More | weFixPDF',
@@ -328,6 +329,9 @@ export default async function PdfHubPage() {
               {faqs.map((f, i) => <FaqItem key={i} q={f.q} a={f.a} i={i} />)}
             </div>
           </section>
+
+          {/* ── Rating ── */}
+          <ToolRating toolSlug="pdf-hub" />
 
           {/* ── Other categories ── */}
           <section>
