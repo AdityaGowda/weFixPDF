@@ -1,15 +1,4 @@
-const mysql = require('mysql2/promise');
-require('dotenv').config();
-
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+const db = require('../config/db.config');
 
 exports.submitRating = async (req, res) => {
   const { tool_slug, rating, feedback, user_name } = req.body;
@@ -20,7 +9,7 @@ exports.submitRating = async (req, res) => {
   }
 
   try {
-    const [result] = await pool.execute(
+    const [result] = await db.execute(
       'INSERT INTO tool_ratings (tool_slug, rating, feedback, user_name, ip_address) VALUES (?, ?, ?, ?, ?)',
       [tool_slug, rating, feedback || null, user_name || null, ip_address || null]
     );
@@ -40,7 +29,7 @@ exports.getRatingStats = async (req, res) => {
   }
 
   try {
-    const [rows] = await pool.execute(
+    const [rows] = await db.execute(
       'SELECT AVG(rating) as averageRating, COUNT(*) as totalRatings FROM tool_ratings WHERE tool_slug = ?',
       [slug]
     );

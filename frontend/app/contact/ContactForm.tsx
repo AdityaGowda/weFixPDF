@@ -1,7 +1,8 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
-import { useRef } from "react";
+import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
+import { useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 const inputClass =
   "w-full px-3.5 py-2.5 rounded-lg bg-white dark:bg-[#1a1a1e] border border-[rgba(0,0,0,0.12)] dark:border-[rgba(255,255,255,0.12)] text-[#0F0F0F] dark:text-[#F8FAFC] placeholder-[#9CA3AF] dark:placeholder-[#64748B] text-[14px] " +
@@ -15,15 +16,57 @@ export default function ContactForm() {
   const subjectRef = useRef<HTMLSelectElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const name    = nameRef.current?.value    ?? "";
-    const email   = emailRef.current?.value   ?? "";
-    const subject = subjectRef.current?.value ?? "";
-    const message = messageRef.current?.value ?? "";
-    const body    = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-    window.location.href =
-      `mailto:hello@wefixpdf.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setLoading(true);
+
+    const data = {
+      name: nameRef.current?.value,
+      email: emailRef.current?.value,
+      subject: subjectRef.current?.value,
+      message: messageRef.current?.value,
+    };
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/contact/submit`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+        toast.success("Message sent successfully!");
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      toast.error("Failed to send message. Please try again.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (submitted) {
+    return (
+      <div className="text-center py-12 px-6 rounded-xl bg-emerald-50/50 dark:bg-emerald-500/5 border border-emerald-100 dark:border-emerald-500/10">
+        <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto mb-4" />
+        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Message Sent!</h3>
+        <p className="text-slate-600 dark:text-slate-400 text-sm">
+          Thank you for reaching out. We&apos;ll get back to you within 24–48 hours.
+        </p>
+        <button 
+          onClick={() => setSubmitted(false)}
+          className="mt-6 text-sm font-medium text-blue-600 hover:underline"
+        >
+          Send another message
+        </button>
+      </div>
+    );
   }
 
   return (
@@ -86,8 +129,12 @@ export default function ContactForm() {
         />
       </div>
 
-      <button type="submit" className="btn-primary">
-        Send message <ArrowRight className="w-4 h-4" />
+      <button type="submit" disabled={loading} className="btn-primary w-full sm:w-auto">
+        {loading ? (
+          <>Sending... <Loader2 className="w-4 h-4 animate-spin" /></>
+        ) : (
+          <>Send message <ArrowRight className="w-4 h-4" /></>
+        )}
       </button>
     </form>
   );

@@ -7,6 +7,7 @@ const helmet = require("helmet");
 const convertRoutes = require("./routes/convert.routes");
 const seoRoutes = require("./routes/seo.routes");
 const ratingRoutes = require("./routes/ratingRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 const db = require("./config/db.config");
 
 const app = express();
@@ -59,6 +60,7 @@ app.use(express.json());
 app.use("/api/convert", convertRoutes);
 app.use("/api/seo", seoRoutes);
 app.use("/api/rating", ratingRoutes);
+app.use("/api/contact", contactRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).send("Backend running");
