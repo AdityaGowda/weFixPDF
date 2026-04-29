@@ -91,54 +91,6 @@ export function buildBreadcrumbSchema(crumbs: { name: string; href: string }[]) 
   };
 }
 
-export function buildArticleSchema(page: SeoPage, pathPrefix = "/blog") {
-  return {
-    "@context": "https://schema.org",
-    "@type": page.schema_type || "Article",
-    headline: page.h1,
-    description: page.schema_description || page.description,
-    url: `${BASE_URL}${pathPrefix}/${page.slug}`,
-    image: DEFAULT_OG_IMAGE,
-    datePublished: new Date().toISOString().split("T")[0],
-    dateModified: new Date().toISOString().split("T")[0],
-    author: {
-      "@type": "Organization",
-      name: "weFixPDF",
-      url: BASE_URL,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "weFixPDF",
-      url: BASE_URL,
-      logo: { "@type": "ImageObject", url: `${BASE_URL}/logo.png` },
-    },
-  };
-}
-
-export function buildCollectionPageSchema(page: SeoPage) {
-  return {
-    "@context": "https://schema.org",
-    "@type": page.schema_type || "CollectionPage",
-    name: page.schema_name || page.h1,
-    description: page.schema_description || page.description,
-    url: `${BASE_URL}/use-cases/${page.slug}`,
-    image: DEFAULT_OG_IMAGE,
-    publisher: { "@type": "Organization", name: "weFixPDF", url: BASE_URL },
-  };
-}
-
-export function buildWebPageSchema(page: SeoPage) {
-  return {
-    "@context": "https://schema.org",
-    "@type": page.schema_type || "WebPage",
-    name: page.schema_name || page.h1,
-    description: page.schema_description || page.description,
-    url: `${BASE_URL}/compare/${page.slug}`,
-    image: DEFAULT_OG_IMAGE,
-    publisher: { "@type": "Organization", name: "weFixPDF", url: BASE_URL },
-  };
-}
-
 export function buildHowToSchema(page: { title: string, description: string, steps: { name: string, text: string }[] }) {
   return {
     "@context": "https://schema.org",

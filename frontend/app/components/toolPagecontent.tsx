@@ -119,20 +119,7 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
         </section>
       )}
 
-      {/* ── Related Guides (Blog) ── */}
-      {metadata?.relatedBlogs && metadata.relatedBlogs.length > 0 && (
-        <InternalLinkGrid title="Related Guides" badge="Blog" links={metadata.relatedBlogs} color="blue" />
-      )}
 
-      {/* ── Use Cases ── */}
-      {metadata?.relatedUseCases && metadata.relatedUseCases.length > 0 && (
-        <InternalLinkGrid title="Use Cases" badge="Workflows" links={metadata.relatedUseCases} color="violet" />
-      )}
-
-      {/* ── Comparisons ── */}
-      {metadata?.relatedComparisons && metadata.relatedComparisons.length > 0 && (
-        <InternalLinkGrid title="Compare & Learn" badge="vs Others" links={metadata.relatedComparisons} color="orange" />
-      )}
 
       {/* ── FAQ ── */}
       {metadata?.faqs && metadata.faqs.length > 0 && (

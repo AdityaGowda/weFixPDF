@@ -85,14 +85,7 @@ const faqs = [
   },
 ];
 
-const relatedLinks = [
-  { label: 'How to Compress a PDF Without Losing Quality', href: '/blog/how-to-compress-pdf-without-losing-quality' },
-  { label: 'How to Merge PDF Files Online for Free', href: '/blog/how-to-merge-pdf-files' },
-  { label: 'How to Reduce PDF File Size (5 Methods)', href: '/blog/how-to-reduce-pdf-file-size' },
-  { label: 'Compress PDF to 50 KB — For UPSC & Aadhaar Portals', href: '/use-cases/compress-pdf-to-50kb' },
-  { label: 'PDF Tools for Students & Educators', href: '/use-cases/pdf-tools-for-students' },
-  { label: 'Free vs Paid PDF Tools: Is a Subscription Worth It?', href: '/compare/free-vs-paid-pdf-converters' },
-];
+
 
 function ToolCard({ href, label, desc, icon: Icon, popular }: {
   href: string; label: string; desc: string; icon: any; popular?: boolean;
@@ -324,23 +317,7 @@ export default async function PdfHubPage() {
             </Link>
           </section>
 
-          {/* ── Related reading ── */}
-          <section className="space-y-4">
-            <h2 className="text-[20px] font-bold" style={{ color: 'var(--text)' }}>Guides &amp; Related Reading</h2>
-            <div className="grid sm:grid-cols-2 gap-2">
-              {relatedLinks.map(({ label, href }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="flex items-center gap-2 p-3 rounded-lg border border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] bg-card hover:border-blue-400/30 transition-colors text-[13px] font-medium group"
-                  style={{ color: 'var(--text)' }}
-                >
-                  <ChevronRight className="w-3.5 h-3.5 flex-shrink-0 group-hover:translate-x-0.5 transition-transform" style={{ color: '#4f6edb' }} />
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </section>
+
 
           {/* ── FAQ ── */}
           <section className="space-y-2">

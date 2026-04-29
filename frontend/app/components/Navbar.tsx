@@ -22,9 +22,6 @@ const DB_TYPE: Record<string, string> = {
 
 
 const RESOURCES = [
-  { label: "Blog",          href: "/blog",      desc: "Guides & tutorials" },
-  { label: "Compare Tools", href: "/compare",   desc: "weFixPDF vs alternatives" },
-  { label: "Use Cases",     href: "/use-cases", desc: "By profession & workflow" },
   { label: "Help Center",   href: "/help",      desc: "FAQs & troubleshooting" },
   { label: "Security",      href: "/security",  desc: "How we protect your files" },
 ];

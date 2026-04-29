@@ -47,11 +47,6 @@ const WEBSITE_SCHEMA = {
   name: "weFixPDF",
   url: "https://wefixpdf.com",
   description: "Free online PDF and image tools — compress, convert, merge, split, protect. No sign-up, no watermarks, zero data stored.",
-  potentialAction: {
-    "@type": "SearchAction",
-    target: { "@type": "EntryPoint", urlTemplate: "https://wefixpdf.com/blog?q={search_term_string}" },
-    "query-input": "required name=search_term_string",
-  },
 };
 
 const ORGANIZATION_SCHEMA = {

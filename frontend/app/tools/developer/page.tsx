@@ -119,13 +119,7 @@ const categories = [
   },
 ];
 
-const relatedLinks = [
-  { label: 'How to Decode a JWT Token Without a Library', href: '/blog/how-to-decode-jwt-token' },
-  { label: 'JSON vs YAML: When to Use Each Format', href: '/blog/json-vs-yaml' },
-  { label: 'CRON Expressions Explained — Complete Guide', href: '/blog/cron-expressions-guide' },
-  { label: 'Developer Tools for Backend Engineers', href: '/use-cases/developer-tools-for-backend' },
-  { label: 'Browser-Based Tools vs Desktop Apps for Developers', href: '/compare/online-vs-desktop-pdf-tools' },
-];
+
 
 function ToolCard({ href, label, desc, icon: Icon, popular }: {
   href: string; label: string; desc: string; icon: any; popular?: boolean;
@@ -349,23 +343,7 @@ export default async function DeveloperHubPage() {
             </ul>
           </section>
 
-          {/* ── Related reading ── */}
-          <section className="space-y-4">
-            <h2 className="text-[20px] font-bold" style={{ color: 'var(--text)' }}>Guides &amp; Related Reading</h2>
-            <div className="grid sm:grid-cols-2 gap-2">
-              {relatedLinks.map(({ label, href }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="flex items-center gap-2 p-3 rounded-lg border border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] bg-card hover:border-fuchsia-400/30 transition-colors text-[13px] font-medium group"
-                  style={{ color: 'var(--text)' }}
-                >
-                  <ChevronRight className="w-3.5 h-3.5 flex-shrink-0 group-hover:translate-x-0.5 transition-transform" style={{ color: '#B44CFF' }} />
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </section>
+
 
           {/* ── FAQ ── */}
           <section>
