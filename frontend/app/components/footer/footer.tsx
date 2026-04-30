@@ -34,6 +34,7 @@ export default async function Footer() {
       links: [
         { label: 'About weFixPDF', href: '/about' },
         { label: 'Privacy & Security', href: '/security' },
+        { label: 'AI Tools (llms.txt)', href: '/llms.txt' },
         { label: 'Help Center', href: '/help' },
         { label: 'Contact Support', href: '/contact' },
       ],

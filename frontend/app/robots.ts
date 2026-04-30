@@ -13,5 +13,7 @@ export default function robots(): MetadataRoute.Robots {
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,
+    // @ts-ignore - llms is a new standard for AI discovery
+    llms: `${baseUrl}/llms.txt`,
   };
 }
