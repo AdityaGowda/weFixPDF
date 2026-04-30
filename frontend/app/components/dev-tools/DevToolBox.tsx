@@ -15,18 +15,6 @@ const ColorPaletteGenerator = dynamic(() => import('./ColorPaletteGenerator'));
 const JsonYamlConverter     = dynamic(() => import('./JsonYamlConverter'));
 const JsonXmlConverter      = dynamic(() => import('./JsonXmlConverter'));
 
-// New tools — batch 3 (in-browser computation)
-const TextToAsciiArt  = dynamic(() => import('./TextToAsciiArt'));
-const WasmAnalyzer    = dynamic(() => import('./WasmAnalyzer'));
-const LlmTokenCounter = dynamic(() => import('./LlmTokenCounter'));
-const ApiPingTester   = dynamic(() => import('./ApiPingTester'));
-
-// New tools — batch 4 (utility tools)
-const UuidGenerator       = dynamic(() => import('./UuidGenerator'));
-const PasswordGenerator   = dynamic(() => import('./PasswordGenerator'));
-const LoremIpsumGenerator = dynamic(() => import('./LoremIpsumGenerator'));
-const WordCounter         = dynamic(() => import('./WordCounter'));
-
 // New tools — batch 2
 const CronExpressionBuilder = dynamic(() => import('./CronExpressionBuilder'));
 const ChmodCalculator       = dynamic(() => import('./ChmodCalculator'));
@@ -46,6 +34,46 @@ const MockJsonGenerator     = dynamic(() => import('./MockJsonGenerator'));
 const EnvFileParser         = dynamic(() => import('./EnvFileParser'));
 const MarkdownToHtml        = dynamic(() => import('./MarkdownToHtml'));
 const IpSubnetCalculator    = dynamic(() => import('./IpSubnetCalculator'));
+
+// New tools — batch 3 (in-browser computation)
+const TextToAsciiArt  = dynamic(() => import('./TextToAsciiArt'));
+const WasmAnalyzer    = dynamic(() => import('./WasmAnalyzer'));
+const LlmTokenCounter = dynamic(() => import('./LlmTokenCounter'));
+const ApiPingTester   = dynamic(() => import('./ApiPingTester'));
+
+// New tools — batch 4 (utility tools)
+const UuidGenerator       = dynamic(() => import('./UuidGenerator'));
+const PasswordGenerator   = dynamic(() => import('./PasswordGenerator'));
+const LoremIpsumGenerator = dynamic(() => import('./LoremIpsumGenerator'));
+const WordCounter         = dynamic(() => import('./WordCounter'));
+
+// New tools — batch 5
+const XmlFormatter = dynamic(() => import('./XmlFormatter'));
+const HtmlFormatter = dynamic(() => import('./HtmlFormatter'));
+const XmlValidator = dynamic(() => import('./XmlValidator'));
+const JsonValidator = dynamic(() => import('./JsonValidator'));
+const HtmlValidator = dynamic(() => import('./HtmlValidator'));
+const XpathTester = dynamic(() => import('./XpathTester'));
+const CreditCardValidator = dynamic(() => import('./CreditCardValidator'));
+const JavaRegexTester = dynamic(() => import('./JavaRegexTester'));
+const JsBeautifier = dynamic(() => import('./JsBeautifier'));
+const JsMinifier = dynamic(() => import('./JsMinifier'));
+const CssBeautifier = dynamic(() => import('./CssBeautifier'));
+const CssMinifier = dynamic(() => import('./CssMinifier'));
+const XsdGenerator = dynamic(() => import('./XsdGenerator'));
+const XsltTransformer = dynamic(() => import('./XsltTransformer'));
+const CsvToXml = dynamic(() => import('./CsvToXml'));
+const StringUtilities = dynamic(() => import('./StringUtilities'));
+const HtmlEscape = dynamic(() => import('./HtmlEscape'));
+const XmlEscape = dynamic(() => import('./XmlEscape'));
+const JavaDotnetEscape = dynamic(() => import('./JavaDotnetEscape'));
+const JavascriptEscape = dynamic(() => import('./JavascriptEscape'));
+const JsonEscape = dynamic(() => import('./JsonEscape'));
+const CsvEscape = dynamic(() => import('./CsvEscape'));
+const SqlEscape = dynamic(() => import('./SqlEscape'));
+const MimeTypesList = dynamic(() => import('./MimeTypesList'));
+const HtmlEntities = dynamic(() => import('./HtmlEntities'));
+const I18nSnippets = dynamic(() => import('./I18nSnippets'));
 
 // ─────────────────────────────────────────────────────────────────────────────
 // DevToolBox — renders the correct interactive tool for a given slug
@@ -94,6 +122,33 @@ export default function DevToolBox({ slug }: DevToolBoxProps) {
     case 'password-generator':     return <PasswordGenerator />;
     case 'lorem-ipsum-generator':  return <LoremIpsumGenerator />;
     case 'word-counter':           return <WordCounter />;
+    // New — batch 5
+    case 'xml-formatter':          return <XmlFormatter />;
+    case 'html-formatter':         return <HtmlFormatter />;
+    case 'xml-validator':          return <XmlValidator />;
+    case 'json-validator':         return <JsonValidator />;
+    case 'html-validator':         return <HtmlValidator />;
+    case 'xpath-tester':           return <XpathTester />;
+    case 'credit-card-validator':  return <CreditCardValidator />;
+    case 'java-regex-tester':      return <JavaRegexTester />;
+    case 'js-beautifier':          return <JsBeautifier />;
+    case 'js-minifier':            return <JsMinifier />;
+    case 'css-beautifier':         return <CssBeautifier />;
+    case 'css-minifier':           return <CssMinifier />;
+    case 'xsd-generator':          return <XsdGenerator />;
+    case 'xslt-transformer':       return <XsltTransformer />;
+    case 'csv-to-xml':             return <CsvToXml />;
+    case 'string-utilities':       return <StringUtilities />;
+    case 'html-escape':            return <HtmlEscape />;
+    case 'xml-escape':             return <XmlEscape />;
+    case 'java-dotnet-escape':     return <JavaDotnetEscape />;
+    case 'javascript-escape':      return <JavascriptEscape />;
+    case 'json-escape':            return <JsonEscape />;
+    case 'csv-escape':             return <CsvEscape />;
+    case 'sql-escape':             return <SqlEscape />;
+    case 'mime-types-list':        return <MimeTypesList />;
+    case 'html-entities':          return <HtmlEntities />;
+    case 'i18n-snippets':          return <I18nSnippets />;
     default:                        return null;
   }
 }

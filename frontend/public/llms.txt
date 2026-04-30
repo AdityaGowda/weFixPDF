@@ -1,0 +1,77 @@
+# weFixPDF
+
+> weFixPDF (https://wefixpdf.com) is a free, private, and instant file conversion platform offering PDF tools, image tools, and developer utilities — with zero data retention, no account required, and no daily limits.
+
+weFixPDF was built in India 🇮🇳 by Adithya M R after frustration with watermarked, login-gated PDF tools. The goal: make every common file operation free, instant, and private — no strings attached. The platform is 100% free, funded by display advertising, with no paid tier, no freemium walls, and no subscription model. Files are processed in-memory and permanently deleted the moment you download your result.
+
+## PDF Tools
+
+- [Compress PDF](https://wefixpdf.com/tools/compress-pdf): Reduce PDF file size by up to 80% with Standard or High Quality modes. Files up to 50MB supported.
+- [PDF to JPG](https://wefixpdf.com/tools/pdf-to-jpg): Convert PDF pages to high-quality JPG images instantly.
+- [Merge PDF](https://wefixpdf.com/tools/merge-pdf): Combine multiple PDF files into one document.
+- [Split PDF](https://wefixpdf.com/tools/split-pdf): Extract specific pages or page ranges, or split every page into a separate PDF.
+- [PDF to Word](https://wefixpdf.com/tools/pdf-to-word): Convert PDF documents to editable DOCX format.
+- [Word to PDF](https://wefixpdf.com/tools/word-to-pdf): Convert DOCX and DOC files to PDF.
+- [Rotate PDF](https://wefixpdf.com/tools/rotate-pdf): Rotate pages in a PDF file to any orientation.
+- [Protect PDF](https://wefixpdf.com/protect-pdf): Add AES-128 password encryption to any PDF — compatible with Adobe Acrobat, Apple Preview, and all major PDF readers.
+- [Unlock PDF](https://wefixpdf.com/tools/unlock-pdf): Remove passwords and restrictions from PDF files you own.
+- [JPG to PDF](https://wefixpdf.com/tools/jpg-to-pdf): Convert JPG images to PDF.
+- [Image to PDF](https://wefixpdf.com/tools/image-to-pdf): Combine one or more images (JPG, PNG, WebP, HEIC) into a single PDF document.
+- [Browse all PDF tools →](https://wefixpdf.com/tools/pdf)
+
+## Image Tools
+
+- [Image Compressor](https://wefixpdf.com/tools/image-compressor): Compress JPG, PNG, and WebP images by up to 80% while preserving visual quality.
+- [HEIC to JPG](https://wefixpdf.com/tools/heic-to-jpg): Convert Apple iPhone HEIC photos to universally compatible JPG format. Batch conversion supported.
+- [PNG to JPG](https://wefixpdf.com/tools/png-to-jpg): Convert PNG images to JPG format.
+- [JPG to PNG](https://wefixpdf.com/tools/jpg-to-png): Convert JPG images to PNG format.
+- [PNG to WebP](https://wefixpdf.com/tools/png-to-webp): Convert PNG to the modern WebP format, reducing file size by 25–35%.
+- [Resize & Crop Image](https://wefixpdf.com/tools/resize-image): Resize or crop any image online.
+- [Browse all image tools →](https://wefixpdf.com/tools/image)
+
+## Developer Tools
+
+- [CSV ↔ JSON Converter](https://wefixpdf.com/tools/csv-json-converter): Convert between CSV and JSON formats instantly.
+- [JSON to YAML](https://wefixpdf.com/tools/json-to-yaml): Convert JSON data to YAML format.
+- [YAML to JSON](https://wefixpdf.com/tools/yaml-to-json): Convert YAML to JSON format.
+- [JSON to XML](https://wefixpdf.com/tools/json-to-xml): Convert JSON data to XML format.
+- [Color Palette Generator](https://wefixpdf.com/tools/color-palette-generator): Generate colour palettes for design projects.
+- [Text Diff Checker](https://wefixpdf.com/tools/text-diff-checker): Compare two blocks of text and highlight differences.
+- [Browse all developer tools (35+ tools) →](https://wefixpdf.com/tools/developer)
+
+## Why weFixPDF
+
+- **100% Free Forever**: No paid tier exists. All tools are permanently free, funded by display advertising.
+- **No Account Required**: No email, no password, no sign-up. Open any tool and use it instantly.
+- **No Daily Limits**: No task counters, no monthly quotas, no upgrade walls — unlimited use every day.
+- **Zero Data Retention**: Files are processed in-memory and permanently deleted immediately after download. Nothing is stored on servers.
+- **Secure by Design**: All file transfers use TLS 1.3 encryption. Files are processed in isolated, ephemeral cloud instances.
+- **Fast Processing**: Most files complete in under 3–10 seconds. Large files (30–50MB) may take up to 30 seconds.
+- **Mobile-Friendly**: Fully optimised for touchscreens — works on any smartphone or tablet.
+- **No Watermarks**: Output files are clean with no branding added.
+
+## Who Uses weFixPDF
+
+- Students compressing lecture PDFs, merging assignments, or splitting documents for scholarship portals.
+- Small businesses and freelancers managing invoices, contracts, and proposals without paying for software.
+- HR teams handling document-heavy workflows — offer letters, onboarding forms, policy documents.
+- Legal professionals merging court filings, compressing exhibits, and protecting sensitive documents.
+- Web developers optimising images for Core Web Vitals and page performance.
+- Individuals needing to compress files below Gmail/Outlook attachment limits (10–25MB).
+
+## Platform & Resources
+
+- [All Tools](https://wefixpdf.com/tools): Browse the complete toolkit — PDF, image, and developer tools.
+- [Use Cases](https://wefixpdf.com/use-cases): How different users — students, lawyers, developers, freelancers — use weFixPDF.
+- [Help Center / FAQ](https://wefixpdf.com/help): 35+ answers on PDF tools, image tools, privacy, file formats, and performance.
+- [Blog](https://wefixpdf.com/blog): Guides on compressing PDFs, converting images, file format comparisons, and online security.
+- [Security](https://wefixpdf.com/security): Details on how weFixPDF protects your files using TLS 1.3 and zero-retention architecture.
+- [About](https://wefixpdf.com/about): The story behind weFixPDF, built in India in 2024.
+- [Contact Support](https://wefixpdf.com/contact): Reach the team for help with complex tasks.
+
+## Legal
+
+- [Privacy Policy](https://wefixpdf.com/privacy-policy)
+- [Terms of Service](https://wefixpdf.com/terms)
+- [Disclaimer](https://wefixpdf.com/disclaimer)
+- [Sitemap](https://wefixpdf.com/sitemap-page)

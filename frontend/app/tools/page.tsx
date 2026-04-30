@@ -6,6 +6,7 @@ import {
   ShieldCheck, LockOpen, Minimize2, Zap, Smartphone, ArrowRight, FileImage,
   BookOpen, Camera, Code, Type, ShieldX, Expand, Shield, Columns2,
   Palette, Braces, KeyRound, ArrowLeftRight, GitCompare, FileCode,
+  Crop, CheckCircle2, Terminal, Hash, Globe,
 } from "lucide-react";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -43,6 +44,7 @@ const iconNameMap: Record<string, any> = {
   ShieldCheck, LockOpen, Minimize2, Zap, Smartphone, Image,
   BookOpen, Camera, Code, Type, ShieldX, Expand, Shield, Columns2,
   Palette, Braces, KeyRound, ArrowLeftRight, GitCompare, FileCode,
+  Crop, CheckCircle2, Terminal, Hash, Globe,
 };
 
 const popularSlugs = new Set(['compress-pdf', 'image-compressor', 'png-to-jpg']);
