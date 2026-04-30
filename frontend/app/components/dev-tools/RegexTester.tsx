@@ -86,7 +86,7 @@ function runRegex(pattern: string, flags: Record<string,boolean>, text: string):
       if (m) matches.push({ index: m.index, match: m[0], groups: m.slice(1) });
     }
     return { matches, error: null };
-  } catch (e) {
+  } catch (e: any) {
     return { matches: [], error: (e as Error).message };
   }
 }

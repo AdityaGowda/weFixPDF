@@ -12,7 +12,7 @@ export default function XpathTester() {
     try {
       const result = testXPath(input1, input2);
       setOutput(result || 'Done.');
-    } catch (e) {
+    } catch (e: any) {
       setOutput('Error: ' + e.message);
     }
   };

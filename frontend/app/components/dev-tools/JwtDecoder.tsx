@@ -50,7 +50,7 @@ export default function JwtDecoder() {
     try {
       setParts(decodeJwt(token.trim()));
       setError(null);
-    } catch (e) {
+    } catch (e: any) {
       setParts(null);
       setError(e instanceof Error ? e.message : String(e));
     }

@@ -44,7 +44,7 @@ async function ping(url: string, method: string, headers: Record<string, string>
     });
     const duration = performance.now() - start;
     return { duration, status: res.status, statusText: res.statusText, error: '' };
-  } catch (e) {
+  } catch (e: any) {
     const duration = performance.now() - start;
     const msg = e instanceof Error ? e.message : String(e);
     // CORS errors appear as TypeError: Failed to fetch
