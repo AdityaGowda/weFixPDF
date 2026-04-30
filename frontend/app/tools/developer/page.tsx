@@ -54,6 +54,7 @@ const iconMap: Record<string, any> = {
   Code, Palette, Braces, KeyRound, ArrowLeftRight, GitCompare, FileCode,
   Terminal, Hash, Globe, Shield, Clock, Wifi, Crop, Binary, FileText,
   AlignLeft, Network, Type, Calculator, Contrast, Database, FileJson, Cog,
+  CheckCircle2,
 };
 
 const popularSlugs = new Set(['json-formatter', 'jwt-decoder', 'csv-json-converter', 'text-diff-checker']);
@@ -88,35 +89,55 @@ const faqs = [
 const categories = [
   {
     label: 'Data Format Converters',
-    tools: ['csv-json-converter', 'json-to-yaml', 'yaml-to-json', 'json-to-xml', 'xml-to-json'],
+    tools: [
+      'csv-json-converter', 'json-to-yaml', 'yaml-to-json', 'json-to-xml', 'xml-to-json',
+      'csv-to-xml', 'xslt-transformer'
+    ],
   },
   {
-    label: 'JSON & Code Tools',
-    tools: ['json-formatter', 'sql-formatter', 'markdown-to-html'],
+    label: 'Formatters & Minifiers',
+    tools: [
+      'json-formatter', 'xml-formatter', 'html-formatter', 'sql-formatter',
+      'js-beautifier', 'js-minifier', 'css-beautifier', 'css-minifier'
+    ],
+  },
+  {
+    label: 'Validators & Testers',
+    tools: [
+      'json-validator', 'xml-validator', 'html-validator', 'xpath-tester',
+      'regex-tester', 'java-regex-tester', 'credit-card-validator', 'api-ping-tester',
+      'text-diff-checker', 'http-header-analyzer'
+    ],
   },
   {
     label: 'Auth & Security',
-    tools: ['jwt-decoder', 'hash-generator', 'base64-encoder-decoder'],
+    tools: ['jwt-decoder', 'hash-generator', 'base64-encoder-decoder', 'uuid-generator', 'password-generator'],
+  },
+  {
+    label: 'String & Escape Utilities',
+    tools: [
+      'string-utilities', 'word-counter', 'html-escape', 'xml-escape',
+      'java-dotnet-escape', 'javascript-escape', 'json-escape', 'csv-escape', 'sql-escape'
+    ],
   },
   {
     label: 'Web & CSS Utilities',
-    tools: ['color-palette-generator', 'color-contrast-checker', 'css-unit-converter', 'og-meta-tag-previewer', 'favicon-generator'],
+    tools: [
+      'color-palette-generator', 'color-contrast-checker', 'css-unit-converter',
+      'og-meta-tag-previewer', 'favicon-generator', 'markdown-to-html', 'html-entities', 'i18n-snippets'
+    ],
   },
   {
     label: 'DevOps & Infrastructure',
     tools: ['cron-expression-builder', 'chmod-calculator', 'ip-subnet-calculator', 'unix-timestamp-converter'],
   },
   {
-    label: 'Testing & Debugging',
-    tools: ['regex-tester', 'text-diff-checker', 'http-header-analyzer', 'api-ping-tester'],
-  },
-  {
     label: 'Data & AI Utilities',
-    tools: ['mock-json-generator', 'env-file-parser', 'llm-token-counter', 'number-base-converter'],
+    tools: ['mock-json-generator', 'env-file-parser', 'llm-token-counter', 'number-base-converter', 'xsd-generator'],
   },
   {
     label: 'Low-Level & Misc',
-    tools: ['wasm-analyzer', 'text-to-ascii-art', 'url-parser-builder'],
+    tools: ['wasm-analyzer', 'text-to-ascii-art', 'url-parser-builder', 'lorem-ipsum-generator', 'mime-types-list'],
   },
 ];
 
@@ -207,47 +228,45 @@ export default async function DeveloperHubPage() {
   };
 
   return (
-    <>
+    <div className="bg-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-      <div className="bg-page">
-
-        {/* ── Hero ── */}
-        <section className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] py-14 md:py-20">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6">
-            <nav className="flex items-center gap-2 text-[12px] mb-8" aria-label="Breadcrumb" style={{ color: 'var(--text-muted)' }}>
-              <Link href="/" className="hover:underline">Home</Link>
-              <span>/</span>
-              <Link href="/tools" className="hover:underline">Tools</Link>
-              <span>/</span>
-              <span style={{ color: 'var(--text)' }}>Developer Tools</span>
-            </nav>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="w-2.5 h-2.5 rounded-sm" style={{ background: '#B44CFF' }} />
-              <p className="text-label">{allDevTools.length} free tools · Runs in browser · No data sent to server</p>
-            </div>
-            <h1 className="text-hero mb-4" style={{ color: 'var(--text)' }}>
-              Free Developer Tools Online
-            </h1>
-            <p className="text-[17px] leading-[1.75] max-w-2xl" style={{ color: 'var(--text-muted)' }}>
-              The data that goes through developer tools is often sensitive — production JWTs, .env files, database
-              schemas, API responses. Everything here runs in JavaScript inside your browser tab. No server call,
-              no upload, nothing logged. Paste your JSON, decode your JWT, build your CRON — all of it stays local.
-            </p>
-            <div className="flex flex-wrap gap-2 mt-6">
-              {['Runs locally in browser', 'No data sent to server', 'No sign-up', 'No install', '100% Free'].map((chip) => (
-                <span key={chip} className="inline-flex items-center gap-1.5 text-[12px] font-medium px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                  <CheckCircle2 className="w-3 h-3 flex-shrink-0" strokeWidth={2} />
-                  {chip}
-                </span>
-              ))}
-            </div>
+      {/* ── Hero ── */}
+      <section className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] py-14 md:py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <nav className="flex items-center gap-2 text-[12px] mb-8" aria-label="Breadcrumb" style={{ color: 'var(--text-muted)' }}>
+            <Link href="/" className="hover:underline">Home</Link>
+            <span>/</span>
+            <Link href="/tools" className="hover:underline">Tools</Link>
+            <span>/</span>
+            <span style={{ color: 'var(--text)' }}>Developer Tools</span>
+          </nav>
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-2.5 h-2.5 rounded-sm" style={{ background: '#B44CFF' }} />
+            <p className="text-label">{allDevTools.length} free tools · Runs in browser · No data sent to server</p>
           </div>
-        </section>
+          <h1 className="text-hero mb-4" style={{ color: 'var(--text)' }}>
+            Free Developer Tools Online
+          </h1>
+          <p className="text-[17px] leading-[1.75] max-w-2xl" style={{ color: 'var(--text-muted)' }}>
+            The data that goes through developer tools is often sensitive — production JWTs, .env files, database
+            schemas, API responses. Everything here runs in JavaScript inside your browser tab. No server call,
+            no upload, nothing logged. Paste your JSON, decode your JWT, build your CRON — all of it stays local.
+          </p>
+          <div className="flex flex-wrap gap-2 mt-6">
+            {['Runs locally in browser', 'No data sent to server', 'No sign-up', 'No install', '100% Free'].map((chip) => (
+              <span key={chip} className="inline-flex items-center gap-1.5 text-[12px] font-medium px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                <CheckCircle2 className="w-3 h-3 flex-shrink-0" strokeWidth={2} />
+                {chip}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 space-y-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 space-y-16">
 
           {/* ── Tool grid by category ── */}
           {categories.map((cat) => {
@@ -381,7 +400,6 @@ export default async function DeveloperHubPage() {
           </section>
 
         </div>
-      </div>
-    </>
+    </div>
   );
 }
