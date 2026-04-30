@@ -85,7 +85,7 @@ const nextConfig: NextConfig = {
       },
       // Numbered slug variants → /tools/slug (e.g. /split-pdf1 → /tools/split-pdf)
       {
-        source: "/:slug([a-z][a-z-]*[a-z])\\d",
+        source: "/:slug([a-z][a-z-]*[a-z]):num(\\d+)",
         destination: "/tools/:slug",
         permanent: true,
       },
