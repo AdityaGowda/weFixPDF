@@ -10,50 +10,45 @@ import {
 } from 'lucide-react';
 import ToolRating from '@/app/components/ToolRating';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const allTools = await getToolListings();
-  const devCount = allTools.filter((t) => t.type === 'Dev Tools').length;
-  const countLabel = devCount > 0 ? `${devCount}+` : '50+';
-  return {
-    title: 'Free Developer Tools Online — JSON, YAML, JWT, CSS & More | weFixPDF',
-    description:
-      `${countLabel} free browser-based developer tools: JSON formatter, YAML converter, JWT decoder, Base64 encoder, regex tester, SQL formatter, CSS unit converter, hash generator and more. No install, no upload, runs locally.`,
-    alternates: { canonical: 'https://wefixpdf.com/tools/developer' },
-    keywords: [
-      'free developer tools online',
-      'json formatter online free',
-      'json to yaml converter free',
-      'jwt decoder online',
-      'base64 encoder decoder online',
-      'regex tester online free',
-      'sql formatter online',
-      'css unit converter online',
-      'hash generator online free',
-      'browser based developer tools',
-      'online dev tools no sign up',
-      'csv to json converter online',
-      'yaml to json converter free',
-      'unix timestamp converter',
-      'ip subnet calculator online',
-    ],
-    robots: { index: true, follow: true },
-    openGraph: {
-      title: 'Free Developer Tools Online — JSON, YAML, JWT & More | weFixPDF',
-      description: `${countLabel} browser-based dev tools: JSON formatter, JWT decoder, regex tester, SQL formatter & more. Runs locally — nothing sent to a server.`,
-      url: 'https://wefixpdf.com/tools/developer',
-      siteName: 'weFixPDF',
-      type: 'website',
-      images: [{ url: 'https://wefixpdf.com/wfp.png', width: 1200, height: 630, alt: 'weFixPDF — Free Developer Tools' }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: 'Free Developer Tools Online | weFixPDF',
-      description: `${countLabel} free browser-based tools: JSON, YAML, JWT, regex, SQL, CSS, Base64 and more.`,
-      images: ['https://wefixpdf.com/wfp.png'],
-      site: '@wefixpdf',
-    },
-  };
-}
+export const metadata: Metadata = {
+  title: 'Free Developer Tools Online — JSON, YAML, JWT, CSS & More | weFixPDF',
+  description:
+    '30+ free browser-based developer tools: JSON formatter, YAML converter, JWT decoder, Base64 encoder, regex tester, SQL formatter, CSS unit converter, hash generator and more. No install, no upload, runs locally.',
+  alternates: { canonical: 'https://wefixpdf.com/tools/developer' },
+  keywords: [
+    'free developer tools online',
+    'json formatter online free',
+    'json to yaml converter free',
+    'jwt decoder online',
+    'base64 encoder decoder online',
+    'regex tester online free',
+    'sql formatter online',
+    'css unit converter online',
+    'hash generator online free',
+    'browser based developer tools',
+    'online dev tools no sign up',
+    'csv to json converter online',
+    'yaml to json converter free',
+    'unix timestamp converter',
+    'ip subnet calculator online',
+  ],
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: 'Free Developer Tools Online — JSON, YAML, JWT & More | weFixPDF',
+    description: '30+ browser-based dev tools: JSON formatter, JWT decoder, regex tester, SQL formatter & more. Runs locally — nothing sent to a server.',
+    url: 'https://wefixpdf.com/tools/developer',
+    siteName: 'weFixPDF',
+    type: 'website',
+    images: [{ url: 'https://wefixpdf.com/wfp.png', width: 1200, height: 630, alt: 'weFixPDF — Free Developer Tools' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Developer Tools Online | weFixPDF',
+    description: '30+ free browser-based tools: JSON, YAML, JWT, regex, SQL, CSS, Base64 and more.',
+    images: ['https://wefixpdf.com/wfp.png'],
+    site: '@wefixpdf',
+  },
+};
 
 const iconMap: Record<string, any> = {
   Code, Palette, Braces, KeyRound, ArrowLeftRight, GitCompare, FileCode,
