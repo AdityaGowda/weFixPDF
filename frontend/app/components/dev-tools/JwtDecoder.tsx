@@ -165,7 +165,17 @@ export default function JwtDecoder() {
           <p className="px-4 py-3 font-mono text-[12px] break-all" style={{ color: 'var(--text-muted)' }}>
             {parts.signature}
           </p>
-        </div>
+        
+      <div className="mt-8 bg-card border border-base p-6 rounded-xl space-y-4">
+        <h3 className="text-[15px] font-semibold text-[color:var(--text)]">🔒 Privacy & Safe Usage</h3>
+        <p className="text-[13px] text-[color:var(--text-muted)]">
+          <strong>100% Private:</strong> This tool runs entirely in your browser. No data, inputs, or files are sent to our servers or saved anywhere.
+        </p>
+        <p className="text-[12px] text-[color:var(--text-muted)] opacity-80 border-t border-base pt-4">
+          <strong>Disclaimer:</strong> Always review generated code before production use.
+        </p>
+      </div>
+    </div>
       )}
 
       {!token && (

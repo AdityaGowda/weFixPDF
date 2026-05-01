@@ -191,7 +191,17 @@ export default function ColorPaletteGenerator() {
             <pre className="p-4 text-[12px] font-mono leading-relaxed overflow-auto" style={{ color: 'var(--text)', maxHeight: 200 }}>
               {exportText}
             </pre>
-          </div>
+          
+      <div className="mt-8 bg-card border border-base p-6 rounded-xl space-y-4">
+        <h3 className="text-[15px] font-semibold text-[color:var(--text)]">🔒 Privacy & Safe Usage</h3>
+        <p className="text-[13px] text-[color:var(--text-muted)]">
+          <strong>100% Private:</strong> This tool runs entirely in your browser. No data, inputs, or files are sent to our servers or saved anywhere.
+        </p>
+        <p className="text-[12px] text-[color:var(--text-muted)] opacity-80 border-t border-base pt-4">
+          <strong>Disclaimer:</strong> This tool is provided for informational and productivity purposes only. Please verify important results independently.
+        </p>
+      </div>
+    </div>
         </>
       )}
     </ToolShell>

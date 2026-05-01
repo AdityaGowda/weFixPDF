@@ -142,7 +142,17 @@ export default function Base64Tool() {
             <p className="px-4 py-2.5 text-[11px] font-mono break-all" style={{ color: 'var(--text-muted)', maxHeight: 120, overflow: 'auto' }}>{fileUri.slice(0, 200)}…</p>
           </div>
         )}
+      
+      <div className="mt-8 bg-card border border-base p-6 rounded-xl space-y-4">
+        <h3 className="text-[15px] font-semibold text-[color:var(--text)]">🔒 Privacy & Safe Usage</h3>
+        <p className="text-[13px] text-[color:var(--text-muted)]">
+          <strong>100% Private:</strong> This tool runs entirely in your browser. No data, inputs, or files are sent to our servers or saved anywhere.
+        </p>
+        <p className="text-[12px] text-[color:var(--text-muted)] opacity-80 border-t border-base pt-4">
+          <strong>Disclaimer:</strong> This tool is provided for informational and productivity purposes only. Please verify important results independently.
+        </p>
       </div>
+    </div>
     </ToolShell>
   );
 }

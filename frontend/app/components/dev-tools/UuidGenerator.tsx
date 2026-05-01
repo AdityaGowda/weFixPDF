@@ -160,7 +160,17 @@ export default function UuidGenerator() {
           <p><strong style={{ color: 'var(--text)' }}>UUID v4</strong> — 122 random bits + 6 version/variant bits. Collision probability is astronomically low — about 1 in 5 undecillion for a billion UUIDs per second over 85 years.</p>
           <p>Generated entirely in your browser using <code className="font-mono text-[11px]">crypto.randomUUID()</code> — nothing leaves your device.</p>
         </div>
+      
+      <div className="mt-8 bg-card border border-base p-6 rounded-xl space-y-4">
+        <h3 className="text-[15px] font-semibold text-[color:var(--text)]">🔒 Privacy & Safe Usage</h3>
+        <p className="text-[13px] text-[color:var(--text-muted)]">
+          <strong>100% Private:</strong> This tool runs entirely in your browser. No data, inputs, or files are sent to our servers or saved anywhere.
+        </p>
+        <p className="text-[12px] text-[color:var(--text-muted)] opacity-80 border-t border-base pt-4">
+          <strong>Disclaimer:</strong> This tool is provided for informational and productivity purposes only. Please verify important results independently.
+        </p>
       </div>
+    </div>
     </ToolShell>
   );
 }
