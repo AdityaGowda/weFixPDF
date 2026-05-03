@@ -50,18 +50,18 @@ const FALLBACK_PDF_TOOLS = [
 const FALLBACK_IMAGE_TOOLS = [
   { name: "JPG to PNG", href: "/tools/jpg-to-png", icon: FileImage, desc: "Lossless conversion, no watermarks." },
   { name: "PNG to JPG", href: "/tools/png-to-jpg", icon: Image, desc: "Smaller files for faster web pages." },
-  { name: "Image Compressor", href: "/tools/image-compressor", icon: Minimize2, desc: "Shrink JPG, PNG, WEBP by up to 80%." },
   { name: "PNG to WEBP", href: "/tools/png-to-webp", icon: Zap, desc: "Modern format, 30% smaller files." },
+  { name: "Image Compressor", href: "/tools/image-compressor", icon: Minimize2, desc: "Shrink JPG, PNG, WEBP by up to 80%." },
   { name: "HEIC to JPG", href: "/tools/heic-to-jpg", icon: Smartphone, desc: "Convert iPhone photos anywhere." },
 ];
 
 const FALLBACK_DEV_TOOLS = [
-  { name: "CSV ↔ JSON Converter", href: "/tools/csv-json-converter", icon: ArrowLeftRight, desc: "Convert CSV to JSON or JSON to CSV with live preview." },
+  { name: "CSV ↔ JSON", href: "/tools/csv-json-converter", icon: ArrowLeftRight, desc: "Convert CSV to JSON or JSON to CSV with live preview." },
   { name: "JSON Formatter", href: "/tools/json-formatter", icon: Braces, desc: "Pretty-print, minify, and validate any JSON." },
   { name: "JWT Decoder", href: "/tools/jwt-decoder", icon: KeyRound, desc: "Decode JWT header & payload — stays in your browser." },
   { name: "Text Diff Checker", href: "/tools/text-diff-checker", icon: GitCompare, desc: "Compare two texts and highlight every change." },
   { name: "JSON to YAML", href: "/tools/json-to-yaml", icon: FileCode, desc: "Convert JSON to clean, indented YAML instantly." },
-  { name: "Color Palette Generator", href: "/tools/color-palette-generator", icon: Palette, desc: "Generate palettes and export as CSS, Tailwind, or JSON." },
+  { name: "Color Palette", href: "/tools/color-palette-generator", icon: Palette, desc: "Generate palettes and export as CSS, Tailwind, or JSON." },
 ];
 
 const faqs = [
@@ -192,7 +192,13 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
   const dbDevTools = tools
     .filter((t) => t.type === "Dev Tools")
     .sort((a, b) => a.position - b.position)
-    .map((t) => ({ name: t.name, href: `/tools/${t.slug}`, icon: ICON_MAP[t.slug] ?? Code, desc: t.description }));
+    .map((t) => {
+      let name = t.name;
+      if (name === "CSV to JSON Converter") name = "CSV ↔ JSON";
+      if (name === "Color Palette Generator") name = "Color Palette";
+      if (name.endsWith(" Converter")) name = name.replace(" Converter", "");
+      return { name, href: `/tools/${t.slug}`, icon: ICON_MAP[t.slug] ?? Code, desc: t.description };
+    });
 
   const pdfTools   = dbPdfTools.length   > 0 ? dbPdfTools   : FALLBACK_PDF_TOOLS;
   const imageTools = dbImageTools.length > 0 ? dbImageTools : FALLBACK_IMAGE_TOOLS;
@@ -283,9 +289,9 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
       {/* ══ 3. IMAGE TOOL GRID ════════════════════════════════ */}
       <section id="image-tools" className="py-16 md:py-20 bg-page border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <SectionLabel color="emerald" href="/tools/image">Image Tools</SectionLabel>
+          <SectionLabel color="emerald" href="/tools/image">Image Converters</SectionLabel>
           <h2 className="text-section mb-8" style={{ color: 'var(--text)' }}>
-            Convert &amp; compress <span style={{ color: '#10B981' }}>images</span>
+            Professional <span style={{ color: '#10B981' }}>Image Converters</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {imageTools.map((tool) => (
@@ -294,7 +300,7 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
           </div>
           <div className="mt-6">
             <a href="/tools/image" className="inline-flex items-center gap-1.5 text-[13px] font-medium" style={{ color: '#10B981' }}>
-              Browse all image tools <ArrowRight className="w-3.5 h-3.5" />
+              Browse all image converters <ArrowRight className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>
@@ -398,6 +404,19 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
                 How we protect your files
                 <ArrowRight className="w-4 h-4" />
               </a>
+
+              {/* Highlight Grid */}
+              <div className="grid grid-cols-2 gap-y-3 gap-x-6 pt-4 border-t border-[rgba(0,0,0,0.06)]">
+                {[
+                  '100% Free', 'No Sign-up', 'No Watermarks',
+                  'Zero Data Retention', 'TLS Encryption', 'No Usage Limits'
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-2 text-[13px]" style={{ color: 'var(--text-muted)' }}>
+                    <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" color="#3B6D11" strokeWidth={2.5} />
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Right — feature blocks */}

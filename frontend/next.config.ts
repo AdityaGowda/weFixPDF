@@ -84,18 +84,19 @@ const nextConfig: NextConfig = {
         destination: "/privacy-policy",
         permanent: true,
       },
+      // Tool pages: /{slug} → /tools/{slug}  (301 permanent)
+      // We list these first to ensure static slugs take precedence over regex patterns
+      ...TOOL_SLUGS.map((slug) => ({
+        source: `/${slug}`,
+        destination: `/tools/${slug}`,
+        permanent: true,
+      })),
       // Numbered slug variants → /tools/slug (e.g. /split-pdf1 → /tools/split-pdf)
       {
         source: "/:slug([a-z][a-z-]*[a-z]):num(\\d+)",
         destination: "/tools/:slug",
         permanent: true,
       },
-      // Tool pages: /{slug} → /tools/{slug}  (301 permanent)
-      ...TOOL_SLUGS.map((slug) => ({
-        source: `/${slug}`,
-        destination: `/tools/${slug}`,
-        permanent: true,
-      })),
     ];
   },
 };

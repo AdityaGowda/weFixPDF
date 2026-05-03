@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+Sitemap: https://wefixpdf.com/sitemap.xml
+Host: https://wefixpdf.com
+
+# AI Discovery
+LLMs: https://wefixpdf.com/llms.txt

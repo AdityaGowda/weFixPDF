@@ -1,8 +1,8 @@
 # weFixPDF
 
-> weFixPDF (https://wefixpdf.com) is a free, private, and instant file conversion platform offering PDF tools, image tools, and developer utilities — with zero data retention, no account required, and no daily limits.
+> weFixPDF (https://wefixpdf.com) is a free, private, and instant file conversion platform offering PDF tools, image tools, and 60+ developer utilities — with zero data retention, no account required, and no daily limits.
 
-weFixPDF was built in India 🇮🇳 by Adithya M R after frustration with watermarked, login-gated PDF tools. The goal: make every common file operation free, instant, and private — no strings attached. The platform is 100% free, funded by display advertising, with no paid tier, no freemium walls, and no subscription model. Files are processed in-memory and permanently deleted the moment you download your result.
+weFixPDF is built by Adithya M R in India 🇮🇳 — with one goal: make file tools actually free. No watermarks. No accounts. No paid tiers. Files are processed in-memory and permanently deleted after download. Funded by ads, not your data.
 
 ## PDF Tools
 
@@ -12,9 +12,17 @@ weFixPDF was built in India 🇮🇳 by Adithya M R after frustration with water
 - [Split PDF](https://wefixpdf.com/tools/split-pdf): Extract specific pages or page ranges, or split every page into a separate PDF.
 - [PDF to Word](https://wefixpdf.com/tools/pdf-to-word): Convert PDF documents to editable DOCX format.
 - [Word to PDF](https://wefixpdf.com/tools/word-to-pdf): Convert DOCX and DOC files to PDF.
-- [Rotate PDF](https://wefixpdf.com/tools/rotate-pdf): Rotate pages in a PDF file to any orientation.
-- [Protect PDF](https://wefixpdf.com/protect-pdf): Add AES-128 password encryption to any PDF — compatible with Adobe Acrobat, Apple Preview, and all major PDF readers.
+- [Rotate PDF](https://wefixpdf.com/tools/rotate-pdf): Rotate pages in a PDF file to any orientation permanently.
+- [Protect PDF](https://wefixpdf.com/tools/protect-pdf): Add AES-128 password encryption to any PDF — compatible with Adobe Acrobat, Apple Preview, and all major PDF readers.
 - [Unlock PDF](https://wefixpdf.com/tools/unlock-pdf): Remove passwords and restrictions from PDF files you own.
+- [PDF to EPUB](https://wefixpdf.com/tools/pdf-to-epub): Convert PDF documents to EPUB ebook format.
+- [Auto Rotate PDF](https://wefixpdf.com/tools/auto-rotate-pdf): Automatically detect and fix page orientation in scanned PDFs.
+- [Scan to PDF](https://wefixpdf.com/tools/scan-to-pdf): Convert scanned images (JPG, PNG, WebP) into a searchable PDF document.
+- [PDF to HTML](https://wefixpdf.com/tools/pdf-to-html): Convert PDF files to HTML web pages.
+- [Remove PDF Metadata](https://wefixpdf.com/tools/remove-pdf-metadata): Strip author, title, and other hidden metadata from PDF files for privacy.
+- [Extract Text from PDF](https://wefixpdf.com/tools/extract-text-pdf): Extract all text content from a PDF as a plain text file.
+- [Compare PDF](https://wefixpdf.com/tools/compare-pdf): Compare two PDF documents side-by-side and highlight differences.
+- [Redact PDF](https://wefixpdf.com/tools/redact-pdf): Permanently black out sensitive text and images in PDF files.
 - [JPG to PDF](https://wefixpdf.com/tools/jpg-to-pdf): Convert JPG images to PDF.
 - [Image to PDF](https://wefixpdf.com/tools/image-to-pdf): Combine one or more images (JPG, PNG, WebP, HEIC) into a single PDF document.
 - [Browse all PDF tools →](https://wefixpdf.com/tools/pdf)
@@ -22,33 +30,109 @@ weFixPDF was built in India 🇮🇳 by Adithya M R after frustration with water
 ## Image Tools
 
 - [Image Compressor](https://wefixpdf.com/tools/image-compressor): Compress JPG, PNG, and WebP images by up to 80% while preserving visual quality.
+- [Compress Image](https://wefixpdf.com/tools/compress-image): Alternative image compression tool supporting JPG, PNG, and WebP formats.
 - [HEIC to JPG](https://wefixpdf.com/tools/heic-to-jpg): Convert Apple iPhone HEIC photos to universally compatible JPG format. Batch conversion supported.
+- [HEIC to PNG](https://wefixpdf.com/tools/heic-to-png): Convert Apple HEIC photos to lossless PNG format.
 - [PNG to JPG](https://wefixpdf.com/tools/png-to-jpg): Convert PNG images to JPG format.
 - [JPG to PNG](https://wefixpdf.com/tools/jpg-to-png): Convert JPG images to PNG format.
 - [PNG to WebP](https://wefixpdf.com/tools/png-to-webp): Convert PNG to the modern WebP format, reducing file size by 25–35%.
-- [Resize & Crop Image](https://wefixpdf.com/tools/resize-image): Resize or crop any image online.
+- [Resize & Crop Image](https://wefixpdf.com/tools/resize-image): Resize or crop any image online to exact pixel dimensions.
 - [Browse all image tools →](https://wefixpdf.com/tools/image)
 
 ## Developer Tools
 
-- [CSV ↔ JSON Converter](https://wefixpdf.com/tools/csv-json-converter): Convert between CSV and JSON formats instantly.
-- [JSON to YAML](https://wefixpdf.com/tools/json-to-yaml): Convert JSON data to YAML format.
+All developer tools run locally in your browser — nothing is sent to a server.
+
+### Data Format Converters
+- [CSV ↔ JSON Converter](https://wefixpdf.com/tools/csv-json-converter): Convert between CSV and JSON formats instantly with live preview.
+- [JSON to YAML](https://wefixpdf.com/tools/json-to-yaml): Convert JSON data to clean, indented YAML format.
 - [YAML to JSON](https://wefixpdf.com/tools/yaml-to-json): Convert YAML to JSON format.
 - [JSON to XML](https://wefixpdf.com/tools/json-to-xml): Convert JSON data to XML format.
-- [Color Palette Generator](https://wefixpdf.com/tools/color-palette-generator): Generate colour palettes for design projects.
-- [Text Diff Checker](https://wefixpdf.com/tools/text-diff-checker): Compare two blocks of text and highlight differences.
-- [Browse all developer tools (35+ tools) →](https://wefixpdf.com/tools/developer)
+- [XML to JSON](https://wefixpdf.com/tools/xml-to-json): Convert XML to JSON format.
+- [CSV to XML](https://wefixpdf.com/tools/csv-to-xml): Convert CSV data to XML format.
+- [Markdown to HTML](https://wefixpdf.com/tools/markdown-to-html): Convert Markdown text to HTML with syntax highlighting preview.
+
+### JSON & Text Tools
+- [JSON Formatter](https://wefixpdf.com/tools/json-formatter): Pretty-print, minify, and validate any JSON data with syntax highlighting.
+- [JSON Validator](https://wefixpdf.com/tools/json-validator): Validate JSON syntax and inspect errors.
+- [JSON Escape](https://wefixpdf.com/tools/json-escape): Escape and unescape JSON strings.
+- [Text Diff Checker](https://wefixpdf.com/tools/text-diff-checker): Compare two blocks of text and highlight differences character by character.
+- [Word Counter](https://wefixpdf.com/tools/word-counter): Count words, characters, sentences, and paragraphs in any text.
+- [Text to ASCII Art](https://wefixpdf.com/tools/text-to-ascii-art): Convert plain text to ASCII art with multiple font styles.
+- [String Utilities](https://wefixpdf.com/tools/string-utilities): Case conversion, reverse, trim, and other common string operations.
+- [Lorem Ipsum Generator](https://wefixpdf.com/tools/lorem-ipsum-generator): Generate placeholder text for design mockups.
+
+### Security & Encoding
+- [JWT Decoder](https://wefixpdf.com/tools/jwt-decoder): Decode JWT header & payload without sending tokens to a server.
+- [Hash Generator](https://wefixpdf.com/tools/hash-generator): Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from any input.
+- [Base64 Encoder & Decoder](https://wefixpdf.com/tools/base64-encoder-decoder): Encode text or files to Base64 and decode Base64 back to plain text.
+- [Password Generator](https://wefixpdf.com/tools/password-generator): Generate secure random passwords with configurable length and character sets.
+- [Credit Card Validator](https://wefixpdf.com/tools/credit-card-validator): Validate credit card numbers using the Luhn algorithm (no data stored).
+
+### Web & Network Tools
+- [HTTP Header Analyzer](https://wefixpdf.com/tools/http-header-analyzer): Inspect HTTP response headers for security, caching, and configuration issues.
+- [OG Meta Tag Previewer](https://wefixpdf.com/tools/og-meta-tag-previewer): Preview how your page looks in social media link previews (OpenGraph).
+- [URL Parser & Builder](https://wefixpdf.com/tools/url-parser-builder): Parse a URL into its components or build one from parts.
+- [IP Subnet Calculator](https://wefixpdf.com/tools/ip-subnet-calculator): Calculate subnets, CIDR ranges, broadcast addresses, and host counts.
+- [API Ping Tester](https://wefixpdf.com/tools/api-ping-tester): Test HTTP endpoints and inspect response status codes and latency.
+- [Favicon Generator](https://wefixpdf.com/tools/favicon-generator): Generate favicon files from uploaded images in multiple sizes.
+- [MIME Types List](https://wefixpdf.com/tools/mime-types-list): Browse and search a comprehensive reference of MIME content types.
+
+### Developer Utilities
+- [Regex Tester](https://wefixpdf.com/tools/regex-tester): Test and debug regular expressions with real-time match highlighting.
+- [Cron Expression Builder](https://wefixpdf.com/tools/cron-expression-builder): Build and validate cron schedule expressions with a visual UI.
+- [Unix Timestamp Converter](https://wefixpdf.com/tools/unix-timestamp-converter): Convert Unix timestamps to human-readable dates and vice versa.
+- [Number Base Converter](https://wefixpdf.com/tools/number-base-converter): Convert numbers between binary, octal, decimal, and hexadecimal.
+- [chmod Calculator](https://wefixpdf.com/tools/chmod-calculator): Calculate Unix file permission values using a visual checkbox grid.
+- [UUID Generator](https://wefixpdf.com/tools/uuid-generator): Generate random UUIDs (v4) in bulk.
+- [LLM Token Counter](https://wefixpdf.com/tools/llm-token-counter): Count tokens for OpenAI GPT, Claude, Llama, and other LLM models before sending requests.
+- [WASM Analyzer](https://wefixpdf.com/tools/wasm-analyzer): Inspect WebAssembly binary files — view sections, imports, exports, and disassembly.
+
+### CSS & Color Tools
+- [Color Palette Generator](https://wefixpdf.com/tools/color-palette-generator): Generate harmonious color palettes and export as CSS variables, Tailwind config, or JSON.
+- [Color Contrast Checker](https://wefixpdf.com/tools/color-contrast-checker): Check foreground/background color contrast ratios against WCAG accessibility standards.
+- [CSS Unit Converter](https://wefixpdf.com/tools/css-unit-converter): Convert between CSS units — px, rem, em, vw, vh, and more.
+
+### Formatters, Validators & Escape Tools
+- [SQL Formatter](https://wefixpdf.com/tools/sql-formatter): Format and beautify SQL queries for readability.
+- [XML Formatter](https://wefixpdf.com/tools/xml-formatter): Pretty-print and indent XML documents.
+- [HTML Formatter](https://wefixpdf.com/tools/html-formatter): Format and beautify HTML markup.
+- [XML Validator](https://wefixpdf.com/tools/xml-validator): Validate XML syntax and report errors.
+- [HTML Validator](https://wefixpdf.com/tools/html-validator): Validate HTML markup for syntax errors.
+- [XPath Tester](https://wefixpdf.com/tools/xpath-tester): Test XPath expressions against XML documents.
+- [XSD Generator](https://wefixpdf.com/tools/xsd-generator): Generate XML Schema Definition (XSD) from XML samples.
+- [XSLT Transformer](https://wefixpdf.com/tools/xslt-transformer): Apply XSLT stylesheets to transform XML documents.
+- [JS Beautifier](https://wefixpdf.com/tools/js-beautifier): Format and beautify JavaScript code.
+- [JS Minifier](https://wefixpdf.com/tools/js-minifier): Minify JavaScript code to reduce file size.
+- [CSS Beautifier](https://wefixpdf.com/tools/css-beautifier): Format and beautify CSS stylesheets.
+- [CSS Minifier](https://wefixpdf.com/tools/css-minifier): Minify CSS to reduce file size.
+- [HTML Escape](https://wefixpdf.com/tools/html-escape): Escape and unescape HTML special characters.
+- [XML Escape](https://wefixpdf.com/tools/xml-escape): Escape and unescape XML special characters.
+- [JavaScript Escape](https://wefixpdf.com/tools/javascript-escape): Escape and unescape JavaScript strings.
+- [Java & .NET Escape](https://wefixpdf.com/tools/java-dotnet-escape): Escape strings for Java and .NET string literals.
+- [SQL Escape](https://wefixpdf.com/tools/sql-escape): Escape strings for safe SQL query construction.
+- [CSV Escape](https://wefixpdf.com/tools/csv-escape): Escape and quote CSV field values correctly.
+- [HTML Entities Reference](https://wefixpdf.com/tools/html-entities): Browse and copy HTML entity codes and their character equivalents.
+
+### Misc
+- [Mock JSON Generator](https://wefixpdf.com/tools/mock-json-generator): Generate realistic mock JSON data for testing APIs and UI development.
+- [ENV File Parser](https://wefixpdf.com/tools/env-file-parser): Parse .env files and inspect key-value pairs.
+- [Java Regex Tester](https://wefixpdf.com/tools/java-regex-tester): Test regular expressions using Java regex syntax.
+- [i18n Snippets](https://wefixpdf.com/tools/i18n-snippets): Ready-to-use code snippets for internationalisation in Next.js, React, Vue, and more.
+
+- [Browse all developer tools →](https://wefixpdf.com/tools/developer)
 
 ## Why weFixPDF
 
 - **100% Free Forever**: No paid tier exists. All tools are permanently free, funded by display advertising.
 - **No Account Required**: No email, no password, no sign-up. Open any tool and use it instantly.
 - **No Daily Limits**: No task counters, no monthly quotas, no upgrade walls — unlimited use every day.
+- **No Watermarks**: Output files are clean with no branding added.
 - **Zero Data Retention**: Files are processed in-memory and permanently deleted immediately after download. Nothing is stored on servers.
 - **Secure by Design**: All file transfers use TLS 1.3 encryption. Files are processed in isolated, ephemeral cloud instances.
 - **Fast Processing**: Most files complete in under 3–10 seconds. Large files (30–50MB) may take up to 30 seconds.
 - **Mobile-Friendly**: Fully optimised for touchscreens — works on any smartphone or tablet.
-- **No Watermarks**: Output files are clean with no branding added.
+- **Browser-Based Dev Tools**: All developer tools run in the browser — no server access, no data leakage.
 
 ## Who Uses weFixPDF
 
@@ -56,22 +140,21 @@ weFixPDF was built in India 🇮🇳 by Adithya M R after frustration with water
 - Small businesses and freelancers managing invoices, contracts, and proposals without paying for software.
 - HR teams handling document-heavy workflows — offer letters, onboarding forms, policy documents.
 - Legal professionals merging court filings, compressing exhibits, and protecting sensitive documents.
-- Web developers optimising images for Core Web Vitals and page performance.
+- Web developers optimising images for Core Web Vitals, testing APIs, formatting JSON, and debugging regex.
 - Individuals needing to compress files below Gmail/Outlook attachment limits (10–25MB).
+- AI/ML engineers using the LLM Token Counter to estimate prompt costs before API calls.
 
 ## Platform & Resources
 
-- [All Tools](https://wefixpdf.com/tools): Browse the complete toolkit — PDF, image, and developer tools.
-- [Use Cases](https://wefixpdf.com/use-cases): How different users — students, lawyers, developers, freelancers — use weFixPDF.
-- [Help Center / FAQ](https://wefixpdf.com/help): 35+ answers on PDF tools, image tools, privacy, file formats, and performance.
-- [Blog](https://wefixpdf.com/blog): Guides on compressing PDFs, converting images, file format comparisons, and online security.
+- [All Tools](https://wefixpdf.com/tools): Browse the complete toolkit — PDF, image, and 60+ developer tools.
+- [Help Center / FAQ](https://wefixpdf.com/help): Answers on PDF tools, image tools, privacy, file formats, and performance.
 - [Security](https://wefixpdf.com/security): Details on how weFixPDF protects your files using TLS 1.3 and zero-retention architecture.
 - [About](https://wefixpdf.com/about): The story behind weFixPDF, built in India in 2024.
 - [Contact Support](https://wefixpdf.com/contact): Reach the team for help with complex tasks.
+- [Sitemap](https://wefixpdf.com/sitemap-page)
 
 ## Legal
 
 - [Privacy Policy](https://wefixpdf.com/privacy-policy)
 - [Terms of Service](https://wefixpdf.com/terms)
 - [Disclaimer](https://wefixpdf.com/disclaimer)
-- [Sitemap](https://wefixpdf.com/sitemap-page)
