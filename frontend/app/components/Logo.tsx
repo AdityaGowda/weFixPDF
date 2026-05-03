@@ -11,8 +11,8 @@ export default function WeFixPDFLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg
     >
       {/* dark mode logo */}
       <Image
-        src="/logo.png"
-        alt="weFixPDF Logo"
+        src="/darklogo.svg"
+        alt="weFixPDF dark mode logo"
         width={imgSize}
         height={imgSize}
         priority
@@ -22,7 +22,7 @@ export default function WeFixPDFLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg
       {/* light mode — swap with your light logo once available */}
       <Image
         src="/logo.png"
-        alt="weFixPDF Logo"
+        alt="weFixPDF light mode logo"
         width={imgSize}
         height={imgSize}
         priority

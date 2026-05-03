@@ -28,6 +28,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/disclaimer`,     lastModified: today, priority: 0.3 },
     { url: `${BASE_URL}/terms`,          lastModified: today, priority: 0.3 },
     { url: `${BASE_URL}/contact`,        lastModified: today, priority: 0.5 },
+    { url: `${BASE_URL}/tools/image`, lastModified: today, priority: 0.9 },
+    { url: `${BASE_URL}/tools/pdf`, lastModified: today, priority: 0.9 },
+    { url: `${BASE_URL}/tools/developer`, lastModified: today, priority: 0.9 },
+
+
   ];
 
   // Dynamic pages from DB
