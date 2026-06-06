@@ -16,8 +16,20 @@ export default function CookieConsent() {
     localStorage.setItem("cookie_consent", type);
     setShowBanner(false);
 
-    window.dispatchEvent(new Event("cookie-consent-updated"));
+    // Update Google Consent Mode (defaults are set denied in <head>).
+    const v = type === "accepted" ? "granted" : "denied";
+    (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag?.(
+      "consent",
+      "update",
+      {
+        ad_storage: v,
+        ad_user_data: v,
+        ad_personalization: v,
+        analytics_storage: v,
+      }
+    );
 
+    window.dispatchEvent(new Event("cookie-consent-updated"));
   };
 
   if (!showBanner) return null;

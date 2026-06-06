@@ -19,6 +19,8 @@ export const NOINDEX_SLUGS = new Set<string>([
   "wasm-analyzer",
   "text-to-ascii-art",
   "credit-card-validator",
+  "og-meta-tag-previewer",
+  "js-minifier",
 ]);
 
 export function isExcludedFromSitemap(slug: string): boolean {
