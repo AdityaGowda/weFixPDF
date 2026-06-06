@@ -3,42 +3,23 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { Copy, Check, Trash2, Upload, Download, RefreshCw, ChevronRight } from 'lucide-react';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Types
-// ─────────────────────────────────────────────────────────────────────────────
-
 export interface SplitEditorPaneProps {
-  /** Label shown above the left (input) panel */
   leftLabel: string;
-  /** Label shown above the right (output) panel */
   rightLabel: string;
   leftPlaceholder?: string;
   rightPlaceholder?: string;
-  /** Pre-fill a sample to let users try immediately */
   sampleInput?: string;
-  /** e.g. ".csv,.txt" — enables file upload button on the left */
   fileAccept?: string;
-  /** Called on every input change; return converted string or throw on error */
   convert: (input: string) => string;
-  /** File extension for the output download button, e.g. "json" */
   downloadExt?: string;
-  /** Optional toolbar extras rendered between left label and clear button */
   leftToolbar?: React.ReactNode;
-  /** Optional content rendered below the right output textarea */
   rightExtra?: React.ReactNode;
-  /** If true, renders a swap ⇄ button and calls onSwap */
   canSwap?: boolean;
   onSwap?: () => void;
-  /** Controlled input value (optional — makes the left pane controlled) */
   inputValue?: string;
   onInputChange?: (v: string) => void;
-  /** Min height of each textarea in px */
   minHeight?: number;
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// CopyButton — small inline copy-to-clipboard with tick feedback
-// ─────────────────────────────────────────────────────────────────────────────
 
 export function CopyButton({ text, className = '' }: { text: string; className?: string }) {
   const [copied, setCopied] = useState(false);
@@ -48,7 +29,6 @@ export function CopyButton({ text, className = '' }: { text: string; className?:
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
-      /* ignore */
     }
   }, [text]);
 
@@ -68,10 +48,6 @@ export function CopyButton({ text, className = '' }: { text: string; className?:
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Panel — reusable left/right panel wrapper
-// ─────────────────────────────────────────────────────────────────────────────
-
 interface PanelProps {
   label: string;
   lang?: string;
@@ -83,7 +59,6 @@ interface PanelProps {
 export function Panel({ label, lang, children, toolbar, accent = '#7C3AED' }: PanelProps) {
   return (
     <div className="flex flex-col rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden bg-[var(--bg-card)]">
-      {/* Panel header */}
       <div className="flex items-center justify-between gap-2 px-3 py-2 border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] bg-[var(--surface)]">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: accent }} />
@@ -96,15 +71,10 @@ export function Panel({ label, lang, children, toolbar, accent = '#7C3AED' }: Pa
         </div>
         {toolbar && <div className="flex items-center gap-1">{toolbar}</div>}
       </div>
-      {/* Panel body */}
       <div className="flex-1 flex flex-col">{children}</div>
     </div>
   );
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// EditorTextarea — shared textarea style
-// ─────────────────────────────────────────────────────────────────────────────
 
 interface EditorTextareaProps {
   value: string;
@@ -135,10 +105,6 @@ export function EditorTextarea({ value, onChange, placeholder, readOnly, minHeig
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// StatusBar — shown between panels
-// ─────────────────────────────────────────────────────────────────────────────
-
 function StatusBar({ error, outputLen }: { error: string | null; outputLen: number }) {
   if (error) {
     return (
@@ -158,10 +124,6 @@ function StatusBar({ error, outputLen }: { error: string | null; outputLen: numb
   }
   return null;
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SplitEditorPane — the main reusable component
-// ─────────────────────────────────────────────────────────────────────────────
 
 export default function SplitEditorPane({
   leftLabel,
@@ -188,7 +150,6 @@ export default function SplitEditorPane({
   const input = inputValue !== undefined ? inputValue : internalInput;
   const setInput = onInputChange ?? setInternalInput;
 
-  // Live convert on every input change
   useEffect(() => {
     if (!input.trim()) { setOutput(''); setError(null); return; }
     try {
@@ -222,9 +183,7 @@ export default function SplitEditorPane({
 
   return (
     <div className="w-full space-y-3">
-      {/* Two-panel grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {/* ── LEFT: Input ── */}
         <Panel
           label={leftLabel}
           accent="#7C3AED"
@@ -272,7 +231,6 @@ export default function SplitEditorPane({
           )}
         </Panel>
 
-        {/* ── RIGHT: Output ── */}
         <Panel
           label={rightLabel}
           accent="#163863"
@@ -303,7 +261,6 @@ export default function SplitEditorPane({
         </Panel>
       </div>
 
-      {/* Hint row */}
       {!input && (
         <p className="text-center text-[12px]" style={{ color: 'var(--text-subtle)' }}>
           Paste into the left panel{fileAccept ? ', upload a file, ' : ' '}or click <strong>Sample</strong> to try it out
@@ -314,11 +271,6 @@ export default function SplitEditorPane({
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// ToolShell — wraps the interactive UI with a consistent outer container
-// Used by every dev tool page so spacing is uniform
-// ─────────────────────────────────────────────────────────────────────────────
-
 export function ToolShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="w-full rounded-2xl border border-[rgba(0,0,0,0.07)] dark:border-[rgba(255,255,255,0.07)] bg-[var(--surface)] p-4 md:p-5">
@@ -326,10 +278,6 @@ export function ToolShell({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SelectChip — small pill select used in toolbars
-// ─────────────────────────────────────────────────────────────────────────────
 
 export function SelectChip({
   label, value, options, onChange,
@@ -347,10 +295,6 @@ export function SelectChip({
     </label>
   );
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// ToggleChip — small pill toggle
-// ─────────────────────────────────────────────────────────────────────────────
 
 export function ToggleChip({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (

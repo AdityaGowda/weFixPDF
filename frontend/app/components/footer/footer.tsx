@@ -47,7 +47,6 @@ export default async function Footer() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-8 gap-y-12">
 
-          {/* Brand Column */}
           <div className="sm:col-span-2 md:col-span-4 lg:col-span-1 space-y-5">
             <WeFixPDFLogo size="sm" />
             <p className="text-[13px] leading-[1.65] max-w-sm lg:max-w-none" style={{ color: 'var(--text-muted)' }}>
@@ -61,7 +60,6 @@ export default async function Footer() {
             </div>
           </div>
 
-          {/* Navigation Columns */}
           {footerNav.map((col) => (
             <nav key={col.label} className="space-y-4" aria-label={col.label}>
               <h5 className="text-[12px] font-bold uppercase tracking-wider">
@@ -97,7 +95,6 @@ export default async function Footer() {
           ))}
         </div>
 
-        {/* Bottom bar */}
         <div className="mt-14 pt-8 border-t border-[rgba(0,0,0,0.07)] dark:border-[rgba(255,255,255,0.07)] flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex flex-col items-center md:items-start text-center md:text-left gap-1">
             <p className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>

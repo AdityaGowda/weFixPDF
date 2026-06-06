@@ -12,7 +12,6 @@ const uid = () => Math.random().toString(36).slice(2);
 
 const FIELD_TYPES: FieldType[] = ['string','number','boolean','date','email','uuid','name','address'];
 
-// ── Generators ───────────────────────────────────────────────────────────────
 const WORDS    = ['alpha','beta','gamma','delta','echo','foxtrot','hotel','india','juliet','kilo','lima','mike','november'];
 const FIRSTS   = ['Alice','Bob','Carol','David','Emma','Frank','Grace','Henry','Iris','Jack','Kate','Liam','Mia','Noah','Olivia','Paul','Quinn','Rose','Sam','Tara'];
 const LASTS    = ['Smith','Johnson','Williams','Jones','Brown','Davis','Miller','Wilson','Moore','Taylor','Anderson','Thomas','Jackson','White','Harris'];
@@ -98,14 +97,12 @@ export default function MockJsonGenerator() {
   return (
     <ToolShell>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Left: Schema */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Schema</p>
             <button onClick={addField} className={iconBtn}><Plus className="w-3 h-3" /> Add field</button>
           </div>
 
-          {/* Column headers */}
           <div className="grid grid-cols-[1fr_auto_auto_auto] gap-2 px-1 text-[10px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
             <span>Field name</span><span>Type</span><span>Array</span><span />
           </div>
@@ -129,7 +126,6 @@ export default function MockJsonGenerator() {
             </div>
           ))}
 
-          {/* Count + Generate */}
           <div className="flex items-center gap-3 pt-2">
             <label className="text-[11px] font-medium" style={{ color: 'var(--text-muted)' }}>Records</label>
             <input type="number" value={count} onChange={e => setCount(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))}
@@ -141,7 +137,6 @@ export default function MockJsonGenerator() {
           </div>
         </div>
 
-        {/* Right: Output */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden flex flex-col">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">

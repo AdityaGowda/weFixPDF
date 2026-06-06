@@ -1,10 +1,5 @@
 import beautify from 'js-beautify';
 
-/**
- * Clean Architecture Utility File for all Developer Tools
- * All processing is done 100% Client-Side for maximum speed and privacy.
- */
-
 export const formatHtml = (input: string) => beautify.html(input, { indent_size: 2 });
 export const formatXml = (input: string) => beautify.html(input, { indent_size: 2, extra_liners: [] });
 export const formatJs = (input: string) => beautify.js(input, { indent_size: 2 });
@@ -12,15 +7,15 @@ export const formatCss = (input: string) => beautify.css(input, { indent_size: 2
 
 export const minifyJs = (input: string) => {
   return input
-    .replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '') // Remove comments
-    .replace(/\s+/g, ' ') // Collapse whitespace
+    .replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '')
+    .replace(/\s+/g, ' ')
     .trim();
 };
 
 export const minifyCss = (input: string) => {
   return input
-    .replace(/\/\*[\s\S]*?\*\//g, '') // Remove comments
-    .replace(/\s+/g, ' ') // Collapse whitespace
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\s+/g, ' ')
     .replace(/\s*{\s*/g, '{')
     .replace(/\s*}\s*/g, '}')
     .replace(/\s*:\s*/g, ':')
@@ -51,8 +46,6 @@ export const validateHtml = (input: string) => {
   if (!input.trim()) return 'No input provided.';
   const parser = new DOMParser();
   const doc = parser.parseFromString(input, 'text/html');
-  // Basic validation; standard browser parser tries to fix errors, 
-  // so true validation requires checking for stray tags manually or using a heavy linter.
   return 'HTML Parsed successfully by browser DOM.';
 };
 
@@ -88,7 +81,7 @@ export const testXPath = (xml: string, xpath: string) => {
     const doc = parser.parseFromString(xml, 'application/xml');
     const errorNode = doc.querySelector('parsererror');
     if (errorNode) throw new Error('Invalid XML data provided.');
-    
+
     const result = doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null);
     let output = '';
     let node = result.iterateNext();
@@ -147,10 +140,10 @@ export const transformXslt = (xml: string, xslt: string) => {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xml, 'application/xml');
     if (xmlDoc.querySelector('parsererror')) throw new Error('Invalid XML');
-    
+
     const xslDoc = parser.parseFromString(xslt, 'application/xml');
     if (xslDoc.querySelector('parsererror')) throw new Error('Invalid XSLT');
-    
+
     const processor = new XSLTProcessor();
     processor.importStylesheet(xslDoc);
     const resultDoc = processor.transformToDocument(xmlDoc);
@@ -161,7 +154,6 @@ export const transformXslt = (xml: string, xslt: string) => {
 };
 
 export const generateXsd = (xml: string) => {
-  // A basic mock generator since full XSD generation requires deep schema inference logic
   return `<!-- Auto-generated mock XSD schema based on the provided XML -->\n<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">\n  <xs:element name="Root">\n    <xs:complexType>\n      <xs:sequence>\n        <!-- Elements inferred from XML structure would go here -->\n      </xs:sequence>\n    </xs:complexType>\n  </xs:element>\n</xs:schema>`;
 };
 

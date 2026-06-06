@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 
 export default function CustomUploadBoxScanToPdf() {
-  const [isMobile, setIsMobile] = useState<boolean | null>(null); // null = not yet checked
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [photoData, setPhotoData] = useState<string | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
@@ -19,24 +19,20 @@ export default function CustomUploadBoxScanToPdf() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
-  // Detect touchscreen device (most reliable signal for camera availability)
   useEffect(() => {
     setIsMobile(window.matchMedia("(pointer: coarse)").matches);
   }, []);
 
-  // Keep streamRef in sync so cleanup always has the latest stream
   useEffect(() => {
     streamRef.current = stream;
   }, [stream]);
 
-  // Attach stream to video element when stream changes
   useEffect(() => {
     if (stream && videoRef.current) {
       videoRef.current.srcObject = stream;
     }
   }, [stream]);
 
-  // Stop camera on unmount
   useEffect(() => {
     return () => stopCamera();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,7 +49,6 @@ export default function CustomUploadBoxScanToPdf() {
   const startCamera = async () => {
     setCameraError(null);
     try {
-      // Try rear camera first, fall back to any camera
       let mediaStream: MediaStream;
       try {
         mediaStream = await navigator.mediaDevices.getUserMedia({
@@ -102,9 +97,8 @@ export default function CustomUploadBoxScanToPdf() {
       const imgW = canvasRef.current.width;
       const imgH = canvasRef.current.height;
 
-      // Fit image into A4 preserving aspect ratio
-      const a4W = 210; // mm
-      const a4H = 297; // mm
+      const a4W = 210;
+      const a4H = 297;
       const ratio = Math.min(a4W / imgW, a4H / imgH);
       const fitW = imgW * ratio;
       const fitH = imgH * ratio;
@@ -136,10 +130,8 @@ export default function CustomUploadBoxScanToPdf() {
     setCameraError(null);
   };
 
-  // Still detecting
   if (isMobile === null) return null;
 
-  // Desktop: show mobile-only notice
   if (!isMobile) {
     return (
       <div className="w-full max-w-xl mx-auto">
@@ -171,11 +163,9 @@ export default function CustomUploadBoxScanToPdf() {
     );
   }
 
-  // Mobile: camera UI
   return (
     <div className="w-full max-w-sm mx-auto">
 
-      {/* Error banner */}
       {cameraError && (
         <div className="mb-4 flex items-start gap-3 p-4 rounded-2xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20">
           <AlertCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
@@ -186,7 +176,6 @@ export default function CustomUploadBoxScanToPdf() {
         </div>
       )}
 
-      {/* Step 1: Start screen */}
       {!stream && !photoData && !pdfUrl && (
         <div className="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-10 text-center">
           <div className="w-20 h-20 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -205,7 +194,6 @@ export default function CustomUploadBoxScanToPdf() {
         </div>
       )}
 
-      {/* Step 2: Camera viewfinder */}
       {stream && !photoData && (
         <div className="flex flex-col items-center gap-6">
           <div className="relative w-full rounded-3xl overflow-hidden bg-black border-4 border-slate-800 shadow-2xl">
@@ -217,10 +205,8 @@ export default function CustomUploadBoxScanToPdf() {
               className="w-full object-cover"
               style={{ minHeight: "60vh" }}
             />
-            {/* Viewfinder overlay */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="w-4/5 h-4/5 border-2 border-white/60 rounded-xl relative">
-                {/* Corner marks */}
                 {[
                   "top-0 left-0 border-t-4 border-l-4 rounded-tl-lg",
                   "top-0 right-0 border-t-4 border-r-4 rounded-tr-lg",
@@ -236,7 +222,6 @@ export default function CustomUploadBoxScanToPdf() {
             </p>
           </div>
           <canvas ref={canvasRef} className="hidden" />
-          {/* Shutter button */}
           <button
             onClick={takePhoto}
             className="w-20 h-20 bg-white border-4 border-emerald-500 rounded-full shadow-xl shadow-emerald-500/30 flex items-center justify-center active:scale-95 transition-transform"
@@ -250,7 +235,6 @@ export default function CustomUploadBoxScanToPdf() {
         </div>
       )}
 
-      {/* Step 3: Review photo */}
       {photoData && !pdfUrl && (
         <div className="flex flex-col items-center gap-5">
           <div className="w-full rounded-3xl overflow-hidden border-4 border-slate-200 dark:border-slate-700 shadow-xl">
@@ -275,7 +259,6 @@ export default function CustomUploadBoxScanToPdf() {
         </div>
       )}
 
-      {/* Step 4: Download */}
       {pdfUrl && (
         <div className="rounded-3xl bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-200 dark:border-emerald-800/50 p-10 text-center">
           <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-5">

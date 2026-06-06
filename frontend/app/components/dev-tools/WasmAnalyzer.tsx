@@ -3,9 +3,6 @@
 import { useState, useCallback, useRef } from 'react';
 import { ToolShell, CopyButton } from './SplitEditorPane';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// LEB128 unsigned decoder
-// ─────────────────────────────────────────────────────────────────────────────
 function readULEB128(bytes: Uint8Array, offset: number): [number, number] {
   let result = 0;
   let shift = 0;
@@ -26,9 +23,6 @@ function readString(bytes: Uint8Array, offset: number): [string, number] {
   return [str, lenBytes + len];
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Types
-// ─────────────────────────────────────────────────────────────────────────────
 interface WasmSection { id: number; name: string; size: number; offset: number }
 interface WasmImport  { module: string; field: string; kind: string }
 interface WasmExport  { name: string; kind: string; index: number }
@@ -53,14 +47,10 @@ const SECTION_NAMES: Record<number, string> = {
 
 const KIND_NAMES = ['Function', 'Table', 'Memory', 'Global'];
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Parser
-// ─────────────────────────────────────────────────────────────────────────────
 function analyzeWasm(buffer: ArrayBuffer): WasmAnalysis {
   const bytes = new Uint8Array(buffer);
   const view  = new DataView(buffer);
 
-  // Magic: \0asm  Version: 1
   if (bytes.length < 8
     || view.getUint32(0, false) !== 0x0061736D
     || view.getUint32(4, true)  !== 1) {
@@ -84,7 +74,6 @@ function analyzeWasm(buffer: ArrayBuffer): WasmAnalysis {
     offset += sectionSize;
   }
 
-  // ── Imports (section 2) ────────────────────────────────────────────────────
   const imports: WasmImport[] = [];
   const importSec = sections.find(s => s.id === 2);
   if (importSec) {
@@ -94,16 +83,14 @@ function analyzeWasm(buffer: ArrayBuffer): WasmAnalysis {
       const [mod, mb] = readString(bytes, pos); pos += mb;
       const [field, fb] = readString(bytes, pos); pos += fb;
       const kind = bytes[pos++] ?? 0;
-      // skip kind-specific data
-      if (kind === 0) { const [, tb] = readULEB128(bytes, pos); pos += tb; }      // func: type idx
-      else if (kind === 1) { pos += 2; }                                          // table: type + limits
-      else if (kind === 2) { const flags = bytes[pos++]; pos++; if (flags & 1) pos++; } // memory limits
-      else if (kind === 3) { pos += 2; }                                          // global: type + mutability
+      if (kind === 0) { const [, tb] = readULEB128(bytes, pos); pos += tb; }
+      else if (kind === 1) { pos += 2; }
+      else if (kind === 2) { const flags = bytes[pos++]; pos++; if (flags & 1) pos++; }
+      else if (kind === 3) { pos += 2; }
       imports.push({ module: mod, field, kind: KIND_NAMES[kind] ?? 'Unknown' });
     }
   }
 
-  // ── Exports (section 7) ────────────────────────────────────────────────────
   const exports: WasmExport[] = [];
   const exportSec = sections.find(s => s.id === 7);
   if (exportSec) {
@@ -117,7 +104,6 @@ function analyzeWasm(buffer: ArrayBuffer): WasmAnalysis {
     }
   }
 
-  // ── Memory (section 5) ────────────────────────────────────────────────────
   let memory: WasmMemory | null = null;
   const memSec = sections.find(s => s.id === 5);
   if (memSec) {
@@ -132,7 +118,6 @@ function analyzeWasm(buffer: ArrayBuffer): WasmAnalysis {
     }
   }
 
-  // ── Function count (section 3) ────────────────────────────────────────────
   let functionCount = 0;
   const funcSec = sections.find(s => s.id === 3);
   if (funcSec) {
@@ -140,7 +125,6 @@ function analyzeWasm(buffer: ArrayBuffer): WasmAnalysis {
     functionCount = count;
   }
 
-  // ── Tips ─────────────────────────────────────────────────────────────────
   const tips: string[] = [];
   const customSections = sections.filter(s => s.id === 0);
   const customSize = customSections.reduce((a, s) => a + s.size, 0);
@@ -154,9 +138,6 @@ function analyzeWasm(buffer: ArrayBuffer): WasmAnalysis {
   return { valid: true, totalSize: bytes.length, sections, imports, exports, memory, functionCount, tips };
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Helpers
-// ─────────────────────────────────────────────────────────────────────────────
 function fmtBytes(n: number): string {
   if (n < 1024) return `${n} B`;
   if (n < 1048576) return `${(n / 1024).toFixed(1)} KB`;
@@ -173,9 +154,6 @@ const SECTION_COLORS: Record<number, string> = {
   10: '#F59E0B', 11: '#EF4444',
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Component
-// ─────────────────────────────────────────────────────────────────────────────
 export default function WasmAnalyzer() {
   const [analysis, setAnalysis] = useState<WasmAnalysis | null>(null);
   const [fileName, setFileName]   = useState('');
@@ -213,7 +191,6 @@ export default function WasmAnalyzer() {
     e.target.value = '';
   }, [process]);
 
-  // JSON export of analysis
   const exportJson = analysis ? JSON.stringify({
     file: fileName, totalSize: analysis.totalSize,
     sections: analysis.sections.map(s => ({ name: s.name, size: s.size })),
@@ -224,7 +201,6 @@ export default function WasmAnalyzer() {
   return (
     <ToolShell>
       <div className="space-y-5">
-        {/* Drop zone */}
         <div
           onDragOver={e => { e.preventDefault(); setDragging(true); }}
           onDragLeave={() => setDragging(false)}
@@ -253,7 +229,6 @@ export default function WasmAnalyzer() {
 
         {analysis && (
           <>
-            {/* Summary bar */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
                 { label: 'Total Size',    value: fmtBytes(analysis.totalSize) },
@@ -268,13 +243,11 @@ export default function WasmAnalyzer() {
               ))}
             </div>
 
-            {/* Section breakdown */}
             <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
               <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
                 <span className="w-2 h-2 rounded-full bg-[#7C3AED]" />
                 <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Section Breakdown</span>
               </div>
-              {/* Stacked bar */}
               <div className="flex h-3 overflow-hidden">
                 {analysis.sections.map((s, i) => (
                   <div
@@ -317,9 +290,7 @@ export default function WasmAnalyzer() {
               </table>
             </div>
 
-            {/* Exports + Imports side by side */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {/* Exports */}
               <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
                 <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
                   <span className="w-2 h-2 rounded-full bg-[#163863]" />
@@ -346,7 +317,6 @@ export default function WasmAnalyzer() {
                 </div>
               </div>
 
-              {/* Imports */}
               <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
                 <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
                   <span className="w-2 h-2 rounded-full bg-[#2563EB]" />
@@ -374,7 +344,6 @@ export default function WasmAnalyzer() {
               </div>
             </div>
 
-            {/* Memory */}
             {analysis.memory && (
               <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] px-4 py-3 flex items-center gap-6 bg-[var(--bg-card)]">
                 <span className="text-[12px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Memory</span>
@@ -391,7 +360,6 @@ export default function WasmAnalyzer() {
               </div>
             )}
 
-            {/* Tips */}
             <div className="rounded-xl border border-[rgba(245,158,11,0.3)] bg-[rgba(245,158,11,0.04)] overflow-hidden">
               <div className="flex items-center gap-2 px-3 py-2 border-b border-[rgba(245,158,11,0.2)]">
                 <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />
@@ -407,7 +375,6 @@ export default function WasmAnalyzer() {
               </ul>
             </div>
 
-            {/* Export JSON */}
             <div className="flex justify-end">
               <CopyButton text={exportJson} />
             </div>

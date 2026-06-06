@@ -36,7 +36,8 @@ exports.getRatingStats = async (req, res) => {
 
     const stats = rows[0];
     res.status(200).json({
-      averageRating: parseFloat(stats.averageRating || 0).toFixed(1),
+      // Return as a number (not a toFixed string) so clients can do math directly.
+      averageRating: Number(parseFloat(stats.averageRating || 0).toFixed(1)),
       totalRatings: stats.totalRatings || 0,
     });
   } catch (error) {

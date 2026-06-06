@@ -21,7 +21,6 @@ export default function ToolRating({ toolSlug }: ToolRatingProps) {
     const hasRated = localStorage.getItem(`rated_${toolSlug}`);
     if (hasRated) setSubmitted(true);
 
-    // Fetch stats
     const fetchStats = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/rating/${toolSlug}/stats`);
@@ -80,7 +79,7 @@ export default function ToolRating({ toolSlug }: ToolRatingProps) {
           </div>
           <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">Thanks for the feedback!</h3>
           <p className="text-slate-600 dark:text-slate-400 max-w-sm mx-auto">Your rating helps us keep weFixPDF free and reliable for everyone.</p>
-          
+
           {stats && stats.totalRatings > 0 && (
             <div className="mt-8 pt-8 border-t border-emerald-100 dark:border-emerald-500/10 flex items-center justify-center gap-4">
                <div className="text-left">
@@ -101,16 +100,15 @@ export default function ToolRating({ toolSlug }: ToolRatingProps) {
 
   return (
     <section id="rating-section" className="bg-white dark:bg-[#0c0c0e] border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] p-8 md:p-10 rounded-[2rem] shadow-sm relative overflow-hidden group">
-      {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,#3b82f610,transparent_50%)] pointer-events-none" />
-      
+
       <div className="max-w-xl mx-auto relative z-10">
         <div className="text-center mb-8">
           <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight">Rate this tool</h3>
           <p className="text-slate-500 dark:text-slate-400 text-[15px] leading-relaxed">
             How was your experience? Your feedback helps us build better tools.
           </p>
-          
+
           {stats && stats.totalRatings > 0 && (
              <div className="flex items-center justify-center gap-3 mt-6">
                 <div className="flex gap-0.5">
@@ -126,7 +124,6 @@ export default function ToolRating({ toolSlug }: ToolRatingProps) {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Star Selection */}
           <div className="flex justify-center gap-2">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
@@ -149,7 +146,6 @@ export default function ToolRating({ toolSlug }: ToolRatingProps) {
           </div>
 
           <div className="space-y-4">
-            {/* Feedback Text */}
             <textarea
               placeholder="What could we improve? (Optional)"
               value={feedback}
@@ -157,7 +153,6 @@ export default function ToolRating({ toolSlug }: ToolRatingProps) {
               className="w-full px-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-sm min-h-[100px]"
             />
 
-            {/* Name Input */}
             <div className="relative">
               <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input

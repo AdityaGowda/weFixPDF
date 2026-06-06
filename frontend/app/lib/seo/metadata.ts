@@ -1,8 +1,3 @@
-// lib/seo/metadata.ts
-// ─────────────────────────────────────────────────────────────
-// generateMetadata helper for all page types
-// Usage: export const metadata = buildMetadata(page)
-// ─────────────────────────────────────────────────────────────
 
 import type { Metadata } from "next";
 import type { SeoPage } from "./seoApi";
@@ -38,12 +33,11 @@ export function buildMetadata(page: SeoPage, pathPrefix = ""): Metadata {
   };
 }
 
-// JSON-LD schema builders
 export function buildToolSchema(page: SeoPage, rating?: { averageRating: string; totalRatings: number }) {
   const absoluteUrl = page.url?.startsWith("http")
     ? page.url
     : `${BASE_URL}${page.url}`;
-  
+
   const schema: any = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",

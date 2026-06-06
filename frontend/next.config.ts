@@ -49,6 +49,14 @@ const TOOL_SLUGS = [
   'api-ping-tester',
 ];
 
+/* Consolidation: old single-format escape slugs → /tools/string-escape.
+   Mirror of frontend/app/lib/seo/consolidation.ts STRING_ESCAPE_OLD_SLUGS.
+   (Kept inline so next.config stays import-free at build time.) */
+const STRING_ESCAPE_OLD_SLUGS = [
+  "html-escape", "xml-escape", "java-dotnet-escape", "javascript-escape",
+  "json-escape", "csv-escape", "sql-escape",
+];
+
 const nextConfig: NextConfig = {
   output: "standalone",
   async headers() {
@@ -91,6 +99,13 @@ const nextConfig: NextConfig = {
         destination: `/tools/${slug}`,
         permanent: true,
       })),
+      // ── Consolidation: 7 string-escape tools → /tools/string-escape (301) ──
+      // Keep in sync with frontend/app/lib/seo/consolidation.ts (STRING_ESCAPE_OLD_SLUGS)
+      // and migrations/002_set_noindex_thin_tools.sql.
+      ...STRING_ESCAPE_OLD_SLUGS.flatMap((slug) => [
+        { source: `/tools/${slug}`, destination: "/tools/string-escape", permanent: true },
+        { source: `/${slug}`, destination: "/tools/string-escape", permanent: true },
+      ]),
       // Numbered slug variants → /tools/slug (e.g. /split-pdf1 → /tools/split-pdf)
       {
         source: "/:slug([a-z][a-z-]*[a-z]):num(\\d+)",

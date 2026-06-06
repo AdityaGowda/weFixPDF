@@ -3,12 +3,9 @@
 import { useState, useRef, useCallback } from 'react';
 import { ToolShell, CopyButton } from './SplitEditorPane';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Types
-// ─────────────────────────────────────────────────────────────────────────────
 interface PingResult {
   attempt:    number;
-  duration:   number | null;   // ms, null = error
+  duration:   number | null;
   status:     number | null;
   statusText: string;
   error:      string;
@@ -30,9 +27,6 @@ function makeEmptyEndpoint(): EndpointState {
   return { url: '', method: 'GET', headers: [], results: [], running: false, runs: 5 };
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Single ping
-// ─────────────────────────────────────────────────────────────────────────────
 async function ping(url: string, method: string, headers: Record<string, string>): Promise<Omit<PingResult, 'attempt' | 'timestamp'>> {
   const start = performance.now();
   try {
@@ -47,7 +41,6 @@ async function ping(url: string, method: string, headers: Record<string, string>
   } catch (e: any) {
     const duration = performance.now() - start;
     const msg = e instanceof Error ? e.message : String(e);
-    // CORS errors appear as TypeError: Failed to fetch
     const error = msg.includes('Failed to fetch') || msg.includes('NetworkError')
       ? 'Network error / CORS blocked — check the URL and ensure the server allows cross-origin requests.'
       : msg;
@@ -55,9 +48,6 @@ async function ping(url: string, method: string, headers: Record<string, string>
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Stats
-// ─────────────────────────────────────────────────────────────────────────────
 function computeStats(results: PingResult[]) {
   const durations = results.map(r => r.duration).filter((d): d is number => d !== null);
   if (durations.length === 0) return null;
@@ -78,9 +68,6 @@ function statusColor(status: number | null): string {
   return '#EF4444';
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Bar chart
-// ─────────────────────────────────────────────────────────────────────────────
 function LatencyChart({ results }: { results: PingResult[] }) {
   if (results.length === 0) return null;
   const max = Math.max(...results.map(r => r.duration ?? 0), 1);
@@ -104,9 +91,6 @@ function LatencyChart({ results }: { results: PingResult[] }) {
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Endpoint panel
-// ─────────────────────────────────────────────────────────────────────────────
 function EndpointPanel({
   ep, idx, onChange, onRun, accent,
 }: {
@@ -127,7 +111,6 @@ function EndpointPanel({
 
   return (
     <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
-      {/* Header */}
       <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
         <span className="w-2 h-2 rounded-full" style={{ background: accent }} />
         <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Endpoint {idx + 1}</span>
@@ -139,7 +122,6 @@ function EndpointPanel({
       </div>
 
       <div className="p-4 space-y-3">
-        {/* URL + Method */}
         <div className="flex gap-2">
           <select
             value={ep.method}
@@ -159,7 +141,6 @@ function EndpointPanel({
           />
         </div>
 
-        {/* Headers */}
         {ep.headers.map((h, i) => (
           <div key={i} className="flex gap-2">
             <input
@@ -181,7 +162,6 @@ function EndpointPanel({
         <div className="flex items-center gap-3 flex-wrap">
           <button onClick={addHeader} className={iconBtn}>+ Header</button>
 
-          {/* Runs */}
           <label className="flex items-center gap-2">
             <span className="text-[11px] font-medium" style={{ color: 'var(--text-muted)' }}>Runs</span>
             <input
@@ -206,11 +186,9 @@ function EndpointPanel({
           )}
         </div>
 
-        {/* Chart */}
         {ep.results.length > 0 && (
           <div className="space-y-2">
             <LatencyChart results={ep.results} />
-            {/* Result rows */}
             <div className="overflow-auto" style={{ maxHeight: 160 }}>
               <table className="w-full text-[11px]">
                 <thead>
@@ -241,7 +219,6 @@ function EndpointPanel({
               </table>
             </div>
 
-            {/* Stats summary */}
             {stats && (
               <div className="flex flex-wrap gap-4 text-[11px] pt-1 border-t border-[rgba(0,0,0,0.04)] dark:border-[rgba(255,255,255,0.04)]">
                 {[
@@ -264,9 +241,6 @@ function EndpointPanel({
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Main component
-// ─────────────────────────────────────────────────────────────────────────────
 export default function ApiPingTester() {
   const [endpoints, setEndpoints] = useState<EndpointState[]>([makeEmptyEndpoint()]);
   const abortRefs = useRef<(AbortController | null)[]>([null, null]);
@@ -279,7 +253,6 @@ export default function ApiPingTester() {
     const ep = endpoints[idx];
     if (!ep.url || ep.running) return;
 
-    // Clear old results
     updateEndpoint(idx, { results: [], running: true });
 
     const headerMap: Record<string, string> = {};
@@ -290,7 +263,6 @@ export default function ApiPingTester() {
       setEndpoints(eps => eps.map((e, i) =>
         i === idx ? { ...e, results: [...e.results, { ...result, attempt, timestamp: Date.now() }] } : e
       ));
-      // Small gap between requests to be polite
       if (attempt < ep.runs) await new Promise(r => setTimeout(r, 200));
     }
 
@@ -310,7 +282,6 @@ export default function ApiPingTester() {
   return (
     <ToolShell>
       <div className="space-y-4">
-        {/* Info banner */}
         <div className="rounded-xl bg-[rgba(37,99,235,0.06)] border border-[rgba(37,99,235,0.15)] px-4 py-3 text-[12px]" style={{ color: 'var(--text-muted)' }}>
           Requests are made directly from your browser — no proxy. CORS must be enabled on the target server.
           Test against public APIs or your own CORS-enabled endpoints. Compare two URLs side by side.
@@ -346,7 +317,6 @@ export default function ApiPingTester() {
           </button>
         )}
 
-        {/* Quick test URLs */}
         <div className="space-y-1">
           <p className="text-[11px] font-medium" style={{ color: 'var(--text-muted)' }}>Quick test — public APIs with CORS enabled:</p>
           <div className="flex flex-wrap gap-2">

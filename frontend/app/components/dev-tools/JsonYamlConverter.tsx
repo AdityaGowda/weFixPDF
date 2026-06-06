@@ -31,7 +31,6 @@ export default function JsonYamlConverter({ slug }: Props) {
   const isJsonToYaml = slug === 'json-to-yaml';
   const [swapped, setSwapped] = useState(false);
 
-  // Effective direction
   const toYaml = isJsonToYaml ? !swapped : swapped;
 
   const convert = useCallback(

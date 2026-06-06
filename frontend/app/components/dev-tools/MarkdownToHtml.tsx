@@ -41,7 +41,6 @@ export default function MarkdownToHtml() {
   const [rawHtml,   setRawHtml]   = useState('');
   const previewRef = useRef<HTMLDivElement>(null);
 
-  // Capture innerHTML after render for raw HTML view
   useEffect(() => {
     if (previewRef.current) {
       setRawHtml(previewRef.current.innerHTML);
@@ -53,7 +52,6 @@ export default function MarkdownToHtml() {
   return (
     <ToolShell>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {/* Left: Markdown input */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden flex flex-col">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">
@@ -75,7 +73,6 @@ export default function MarkdownToHtml() {
           />
         </div>
 
-        {/* Right: Preview or raw HTML */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden flex flex-col">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">

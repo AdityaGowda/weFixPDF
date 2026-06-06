@@ -3,54 +3,36 @@
 import { useState, useMemo } from 'react';
 import { ToolShell, CopyButton } from './SplitEditorPane';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Model definitions
-// ─────────────────────────────────────────────────────────────────────────────
 interface ModelDef {
   id: string;
   name: string;
   provider: string;
-  contextWindow: number;       // tokens
-  inputPricePer1M:  number;    // USD per 1M input tokens
-  outputPricePer1M: number;    // USD per 1M output tokens
-  avgCharsPerToken: number;    // calibration factor for approximation
+  contextWindow: number;
+  inputPricePer1M:  number;
+  outputPricePer1M: number;
+  avgCharsPerToken: number;
 }
 
 const MODELS: ModelDef[] = [
-  // OpenAI
   { id: 'gpt-4o',         name: 'GPT-4o',              provider: 'OpenAI',    contextWindow: 128_000, inputPricePer1M: 2.50,   outputPricePer1M: 10.00,  avgCharsPerToken: 4.0 },
   { id: 'gpt-4o-mini',    name: 'GPT-4o mini',         provider: 'OpenAI',    contextWindow: 128_000, inputPricePer1M: 0.15,   outputPricePer1M: 0.60,   avgCharsPerToken: 4.0 },
   { id: 'gpt-4-turbo',    name: 'GPT-4 Turbo',         provider: 'OpenAI',    contextWindow: 128_000, inputPricePer1M: 10.00,  outputPricePer1M: 30.00,  avgCharsPerToken: 4.0 },
   { id: 'gpt-3.5-turbo',  name: 'GPT-3.5 Turbo',      provider: 'OpenAI',    contextWindow: 16_385,  inputPricePer1M: 0.50,   outputPricePer1M: 1.50,   avgCharsPerToken: 4.0 },
   { id: 'o1',             name: 'o1',                  provider: 'OpenAI',    contextWindow: 128_000, inputPricePer1M: 15.00,  outputPricePer1M: 60.00,  avgCharsPerToken: 4.0 },
   { id: 'o3-mini',        name: 'o3-mini',             provider: 'OpenAI',    contextWindow: 200_000, inputPricePer1M: 1.10,   outputPricePer1M: 4.40,   avgCharsPerToken: 4.0 },
-  // Anthropic
   { id: 'claude-opus-4',     name: 'Claude Opus 4',     provider: 'Anthropic', contextWindow: 200_000, inputPricePer1M: 15.00,  outputPricePer1M: 75.00,  avgCharsPerToken: 3.8 },
   { id: 'claude-sonnet-4-6', name: 'Claude Sonnet 4.6', provider: 'Anthropic', contextWindow: 200_000, inputPricePer1M: 3.00,   outputPricePer1M: 15.00,  avgCharsPerToken: 3.8 },
   { id: 'claude-haiku-4-5',  name: 'Claude Haiku 4.5',  provider: 'Anthropic', contextWindow: 200_000, inputPricePer1M: 0.80,   outputPricePer1M: 4.00,   avgCharsPerToken: 3.8 },
-  // Google
   { id: 'gemini-2.5-pro',  name: 'Gemini 2.5 Pro',    provider: 'Google',    contextWindow: 1_000_000, inputPricePer1M: 1.25,  outputPricePer1M: 10.00,  avgCharsPerToken: 4.1 },
   { id: 'gemini-2.0-flash',name: 'Gemini 2.0 Flash',  provider: 'Google',    contextWindow: 1_000_000, inputPricePer1M: 0.10,  outputPricePer1M: 0.40,   avgCharsPerToken: 4.1 },
-  // Meta
   { id: 'llama-3.1-405b', name: 'Llama 3.1 405B',     provider: 'Meta',      contextWindow: 128_000, inputPricePer1M: 2.70,   outputPricePer1M: 2.70,   avgCharsPerToken: 3.9 },
   { id: 'llama-3.1-8b',   name: 'Llama 3.1 8B',       provider: 'Meta',      contextWindow: 128_000, inputPricePer1M: 0.06,   outputPricePer1M: 0.06,   avgCharsPerToken: 3.9 },
-  // Mistral
   { id: 'mistral-large',  name: 'Mistral Large 2',    provider: 'Mistral',   contextWindow: 128_000, inputPricePer1M: 2.00,   outputPricePer1M: 6.00,   avgCharsPerToken: 3.9 },
   { id: 'mistral-small',  name: 'Mistral Small 3.1',  provider: 'Mistral',   contextWindow: 128_000, inputPricePer1M: 0.10,   outputPricePer1M: 0.30,   avgCharsPerToken: 3.9 },
 ];
 
 const PROVIDERS = [...new Set(MODELS.map(m => m.provider))];
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Tokenizer approximation
-// Uses a BPE-inspired heuristic:
-//  - Common short English words → 1 token
-//  - Each punctuation/whitespace run → 1 token
-//  - Long or uncommon words split at ~4-char boundaries
-// Produces colored spans mapping approximate token chunks
-// ─────────────────────────────────────────────────────────────────────────────
-
-// 200 most common English words that are typically 1 token in GPT tokenizers
 const COMMON_WORDS = new Set([
   'the','be','to','of','and','a','in','that','have','it','for','not','on','with',
   'he','as','you','do','at','this','but','his','by','from','they','we','say','her',
@@ -82,7 +64,6 @@ function tokenize(text: string, charsPerToken: number): Token[] {
   while (i < len) {
     const ch = text[i];
 
-    // Whitespace run
     if (/\s/.test(ch)) {
       let j = i;
       while (j < len && /\s/.test(text[j])) j++;
@@ -91,12 +72,10 @@ function tokenize(text: string, charsPerToken: number): Token[] {
       continue;
     }
 
-    // Numeric run — each group of digits is roughly 1 token
     if (/\d/.test(ch)) {
       let j = i;
       while (j < len && /\d/.test(text[j])) j++;
       const numStr = text.slice(i, j);
-      // Long numbers split into pairs of digits
       const chunkSize = 2;
       for (let k = 0; k < numStr.length; k += chunkSize) {
         tokens.push({ text: numStr.slice(k, k + chunkSize), color: TOKEN_COLORS[colorIdx++ % TOKEN_COLORS.length] });
@@ -105,24 +84,20 @@ function tokenize(text: string, charsPerToken: number): Token[] {
       continue;
     }
 
-    // Punctuation — each character is typically 1 token
     if (/[^a-zA-Z0-9\s]/.test(ch)) {
       tokens.push({ text: ch, color: TOKEN_COLORS[colorIdx++ % TOKEN_COLORS.length] });
       i++;
       continue;
     }
 
-    // Word
     let j = i;
     while (j < len && /[a-zA-Z]/.test(text[j])) j++;
     const word = text.slice(i, j);
     const lower = word.toLowerCase();
 
     if (COMMON_WORDS.has(lower) || word.length <= 4) {
-      // Common short word → 1 token
       tokens.push({ text: word, color: TOKEN_COLORS[colorIdx++ % TOKEN_COLORS.length] });
     } else {
-      // Split long/uncommon word at charsPerToken boundaries (approximate subword tokenization)
       const chunk = Math.max(3, Math.round(charsPerToken));
       for (let k = 0; k < word.length; k += chunk) {
         tokens.push({ text: word.slice(k, k + chunk), color: TOKEN_COLORS[colorIdx++ % TOKEN_COLORS.length] });
@@ -146,9 +121,6 @@ function formatCost(dollars: number): string {
   return `$${dollars.toFixed(2)}`;
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Component
-// ─────────────────────────────────────────────────────────────────────────────
 export default function LlmTokenCounter() {
   const [text,      setText]      = useState('The quick brown fox jumps over the lazy dog. Large language models tokenize text differently depending on the model and vocabulary.');
   const [modelId,   setModelId]   = useState('gpt-4o');
@@ -171,7 +143,6 @@ export default function LlmTokenCounter() {
   return (
     <ToolShell>
       <div className="space-y-4">
-        {/* Provider filter + Model selector */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div>
             <label className="block text-[11px] font-medium mb-1" style={{ color: 'var(--text-muted)' }}>Provider</label>
@@ -201,7 +172,6 @@ export default function LlmTokenCounter() {
           </div>
         </div>
 
-        {/* Stats bar */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
             { label: 'Input tokens',  value: inputTokens.toLocaleString(),   color: '#7C3AED' },
@@ -216,7 +186,6 @@ export default function LlmTokenCounter() {
           ))}
         </div>
 
-        {/* Context window bar */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] p-3 bg-[var(--bg-card)]">
           <div className="flex justify-between mb-1">
             <span className="text-[11px] font-medium" style={{ color: 'var(--text-muted)' }}>
@@ -237,7 +206,6 @@ export default function LlmTokenCounter() {
           </div>
         </div>
 
-        {/* Text input with token highlighting */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">
@@ -259,7 +227,6 @@ export default function LlmTokenCounter() {
           />
         </div>
 
-        {/* Token visualization */}
         {tokens.length > 0 && (
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
@@ -290,14 +257,12 @@ export default function LlmTokenCounter() {
           </div>
         )}
 
-        {/* Output tokens + cost breakdown */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <span className="w-2 h-2 rounded-full bg-[#163863]" />
             <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Cost Breakdown</span>
           </div>
           <div className="p-4 space-y-3">
-            {/* Output tokens slider */}
             <div className="flex items-center gap-4">
               <label className="text-[11px] font-medium whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>
                 Output tokens: <code className="text-[#7C3AED] font-mono">{outTokens.toLocaleString()}</code>

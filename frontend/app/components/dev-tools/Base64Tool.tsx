@@ -62,7 +62,6 @@ export default function Base64Tool() {
 
   return (
     <ToolShell>
-      {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3 mb-4">
         <div className="inline-flex rounded-lg border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] overflow-hidden text-[11px] font-medium">
           {(['encode', 'decode'] as const).map(m => (
@@ -76,7 +75,6 @@ export default function Base64Tool() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {/* Input */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden flex flex-col">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">
@@ -95,7 +93,6 @@ export default function Base64Tool() {
           )}
         </div>
 
-        {/* Output */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden flex flex-col">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">
@@ -117,7 +114,6 @@ export default function Base64Tool() {
         </div>
       </div>
 
-      {/* File zone */}
       <div className="mt-4 space-y-3">
         <div
           onDragOver={e => { e.preventDefault(); setDrag(true); }}

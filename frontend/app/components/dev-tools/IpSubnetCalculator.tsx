@@ -103,7 +103,6 @@ export default function IpSubnetCalculator() {
   return (
     <ToolShell>
       <div className="space-y-5">
-        {/* Inputs */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
           <div>
             <label className="block text-[11px] font-medium mb-1" style={{ color: 'var(--text-muted)' }}>IPv4 Address</label>
@@ -127,7 +126,6 @@ export default function IpSubnetCalculator() {
           </div>
         </div>
 
-        {/* Results */}
         {result && !ipError && (
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
@@ -156,7 +154,6 @@ export default function IpSubnetCalculator() {
           </div>
         )}
 
-        {/* Quick CIDR reference */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />

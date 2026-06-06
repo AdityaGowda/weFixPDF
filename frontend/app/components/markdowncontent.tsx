@@ -2,8 +2,6 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { Components } from "react-markdown";
 
-// Body content sits below structural h2 sections (How It Works, Features, FAQ).
-// Shift markdown headings down one level so they don't compete with page h2s.
 const components: Components = {
   h1: ({ children }) => (
     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight">{children}</h2>

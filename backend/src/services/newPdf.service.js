@@ -15,8 +15,14 @@ function sendFile(res, filePath, contentType, downloadName) {
   res.setHeader("Content-Type", contentType);
   res.setHeader("Content-Disposition", `attachment; filename="${downloadName}"`);
   const stream = fs.createReadStream(filePath);
+  const cleanup = () => safeDelete(filePath);
+  stream.on("error", (err) => {
+    console.error("sendFile stream error:", err);
+    if (!res.headersSent) res.status(500).end();
+    cleanup();
+  });
+  res.on("close", cleanup);
   stream.pipe(res);
-  stream.on("close", () => safeDelete(filePath));
 }
 
 async function removeMetadata({ res, req, file }) {
@@ -106,19 +112,26 @@ async function comparePdf({ res, req, files }) {
 
     const lines1 = text1.split('\n');
     const lines2 = text2.split('\n');
-    
+
+    // Use Sets for O(1) membership checks instead of O(n) Array.includes per line.
+    const set1 = new Set(lines1);
+    const set2 = new Set(lines2);
+
+    const escapeHtml = (s) => s
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
     let htmlDiff = '<html><head><style>body{font-family:sans-serif;line-height:1.6;padding:20px} .del{background:#ffebee;color:#c62828;text-decoration:line-through;padding:2px} .add{background:#e8f5e9;color:#2e7d32;padding:2px}</style></head><body><h1>Comparison Report</h1><pre style="white-space: pre-wrap;">';
-    
+
     htmlDiff += '<h2>File 1 (Removed Lines):</h2>';
     for(let i=0; i<Math.min(lines1.length, 500); i++) {
-       if(!lines2.includes(lines1[i]) && lines1[i].trim().length > 0) {
-           htmlDiff += `<div class="del">- ${lines1[i]}</div>`;
+       if(!set2.has(lines1[i]) && lines1[i].trim().length > 0) {
+           htmlDiff += `<div class="del">- ${escapeHtml(lines1[i])}</div>`;
        }
     }
     htmlDiff += '<h2>File 2 (Added Lines):</h2>';
     for(let i=0; i<Math.min(lines2.length, 500); i++) {
-       if(!lines1.includes(lines2[i]) && lines2[i].trim().length > 0) {
-           htmlDiff += `<div class="add">+ ${lines2[i]}</div>`;
+       if(!set1.has(lines2[i]) && lines2[i].trim().length > 0) {
+           htmlDiff += `<div class="add">+ ${escapeHtml(lines2[i])}</div>`;
        }
     }
     
@@ -182,7 +195,8 @@ async function pdfToHtml({ res, req, file }) {
     const parsed = await pdfParse(pdfBuffer);
     const rawText = parsed.text || "";
     
-    const htmlLines = rawText.split('\n').map(l => `<p>${l}</p>`).join('');
+    const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const htmlLines = rawText.split('\n').map(l => `<p>${esc(l)}</p>`).join('');
     const finalHtml = `<html><head><meta charset="utf-8"/><style>body{max-width:800px;margin:auto;font-family:sans-serif;padding:20px;}</style></head><body>${htmlLines}</body></html>`;
 
     const uid = Date.now();

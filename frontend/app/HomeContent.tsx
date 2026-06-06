@@ -6,8 +6,6 @@ import {
 import HeroDropzone from "./components/HeroDropzone";
 import { type ToolListing } from "@/app/lib/seo/seoApi";
 
-/* ─── Icon map (slug → lucide icon) ────────────────────────── */
-
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number; color?: string }>> = {
   "compress-pdf": FileDown,
   "pdf-to-jpg": FileImage,
@@ -22,7 +20,6 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string; strokeW
   "image-compressor": Minimize2,
   "png-to-webp": Zap,
   "heic-to-jpg": Smartphone,
-  // Dev tools
   "csv-json-converter":      ArrowLeftRight,
   "color-palette-generator": Palette,
   "text-diff-checker":       GitCompare,
@@ -33,8 +30,6 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string; strokeW
   "json-formatter":          Braces,
   "jwt-decoder":             KeyRound,
 };
-
-/* ─── Fallback data (used when DB returns nothing) ──────────── */
 
 const FALLBACK_PDF_TOOLS = [
   { name: "Compress PDF", href: "/tools/compress-pdf", icon: FileDown, desc: "Reduce file size by up to 90%, losslessly." },
@@ -98,8 +93,6 @@ const faqs = [
     a: "Yes. Our compression removes redundant data and optimises embedded images while preserving text sharpness and visual fidelity."
   },
 ];
-
-/* ─── Sub-components ────────────────────────────────────────── */
 
 function FreeBadge() {
   return (
@@ -176,8 +169,6 @@ function SectionLabel({ children, color = 'blue', href }: { children: React.Reac
   );
 }
 
-/* ─── Page ──────────────────────────────────────────────────── */
-
 export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
   const dbPdfTools = tools
     .filter((t) => t.type === "PDF Tools")
@@ -209,7 +200,6 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
   return (
     <div>
 
-      {/* ══ 1. HERO ═══════════════════════════════════════════ */}
       <section
         className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]"
         style={{
@@ -219,17 +209,14 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-16">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-            {/* Left — copy */}
             <div className="space-y-6 max-w-lg">
 
-              {/* Headline */}
               <h1 className="text-hero" style={{ color: 'var(--text)' }}>
                 Free Online{' '}
                 <span style={{ color: 'var(--blue)' }}>PDF, Image &amp; Developer Tools</span>
                 {' '}— Compress, Convert, Merge &amp; More
               </h1>
 
-              {/* Trust pills */}
               <div className="flex flex-wrap gap-2">
                 {[
                   { label: 'Always free — no credit card' },
@@ -249,13 +236,11 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
                 ))}
               </div>
 
-              {/* Sub-headline */}
               <p className="text-[15px] leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
                 Compress a PDF before sending it, convert an iPhone photo to JPG, format a JWT or JSON response — all in one place, no account, nothing stored once you download.
               </p>
             </div>
 
-            {/* Right — upload dropzone (the real CTA) */}
             <div>
               <HeroDropzone />
               <p className="mt-3 text-center text-[12px]" style={{ color: 'var(--text-muted)' }}>
@@ -266,7 +251,6 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
         </div>
       </section>
 
-      {/* ══ 2. PDF TOOL GRID ══════════════════════════════════ */}
       <section id="pdf-tools" className="py-16 md:py-20" style={{ background: 'var(--surface)' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <SectionLabel href="/tools/pdf">PDF Tools</SectionLabel>
@@ -286,7 +270,6 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
         </div>
       </section>
 
-      {/* ══ 3. IMAGE TOOL GRID ════════════════════════════════ */}
       <section id="image-tools" className="py-16 md:py-20 bg-page border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <SectionLabel color="emerald" href="/tools/image">Image Converters</SectionLabel>
@@ -306,7 +289,6 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
         </div>
       </section>
 
-      {/* ══ 4. DEV TOOLS GRID ════════════════════════════════ */}
       <section id="dev-tools" className="py-16 md:py-20 border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]" style={{ background: 'var(--surface)' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <SectionLabel color="purple" href="/tools/developer">Developer Tools</SectionLabel>
@@ -329,7 +311,6 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
         </div>
       </section>
 
-      {/* ══ 5. HOW IT WORKS ═══════════════════════════════════ */}
       <section className="py-16 md:py-20 bg-page border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <SectionLabel>How it works</SectionLabel>
@@ -384,7 +365,6 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20">
 
-            {/* Left */}
             <div className="space-y-5">
               <SectionLabel>Privacy &amp; Security</SectionLabel>
               <h2 className="text-section" style={{ color: 'var(--text)' }}>
@@ -405,7 +385,6 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
                 <ArrowRight className="w-4 h-4" />
               </a>
 
-              {/* Highlight Grid */}
               <div className="grid grid-cols-2 gap-y-3 gap-x-6 pt-4 border-t border-[rgba(0,0,0,0.06)]">
                 {[
                   '100% Free', 'No Sign-up', 'No Watermarks',
@@ -419,7 +398,6 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
               </div>
             </div>
 
-            {/* Right — feature blocks */}
             <div className="space-y-4">
               {[
                 {
@@ -450,7 +428,6 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
         </div>
       </section>
 
-      {/* ══ 6. STATS BAR ══════════════════════════════════════ */}
       <section className="py-12 border-t border-[rgba(0,0,0,0.06)]" style={{ background: 'var(--surface)' }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -474,7 +451,6 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
         </div>
       </section>
 
-      {/* ══ 7. FAQ ════════════════════════════════════════════ */}
       <section className="py-16 md:py-20 bg-page border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <SectionLabel>FAQ</SectionLabel>
@@ -487,7 +463,6 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
         </div>
       </section>
 
-      {/* ══ 8. FINAL CTA ══════════════════════════════════════ */}
       <section
         className="py-16 md:py-24 border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]"
         style={{ background: 'linear-gradient(135deg, rgba(45,91,227,0.06) 0%, rgba(139,92,246,0.05) 100%), var(--bg-page)' }}
@@ -513,7 +488,6 @@ export default function HomeContent({ tools = [] }: { tools?: ToolListing[] }) {
         </div>
       </section>
 
-      {/* ══ 9. SEO CONTENT (hidden from primary view) ════════ */}
       <section className="py-12 bg-page border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">

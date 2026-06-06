@@ -2,11 +2,6 @@
 
 import { useEffect } from "react";
 
-/**
- * AdSenseLoader dynamically injects the Google AdSense script after the component has mounted.
- * This prevents hydration mismatches and avoids the 'data-nscript' attribute that 
- * Next.js 'next/script' adds, satisfyng Google AdSense requirements.
- */
 export default function AdSenseLoader() {
   useEffect(() => {
     const checkAndLoad = () => {
@@ -23,10 +18,8 @@ export default function AdSenseLoader() {
       }
     };
 
-    // Initial check
     checkAndLoad();
 
-    // Listen for updates
     window.addEventListener("cookie-consent-updated", checkAndLoad);
     return () => window.removeEventListener("cookie-consent-updated", checkAndLoad);
   }, []);

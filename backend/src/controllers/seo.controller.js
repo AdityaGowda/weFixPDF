@@ -234,22 +234,22 @@ async function getSiteSchemas(req, res, next) {
 // GET /api/seo/homepage — Get homepage SEO + schemas + tool listings in one call
 async function getHomepage(req, res, next) {
   try {
-    // 1. Homepage SEO content
-    const homeSeo = await SeoContent.findBySlug("home", "homepage");
+    // Run the three independent queries in parallel instead of sequentially.
+    const [homeSeo, [tools], [schemas]] = await Promise.all([
+      SeoContent.findBySlug("home", "homepage"),
+      db.execute(
+        "SELECT position, slug, name, description, url, keywords FROM tool_listings WHERE is_active = 1 ORDER BY position ASC"
+      ),
+      db.execute(
+        "SELECT schema_key, schema_type, schema_data FROM site_schemas WHERE is_active = 1 ORDER BY id ASC"
+      ),
+    ]);
 
-    // 2. Tool listings
-    const [tools] = await db.execute(
-      "SELECT position, slug, name, description, url, keywords FROM tool_listings WHERE is_active = 1 ORDER BY position ASC"
-    );
     const parsedTools = tools.map((r) => ({
       ...r,
       keywords: typeof r.keywords === "string" ? JSON.parse(r.keywords) : r.keywords,
     }));
 
-    // 3. Site schemas
-    const [schemas] = await db.execute(
-      "SELECT schema_key, schema_type, schema_data FROM site_schemas WHERE is_active = 1 ORDER BY id ASC"
-    );
     const parsedSchemas = schemas.map((r) => ({
       ...r,
       schema_data: typeof r.schema_data === "string" ? JSON.parse(r.schema_data) : r.schema_data,

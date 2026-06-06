@@ -110,7 +110,6 @@ export default function SecurityPage() {
   return (
     <div className="bg-page">
 
-      {/* ── Hero ── */}
       <section className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] py-14 md:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <SectionLabel>Security &amp; Privacy</SectionLabel>
@@ -124,7 +123,6 @@ export default function SecurityPage() {
         </div>
       </section>
 
-      {/* ── Key guarantee banner ── */}
       <section className="py-10 border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] bg-surface">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -155,7 +153,6 @@ export default function SecurityPage() {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 space-y-16">
 
-        {/* ── 6 Security Pillars ── */}
         <section>
           <SectionLabel>Security architecture</SectionLabel>
           <h2 className="text-section mb-8" style={{ color: 'var(--text)' }}>Six pillars of protection</h2>
@@ -187,7 +184,6 @@ export default function SecurityPage() {
           </div>
         </section>
 
-        {/* ── How file processing works ── */}
         <section>
           <SectionLabel>How your file flows through our system</SectionLabel>
           <h2 className="text-section mb-8" style={{ color: 'var(--text)' }}>Step by step</h2>
@@ -220,7 +216,6 @@ export default function SecurityPage() {
           </div>
         </section>
 
-        {/* ── Comparison table ── */}
         <section>
           <SectionLabel>Privacy comparison</SectionLabel>
           <h2 className="text-section mb-8" style={{ color: 'var(--text)' }}>weFixPDF vs typical online tools</h2>
@@ -246,7 +241,6 @@ export default function SecurityPage() {
           </div>
         </section>
 
-        {/* ── CTA ── */}
         <section className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] p-8 md:p-12 bg-surface">
           <h2 className="text-[20px] font-medium mb-2" style={{ color: 'var(--text)' }}>Ready to upload securely?</h2>
           <p className="text-[14px] mb-6" style={{ color: 'var(--text-muted)' }}>

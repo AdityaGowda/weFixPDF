@@ -3,8 +3,6 @@
 import { useState, useMemo } from 'react';
 import { ToolShell } from './SplitEditorPane';
 
-// ── Analysis logic ────────────────────────────────────────────────────────────
-
 interface Stats {
   characters: number;
   charactersNoSpaces: number;
@@ -47,8 +45,6 @@ function analyze(text: string): Stats {
   return { characters, charactersNoSpaces, words, sentences, paragraphs, lines, readingTime, speakingTime, uniqueWords, avgWordLength, longestWord };
 }
 
-// ── Frequency analysis ────────────────────────────────────────────────────────
-
 const STOP_WORDS = new Set([
   'a','an','the','and','or','but','in','on','at','to','for','of','with','by',
   'is','are','was','were','be','been','being','have','has','had','do','does',
@@ -72,8 +68,6 @@ function topWords(text: string, n = 10): Array<{ word: string; count: number }> 
     .slice(0, n)
     .map(([word, count]) => ({ word, count }));
 }
-
-// ── StatCard ─────────────────────────────────────────────────────────────────
 
 function StatCard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
@@ -103,7 +97,6 @@ export default function WordCounter() {
   return (
     <ToolShell>
       <div className="space-y-4">
-        {/* Input */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">
@@ -123,7 +116,6 @@ export default function WordCounter() {
           />
         </div>
 
-        {/* Primary stats grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           <StatCard label="Words"          value={stats.words} />
           <StatCard label="Characters"     value={stats.characters} sub={`${stats.charactersNoSpaces.toLocaleString()} without spaces`} />
@@ -131,7 +123,6 @@ export default function WordCounter() {
           <StatCard label="Paragraphs"     value={stats.paragraphs} />
         </div>
 
-        {/* Secondary stats grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           <StatCard label="Lines"          value={stats.lines} />
           <StatCard label="Unique words"   value={stats.uniqueWords} />
@@ -139,7 +130,6 @@ export default function WordCounter() {
           <StatCard label="Speaking time"  value={stats.speakingTime} sub={`at ${SPEAKING_WPM} wpm`} />
         </div>
 
-        {/* Word info row */}
         {text.trim() && (
           <div className="grid grid-cols-2 gap-2">
             <StatCard label="Avg word length" value={`${stats.avgWordLength} chars`} />
@@ -147,7 +137,6 @@ export default function WordCounter() {
           </div>
         )}
 
-        {/* Word frequency toggle */}
         {text.trim() && (
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">

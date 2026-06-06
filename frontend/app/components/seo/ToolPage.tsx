@@ -58,10 +58,8 @@ export default function ToolPage({ page }: ToolPageProps) {
       </script>
 
       <div className=" dark:bg-slate-950 min-h-screen">
-        {/* ── 1. HERO + UPLOAD ── */}
         <section className="relative pt-12 pb-6 px-4 border-b border-slate-100 dark:border-slate-900">
           <div className="max-w-5xl mx-auto text-center mb-6 md:mb-10">
-            {/* Breadcrumb */}
             <nav aria-label="Breadcrumb" className="flex flex-wrap items-center justify-center gap-2 text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-400 mb-6 md:mb-8">
               <Link href="/" className="hover:text-brand-primary transition-colors">Home</Link>
               <ArrowRight className="w-3 h-3 text-slate-300 shrink-0" />
@@ -76,7 +74,6 @@ export default function ToolPage({ page }: ToolPageProps) {
             </p>
           </div>
 
-          {/* ── CTA / Instruction Line ── */}
           <div className="max-w-5xl mx-auto mt-12 mb-8 px-4 text-center">
             <p className="text-xl md:text-1xl font-black text-slate-900 dark:text-white tracking-tight">
               Want to <span className="text-brand-primary underline decoration-emerald-500/20 underline-offset-4">{page.cta?.text}</span>{"  "}?
@@ -87,7 +84,6 @@ export default function ToolPage({ page }: ToolPageProps) {
             <UploadBoxUI />
           </a>
         </section>
-        {/* ── 4. BODY CONTENT — from DB body_content (Markdown/HTML) ── */}
         {page.bodyContent && (
           <section className="py-16 md:py-24 px-4 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-900 overflow-hidden">
             <div className="max-w-5xl mx-auto">
@@ -105,7 +101,6 @@ export default function ToolPage({ page }: ToolPageProps) {
 
               <MarkdownContent content={page.bodyContent} />
 
-              {/* CTA inline inside article */}
               {page.cta && (
                 <div className="mt-12 md:mt-16 p-6 md:p-8 rounded-3xl bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800/30 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
                   <div className="space-y-1">
@@ -124,7 +119,6 @@ export default function ToolPage({ page }: ToolPageProps) {
             </div>
           </section>
         )}
-        {/* ── 3. FEATURES (WHY weFixPDF) ── */}
         {page.features && page.features.length > 0 && (
           <section className="py-16 md:py-24 px-4 bg-slate-50 dark:bg-slate-900/20 border-y border-slate-100 dark:border-slate-900">
             <div className="max-w-5xl mx-auto">
@@ -145,7 +139,6 @@ export default function ToolPage({ page }: ToolPageProps) {
                     </span>
                   </div>
                 ))}
-                {/* Bonus security chip if < 5 features */}
                 {page.features.length < 5 && (
                   <div className="flex items-center gap-3 p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm">
                     <div className="w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center shrink-0">
@@ -161,7 +154,6 @@ export default function ToolPage({ page }: ToolPageProps) {
           </section>
         )}
 
-        {/* ── 4. RELATED TOOLS ── */}
         {page.related && page.related.length > 0 && (
           <section className="py-16 md:py-24 px-4 bg-white dark:bg-slate-950">
             <div className="max-w-5xl mx-auto">
@@ -186,7 +178,6 @@ export default function ToolPage({ page }: ToolPageProps) {
           </section>
         )}
 
-        {/* ── 5. FAQ ── */}
         {page.faq && page.faq.length > 0 && (
           <section className="py-16 md:py-24 px-4 border-b border-slate-100 dark:border-slate-900">
             <div className="max-w-5xl mx-auto">

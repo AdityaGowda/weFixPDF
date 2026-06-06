@@ -77,8 +77,6 @@ const faqs = [
   },
 ];
 
-
-
 function ToolCard({ href, label, desc, icon: Icon, popular }: {
   href: string; label: string; desc: string; icon: any; popular?: boolean;
 }) {
@@ -168,7 +166,6 @@ export default async function ImageHubPage() {
 
       <div className="bg-page">
 
-        {/* ── Hero ── */}
         <section className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] py-14 md:py-20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6">
             <nav className="flex items-center gap-2 text-[12px] mb-8" aria-label="Breadcrumb" style={{ color: 'var(--text-muted)' }}>
@@ -203,7 +200,6 @@ export default async function ImageHubPage() {
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 space-y-16">
 
-          {/* ── Tool grid ── */}
           <section>
             <h2 className="text-[20px] font-bold mb-6" style={{ color: 'var(--text)' }}>
               All {tools.length} Image Tools — Free &amp; Instant
@@ -213,7 +209,6 @@ export default async function ImageHubPage() {
             </div>
           </section>
 
-          {/* ── Format guide ── */}
           <section className="space-y-6">
             <h2 className="text-[22px] font-bold" style={{ color: 'var(--text)' }}>
               JPG, PNG, WEBP, HEIC — which one to use
@@ -275,7 +270,6 @@ export default async function ImageHubPage() {
             </div>
           </section>
 
-          {/* ── Common tasks ── */}
           <section className="space-y-5">
             <h2 className="text-[22px] font-bold" style={{ color: 'var(--text)' }}>
               What people actually use these tools for
@@ -303,7 +297,6 @@ export default async function ImageHubPage() {
             </ul>
           </section>
 
-          {/* ── Privacy ── */}
           <section className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] p-6 bg-surface space-y-3">
             <h2 className="text-[18px] font-bold" style={{ color: 'var(--text)' }}>No file storage. No tracking.</h2>
             <p className="text-[14px] leading-[1.75]" style={{ color: 'var(--text-muted)' }}>
@@ -317,9 +310,6 @@ export default async function ImageHubPage() {
             </Link>
           </section>
 
-
-
-          {/* ── FAQ ── */}
           <section>
             <h2 className="text-[22px] font-bold mb-6" style={{ color: 'var(--text)' }}>
               Frequently Asked Questions — Image Tools
@@ -329,10 +319,8 @@ export default async function ImageHubPage() {
             </div>
           </section>
 
-          {/* ── Rating ── */}
           <ToolRating toolSlug="image-hub" />
 
-          {/* ── Other categories ── */}
           <section>
             <h2 className="text-[20px] font-bold mb-4" style={{ color: 'var(--text)' }}>Explore Other Tool Categories</h2>
             <div className="grid sm:grid-cols-2 gap-3">

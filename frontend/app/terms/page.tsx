@@ -28,10 +28,8 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <div className="min-h-screen">
-      {/* Hero */}
       <section className="pt-10 pb-12 border-b border-slate-100 dark:border-slate-800">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-xs text-slate-400 mb-8 font-medium">
             <Link href="/" className="hover:text-brand-primary transition-colors">Home</Link>
             <span>/</span>
@@ -53,7 +51,6 @@ export default function TermsPage() {
         </div>
       </section>
 
-      {/* Content */}
       <div className="max-w-3xl mx-auto px-4 py-14">
         <TermsContent />
       </div>

@@ -4,7 +4,6 @@ import { useState, useCallback, useRef, useEffect, DragEvent } from 'react';
 import { Upload, FileText } from 'lucide-react';
 import { ToolShell, CopyButton } from './SplitEditorPane';
 
-// ── Compact pure-JS MD5 ──────────────────────────────────────────────────────
 function md5(str: string): string {
   function safeAdd(x: number, y: number) { const l=(x&0xffff)+(y&0xffff); return ((x>>16)+(y>>16)+(l>>16))<<16|(l&0xffff); }
   function rol(n: number, b: number) { return n<<b|n>>>(32-b); }
@@ -50,7 +49,6 @@ function md5(str: string): string {
   return out;
 }
 
-// ── SHA via Web Crypto ────────────────────────────────────────────────────────
 async function shaHex(algo: string, buf: ArrayBuffer): Promise<string> {
   const hash = await crypto.subtle.digest(algo, buf);
   return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
@@ -112,7 +110,6 @@ export default function HashGenerator() {
   return (
     <ToolShell>
       <div className="space-y-4">
-        {/* Text input */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">
@@ -129,7 +126,6 @@ export default function HashGenerator() {
           />
         </div>
 
-        {/* File drop zone */}
         <div
           onDragOver={e => { e.preventDefault(); setDrag(true); }}
           onDragLeave={() => setDrag(false)}
@@ -147,7 +143,6 @@ export default function HashGenerator() {
           <input ref={fileRef} type="file" className="hidden" onChange={e => { const f = e.target.files?.[0]; if (f) computeFile(f); e.target.value = ''; }} />
         </div>
 
-        {/* Results table */}
         {(hashes || loading) && (
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">

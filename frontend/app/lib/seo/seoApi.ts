@@ -1,19 +1,5 @@
-/**
- * ─────────────────────────────────────────────────────────────
- * SEO API Client — fetch SEO data from backend
- * ─────────────────────────────────────────────────────────────
- * Used by server components (SSR) to fetch SEO content from
- * the database via the backend API.
- *
- * All functions run server-side during SSR/ISR.
- * ─────────────────────────────────────────────────────────────
- */
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
-// ─────────────────────────────────────────────────────────────
-// Types (matching the ToolMetaData from toolPageSeo.ts)
-// ─────────────────────────────────────────────────────────────
 
 export type HowItWorksStep = {
   name: string;
@@ -107,6 +93,11 @@ export type ToolMetaData = {
   schema_description?: string;
   author_name?: string;
   author_bio?: string;
+  is_indexable?: boolean;
+  processing_location?: "client" | "server";
+  last_updated?: string;
+  screenshot_url?: string;
+  worked_example?: string;
 };
 
 export type ToolListing = {
@@ -142,14 +133,10 @@ export type HomepageData = {
   schemas: SiteSchema[];
 };
 
-// ─────────────────────────────────────────────────────────────
-// Fetch helpers (with fallback-safe error handling)
-// ─────────────────────────────────────────────────────────────
-
 async function apiFetch<T>(path: string): Promise<T | null> {
   try {
     const res = await fetch(`${API_BASE}${path}`, {
-      next: { revalidate: 3600 }, // ISR: revalidate every hour
+      next: { revalidate: 3600 },
       headers: { "Content-Type": "application/json" },
     });
     if (!res.ok) {
@@ -164,18 +151,9 @@ async function apiFetch<T>(path: string): Promise<T | null> {
   }
 }
 
-// ─────────────────────────────────────────────────────────────
-// Public API functions
-// ─────────────────────────────────────────────────────────────
-
-/**
- * Get SEO data for a specific tool page by slug.
- * Maps DB column names → frontend ToolMetaData shape.
- */
 export async function getToolSeo(slug: string): Promise<ToolMetaData | null> {
   const raw = await apiFetch<Record<string, unknown>>(`/api/seo/${slug}?type=tool`);
   if (!raw) return null;
-  // Parse tools_list into typed internal-link buckets
   const toolsList = (raw.tools_list as { type: string; name: string; url: string }[]) || [];
 
   return {
@@ -198,12 +176,17 @@ export async function getToolSeo(slug: string): Promise<ToolMetaData | null> {
     schema_description: (raw.schema_description as string) || undefined,
     author_name: (raw.author_name as string) || undefined,
     author_bio:  (raw.author_bio  as string) || undefined,
+    is_indexable: raw.is_indexable === 0 || raw.is_indexable === false ? false : true,
+    processing_location:
+      raw.processing_location === "client" || raw.processing_location === "server"
+        ? (raw.processing_location as "client" | "server")
+        : undefined,
+    last_updated: (raw.last_updated as string) || undefined,
+    screenshot_url: (raw.screenshot_url as string) || undefined,
+    worked_example: (raw.worked_example as string) || undefined,
   };
 }
 
-/**
- * Get all tool listings (for homepage grid).
- */
 export async function getToolListings(): Promise<ToolListing[]> {
   const data = await apiFetch<ToolListing[]>("/api/seo/tool-listings");
   return data || [];
@@ -214,34 +197,23 @@ export async function checkToolExists(slug: string): Promise<boolean> {
   return data?.exists || false;
 }
 
-/**
- * Get all site schemas (JSON-LD structured data for homepage).
- */
 export async function getSiteSchemas(): Promise<SiteSchema[]> {
   const data = await apiFetch<SiteSchema[]>("/api/seo/site-schemas");
   return data || [];
 }
 
-/**
- * Get all homepage data in one request (SEO + tools + schemas).
- */
 export async function getHomepageData(): Promise<HomepageData> {
   const data = await apiFetch<HomepageData>("/api/seo/homepage");
   return data || { seo: null, tools: [], schemas: [] };
 }
 
-/**
- * Get SEO data for content pages (blog, compare, usecase, format).
- */
 export async function getPageSeo(slug: string, type?: string): Promise<SeoPage | null> {
   const query = type ? `?type=${type}` : "";
   const raw = await apiFetch<any>(`/api/seo/${slug}${query}`);
   if (!raw) return null;
 
-  // Parse tools_list into typed internal-link buckets
   const toolsList = (raw.tools_list as { type: string; name: string; url: string }[]) || [];
 
-  // Map database keys (snake_case) to SeoPage (camelCase) and normalize items
   return {
     ...raw,
     author_name: raw.author_name || undefined,
@@ -262,9 +234,6 @@ export async function getPageSeo(slug: string, type?: string): Promise<SeoPage |
   };
 }
 
-/**
- * Get all slugs (for sitemap generation).
- */
 export async function getAllSlugs(): Promise<{ slug: string; page_type: string; updated_at: string }[]> {
   const data = await apiFetch<{ slug: string; page_type: string; updated_at: string }[]>("/api/seo/slugs");
   return data || [];

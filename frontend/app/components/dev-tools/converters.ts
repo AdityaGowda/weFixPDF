@@ -1,11 +1,7 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// Pure conversion utilities — no React, no DOM dependencies (except xmlToJson)
-// ─────────────────────────────────────────────────────────────────────────────
 
-// ── JSON Formatter ────────────────────────────────────────────────────────────
 
 export function formatJson(input: string, indent = 2): string {
-  const parsed = JSON.parse(input); // throws on invalid
+  const parsed = JSON.parse(input);
   return JSON.stringify(parsed, null, indent);
 }
 
@@ -13,8 +9,6 @@ export function minifyJson(input: string): string {
   const parsed = JSON.parse(input);
   return JSON.stringify(parsed);
 }
-
-// ── CSV ↔ JSON ────────────────────────────────────────────────────────────────
 
 export interface CsvOptions {
   delimiter?: string;
@@ -85,8 +79,6 @@ export function jsonToCsv(json: string, opts: CsvOptions = {}): string {
   return [headerRow, ...rows].join('\n');
 }
 
-// ── JSON ↔ YAML ───────────────────────────────────────────────────────────────
-
 function yamlScalar(v: unknown, forKey = false): string {
   if (v === null) return 'null';
   if (typeof v === 'boolean') return v ? 'true' : 'false';
@@ -143,8 +135,6 @@ export function jsonToYaml(input: string): string {
   return jsonNodeToYaml(parsed, 0);
 }
 
-// ── YAML → JSON (handles common subset) ──────────────────────────────────────
-
 export function yamlToJson(input: string): string {
   const result = parseYamlDoc(input);
   return JSON.stringify(result, null, 2);
@@ -152,7 +142,6 @@ export function yamlToJson(input: string): string {
 
 function parseYamlDoc(text: string): unknown {
   const rawLines = text.split('\n');
-  // Strip trailing whitespace, track original index for error reporting
   const lines: string[] = rawLines.map((l) => l.replace(/\s+$/, ''));
   let pos = 0;
 
@@ -179,17 +168,14 @@ function parseYamlDoc(text: string): unknown {
     const line = lines[pos];
     const trimmed = line.trim();
 
-    // Sequence
     if (trimmed.startsWith('- ') || trimmed === '-') {
       return parseSeq(curIndent);
     }
 
-    // Mapping
     if (hasMappingColon(trimmed)) {
       return parseMap(curIndent);
     }
 
-    // Scalar on its own line
     pos++;
     return parseScalarStr(trimmed);
   }
@@ -213,7 +199,6 @@ function parseYamlDoc(text: string): unknown {
           arr.push(null);
         }
       } else if (hasMappingColon(itemStr)) {
-        // Inline mapping start; fake a line at seqIndent+2
         const savedLine = lines[pos - 1];
         lines[pos - 1] = ' '.repeat(seqIndent + 2) + itemStr;
         pos--;
@@ -294,8 +279,6 @@ function parseYamlDoc(text: string): unknown {
 
   return parseNode(0);
 }
-
-// ── JSON ↔ XML ────────────────────────────────────────────────────────────────
 
 function escapeXml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -388,8 +371,6 @@ export function xmlToJson(input: string): string {
   return JSON.stringify(result, null, 2);
 }
 
-// ── JWT Decoder ───────────────────────────────────────────────────────────────
-
 export interface JwtParts {
   header: Record<string, unknown>;
   payload: Record<string, unknown>;
@@ -416,8 +397,6 @@ export function decodeJwt(token: string): JwtParts {
   return { header, payload, signature, isExpired, expiresAt: exp, issuedAt: iat };
 }
 
-// ── Text Diff ─────────────────────────────────────────────────────────────────
-
 export type DiffType = 'same' | 'added' | 'removed';
 export interface DiffLine { type: DiffType; text: string; lineA?: number; lineB?: number; }
 
@@ -426,7 +405,6 @@ export function diffLines(a: string, b: string): DiffLine[] {
   const linesB = b.split('\n');
   const m = linesA.length, n = linesB.length;
 
-  // LCS DP table
   const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
   for (let i = m - 1; i >= 0; i--) {
     for (let j = n - 1; j >= 0; j--) {
@@ -448,17 +426,15 @@ export function diffLines(a: string, b: string): DiffLine[] {
   return result;
 }
 
-// ── Color Palette ─────────────────────────────────────────────────────────────
-
 export interface ColorSwatch {
   hex: string; rgb: [number, number, number]; hsl: [number, number, number]; label: string;
 }
 
 export interface Palette {
   base: ColorSwatch;
-  shades: ColorSwatch[];   // darker variants
-  tints: ColorSwatch[];    // lighter variants
-  harmonics: ColorSwatch[]; // complementary / analogous / triadic
+  shades: ColorSwatch[];
+  tints: ColorSwatch[];
+  harmonics: ColorSwatch[];
 }
 
 function hexToRgb(hex: string): [number, number, number] {

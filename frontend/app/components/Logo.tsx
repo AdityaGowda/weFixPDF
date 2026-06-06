@@ -9,7 +9,6 @@ export default function WeFixPDFLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg
       className="inline-flex items-center gap-2"
       style={{ fontSize, fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1 }}
     >
-      {/* dark mode logo */}
       <Image
         src="/darklogo.svg"
         alt="weFixPDF dark mode logo"
@@ -19,7 +18,6 @@ export default function WeFixPDFLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg
         className="hidden dark:block"
         style={{ width: imgSize, height: imgSize, objectFit: 'contain' }}
       />
-      {/* light mode — swap with your light logo once available */}
       <Image
         src="/logo.png"
         alt="weFixPDF light mode logo"

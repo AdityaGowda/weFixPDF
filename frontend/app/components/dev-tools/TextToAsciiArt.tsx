@@ -3,10 +3,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { ToolShell, CopyButton } from './SplitEditorPane';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// 5×7 bitmap font  (row-encoded: each element = one row, MSB = leftmost pixel)
-// Characters: space (0x20) through ~ (0x7E)
-// ─────────────────────────────────────────────────────────────────────────────
 // prettier-ignore
 const FONT5X7: Record<string, number[]> = {
   ' ': [0,0,0,0,0,0,0],
@@ -106,9 +102,6 @@ const FONT5X7: Record<string, number[]> = {
   '~': [0,8,17,1,0,0,0],
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// ASCII style palettes  [filled, medium, empty]
-// ─────────────────────────────────────────────────────────────────────────────
 const STYLES: Record<string, { fill: string; empty: string; name: string }> = {
   block:    { fill: '█', empty: ' ', name: 'Block (█)' },
   hash:     { fill: '#', empty: ' ', name: 'Hash (#)' },
@@ -124,9 +117,6 @@ const STYLES: Record<string, { fill: string; empty: string; name: string }> = {
   mixed:    { fill: '%', empty: ' ', name: 'Percent (%)' },
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Scale modes: how many screen chars per bitmap pixel
-// ─────────────────────────────────────────────────────────────────────────────
 const SCALES = [1, 2, 3];
 
 function renderText(
@@ -144,7 +134,6 @@ function renderText(
   const chars = text.toUpperCase().split('');
   const HEIGHT = 7;
 
-  // Build columns per character (each column = 7 numbers)
   const charBitmaps: number[][] = chars.map(ch => {
     const rows = FONT5X7[ch] ?? FONT5X7['?'] ?? Array(HEIGHT).fill(0);
     return rows.slice(0, HEIGHT);
@@ -162,7 +151,6 @@ function renderText(
         line += ch.repeat(scale);
       }
     }
-    // scale vertically
     for (let s = 0; s < scale; s++) lines.push(line);
   }
 
@@ -175,10 +163,6 @@ function renderText(
 
   return lines.join('\n');
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Component
-// ─────────────────────────────────────────────────────────────────────────────
 
 const iconBtn = 'inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1 rounded transition-colors bg-[rgba(0,0,0,0.05)] dark:bg-[rgba(255,255,255,0.07)] text-[var(--text-muted)] hover:text-[var(--text)]';
 
@@ -195,7 +179,6 @@ export default function TextToAsciiArt() {
   return (
     <ToolShell>
       <div className="space-y-4">
-        {/* Input row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-end">
           <div>
             <label className="block text-[11px] font-medium mb-1" style={{ color: 'var(--text-muted)' }}>Text</label>
@@ -211,7 +194,6 @@ export default function TextToAsciiArt() {
             <p className="text-[10px] mt-1" style={{ color: 'var(--text-subtle)' }}>{text.length}/20 chars · uppercase rendered</p>
           </div>
 
-          {/* Style picker */}
           <div>
             <label className="block text-[11px] font-medium mb-1" style={{ color: 'var(--text-muted)' }}>ASCII Style</label>
             <select
@@ -227,9 +209,7 @@ export default function TextToAsciiArt() {
           </div>
         </div>
 
-        {/* Controls row */}
         <div className="flex flex-wrap gap-4 items-center">
-          {/* Scale */}
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-medium" style={{ color: 'var(--text-muted)' }}>Size</span>
             <div className="flex gap-1">
@@ -242,7 +222,6 @@ export default function TextToAsciiArt() {
             </div>
           </div>
 
-          {/* Spacing */}
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-medium" style={{ color: 'var(--text-muted)' }}>Spacing</span>
             <div className="flex gap-1">
@@ -255,7 +234,6 @@ export default function TextToAsciiArt() {
             </div>
           </div>
 
-          {/* Boxed toggle */}
           <label className="flex items-center gap-2 cursor-pointer select-none">
             <div
               onClick={() => setBoxed(b => !b)}
@@ -266,7 +244,6 @@ export default function TextToAsciiArt() {
             <span className="text-[11px] font-medium" style={{ color: 'var(--text-muted)' }}>Boxed</span>
           </label>
 
-          {/* Invert toggle */}
           <label className="flex items-center gap-2 cursor-pointer select-none">
             <div
               onClick={() => setInvert(v => !v)}
@@ -278,7 +255,6 @@ export default function TextToAsciiArt() {
           </label>
         </div>
 
-        {/* Output */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">
@@ -302,7 +278,6 @@ export default function TextToAsciiArt() {
           </div>
         </div>
 
-        {/* Quick examples */}
         <div className="flex flex-wrap gap-2">
           {['HI', 'HELLO', 'CODE', '2025', 'LOVE', 'DEV'].map(ex => (
             <button key={ex} onClick={() => setText(ex)} className={iconBtn}>{ex}</button>

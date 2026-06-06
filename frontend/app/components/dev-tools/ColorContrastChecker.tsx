@@ -28,10 +28,8 @@ function contrastColor(hex: string): string {
   return 0.299*r + 0.587*g + 0.114*b > 140 ? '#000000' : '#ffffff';
 }
 
-// Adjust luminance towards target to hit a contrast ratio threshold
 function nearestPassing(fg: string, bg: string, threshold: number): string {
   const bgL = luminance(bg);
-  // Try darkening and lightening the fg color
   const [r,g,b] = hexToRgb(fg);
   for (let step = 1; step <= 255; step++) {
     for (const dir of [1, -1]) {
@@ -75,7 +73,6 @@ export default function ColorContrastChecker() {
   return (
     <ToolShell>
       <div className="space-y-5">
-        {/* Color pickers */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
             { label: 'Foreground', hex: fg, textVal: fgText, setHex: setFg, setTextVal: setFgText, onChange: handleFg },
@@ -97,9 +94,7 @@ export default function ColorContrastChecker() {
           ))}
         </div>
 
-        {/* Ratio + preview */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Ratio badge */}
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
               <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Contrast Ratio</span>
@@ -112,7 +107,6 @@ export default function ColorContrastChecker() {
             </div>
           </div>
 
-          {/* Live preview */}
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
               <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Preview</span>
@@ -125,7 +119,6 @@ export default function ColorContrastChecker() {
           </div>
         </div>
 
-        {/* WCAG levels */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <span className="w-2 h-2 rounded-full bg-[#7C3AED]" />
@@ -154,7 +147,6 @@ export default function ColorContrastChecker() {
           </div>
         </div>
 
-        {/* Suggestion */}
         {nearest && nearest !== fg && (
           <div className="rounded-xl border border-amber-200 dark:border-amber-800/50 bg-amber-50 dark:bg-amber-900/20 px-4 py-3 flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg flex-shrink-0" style={{ background: nearest }} />

@@ -15,11 +15,9 @@ const STATIC_CATEGORIES: NavCategory[] = [
   { label: "Developer Tools", items: [], loading: true },
 ];
 
-/* DB type value may differ from display label */
 const DB_TYPE: Record<string, string> = {
   "Developer Tools": "Dev Tools",
 };
-
 
 const RESOURCES = [
   { label: "Help Center",   href: "/help",      desc: "FAQs & troubleshooting" },
@@ -45,7 +43,6 @@ export default function Navbar() {
   const [categories, setCategories] = useState<NavCategory[]>(STATIC_CATEGORIES);
   const { resolvedTheme, setTheme } = useTheme();
 
-  /* Load tool listings non-blocking */
   useEffect(() => {
     getToolListings()
       .then((res: ToolListing[]) => {
@@ -66,7 +63,6 @@ export default function Navbar() {
 
   const toggleTheme = () => setTheme(resolvedTheme === "dark" ? "light" : "dark");
 
-  /* Shared dropdown panel animation */
   const dropdownAnim = "opacity-0 scale-[0.98] translate-y-1 pointer-events-none " +
     "group-hover/item:opacity-100 group-hover/item:scale-100 group-hover/item:translate-y-0 " +
     "group-hover/item:pointer-events-auto transition-all duration-150 origin-top";
@@ -76,15 +72,12 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 bg-white dark:bg-[#09090b] border-b border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] h-[60px] flex items-center">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full flex items-center justify-between gap-6">
 
-        {/* ── Wordmark ── */}
         <a href="/" className="flex-shrink-0" aria-label="weFixPDF home">
           <WeFixPDFLogo size="sm" />
         </a>
 
-        {/* ── Desktop center nav ── */}
         <div className="hidden lg:flex items-center gap-1">
 
-          {/* Tool category dropdowns */}
           {categories.map((cat) => {
             const cols = cat.label === "PDF Tools" ? 3 : 2;
             const width = cat.label === "PDF Tools" ? "w-[660px]" : "w-[480px]";
@@ -98,7 +91,6 @@ export default function Navbar() {
 
                 <div className={`${dropdownBase} ${width}`}>
                   <div className="bg-white dark:bg-[#111113] border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.4)] overflow-hidden">
-                    {/* Scrollable grid */}
                     <div className={`p-2 grid gap-0.5 max-h-[420px] overflow-y-auto`} style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
                       {cat.loading ? (
                         <SkeletonItems />
@@ -119,7 +111,6 @@ export default function Navbar() {
                         ))
                       )}
                     </div>
-                    {/* Footer link */}
                     {!cat.loading && cat.items.length > 0 && (
                       <div className="border-t border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] px-4 py-2.5 flex items-center justify-between">
                         <span className="text-[11px] text-[#6B7280]">{cat.items.length} tools available</span>
@@ -134,7 +125,6 @@ export default function Navbar() {
             );
           })}
 
-          {/* Resources dropdown */}
           <div className="relative group/item">
             <button className="flex items-center gap-1 px-3 py-2 text-[14px] font-medium text-[#4B5563] dark:text-[#94A3B8] hover:text-[#0F0F0F] dark:hover:text-white transition-colors rounded-md hover:bg-[rgba(0,0,0,0.04)] dark:hover:bg-[rgba(255,255,255,0.06)]">
               Resources
@@ -159,7 +149,6 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* ── Desktop right ── */}
         <div className="hidden lg:flex items-center gap-2">
           <a
             href="/tools"
@@ -178,7 +167,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* ── Mobile controls ── */}
         <div className="flex lg:hidden items-center gap-1.5">
           <button
             onClick={toggleTheme}
@@ -199,11 +187,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ── Mobile menu ── */}
       {mobileOpen && (
         <div className="lg:hidden absolute top-[60px] inset-x-0 bg-white dark:bg-[#09090b] border-b border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_8px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.4)] z-40 max-h-[80vh] overflow-y-auto">
           <div className="max-w-6xl mx-auto px-4 py-3 space-y-0.5">
-            {/* Home */}
             <a
               href="/"
               onClick={() => setMobileOpen(false)}
@@ -212,7 +198,6 @@ export default function Navbar() {
               Home
             </a>
 
-            {/* Category sections */}
             {categories.map((cat) => (
               <div key={cat.label}>
                 <button
@@ -255,7 +240,6 @@ export default function Navbar() {
               </div>
             ))}
 
-            {/* Resource links */}
             {RESOURCES.map((r) => (
               <a
                 key={r.href}
