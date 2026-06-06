@@ -3,8 +3,6 @@
 import { useState, useCallback } from 'react';
 import { ToolShell, CopyButton } from './SplitEditorPane';
 
-// ── Source vocabulary ─────────────────────────────────────────────────────────
-
 const WORDS = [
   'lorem','ipsum','dolor','sit','amet','consectetur','adipiscing','elit',
   'sed','do','eiusmod','tempor','incididunt','ut','labore','et','dolore','magna',
@@ -42,7 +40,6 @@ function generateSentence(): string {
   const wordCount = randomInt(6, 20);
   const words: string[] = [capitalize(randomWord())];
   for (let i = 1; i < wordCount; i++) {
-    // Occasionally add a comma
     const prev = words[words.length - 1];
     if (i > 2 && i < wordCount - 1 && Math.random() < 0.15 && !prev.endsWith(',')) {
       words[words.length - 1] = prev + ',';
@@ -89,7 +86,6 @@ export default function LoremIpsumGenerator() {
       while (sentences.length < count) sentences.push(generateSentence());
       text = sentences.slice(0, count).join(' ');
     } else {
-      // words
       const words: string[] = startLorem ? ['Lorem', 'ipsum', 'dolor', 'sit', 'amet'] : [];
       while (words.length < count) words.push(randomWord());
       text = words.slice(0, count).join(' ');
@@ -97,7 +93,6 @@ export default function LoremIpsumGenerator() {
     setOutput(text);
   }, [mode, count, startLorem, wrap]);
 
-  // Generate on first render
   useState(() => { generate(); });
 
   const iconBtn = 'inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1 rounded transition-colors bg-[rgba(0,0,0,0.05)] dark:bg-[rgba(255,255,255,0.07)] text-[var(--text-muted)] hover:text-[var(--text)]';
@@ -113,14 +108,12 @@ export default function LoremIpsumGenerator() {
   return (
     <ToolShell>
       <div className="space-y-4">
-        {/* Config */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <span className="w-2 h-2 rounded-full bg-[#7C3AED]" />
             <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Options</span>
           </div>
           <div className="p-4 space-y-4">
-            {/* Mode selector */}
             <div className="flex items-center gap-3 flex-wrap">
               <label className="text-[12px] font-medium w-24 flex-shrink-0" style={{ color: 'var(--text-muted)' }}>Generate</label>
               <div className="flex gap-1.5">
@@ -132,7 +125,6 @@ export default function LoremIpsumGenerator() {
               </div>
             </div>
 
-            {/* Count */}
             <div className="flex items-center gap-3">
               <label className="text-[12px] font-medium w-24 flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
                 Count
@@ -150,7 +142,6 @@ export default function LoremIpsumGenerator() {
               </div>
             </div>
 
-            {/* Wrap option (only for paragraphs) */}
             {mode === 'paragraphs' && (
               <div className="flex items-center gap-3 flex-wrap">
                 <label className="text-[12px] font-medium w-24 flex-shrink-0" style={{ color: 'var(--text-muted)' }}>Wrap</label>
@@ -162,7 +153,6 @@ export default function LoremIpsumGenerator() {
               </div>
             )}
 
-            {/* Start with Lorem ipsum */}
             <label className="flex items-center gap-2 cursor-pointer text-[12px]" style={{ color: 'var(--text)' }}>
               <input type="checkbox" checked={startLorem} onChange={e => setStartLorem(e.target.checked)} className="accent-[#7C3AED]" />
               Start with "Lorem ipsum dolor sit amet…"
@@ -170,7 +160,6 @@ export default function LoremIpsumGenerator() {
           </div>
         </div>
 
-        {/* Output */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">

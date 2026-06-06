@@ -1,6 +1,6 @@
-// app/sitemap.ts — Auto-generates XML sitemap from DB slugs
 import type { MetadataRoute } from "next";
 import { getAllSlugs } from "@/app/lib/seo/seoApi";
+import { isExcludedFromSitemap } from "@/app/lib/seo/consolidation";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +17,6 @@ const PRIORITY_MAP: Record<string, number> = {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const today = new Date().toISOString().split("T")[0];
 
-  // Static pages
   const staticPages: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}`,                lastModified: today, priority: 1.0 },
     { url: `${BASE_URL}/tools`,          lastModified: today, priority: 0.8 },
@@ -32,14 +31,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/tools/pdf`, lastModified: today, priority: 0.9 },
     { url: `${BASE_URL}/tools/developer`, lastModified: today, priority: 0.9 },
 
-
   ];
 
-  // Dynamic pages from DB
   const slugs = await getAllSlugs();
 
   const dynamicPages: MetadataRoute.Sitemap = slugs
     .filter((s) => s.page_type === "tool")
+    .filter((s) => !isExcludedFromSitemap(s.slug))
     .map((s) => {
       const prefix = PREFIX_MAP[s.page_type] ?? "";
       return {

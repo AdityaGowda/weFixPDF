@@ -5,7 +5,6 @@ import { ToolShell, CopyButton, SelectChip } from './SplitEditorPane';
 
 const SAMPLE = `select u.id,u.name,u.email,o.total from users u inner join orders o on u.id=o.user_id where o.total>100 and u.active=1 group by u.id order by o.total desc limit 10`;
 
-// ── SQL Keywords ──────────────────────────────────────────────────────────────
 const BREAK_BEFORE = [
   'SELECT','FROM','WHERE','LEFT JOIN','RIGHT JOIN','INNER JOIN','FULL OUTER JOIN','CROSS JOIN','JOIN',
   'GROUP BY','ORDER BY','HAVING','LIMIT','OFFSET','UNION ALL','UNION','INSERT INTO','VALUES',
@@ -20,44 +19,34 @@ function sqlKeywordRegex(kw: string) {
 }
 
 function formatSql(raw: string, indent: string, kwCase: 'UPPER'|'lower'): string {
-  // Preserve string literals to avoid mangling them
   const strings: string[] = [];
   let sql = raw.replace(/'[^']*'|"[^"]*"`/g, m => { strings.push(m); return `__STR${strings.length - 1}__`; });
 
-  // Normalise whitespace
   sql = sql.replace(/\s+/g, ' ').trim();
 
-  // Apply keyword case + add newlines before major clauses
   for (const kw of BREAK_BEFORE) {
     const replacement = kwCase === 'UPPER' ? kw : kw.toLowerCase();
     sql = sql.replace(sqlKeywordRegex(kw), ` \n${replacement} `);
   }
 
-  // continuation keywords get indented
   for (const kw of CONTINUATION) {
     const replacement = kwCase === 'UPPER' ? kw : kw.toLowerCase();
     sql = sql.replace(sqlKeywordRegex(kw), `\n${indent}${replacement} `);
   }
 
-  // All other keywords — apply case
   const OTHER_KW = ['AS','IS','NULL','NOT','IN','LIKE','BETWEEN','EXISTS','ALL','ANY','DISTINCT','CASE','WHEN','THEN','ELSE','END','ASC','DESC'];
   for (const kw of OTHER_KW) {
     const replacement = kwCase === 'UPPER' ? kw : kw.toLowerCase();
     sql = sql.replace(new RegExp(`\\b${kw}\\b`, 'gi'), replacement);
   }
 
-  // Add indent after SELECT / WITH
   for (const kw of INDENT_AFTER) {
     const k = kwCase === 'UPPER' ? kw : kw.toLowerCase();
     sql = sql.replace(new RegExp(`\\n${k} `, 'g'), `\n${k}\n${indent}`);
-    // Commas in SELECT list → newline + indent
-    // We do a simple approach: after matching "SELECT … FROM" block, add newlines at commas
   }
 
-  // Commas in column lists get a newline
   sql = sql.replace(/,\s*/g, `,\n${indent}`);
 
-  // Clean up multiple blank lines and trim each line
   const lines = sql.split('\n').map(l => l.trimEnd()).filter(l => l.trim());
   return lines.join('\n');
 }
@@ -89,7 +78,6 @@ export default function SqlFormatterTool() {
 
   return (
     <ToolShell>
-      {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3 mb-4">
         <SelectChip label="Dialect" value={dialect} onChange={v => setDialect(v as Dialect)}
           options={(['MySQL','PostgreSQL','SQLite','MSSQL'] as Dialect[]).map(d => ({ value: d, label: d }))} />
@@ -114,7 +102,6 @@ export default function SqlFormatterTool() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {/* Input */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden flex flex-col">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-[#7C3AED]" /><span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>SQL Input</span></div>
@@ -126,7 +113,6 @@ export default function SqlFormatterTool() {
             style={{ minHeight: 320, color: 'var(--text)', caretColor: 'var(--text)' }} />
         </div>
 
-        {/* Output */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden flex flex-col">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-[#163863]" /><span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Formatted SQL</span></div>

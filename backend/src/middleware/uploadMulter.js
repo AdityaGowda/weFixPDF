@@ -1,9 +1,14 @@
 const multer = require("multer");
 const path = require("path");
 const crypto = require("crypto");
+const fs = require("fs");
+
+const UPLOAD_DIR = "uploads/";
+// Ensure the upload directory exists so multer never fails on a fresh checkout.
+fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 
 const storage = multer.diskStorage({
-  destination: "uploads/",
+  destination: UPLOAD_DIR,
 
   filename: (req, file, cb) => {
     const uid = crypto.randomUUID();

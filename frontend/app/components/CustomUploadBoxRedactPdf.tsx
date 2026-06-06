@@ -7,7 +7,6 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import { Upload, X, CheckCircle, Download, RefreshCcw, Shield, ChevronLeft, ChevronRight, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 
-// Set up pdf.js worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 interface RedactionArea {
@@ -27,11 +26,11 @@ export default function CustomUploadBoxRedactPdf({ service }: Props) {
   const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [areas, setAreas] = useState<RedactionArea[]>([]);
-  
+
   const [isDrawing, setIsDrawing] = useState(false);
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
   const [currentRect, setCurrentRect] = useState<{x:number, y:number, width:number, height:number} | null>(null);
-  
+
   const [loading, setLoading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
 
@@ -58,8 +57,7 @@ export default function CustomUploadBoxRedactPdf({ service }: Props) {
     const rect = containerRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
-    // Ensure we don't draw outside bounds
+
     const clampedX = Math.max(0, Math.min(x, rect.width));
     const clampedY = Math.max(0, Math.min(y, rect.height));
 
@@ -73,16 +71,10 @@ export default function CustomUploadBoxRedactPdf({ service }: Props) {
 
   const handleMouseUp = () => {
     if (isDrawing && currentRect && currentRect.width > 5 && currentRect.height > 5 && containerRef.current) {
-      // Calculate original PDF coordinates based on scale
-      // Note: react-pdf DOM element 'react-pdf__Page__canvas' gives us the scaled dimensions
       const canvas = containerRef.current.querySelector('canvas');
       if (canvas) {
-        // PDF-lib uses points (1/72 inch). We need to map our screen pixels to PDF points.
-        // We'll send percentages to the backend or use the viewport scale.
-        // For simplicity, we send CSS pixels and the backend must map it based on page size.
-        // Let's store the raw CSS px relative to the rendered canvas size.
-        const widthScale = canvas.width / canvas.offsetWidth; // high DPI handling
-        
+        const widthScale = canvas.width / canvas.offsetWidth;
+
         setAreas([...areas, {
           page: pageNumber,
           x: currentRect.x,
@@ -106,13 +98,7 @@ export default function CustomUploadBoxRedactPdf({ service }: Props) {
     try {
       const formData = new FormData();
       formData.append("files", file);
-      
-      // We need to pass the scale reference so the backend knows how to map it to PDF points.
-      // But PDF-lib coordinates start from BOTTOM-LEFT!
-      // To keep it simple, we pass our screen coordinates and let backend convert it, 
-      // but without the rendered Scale, the backend can't know.
-      // We'll pass standard percentages instead to make it resolution independent!
-      
+
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
         const percentAreas = areas.map(a => ({
@@ -167,7 +153,7 @@ export default function CustomUploadBoxRedactPdf({ service }: Props) {
 
       {file && !downloadUrl && (
         <div className="space-y-6 flex flex-col items-center">
-            
+
           <div className="flex items-center justify-between w-full max-w-3xl bg-slate-50 dark:bg-slate-800 p-4 rounded-xl">
              <div className="flex items-center gap-4">
                 <button disabled={pageNumber <= 1} onClick={() => setPageNumber(p => p - 1)} className="p-2 rounded hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50">
@@ -187,16 +173,15 @@ export default function CustomUploadBoxRedactPdf({ service }: Props) {
                onMouseMove={handleMouseMove}
                onMouseUp={handleMouseUp}
                onMouseLeave={handleMouseUp}>
-            
+
             <div ref={pageRef}>
                <Document file={file} onLoadSuccess={onDocumentLoadSuccess} loading={<div className="p-20 text-slate-400">Loading PDF...</div>}>
                  <Page pageNumber={pageNumber} renderTextLayer={false} renderAnnotationLayer={false} width={800} />
                </Document>
             </div>
 
-            {/* Render confirmed areas for this page */}
             {pageAreas.map((area, idx) => (
-               <div key={idx} className="absolute bg-black opacity-80 border-2 border-red-500 flex items-start justify-end" 
+               <div key={idx} className="absolute bg-black opacity-80 border-2 border-red-500 flex items-start justify-end"
                     style={{ left: area.x, top: area.y, width: area.width, height: area.height }}>
                  <button className="bg-red-500 text-white p-1 rounded-bl" onMouseDown={(e) => { e.stopPropagation(); removeArea(areas.indexOf(area)); }}>
                     <Trash2 className="w-4 h-4" />
@@ -204,13 +189,12 @@ export default function CustomUploadBoxRedactPdf({ service }: Props) {
                </div>
             ))}
 
-            {/* Render currently drawing rect */}
             {isDrawing && currentRect && (
                <div className="absolute bg-black opacity-50 border-2 border-red-500 pointer-events-none"
                     style={{ left: currentRect.x, top: currentRect.y, width: currentRect.width, height: currentRect.height }} />
             )}
           </div>
-             
+
           <div className="flex justify-end gap-3 w-full max-w-3xl mt-4">
             <button onClick={() => { setFile(null); setAreas([]); }} className="px-5 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition-colors">
               Cancel
@@ -230,7 +214,7 @@ export default function CustomUploadBoxRedactPdf({ service }: Props) {
            </div>
            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">PDF Redacted Successfully</h3>
            <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-sm">The selected areas have been permanently blacked out.</p>
-           
+
            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
              <a href={downloadUrl} download={`${file?.name.split('.')[0]}_redacted.pdf`} className="flex items-center justify-center gap-2 px-8 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold shadow-lg shadow-emerald-500/30 transition-all">
                <Download className="w-5 h-5" /> Download PDF

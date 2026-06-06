@@ -104,7 +104,6 @@ export default function HttpHeaderAnalyzer() {
   return (
     <ToolShell>
       <div className="space-y-4">
-        {/* Input */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">
@@ -125,7 +124,6 @@ export default function HttpHeaderAnalyzer() {
           />
         </div>
 
-        {/* Missing security headers warning */}
         {raw && missing.length > 0 && (
           <div className="rounded-xl border border-amber-200 dark:border-amber-800/50 bg-amber-50 dark:bg-amber-900/20 px-4 py-3 flex items-start gap-3">
             <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
@@ -140,7 +138,6 @@ export default function HttpHeaderAnalyzer() {
           </div>
         )}
 
-        {/* Results table */}
         {parsed.length > 0 && (
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">

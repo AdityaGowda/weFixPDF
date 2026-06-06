@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function SitemapPage() {
   const tools = await getToolListings();
   const allSlugs = await getAllSlugs();
-  
+
   const pdfTools = tools.filter(t => t.type === "PDF Tools");
   const imageTools = tools.filter(t => t.type === "Image Tools");
   const devTools = tools.filter(t => t.type === "Dev Tools");
@@ -51,7 +51,6 @@ export default async function SitemapPage() {
 
   return (
     <div className="min-h-screen bg-page">
-      {/* Hero */}
       <section className="py-16 border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] bg-surface">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-4">
@@ -63,7 +62,6 @@ export default async function SitemapPage() {
         </div>
       </section>
 
-      {/* Grid */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -75,11 +73,11 @@ export default async function SitemapPage() {
                   </div>
                   <h2 className="text-xl font-bold text-slate-900 dark:text-white">{section.title}</h2>
                 </div>
-                
+
                 <ul className="grid gap-3">
                   {section.links.map((link) => (
                     <li key={link.href}>
-                      <Link 
+                      <Link
                         href={link.href}
                         className="group flex items-center justify-between p-3 rounded-xl bg-white dark:bg-slate-900 border border-transparent hover:border-blue-500/30 hover:bg-blue-50 dark:hover:bg-blue-500/5 transition-all"
                       >
@@ -97,7 +95,6 @@ export default async function SitemapPage() {
         </div>
       </section>
 
-      {/* Footer CTA */}
       <section className="py-16 border-t border-[rgba(0,0,0,0.06)] bg-surface text-center">
         <div className="max-w-2xl mx-auto px-4">
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Missing a tool?</h2>

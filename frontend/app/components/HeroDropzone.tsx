@@ -65,7 +65,6 @@ export default function HeroDropzone() {
         tabIndex={-1}
       />
 
-      {/* Upload icon — hand-drawn SVG, no library dependency */}
       <svg
         className="mx-auto mb-4 text-[#2D5BE3] opacity-80 group-hover:opacity-100 transition-opacity"
         width="32"

@@ -1,8 +1,5 @@
-// Shared between server components (page.tsx) and client components (DevToolBox)
-// Must NOT have 'use client' — plain module only
 
 export const DEV_TOOL_SLUGS = new Set([
-  // Existing
   'csv-json-converter',
   'color-palette-generator',
   'text-diff-checker',
@@ -12,7 +9,6 @@ export const DEV_TOOL_SLUGS = new Set([
   'xml-to-json',
   'json-formatter',
   'jwt-decoder',
-  // New — batch 2
   'cron-expression-builder',
   'chmod-calculator',
   'unix-timestamp-converter',
@@ -31,17 +27,14 @@ export const DEV_TOOL_SLUGS = new Set([
   'env-file-parser',
   'markdown-to-html',
   'ip-subnet-calculator',
-  // Batch 3 — in-browser computation only
   'text-to-ascii-art',
   'wasm-analyzer',
   'llm-token-counter',
   'api-ping-tester',
-  // Batch 4 — utility tools
   'uuid-generator',
   'password-generator',
   'lorem-ipsum-generator',
   'word-counter',
-  // Batch 5 — New Formatter, Validator, String, Escape tools
   'xml-formatter',
   'html-formatter',
   'xml-validator',
@@ -58,6 +51,7 @@ export const DEV_TOOL_SLUGS = new Set([
   'xslt-transformer',
   'csv-to-xml',
   'string-utilities',
+  'string-escape',
   'html-escape',
   'xml-escape',
   'java-dotnet-escape',

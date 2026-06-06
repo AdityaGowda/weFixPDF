@@ -38,7 +38,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 type Tool = { href: string; icon: any; label: string; desc: string; popular?: boolean };
 
-// Map icon_name strings (stored in DB) to Lucide components
 const iconNameMap: Record<string, any> = {
   FileDown, FileImage, FileText, Layers, Scissors, RotateCw,
   ShieldCheck, LockOpen, Minimize2, Zap, Smartphone, Image,
@@ -48,7 +47,6 @@ const iconNameMap: Record<string, any> = {
 };
 
 const popularSlugs = new Set(['compress-pdf', 'image-compressor', 'png-to-jpg']);
-
 
 function FreeBadge({ popular }: { popular?: boolean }) {
   if (popular) {
@@ -140,7 +138,6 @@ export default async function ToolsPage() {
 
       <div className="bg-page">
 
-        {/* ── Hero ── */}
         <section className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] py-14 md:py-20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6">
             <nav className="flex items-center gap-2 text-[12px] mb-8" style={{ color: 'var(--text-muted)' }}>
@@ -155,7 +152,6 @@ export default async function ToolsPage() {
               Compress PDF, convert PDF to JPG or Word, merge &amp; split PDFs — plus compress images, convert JPG to PNG, HEIC to JPG, PNG to WebP. All free, no sign-up, files deleted instantly.
             </p>
 
-            {/* Trust chips */}
             <div className="flex flex-wrap gap-2 mt-6">
               {['TLS 1.3 encrypted', 'Files deleted instantly', 'No sign-up ever', 'No daily limits', 'Zero human access'].map((chip) => (
                 <span
@@ -171,7 +167,6 @@ export default async function ToolsPage() {
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 space-y-14">
 
-          {/* ── PDF Tools ── */}
           <section>
             <div className="flex items-center gap-3 mb-6">
               <div className="flex items-center gap-2">
@@ -188,7 +183,6 @@ export default async function ToolsPage() {
             </div>
           </section>
 
-          {/* ── Image Tools ── */}
           <section>
             <div className="flex items-center gap-3 mb-6">
               <div className="flex items-center gap-2">
@@ -205,7 +199,6 @@ export default async function ToolsPage() {
             </div>
           </section>
 
-          {/* ── Dev Tools ── */}
           {devTools.length > 0 && (
             <section>
               <div className="flex items-center gap-3 mb-6">
@@ -224,7 +217,6 @@ export default async function ToolsPage() {
             </section>
           )}
 
-          {/* ── Stats ── */}
           <section className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
               { stat: '100%',   label: 'Free forever',   accent: '#2D5BE3' },
@@ -243,7 +235,6 @@ export default async function ToolsPage() {
             ))}
           </section>
 
-          {/* ── Trust note ── */}
           <section className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] p-6 bg-surface">
             <p className="text-[14px] font-medium mb-1" style={{ color: 'var(--text)' }}>Why people trust weFixPDF</p>
             <p className="text-[13px] mb-4 leading-relaxed" style={{ color: 'var(--text-muted)' }}>

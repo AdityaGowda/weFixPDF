@@ -28,7 +28,7 @@ STRIPE_KEY=sk_live_abc123`;
 interface ParsedVar { key: string; value: string; line: number; isDuplicate: boolean; isEmpty: boolean }
 
 function parseEnv(raw: string): ParsedVar[] {
-  const seen = new Map<string, number>(); // key → first occurrence index
+  const seen = new Map<string, number>();
   const vars: ParsedVar[] = [];
 
   raw.split('\n').forEach((line, idx) => {
@@ -68,7 +68,6 @@ export default function EnvFileParser() {
   return (
     <ToolShell>
       <div className="space-y-4">
-        {/* Input */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">
@@ -86,7 +85,6 @@ export default function EnvFileParser() {
             style={{ minHeight: 160, color: 'var(--text)', caretColor: 'var(--text)' }} />
         </div>
 
-        {/* Badges */}
         {vars.length > 0 && (
           <div className="flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 rounded-full bg-[rgba(124,58,237,0.1)] text-[#7C3AED]">
@@ -105,7 +103,6 @@ export default function EnvFileParser() {
           </div>
         )}
 
-        {/* Table */}
         {vars.length > 0 && (
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
@@ -146,7 +143,6 @@ export default function EnvFileParser() {
           </div>
         )}
 
-        {/* Export */}
         {vars.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[

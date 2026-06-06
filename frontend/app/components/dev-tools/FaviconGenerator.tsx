@@ -44,7 +44,6 @@ export default function FaviconGenerator() {
   const imgRef = useRef<HTMLImageElement | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  // Generate from emoji on change
   useEffect(() => {
     if (mode === 'emoji') {
       setPreviews(generatePreviews(null, emoji));
@@ -82,11 +81,9 @@ export default function FaviconGenerator() {
     <ToolShell>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-        {/* Left: Input */}
         <div className="space-y-4">
           <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Source</p>
 
-          {/* Toggle */}
           <div className="inline-flex rounded-lg border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] overflow-hidden text-[11px] font-medium">
             <button onClick={() => setMode('emoji')} className={`px-3 py-1.5 transition-colors ${mode === 'emoji' ? 'bg-[#7C3AED] text-white' : 'text-[var(--text-muted)] hover:text-[var(--text)]'}`}>Emoji</button>
             <button onClick={() => setMode('file')}  className={`px-3 py-1.5 transition-colors ${mode === 'file'  ? 'bg-[#7C3AED] text-white' : 'text-[var(--text-muted)] hover:text-[var(--text)]'}`}>Image</button>
@@ -117,7 +114,6 @@ export default function FaviconGenerator() {
             </div>
           )}
 
-          {/* HTML snippet */}
           {previews.length > 0 && (
             <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
               <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
@@ -129,7 +125,6 @@ export default function FaviconGenerator() {
           )}
         </div>
 
-        {/* Right: Previews */}
         <div className="space-y-4">
           <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Preview &amp; Download</p>
           {previews.length > 0 ? (

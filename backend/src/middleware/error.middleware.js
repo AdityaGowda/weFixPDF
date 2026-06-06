@@ -9,14 +9,26 @@ const logger = require("../utils/logger");
  * ─────────────────────────────────────────────────────────────
  */
 
+// Fields that must never be written to logs.
+const SENSITIVE_FIELDS = ["password", "pass", "pwd", "token", "secret", "apiKey", "api_key"];
+
+function redactBody(body) {
+  if (!body || typeof body !== "object") return body;
+  const clone = {};
+  for (const key of Object.keys(body)) {
+    clone[key] = SENSITIVE_FIELDS.includes(key) ? "[REDACTED]" : body[key];
+  }
+  return clone;
+}
+
 const errorHandler = (err, req, res, next) => {
-  // 1. Log the full error (stack + detail) to winston
+  // 1. Log the full error (stack + detail) to winston — with sensitive fields redacted
   logger.error(`${err.name}: ${err.message}`, {
     method: req.method,
     url: req.originalUrl,
     ip: req.ip,
     stack: err.stack,
-    body: req.body,
+    body: redactBody(req.body),
     tool: req.params.tool || null,
   });
 

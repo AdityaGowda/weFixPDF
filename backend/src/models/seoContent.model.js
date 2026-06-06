@@ -10,6 +10,7 @@
  */
 
 const db = require("../config/db.config");
+const { quoteColumns } = require("../utils/sqlIdentifier");
 
 // Helpers to safely stringify/parse JSON columns
 const JSON_COLS = ["how_it_works", "features", "faq", "related_tools", "software_schema", "how_to", "keywords", "breadcrumb", "cta", "tools_list", "comparison_table"];
@@ -48,11 +49,12 @@ const SeoContent = {
   async create(data) {
     const d = stringifyJsonFields(data);
     const cols = Object.keys(d);
+    const quoted = quoteColumns(cols);
     const placeholders = cols.map(() => "?").join(", ");
     const values = cols.map((c) => d[c]);
 
     const [result] = await db.execute(
-      `INSERT INTO seo_content (${cols.join(", ")}) VALUES (${placeholders})`,
+      `INSERT INTO seo_content (${quoted.join(", ")}) VALUES (${placeholders})`,
       values
     );
     return result.insertId;
@@ -153,7 +155,7 @@ const SeoContent = {
     const cols = Object.keys(d);
     if (cols.length === 0) return false;
 
-    const sets = cols.map((c) => `${c} = ?`).join(", ");
+    const sets = quoteColumns(cols).map((c) => `${c} = ?`).join(", ");
     const values = cols.map((c) => d[c]);
     values.push(id);
 
@@ -174,7 +176,7 @@ const SeoContent = {
     const cols = Object.keys(d);
     if (cols.length === 0) return false;
 
-    const sets = cols.map((c) => `${c} = ?`).join(", ");
+    const sets = quoteColumns(cols).map((c) => `${c} = ?`).join(", ");
     const values = cols.map((c) => d[c]);
     values.push(slug, pageType);
 

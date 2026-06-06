@@ -37,7 +37,6 @@ function DiffOutput({ lines }: { lines: DiffLine[] }) {
 
   return (
     <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden bg-[var(--bg-card)]">
-      {/* Header */}
       <div className="flex items-center gap-3 px-4 py-2.5 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
         <span className="w-2 h-2 rounded-full bg-[#2D5BE3]" />
         <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Diff Output</span>
@@ -53,7 +52,6 @@ function DiffOutput({ lines }: { lines: DiffLine[] }) {
           </>
         )}
       </div>
-      {/* Lines */}
       <div className="overflow-auto" style={{ maxHeight: 400 }}>
         {lines.length === 0 ? (
           <p className="px-4 py-8 text-center text-[13px]" style={{ color: 'var(--text-subtle)' }}>
@@ -99,7 +97,6 @@ export default function TextDiffChecker() {
 
   return (
     <ToolShell>
-      {/* Two input panels */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
         <Panel
           label="Original"
@@ -127,7 +124,6 @@ export default function TextDiffChecker() {
         </Panel>
       </div>
 
-      {/* Diff output */}
       <DiffOutput lines={diffResult} />
     </ToolShell>
   );

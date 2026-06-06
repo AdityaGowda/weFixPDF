@@ -14,7 +14,6 @@ export default function DisclaimerPage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#09090b]">
-      {/* Hero Section */}
       <section className="pt-10 pb-12 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <nav className="flex items-center gap-2 text-xs text-slate-400 mb-8 font-medium">
@@ -22,7 +21,7 @@ export default function DisclaimerPage() {
             <span>/</span>
             <span className="text-slate-600 dark:text-slate-300">Disclaimer</span>
           </nav>
-          
+
           <div className="text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-[11px] font-black uppercase tracking-[0.2em] mb-6">
               <AlertCircle className="w-3 h-3" /> Legal Information
@@ -38,10 +37,9 @@ export default function DisclaimerPage() {
         </div>
       </section>
 
-      {/* Main Content */}
       <section className="max-w-3xl mx-auto px-4 py-16">
         <div className="prose prose-slate dark:prose-invert max-w-none space-y-10">
-          
+
           <div>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">1. Acceptance of Terms</h2>
             <p className="text-slate-600 dark:text-slate-400 leading-relaxed">

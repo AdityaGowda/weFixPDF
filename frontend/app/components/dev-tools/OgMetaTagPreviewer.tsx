@@ -90,7 +90,6 @@ export default function OgMetaTagPreviewer() {
     <ToolShell>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
-        {/* Left: inputs */}
         <div className="space-y-3">
           <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Tag Values</p>
           {INPUTS.map(({ key, label, placeholder }) => (
@@ -105,7 +104,6 @@ export default function OgMetaTagPreviewer() {
           ))}
         </div>
 
-        {/* Right: previews */}
         <div className="space-y-5">
           <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Live Previews</p>
           {[
@@ -121,7 +119,6 @@ export default function OgMetaTagPreviewer() {
         </div>
       </div>
 
-      {/* Meta tags output */}
       <div className="mt-5 rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
         <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
           <div className="flex items-center gap-2">

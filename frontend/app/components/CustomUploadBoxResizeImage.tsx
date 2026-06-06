@@ -17,7 +17,7 @@ export default function CustomUploadBoxResizeImage({ service }: Props) {
   const [completedCrop, setCompletedCrop] = useState<PixelCrop | null>(null);
   const [targetWidth, setTargetWidth] = useState<string>("");
   const [targetHeight, setTargetHeight] = useState<string>("");
-  
+
   const [loading, setLoading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
 
@@ -41,12 +41,11 @@ export default function CustomUploadBoxResizeImage({ service }: Props) {
      const image = imageRef.current;
      const canvas = document.createElement('canvas');
      const scaleX = image.naturalWidth / image.width;
-     const scaleY = image.naturalHeight / image.height;     
+     const scaleY = image.naturalHeight / image.height;
      const pixelRatio = window.devicePixelRatio;
-     
-     // default dimensions: full image or cropped rect
+
      let sx = 0, sy = 0, sWidth = image.naturalWidth, sHeight = image.naturalHeight;
-     
+
      if (completedCrop && completedCrop.width > 0 && completedCrop.height > 0) {
         sx = completedCrop.x * scaleX;
         sy = completedCrop.y * scaleY;
@@ -59,10 +58,10 @@ export default function CustomUploadBoxResizeImage({ service }: Props) {
 
      canvas.width = finalWidth * pixelRatio;
      canvas.height = finalHeight * pixelRatio;
-     
+
      const ctx = canvas.getContext('2d');
      if (!ctx) return toast.error("Canvas rendering failed");
-     
+
      ctx.scale(pixelRatio, pixelRatio);
      ctx.imageSmoothingQuality = 'high';
 
@@ -126,7 +125,7 @@ export default function CustomUploadBoxResizeImage({ service }: Props) {
                    <img ref={imageRef} src={imageSrc} style={{ maxHeight: '70vh' }} className="w-auto object-contain shadow border border-slate-200" alt="Crop preview" />
                 </ReactCrop>
              </div>
-             
+
              <div className="flex justify-end gap-3 mt-4">
                 <button onClick={() => { setImageSrc(null); setFile(null); setCrop(undefined); }} className="px-5 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition-colors">
                   Cancel
@@ -147,7 +146,7 @@ export default function CustomUploadBoxResizeImage({ service }: Props) {
            </div>
            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Image Processed Successfully</h3>
            <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-sm">Your resized/cropped image was processed entirely on your device and is ready to download.</p>
-           
+
            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
              <a href={downloadUrl} download={`Resized_${file?.name || 'image.png'}`} className="flex items-center justify-center gap-2 px-8 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold shadow-lg shadow-emerald-500/30 transition-all">
                <Download className="w-5 h-5" /> Download Image

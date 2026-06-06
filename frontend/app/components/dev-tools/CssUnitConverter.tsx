@@ -69,7 +69,6 @@ export default function CssUnitConverter() {
   return (
     <ToolShell>
       <div className="space-y-5">
-        {/* Config row */}
         <div className="flex flex-wrap gap-4">
           <div>
             <label className="block text-[11px] font-medium mb-1" style={{ color: 'var(--text-muted)' }}>Root font size (px)</label>
@@ -88,7 +87,6 @@ export default function CssUnitConverter() {
           </div>
         </div>
 
-        {/* Input */}
         <div className="flex gap-3 items-end">
           <div className="flex-1">
             <label className="block text-[11px] font-medium mb-1" style={{ color: 'var(--text-muted)' }}>Value</label>
@@ -109,7 +107,6 @@ export default function CssUnitConverter() {
           </div>
         </div>
 
-        {/* Results */}
         {conversions.length > 0 && (
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">

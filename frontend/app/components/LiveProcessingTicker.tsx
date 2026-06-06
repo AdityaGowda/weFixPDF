@@ -24,11 +24,9 @@ function generateActivity() {
   };
 }
 
-// ── Skeleton ──────────────────────────────────────────────
 function TickerSkeleton() {
   return (
     <div className="w-full max-w-sm rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 shadow-xl shadow-slate-200/80 dark:shadow-none overflow-hidden shrink-0 animate-pulse">
-      {/* Header */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-800">
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700" />
@@ -37,7 +35,6 @@ function TickerSkeleton() {
         <div className="w-24 h-6 rounded-full bg-slate-200 dark:bg-slate-700" />
       </div>
 
-      {/* Activity rows */}
       <div className="px-5 py-3 space-y-3 h-[150px]">
         {[1, 0.5, 0.25].map((opacity, i) => (
           <div key={i} className="flex items-center gap-3" style={{ opacity }}>
@@ -51,7 +48,6 @@ function TickerSkeleton() {
         ))}
       </div>
 
-      {/* Footer */}
       <div className="flex items-center justify-between px-5 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
         {[0, 1, 2].map((i) => (
           <div key={i} className="flex flex-col items-center gap-1">
@@ -64,7 +60,6 @@ function TickerSkeleton() {
   );
 }
 
-// ── Main Component ────────────────────────────────────────
 export default function LiveProcessingTicker() {
   const [mounted, setMounted] = useState(false);
   const [completedCount, setCompletedCount] = useState(1248);
@@ -96,7 +91,6 @@ export default function LiveProcessingTicker() {
     return () => clearInterval(interval);
   }, []);
 
-  // Return null on initial client pass to match server's empty output (ssr:false)
   if (!mounted) return null;
 
   return (
@@ -112,7 +106,6 @@ export default function LiveProcessingTicker() {
         .activity-new { animation: slideDown 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
       `}</style>
 
-      {/* Header */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-800">
         <div className="flex items-center gap-2">
           <div className="relative flex h-2.5 w-2.5">
@@ -133,7 +126,6 @@ export default function LiveProcessingTicker() {
         </div>
       </div>
 
-      {/* Activity Feed */}
       <div className="px-5 py-3 space-y-3 h-[150px] overflow-hidden">
         {activities.map((activity, i) => (
           <div
@@ -166,7 +158,6 @@ export default function LiveProcessingTicker() {
         ))}
       </div>
 
-      {/* Footer Stats */}
       <div className="flex items-center justify-between px-5 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
         <div className="text-center">
           <p className="text-base font-black text-slate-900 dark:text-white tabular-nums">

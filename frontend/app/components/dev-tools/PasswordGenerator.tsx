@@ -4,8 +4,6 @@ import { useState, useCallback, useEffect } from 'react';
 import { RefreshCw, Eye, EyeOff } from 'lucide-react';
 import { ToolShell, CopyButton } from './SplitEditorPane';
 
-// ── Character sets ────────────────────────────────────────────────────────────
-
 const CHARS = {
   upper:   'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   lower:   'abcdefghijklmnopqrstuvwxyz',
@@ -13,8 +11,6 @@ const CHARS = {
   symbols: '!@#$%^&*()-_=+[]{}|;:,.<>?',
   ambiguous: 'iIlL1oO0',
 };
-
-// ── Entropy calculation ───────────────────────────────────────────────────────
 
 function calcEntropy(poolSize: number, length: number): number {
   return Math.round(length * Math.log2(poolSize));
@@ -28,7 +24,14 @@ function entropyLabel(bits: number): { label: string; color: string } {
   return                 { label: 'Very Strong', color: '#16a34a' };
 }
 
-// ── Secure random password generation ─────────────────────────────────────────
+function secureIndex(n: number): number {
+  if (n <= 0) return 0;
+  const max = Math.floor(0xffffffff / n) * n;
+  const buf = new Uint32Array(1);
+  let x = 0;
+  do { crypto.getRandomValues(buf); x = buf[0]; } while (x >= max);
+  return x % n;
+}
 
 function generatePassword(
   length: number,
@@ -46,7 +49,7 @@ function generatePassword(
     if (excludeAmbiguous) {
       chars = chars.split('').filter(c => !CHARS.ambiguous.includes(c)).join('');
     }
-    if (chars.length) { pool += chars; required.push(chars[Math.floor(Math.random() * chars.length)]); }
+    if (chars.length) { pool += chars; required.push(chars[secureIndex(chars.length)]); }
   };
 
   if (useUpper)   add('upper');
@@ -56,7 +59,6 @@ function generatePassword(
 
   if (!pool) return '';
 
-  // Fill the rest with random chars from pool, then shuffle
   const arr: string[] = [...required];
   const poolArr = pool.split('');
   const randValues = new Uint32Array(length - arr.length);
@@ -65,7 +67,6 @@ function generatePassword(
     arr.push(poolArr[randValues[i] % poolArr.length]);
   }
 
-  // Fisher-Yates shuffle using crypto.getRandomValues
   const shuffleRand = new Uint32Array(arr.length);
   crypto.getRandomValues(shuffleRand);
   for (let i = arr.length - 1; i > 0; i--) {
@@ -96,7 +97,6 @@ export default function PasswordGenerator() {
 
   useEffect(() => { generate(); }, [generate]);
 
-  // Calculate pool size & entropy
   let poolSize = 0;
   if (useUpper)   poolSize += excludeAmbiguous ? CHARS.upper.split('').filter(c => !CHARS.ambiguous.includes(c)).length : CHARS.upper.length;
   if (useLower)   poolSize += excludeAmbiguous ? CHARS.lower.split('').filter(c => !CHARS.ambiguous.includes(c)).length : CHARS.lower.length;
@@ -130,14 +130,12 @@ export default function PasswordGenerator() {
   return (
     <ToolShell>
       <div className="space-y-4">
-        {/* Config */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <span className="w-2 h-2 rounded-full bg-[#7C3AED]" />
             <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Options</span>
           </div>
           <div className="p-4 space-y-4">
-            {/* Length slider */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <label className="text-[12px] font-medium" style={{ color: 'var(--text-muted)' }}>Length</label>
@@ -153,7 +151,6 @@ export default function PasswordGenerator() {
               </div>
             </div>
 
-            {/* Character sets */}
             <div className="grid grid-cols-2 gap-3">
               <Toggle label="Uppercase (A–Z)"   value={useUpper}         onChange={setUseUpper} />
               <Toggle label="Lowercase (a–z)"   value={useLower}          onChange={setUseLower} />
@@ -171,7 +168,6 @@ export default function PasswordGenerator() {
               </div>
             </div>
 
-            {/* Entropy bar */}
             <div className="space-y-1">
               <div className="flex items-center justify-between text-[11px]">
                 <span style={{ color: 'var(--text-muted)' }}>Entropy: {entropyBits} bits</span>
@@ -187,7 +183,6 @@ export default function PasswordGenerator() {
           </div>
         </div>
 
-        {/* Output */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">

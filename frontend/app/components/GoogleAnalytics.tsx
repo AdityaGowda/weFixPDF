@@ -11,10 +11,8 @@ export default function GoogleAnalytics() {
       setConsent(localStorage.getItem("cookie_consent"));
     };
 
-    // Initial check
     checkConsent();
 
-    // Listen for updates
     window.addEventListener("cookie-consent-updated", checkConsent);
     return () => window.removeEventListener("cookie-consent-updated", checkConsent);
   }, []);

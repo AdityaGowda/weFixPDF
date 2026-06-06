@@ -78,7 +78,7 @@ export default function ColorPaletteGenerator() {
   const [exportText, setExportText] = useState('');
 
   const generate = useCallback((color: string) => {
-    try { setPalette(generatePalette(color)); } catch { /* invalid */ }
+    try { setPalette(generatePalette(color)); } catch { }
   }, []);
 
   useEffect(() => { generate(hex); }, [hex, generate]);
@@ -106,9 +106,7 @@ export default function ColorPaletteGenerator() {
 
   return (
     <ToolShell>
-      {/* Controls */}
       <div className="flex flex-wrap items-center gap-3 mb-5">
-        {/* Color picker */}
         <div className="flex items-center gap-2">
           <input
             type="color"
@@ -130,7 +128,6 @@ export default function ColorPaletteGenerator() {
         <button onClick={() => { const h = randomHex(); setHex(h); setHexInput(h); }} className={iconBtn}>
           <Shuffle className="w-3.5 h-3.5" /> Randomize
         </button>
-        {/* Format */}
         <div className="inline-flex rounded-lg border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] overflow-hidden text-[11px] font-medium ml-auto">
           {(['hex', 'rgb', 'hsl'] as ColorFormat[]).map((f) => (
             <button key={f} onClick={() => setFmt(f)} className={`px-2.5 py-1.5 transition-colors ${fmt === f ? 'bg-[#7C3AED] text-white' : 'text-[var(--text-muted)] hover:text-[var(--text)]'}`}>
@@ -142,7 +139,6 @@ export default function ColorPaletteGenerator() {
 
       {palette && (
         <>
-          {/* Base swatch large */}
           <div
             className="w-full h-16 rounded-xl mb-5 flex items-center px-4 gap-3 shadow-inner"
             style={{ background: palette.base.hex }}
@@ -154,14 +150,12 @@ export default function ColorPaletteGenerator() {
             <div className="ml-auto"><CopyButton text={formatSwatch(palette.base, fmt)} /></div>
           </div>
 
-          {/* Swatch rows */}
           <div className="space-y-5 mb-5">
             <SwatchRow title="Shades (darker)" swatches={palette.shades} fmt={fmt} accent="#374151" />
             <SwatchRow title="Tints (lighter)" swatches={palette.tints} fmt={fmt} accent="#9CA3AF" />
             <SwatchRow title="Harmonics" swatches={palette.harmonics} fmt={fmt} accent="#7C3AED" />
           </div>
 
-          {/* Export */}
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
               <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Export as</span>

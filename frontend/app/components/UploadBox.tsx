@@ -147,9 +147,22 @@ export default function UploadBox({
       }
       if (!filename) {
         const base = files[0].name.split(".").slice(0, -1).join(".");
+        const EXT_BY_SERVICE: Record<string, string> = {
+          "extract-text-pdf": "txt",
+          "pdf-to-html": "html",
+          "compare-pdf": "html",
+          "pdf-to-word": "docx",
+          "pdf-to-doc": "docx",
+          "pdf-to-epub": "epub",
+          "pdf-to-jpg": "jpg",
+          "pdf-to-png": "png",
+          "pdf-to-webp": "webp",
+          "heic-to-jpg": "jpg",
+        };
+        const ext = EXT_BY_SERVICE[service] || (service.includes("pdf") ? "pdf" : "zip");
         filename = isMulti
           ? `weFixPDF_${service}.${service.includes("pdf") ? "pdf" : "zip"}`
-          : `${base}_weFixPDF_${service}.pdf`;
+          : `${base}_weFixPDF_${service}.${ext}`;
       }
 
       setSuggestedName(filename);

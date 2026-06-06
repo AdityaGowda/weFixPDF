@@ -67,7 +67,6 @@ export default function UnixTimestampConverter() {
       <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
 
-          {/* Unix timestamp */}
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
               <div className="flex items-center gap-2">
@@ -87,7 +86,6 @@ export default function UnixTimestampConverter() {
             </div>
           </div>
 
-          {/* Human-readable */}
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
               <span className="w-2 h-2 rounded-full bg-[#163863]" />

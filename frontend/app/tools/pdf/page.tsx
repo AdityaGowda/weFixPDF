@@ -86,8 +86,6 @@ const faqs = [
   },
 ];
 
-
-
 function ToolCard({ href, label, desc, icon: Icon, popular }: {
   href: string; label: string; desc: string; icon: any; popular?: boolean;
 }) {
@@ -177,7 +175,6 @@ export default async function PdfHubPage() {
 
       <div className="bg-page">
 
-        {/* ── Hero ── */}
         <section className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] py-14 md:py-20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6">
             <nav className="flex items-center gap-2 text-[12px] mb-8" aria-label="Breadcrumb" style={{ color: 'var(--text-muted)' }}>
@@ -212,7 +209,6 @@ export default async function PdfHubPage() {
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 space-y-16">
 
-          {/* ── Tool grid ── */}
           <section>
             <h2 className="text-[20px] font-bold mb-6" style={{ color: 'var(--text)' }}>
               All {tools.length} PDF Tools — Free &amp; Instant
@@ -222,7 +218,6 @@ export default async function PdfHubPage() {
             </div>
           </section>
 
-          {/* ── What you can do ── */}
           <section className="space-y-6">
             <h2 className="text-[22px] font-bold" style={{ color: 'var(--text)' }}>
               The PDF problems people actually run into
@@ -274,7 +269,6 @@ export default async function PdfHubPage() {
             </div>
           </section>
 
-          {/* ── Common use cases ── */}
           <section className="space-y-5">
             <h2 className="text-[22px] font-bold" style={{ color: 'var(--text)' }}>
               What people use this page for
@@ -303,7 +297,6 @@ export default async function PdfHubPage() {
             </ul>
           </section>
 
-          {/* ── Privacy ── */}
           <section className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] p-6 bg-surface space-y-3">
             <h2 className="text-[18px] font-bold" style={{ color: 'var(--text)' }}>A note on privacy</h2>
             <p className="text-[14px] leading-[1.75]" style={{ color: 'var(--text-muted)' }}>
@@ -318,9 +311,6 @@ export default async function PdfHubPage() {
             </Link>
           </section>
 
-
-
-          {/* ── FAQ ── */}
           <section className="space-y-2">
             <h2 className="text-[22px] font-bold mb-6" style={{ color: 'var(--text)' }}>
               Frequently Asked Questions — PDF Tools
@@ -330,10 +320,8 @@ export default async function PdfHubPage() {
             </div>
           </section>
 
-          {/* ── Rating ── */}
           <ToolRating toolSlug="pdf-hub" />
 
-          {/* ── Other categories ── */}
           <section>
             <h2 className="text-[20px] font-bold mb-4" style={{ color: 'var(--text)' }}>Explore Other Tool Categories</h2>
             <div className="grid sm:grid-cols-2 gap-3">

@@ -8,10 +8,8 @@ type ToolPageContentProps = {
 
 export default async function ToolPageContent({ metadata }: ToolPageContentProps) {
 
-
   return (
     <div className="space-y-16 md:space-y-24 mt-12 md:mt-16">
-      {/* ── Intro ── */}
       {metadata?.intro && (
         <div className="relative max-w-3xl">
           <div className="absolute -left-4 top-0 bottom-0 w-[3px] rounded-full bg-gradient-to-b from-emerald-400 to-emerald-600" />
@@ -21,7 +19,6 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
         </div>
       )}
 
-      {/* ── How It Works ── */}
       {metadata?.howTo?.steps && metadata.howTo.steps.length > 0 && (
         <section>
           <div className="flex items-center gap-3 mb-4">
@@ -60,7 +57,6 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
         </section>
       )}
 
-      {/* ── Features ── */}
       {metadata?.features && metadata.features.length > 0 && (
         <section>
           <div className="flex items-center gap-3 mb-8">
@@ -87,14 +83,26 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
         </section>
       )}
 
-      {/* ── Body Content (rich article markdown) ── */}
       {metadata?.bodyContent && (
         <section>
           <MarkdownContent content={metadata.bodyContent} />
         </section>
       )}
 
-      {/* ── Related Tools ── */}
+      {metadata?.worked_example && (
+        <section>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-1 h-8 rounded-full bg-emerald-500" />
+            <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+              Worked Example
+            </h2>
+          </div>
+          <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 p-6 sm:p-8">
+            <MarkdownContent content={metadata.worked_example} />
+          </div>
+        </section>
+      )}
+
       {metadata?.relatedTools && metadata.relatedTools.length > 0 && (
         <section>
           <div className="flex items-center gap-3 mb-6">
@@ -119,9 +127,6 @@ export default async function ToolPageContent({ metadata }: ToolPageContentProps
         </section>
       )}
 
-
-
-      {/* ── FAQ ── */}
       {metadata?.faqs && metadata.faqs.length > 0 && (
         <section className="pb-8">
           <div className="flex items-center gap-3 mb-8">

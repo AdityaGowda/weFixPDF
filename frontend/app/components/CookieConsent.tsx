@@ -15,12 +15,9 @@ export default function CookieConsent() {
   const handleConsent = (type: "accepted" | "rejected") => {
     localStorage.setItem("cookie_consent", type);
     setShowBanner(false);
-    
-    // Trigger a custom event so other components (like AdSenseLoader) can react
+
     window.dispatchEvent(new Event("cookie-consent-updated"));
-    
-    // If accepted, we can also manually trigger GA/AdSense if needed, 
-    // but they will check localStorage on their own if we set them up right.
+
   };
 
   if (!showBanner) return null;
@@ -32,7 +29,7 @@ export default function CookieConsent() {
           <p className="text-[12px] md:text-[13px] leading-tight text-slate-600 dark:text-slate-400 text-center md:text-left flex-1">
             We use cookies for analytics and personalized ads via AdSense. By using weFixPDF, you agree to our use of cookies.
           </p>
-          
+
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => handleConsent("accepted")}

@@ -1,4 +1,3 @@
-// Shared reusable internal-link grid used on tool, blog, compare, use-case, and format pages.
 
 type ColorVariant = "blue" | "violet" | "orange" | "emerald";
 

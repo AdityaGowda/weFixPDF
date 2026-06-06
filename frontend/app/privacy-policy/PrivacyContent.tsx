@@ -199,7 +199,6 @@ export default function PrivacyContent() {
         </div>
       ))}
 
-      {/* Contact CTA */}
       <div className="rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 p-8 text-center mt-8">
         <h3 className="text-base font-black text-slate-900 dark:text-white mb-2">
           Questions about your privacy?

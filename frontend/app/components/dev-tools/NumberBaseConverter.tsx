@@ -30,7 +30,6 @@ function bitLength(n: bigint): number {
 
 function toTwos(n: bigint, bits: number): string {
   if (n >= 0n) return n.toString(2).padStart(bits, '0');
-  // Two's complement: 2^bits + n
   const twos = (1n << BigInt(bits)) + n;
   return twos.toString(2);
 }
@@ -93,7 +92,6 @@ export default function NumberBaseConverter() {
   return (
     <ToolShell>
       <div className="space-y-4">
-        {/* Input grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {FIELDS.map(({ key, label, prefix, hint }) => (
             <div key={key} className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
@@ -122,7 +120,6 @@ export default function NumberBaseConverter() {
 
         {error && <p className="text-[12px] text-red-500 px-1">{error}</p>}
 
-        {/* Info panel */}
         {values.dec && !error && (
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">

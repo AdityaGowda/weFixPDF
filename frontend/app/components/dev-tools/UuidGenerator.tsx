@@ -4,13 +4,10 @@ import { useState, useCallback } from 'react';
 import { RefreshCw } from 'lucide-react';
 import { ToolShell, CopyButton } from './SplitEditorPane';
 
-// ── UUID generation ────────────────────────────────────────────────────────────
-
 function generateV4(): string {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
     return crypto.randomUUID();
   }
-  // Fallback for environments without randomUUID
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
     const r = (Math.random() * 16) | 0;
     const v = c === 'x' ? r : (r & 0x3) | 0x8;
@@ -63,7 +60,7 @@ export default function UuidGenerator() {
       await navigator.clipboard.writeText(text);
       setAllCopied(true);
       setTimeout(() => setAllCopied(false), 1500);
-    } catch { /* ignore */ }
+    } catch { }
   }, [uuids, format]);
 
   const iconBtn = 'inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1 rounded transition-colors bg-[rgba(0,0,0,0.05)] dark:bg-[rgba(255,255,255,0.07)] text-[var(--text-muted)] hover:text-[var(--text)]';
@@ -72,7 +69,6 @@ export default function UuidGenerator() {
   return (
     <ToolShell>
       <div className="space-y-4">
-        {/* Controls */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">
@@ -81,7 +77,6 @@ export default function UuidGenerator() {
             </div>
           </div>
           <div className="p-4 space-y-4">
-            {/* Count */}
             <div className="flex items-center gap-3 flex-wrap">
               <label className="text-[12px] font-medium w-28 flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
                 How many
@@ -100,7 +95,6 @@ export default function UuidGenerator() {
               </div>
             </div>
 
-            {/* Format */}
             <div className="flex items-center gap-3 flex-wrap">
               <label className="text-[12px] font-medium w-28 flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
                 Format
@@ -120,7 +114,6 @@ export default function UuidGenerator() {
           </div>
         </div>
 
-        {/* Output */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">
@@ -155,7 +148,6 @@ export default function UuidGenerator() {
           </div>
         </div>
 
-        {/* Info box */}
         <div className="rounded-lg px-4 py-3 text-[12px] space-y-1" style={{ background: 'rgba(124,58,237,0.05)', color: 'var(--text-muted)' }}>
           <p><strong style={{ color: 'var(--text)' }}>UUID v4</strong> — 122 random bits + 6 version/variant bits. Collision probability is astronomically low — about 1 in 5 undecillion for a billion UUIDs per second over 85 years.</p>
           <p>Generated entirely in your browser using <code className="font-mono text-[11px]">crypto.randomUUID()</code> — nothing leaves your device.</p>

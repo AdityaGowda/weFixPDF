@@ -107,7 +107,6 @@ export default function UrlParserBuilder() {
   return (
     <ToolShell>
       <div className="space-y-4">
-        {/* Full URL */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <div className="flex items-center gap-2">
@@ -127,7 +126,6 @@ export default function UrlParserBuilder() {
           </div>
         </div>
 
-        {/* Fields grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div>
             {label('Protocol')}
@@ -154,7 +152,6 @@ export default function UrlParserBuilder() {
             placeholder="/v1/search" className={inputClass} style={{ color: 'var(--text)' }} />
         </div>
 
-        {/* Query params */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             <span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Query Parameters</span>
@@ -178,7 +175,6 @@ export default function UrlParserBuilder() {
           </div>
         </div>
 
-        {/* Fragment */}
         <div>
           {label('Fragment (#)')}
           <input type="text" value={fragment} onChange={e => setFrag(e.target.value)}

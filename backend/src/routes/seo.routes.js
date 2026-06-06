@@ -19,6 +19,7 @@
 const express = require("express");
 const router = express.Router();
 const seo = require("../controllers/seo.controller");
+const adminAuth = require("../middleware/adminAuth");
 
 // ── Read endpoints ──────────────────────────────────────────
 router.get("/",               seo.getAll);
@@ -30,14 +31,14 @@ router.get("/site-schemas",   seo.getSiteSchemas);
 router.get("/homepage",       seo.getHomepage);
 router.get("/:slug",          seo.getBySlug);
 
-// ── Write endpoints ─────────────────────────────────────────
-router.post("/",        seo.create);
-router.post("/upsert",  seo.upsert);
-router.post("/bulk",    seo.bulkUpsert);
-router.put("/:id",      seo.updateById);
-router.put("/slug/:slug", seo.updateBySlug);
+// ── Write endpoints (protected — mutate published content) ──
+router.post("/",        adminAuth, seo.create);
+router.post("/upsert",  adminAuth, seo.upsert);
+router.post("/bulk",    adminAuth, seo.bulkUpsert);
+router.put("/:id",      adminAuth, seo.updateById);
+router.put("/slug/:slug", adminAuth, seo.updateBySlug);
 
-// ── Delete ──────────────────────────────────────────────────
-router.delete("/:id",   seo.deleteById);
+// ── Delete (protected) ──────────────────────────────────────
+router.delete("/:id",   adminAuth, seo.deleteById);
 
 module.exports = router;

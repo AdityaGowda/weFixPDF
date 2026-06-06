@@ -9,12 +9,19 @@
 require("dotenv").config();
 const mysql = require("mysql2/promise");
 
+// Credentials come exclusively from the environment — never hardcode them.
+if (!process.env.DB_USER || !process.env.DB_PASSWORD || !process.env.DB_NAME) {
+  console.warn(
+    "[db] DB_USER / DB_PASSWORD / DB_NAME not fully set in environment — check backend/.env"
+  );
+}
+
 const pool = mysql.createPool({
   host: process.env.DB_HOST || "localhost",
   port: parseInt(process.env.DB_PORT, 10) || 3306,
-  user: process.env.DB_USER || "wefixpdf",
-  password: process.env.DB_PASSWORD || "wefixpdf@123",
-  database: process.env.DB_NAME || "wefixpdf",
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 
   // Pool settings
   waitForConnections: true,

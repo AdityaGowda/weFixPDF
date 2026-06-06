@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Shield } from "lucide-react";
 import UploadBox from "@/app/components/UploadBox";
 import CustomUploadBoxScanToPdf from "@/app/components/CustomUploadBoxScanToPdf";
 import DevToolBox from "@/app/components/dev-tools/DevToolBox";
@@ -11,6 +12,7 @@ import Breadcrumbs from "@/app/components/Breadcrumbs";
 import { getToolConfig } from "@/lib/config";
 import ToolRating from "@/app/components/ToolRating";
 import CompactRating from "@/app/components/CompactRating";
+import { isRedirected } from "@/app/lib/seo/consolidation";
 
 type ToolPageProps = {
   params: Promise<{ tool: string }>;
@@ -21,6 +23,7 @@ export async function generateStaticParams() {
   if (!slugs) return [];
   return slugs
     .filter((s) => s.page_type === "tool")
+    .filter((s) => !isRedirected(s.slug))
     .map((s) => ({ tool: s.slug }));
 }
 
@@ -44,12 +47,16 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
 
   const ogImage = { url: "https://wefixpdf.com/wfp.png", width: 1200, height: 630, alt: metadata.title };
 
+  const robots = metadata.is_indexable === false
+    ? { index: false, follow: true }
+    : { index: true, follow: true };
+
   return {
     title: metadata.title,
     description: metadata.description,
     keywords: metadata.keywords,
     alternates: { canonical: metadata.url },
-    robots: { index: true, follow: true },
+    robots,
     openGraph: {
       title: metadata.title,
       description: metadata.description,
@@ -79,8 +86,6 @@ export default async function ToolPage({ params }: ToolPageProps) {
   const slug = reqService.tool;
   const config = getToolConfig(slug);
 
-  // Always build breadcrumbs from known-good values — DB breadcrumb URLs
-  // can contain stale paths (e.g. "#tools", "/compress-pdf") so we ignore them.
   const breadcrumbsData = [
     { name: "Tools", href: "/tools" },
     { name: metadata.h1 || slug, href: `/tools/${slug}` },
@@ -97,7 +102,6 @@ export default async function ToolPage({ params }: ToolPageProps) {
       })
     : null;
 
-  // Fetch rating stats for schema
   let ratingStats = null;
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/rating/${slug}/stats`, { next: { revalidate: 3600 } });
@@ -122,7 +126,6 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
   return (
     <>
-      {/* JSON-LD Structured Data */}
       <script id="software-application-schema" type="application/ld+json">{JSON.stringify(softwareApplicationSchema)}</script>
 
       {faqSchema && (
@@ -135,7 +138,6 @@ export default async function ToolPage({ params }: ToolPageProps) {
         <script id="author-schema" type="application/ld+json">{JSON.stringify(authorSchema)}</script>
       )}
 
-      {/* ── Hero section ── */}
       <section
         className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]"
         style={{ background: 'radial-gradient(ellipse 80% 60% at 60% 0%, rgba(45,91,227,0.07) 0%, transparent 70%), var(--bg-page)' }}
@@ -143,8 +145,6 @@ export default async function ToolPage({ params }: ToolPageProps) {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-5 md:py-14 space-y-5">
           <Breadcrumbs items={breadcrumbsData} />
 
-
-          {/* Tool hero */}
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-3">
               <span
@@ -161,6 +161,26 @@ export default async function ToolPage({ params }: ToolPageProps) {
             <p className="text-[16px] leading-[1.7] max-w-xl" style={{ color: 'var(--text-muted)' }}>
               {metadata?.h2 || "Fast, secure, and privacy-shielded conversion."}
             </p>
+
+            {(metadata?.author_name || metadata?.last_updated) && (
+              <p className="text-[13px] flex flex-wrap items-center gap-x-2 gap-y-1" style={{ color: 'var(--text-muted)' }}>
+                {metadata?.author_name && <span>By <span className="font-semibold" style={{ color: 'var(--text)' }}>{metadata.author_name}</span></span>}
+                {metadata?.author_name && metadata?.last_updated && <span aria-hidden>·</span>}
+                {metadata?.last_updated && (
+                  <span>Updated <time dateTime={metadata.last_updated}>{metadata.last_updated}</time></span>
+                )}
+              </p>
+            )}
+
+            {metadata?.processing_location && (
+              <p className="inline-flex items-center gap-2 text-[13px] font-medium px-3 py-1.5 rounded-lg w-fit"
+                 style={{ background: '#EAF3DE', color: '#3B6D11' }}>
+                <Shield className="w-3.5 h-3.5 shrink-0" />
+                {metadata.processing_location === 'client'
+                  ? 'Runs entirely in your browser — your files never leave your device.'
+                  : 'Processed on our secure server and deleted automatically right after.'}
+              </p>
+            )}
           </div>
 
           {DEV_TOOL_SLUGS.has(reqService.tool)
@@ -172,13 +192,11 @@ export default async function ToolPage({ params }: ToolPageProps) {
         </div>
       </section>
 
-      {/* ── Content ── */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-16">
         <ToolPageContent metadata={metadata} />
         <ToolRating toolSlug={slug} />
       </div>
 
-      {/* AdSense Unit */}
       <ins className="adsbygoogle"
         style={{ display: "block" }}
         data-ad-format="autorelaxed"

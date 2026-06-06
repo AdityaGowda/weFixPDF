@@ -74,7 +74,6 @@ export default function CronExpressionBuilder() {
     <ToolShell>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        {/* ── LEFT: controls ── */}
         <div className="space-y-3">
           <p className="text-[11px] font-semibold uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)' }}>Schedule Builder</p>
           {FIELDS.map(({ key, label, min, max, hint }) => (
@@ -101,9 +100,7 @@ export default function CronExpressionBuilder() {
           ))}
         </div>
 
-        {/* ── RIGHT: output ── */}
         <div className="space-y-3">
-          {/* Cron string */}
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
               <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-[#7C3AED]" /><span className="text-[12px] font-medium" style={{ color: 'var(--text)' }}>Cron Expression</span></div>
@@ -114,7 +111,6 @@ export default function CronExpressionBuilder() {
             </div>
           </div>
 
-          {/* Human-readable */}
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
               <span className="w-2 h-2 rounded-full bg-[#163863]" />
@@ -125,7 +121,6 @@ export default function CronExpressionBuilder() {
             </div>
           </div>
 
-          {/* Next 5 runs */}
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center gap-2 px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
               <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />

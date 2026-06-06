@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getToolListings } from '@/app/lib/seo/seoApi';
+import { REDIRECTED_SLUGS } from '@/app/lib/seo/consolidation';
 import {
   Code, Palette, Braces, KeyRound, ArrowLeftRight, GitCompare,
   FileCode, ArrowRight, CheckCircle2, ChevronRight, Terminal,
@@ -116,8 +117,7 @@ const categories = [
   {
     label: 'String & Escape Utilities',
     tools: [
-      'string-utilities', 'word-counter', 'html-escape', 'xml-escape',
-      'java-dotnet-escape', 'javascript-escape', 'json-escape', 'csv-escape', 'sql-escape'
+      'string-utilities', 'word-counter', 'string-escape'
     ],
   },
   {
@@ -140,8 +140,6 @@ const categories = [
     tools: ['wasm-analyzer', 'text-to-ascii-art', 'url-parser-builder', 'lorem-ipsum-generator', 'mime-types-list'],
   },
 ];
-
-
 
 function ToolCard({ href, label, desc, icon: Icon, popular }: {
   href: string; label: string; desc: string; icon: any; popular?: boolean;
@@ -180,6 +178,7 @@ export default async function DeveloperHubPage() {
   const allTools = await getToolListings();
   const devToolsRaw = allTools
     .filter((t) => t.type === 'Dev Tools')
+    .filter((t) => !REDIRECTED_SLUGS.has(t.slug))
     .sort((a, b) => a.position - b.position);
 
   const toolMap = Object.fromEntries(devToolsRaw.map((t) => [t.slug, t]));
@@ -233,7 +232,6 @@ export default async function DeveloperHubPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-      {/* ── Hero ── */}
       <section className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] py-14 md:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <nav className="flex items-center gap-2 text-[12px] mb-8" aria-label="Breadcrumb" style={{ color: 'var(--text-muted)' }}>
@@ -268,7 +266,6 @@ export default async function DeveloperHubPage() {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 space-y-16">
 
-          {/* ── Tool grid by category ── */}
           {categories.map((cat) => {
             const catTools = cat.tools
               .map((slug) => toolMap[slug])
@@ -295,7 +292,6 @@ export default async function DeveloperHubPage() {
             );
           })}
 
-          {/* ── Why browser-based ── */}
           <section className="space-y-5">
             <h2 className="text-[22px] font-bold" style={{ color: 'var(--text)' }}>
               Why these tools run in your browser, not on a server
@@ -332,7 +328,6 @@ export default async function DeveloperHubPage() {
             </div>
           </section>
 
-          {/* ── Common dev tasks ── */}
           <section className="space-y-5">
             <h2 className="text-[22px] font-bold" style={{ color: 'var(--text)' }}>
               What developers use these for
@@ -363,9 +358,6 @@ export default async function DeveloperHubPage() {
             </ul>
           </section>
 
-
-
-          {/* ── FAQ ── */}
           <section>
             <h2 className="text-[22px] font-bold mb-6" style={{ color: 'var(--text)' }}>
               Questions about the developer tools
@@ -375,10 +367,8 @@ export default async function DeveloperHubPage() {
             </div>
           </section>
 
-          {/* ── Rating ── */}
           <ToolRating toolSlug="developer-hub" />
 
-          {/* ── Other categories ── */}
           <section>
             <h2 className="text-[20px] font-bold mb-4" style={{ color: 'var(--text)' }}>Explore Other Tool Categories</h2>
             <div className="grid sm:grid-cols-2 gap-3">

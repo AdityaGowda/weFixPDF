@@ -4,6 +4,8 @@ const {
   splitPdf,
   compressPdf,
   pdfToJpg,
+  pdfToPng,
+  pdfToWebp,
   jpgToPdf,
   wordToPdf,
   pdfToWord,
@@ -25,8 +27,9 @@ const {
   epubToPdf
 } = require("../services/newPdf.service");
 
-// Tools that use req.files (array) instead of req.file (single)
-const MULTI_FILE_TOOLS = ["merge-pdf", "image-to-pdf", "jpg-to-pdf", "compare-pdf"];
+// Tools that use req.files (array) instead of req.file (single).
+// Single source of truth — also consumed by the route's upload selector.
+const { MULTI_FILE_TOOLS } = require("../config/tools.config");
 
 async function convertFile(req, res, next) {
   try {
@@ -45,7 +48,6 @@ async function convertFile(req, res, next) {
     }
 
     const ctx = { res, req, file, files };
-    console.log(tool, ":::::::::::::::::::::::::::::::::")
     switch (tool) {
       // ── Image tools ──────────────────────────────────────
       case "image-compressor":
@@ -68,6 +70,12 @@ async function convertFile(req, res, next) {
 
       case "pdf-to-jpg":
         return await pdfToJpg(ctx);
+
+      case "pdf-to-png":
+        return await pdfToPng(ctx);
+
+      case "pdf-to-webp":
+        return await pdfToWebp(ctx);
 
       case "image-to-pdf":
       case "jpg-to-pdf":

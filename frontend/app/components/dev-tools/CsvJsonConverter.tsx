@@ -40,7 +40,6 @@ export default function CsvJsonConverter() {
 
   const modeBar = (
     <div className="flex items-center gap-2 mb-4">
-      {/* Mode toggle */}
       <div className="inline-flex rounded-lg border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] overflow-hidden text-[12px] font-medium">
         <button
           onClick={() => setMode('csv2json')}
@@ -56,7 +55,6 @@ export default function CsvJsonConverter() {
         </button>
       </div>
       <ArrowLeftRight className="w-3.5 h-3.5 text-[var(--text-subtle)]" />
-      {/* Options */}
       <SelectChip
         label="Delimiter"
         value={delimiter}

@@ -58,7 +58,6 @@ export default function JwtDecoder() {
 
   return (
     <ToolShell>
-      {/* Token input */}
       <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden bg-[var(--bg-card)] mb-4">
         <div className="flex items-center justify-between px-3 py-2 border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] bg-[var(--surface)]">
           <div className="flex items-center gap-2">
@@ -99,7 +98,6 @@ export default function JwtDecoder() {
         )}
       </div>
 
-      {/* Expiry status banner */}
       {parts && (
         <div className={`flex items-center gap-2 rounded-lg px-3 py-2 mb-4 text-[12px] font-medium ${
           parts.isExpired === true
@@ -124,10 +122,8 @@ export default function JwtDecoder() {
         </div>
       )}
 
-      {/* Decoded sections */}
       {parts && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {/* Header */}
           <SectionCard
             title="Header"
             accent="#7C3AED"
@@ -137,7 +133,6 @@ export default function JwtDecoder() {
             {Object.entries(parts.header).map(([k, v]) => <ClaimBadge key={k} label={k} value={v} />)}
           </SectionCard>
 
-          {/* Payload */}
           <SectionCard
             title="Payload"
             accent="#163863"
@@ -149,7 +144,6 @@ export default function JwtDecoder() {
         </div>
       )}
 
-      {/* Signature */}
       {parts && (
         <div className="mt-3 rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden bg-[var(--bg-card)]">
           <div className="flex items-center justify-between px-4 py-2.5 border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] bg-[var(--surface)]">

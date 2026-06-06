@@ -114,7 +114,6 @@ export default function HelpCenterPage() {
       <script id="faq-schema" type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
 
-      {/* ── Hero ── */}
       <section className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] py-14 md:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <nav className="flex items-center gap-2 text-[12px] mb-8" style={{ color: 'var(--text-muted)' }}>
@@ -130,7 +129,6 @@ export default function HelpCenterPage() {
             Answers to {totalFaqs}+ common questions about PDF tools, image conversion, privacy, and file formats.
           </p>
 
-          {/* Category jump links */}
           <div className="flex flex-wrap gap-2 mt-8">
             {categories.map((cat) => (
               <a
@@ -145,7 +143,6 @@ export default function HelpCenterPage() {
         </div>
       </section>
 
-      {/* ── FAQ Sections ── */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-14 space-y-14">
         {categories.map((cat) => (
           <section key={cat.id} id={cat.id}>
@@ -173,7 +170,6 @@ export default function HelpCenterPage() {
           </section>
         ))}
 
-        {/* ── Contact ── */}
         <section className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] p-8 bg-card">
           <h2 className="text-[18px] font-medium mb-2" style={{ color: 'var(--text)' }}>Still have questions?</h2>
           <p className="text-[14px] mb-6" style={{ color: 'var(--text-muted)' }}>

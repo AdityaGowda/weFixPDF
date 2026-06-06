@@ -43,7 +43,6 @@ export default function ContactPage() {
     <div className="bg-page">
       <script id="breadcrumb-schema" type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
 
-      {/* ── Hero ── */}
       <section className="border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)] py-14 md:py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <nav className="flex items-center gap-2 text-[12px] mb-8" style={{ color: 'var(--text-muted)' }}>
@@ -61,7 +60,6 @@ export default function ContactPage() {
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 space-y-12">
 
-        {/* ── Contact info ── */}
         <div className="grid sm:grid-cols-2 gap-3">
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] p-6 bg-card space-y-3">
             <div
@@ -100,7 +98,6 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* ── Topics ── */}
         <section>
           <h2 className="text-[18px] font-medium mb-2" style={{ color: 'var(--text)' }}>What can we help with?</h2>
           <p className="text-[13px] mb-6" style={{ color: 'var(--text-muted)' }}>Feel free to reach out about any of these topics.</p>
@@ -125,7 +122,6 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* ── Contact form ── */}
         <section className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] p-6 md:p-8 bg-card">
           <h2 className="text-[18px] font-medium mb-1" style={{ color: 'var(--text)' }}>Send a message</h2>
           <p className="text-[13px] mb-6" style={{ color: 'var(--text-muted)' }}>Fill in the form below and we&apos;ll get back to you.</p>

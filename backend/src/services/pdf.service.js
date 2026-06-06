@@ -17,8 +17,9 @@ const path = require("path");
 const { PDFDocument, rgb, StandardFonts, degrees } = require("pdf-lib");
 const mammoth = require("mammoth");
 const { Document, Packer, Paragraph, TextRun } = require("docx");
-const { execSync,spawnSync} = require("child_process");
+const { execSync, execFileSync, spawnSync } = require("child_process");
 const archiver = require("archiver");
+const sharp = require("sharp");
 
 // ─────────────────────────────────────────
 // Helpers
@@ -43,8 +44,15 @@ function sendFile(res, filePath, contentType, downloadName) {
   res.setHeader("Content-Type", contentType);
   res.setHeader("Content-Disposition", `attachment; filename="${downloadName}"`);
   const stream = fs.createReadStream(filePath);
+  // Clean up the temp file once the response is fully flushed OR on error/abort.
+  const cleanup = () => safeDelete(filePath);
+  stream.on("error", (err) => {
+    console.error("sendFile stream error:", err);
+    if (!res.headersSent) res.status(500).end();
+    cleanup();
+  });
+  res.on("close", cleanup);  // covers client abort and normal finish
   stream.pipe(res);
-  stream.on("close", () => safeDelete(filePath));
 }
 
 // ─────────────────────────────────────────
@@ -102,9 +110,13 @@ function parsePageRanges(rangeStr, totalPages) {
   for (const part of parts) {
     const trimmed = part.trim();
     if (trimmed.includes("-")) {
-      const [start, end] = trimmed.split("-").map(Number);
+      let [start, end] = trimmed.split("-").map(Number);
+      if (isNaN(start) || isNaN(end)) continue;
+      start = Math.max(1, start);
+      end = Math.min(end, totalPages);
+      if (start > end) continue; // skip reversed/invalid ranges like "5-2"
       const indices = [];
-      for (let i = start; i <= Math.min(end, totalPages); i++) indices.push(i - 1);
+      for (let i = start; i <= end; i++) indices.push(i - 1);
       if (indices.length) groups.push(indices);
     } else {
       const n = Number(trimmed);
@@ -144,23 +156,21 @@ async function splitPdf({ res, req, file }) {
     }
 
     // Multiple outputs — zip them
-    const archiver = require("archiver");
     const zipPath = `uploads/split-${uid}.zip`;
-    const output = fs.createWriteStream(zipPath);
-    const archive = archiver("zip", { zlib: { level: 9 } });
 
-    output.on("close", () => {
-      outputPaths.forEach(safeDelete);
-      sendFile(res, zipPath, "application/zip", `weFixPDF_split-${uid}.zip`);
+    await new Promise((resolve, reject) => {
+      const output = fs.createWriteStream(zipPath);
+      const archive = archiver("zip", { zlib: { level: 9 } });
+      output.on("close", resolve);
+      output.on("error", reject);
+      archive.on("error", reject);
+      archive.pipe(output);
+      outputPaths.forEach((p, i) => archive.file(p, { name: `part${i + 1}.pdf` }));
+      archive.finalize();
     });
 
-    archive.on("error", (err) => {
-      throw err;
-    });
-
-    archive.pipe(output);
-    outputPaths.forEach((p, i) => archive.file(p, { name: `part${i + 1}.pdf` }));
-    await archive.finalize();
+    outputPaths.forEach(safeDelete);
+    return sendFile(res, zipPath, "application/zip", `weFixPDF_split-${uid}.zip`);
   } catch (err) {
     safeDelete(inputPath);
     const error = new Error(`PDF Split failed: ${err.message}`);
@@ -212,8 +222,8 @@ async function compressPdf({ res, req, file }) {
         break;
 
       case "low":
-        // Use ebook instead of printer to avoid size increase
-        gsArgs.push("-dPDFSETTINGS=/ebook");
+        // Minimal compression — preserve highest quality
+        gsArgs.push("-dPDFSETTINGS=/printer");
         break;
 
       case "extreme":
@@ -283,105 +293,118 @@ async function compressPdf({ res, req, file }) {
  */
 
 // ─────────────────────────────────────────
-// 4. PDF TO JPG
-// POST /api/pdf-to-jpg
+// 4. PDF TO IMAGE (JPG / PNG / WEBP)
+// POST /api/pdf-to-jpg | pdf-to-png | pdf-to-webp
 // req.file = single PDF
-// Requires: pdf-poppler  (apt-get install poppler-utils)
+// Requires: pdf2pic + poppler/graphicsmagick
 // ─────────────────────────────────────────
-async function pdfToJpg({ res, req, file }) {
+const IMAGE_FORMAT_META = {
+  jpg:  { ext: "jpg",  mime: "image/jpeg", renderAs: "jpg" },
+  png:  { ext: "png",  mime: "image/png",  renderAs: "png" },
+  webp: { ext: "webp", mime: "image/webp", renderAs: "png" }, // render PNG, then sharp→webp
+};
+
+async function pdfToImage({ res, req, file }, format) {
   if (!file) return res.status(400).json({ error: "No PDF uploaded." });
 
+  const meta = IMAGE_FORMAT_META[format] || IMAGE_FORMAT_META.jpg;
   const inputPath = file.path;
   const uid = Date.now();
-  const outputDir = `uploads/pdf2jpg-${uid}`;
+  const outputDir = `uploads/pdf2img-${uid}`;
 
   try {
     const { fromPath } = require("pdf2pic");
     fs.mkdirSync(outputDir, { recursive: true });
 
     const convert = fromPath(inputPath, {
-      density: 150,       // DPI — 150 is sharp enough, 300 is very high quality
+      density: 150,
       saveFilename: "page",
       savePath: outputDir,
-      format: "jpg",
+      format: meta.renderAs,
       width: 1200,
       height: 1600,
     });
 
     // bulk(-1) converts ALL pages
     const results = await convert.bulk(-1, { responseType: "image" });
-    const imagePaths = results.map((r) => r.path).filter(Boolean);
+    let imagePaths = results.map((r) => r.path).filter(Boolean);
 
     if (imagePaths.length === 0) {
       throw new Error("No images were generated — PDF may be empty or corrupted.");
     }
 
-    safeDelete(inputPath);
-
-    // Single page — send JPG directly
-    if (imagePaths.length === 1) {
-      return sendFile(res, imagePaths[0], "image/jpeg", "weFixPDF_page1.jpg");
+    // For webp we render PNG then transcode each page with sharp.
+    if (meta.ext === "webp") {
+      const converted = [];
+      for (const p of imagePaths) {
+        const webpPath = p.replace(/\.png$/i, ".webp");
+        await sharp(p).webp({ quality: 80 }).toFile(webpPath);
+        safeDelete(p);
+        converted.push(webpPath);
+      }
+      imagePaths = converted;
     }
 
-    // Multiple pages — zip all JPGs
-    const archiver = require("archiver");
-    const zipPath = `uploads/pdf2jpg-${uid}.zip`;
+    safeDelete(inputPath);
+
+    // Single page — send image directly
+    if (imagePaths.length === 1) {
+      return sendFile(res, imagePaths[0], meta.mime, `weFixPDF_page1.${meta.ext}`);
+    }
+
+    // Multiple pages — zip all images
+    const zipPath = `uploads/pdf2img-${uid}.zip`;
 
     await new Promise((resolve, reject) => {
       const output = fs.createWriteStream(zipPath);
       const archive = archiver("zip", { zlib: { level: 9 } });
-
       output.on("close", resolve);
+      output.on("error", reject);
       archive.on("error", reject);
-
       archive.pipe(output);
       imagePaths.forEach((p, i) =>
-        archive.file(p, { name: `page${i + 1}.jpg` })
+        archive.file(p, { name: `page${i + 1}.${meta.ext}` })
       );
       archive.finalize();
     });
 
-    // Cleanup individual JPGs and temp dir after zip is built
     imagePaths.forEach(safeDelete);
     fs.rmSync(outputDir, { recursive: true, force: true });
 
-    return sendFile(
-      res,
-      zipPath,
-      "application/zip",
-      `weFixPDF_pdf-to-jpg-${uid}.zip`
-    );
-
+    return sendFile(res, zipPath, "application/zip", `weFixPDF_pdf-to-${meta.ext}-${uid}.zip`);
   } catch (err) {
     safeDelete(inputPath);
     fs.rmSync(outputDir, { recursive: true, force: true });
-    const error = new Error(`PDF to JPG conversion failed: ${err.message}`);
+    const error = new Error(`PDF to ${meta.ext.toUpperCase()} conversion failed: ${err.message}`);
     error.statusCode = 500;
     throw error;
   }
 }
+
+const pdfToJpg  = (ctx) => pdfToImage(ctx, "jpg");
+const pdfToPng  = (ctx) => pdfToImage(ctx, "png");
+const pdfToWebp = (ctx) => pdfToImage(ctx, "webp");
 
 // ─────────────────────────────────────────
 // 5. JPG TO PDF
 // POST /api/jpg-to-pdf
 // req.files = one or more image files (.jpg/.jpeg/.png)
 // ─────────────────────────────────────────
-async function jpgToPdf({ res, req,file, files }) {
+async function jpgToPdf({ res, req, file, files }) {
+  let uploadedFiles = [];
+  if (file) {
+    uploadedFiles = [file];
+  } else if (files && files.length) {
+    uploadedFiles = files;
+  }
 
-    if (file) {
-      uploadedFiles = [file];        
-    } else if (files && files.length) {
-      uploadedFiles = files;      
-    }
-
-  const inputPaths = (uploadedFiles|| []).map((f) => f.path);
+  const inputPaths = (uploadedFiles || []).map((f) => f.path);
 
   if (!inputPaths.length) {
     return res.status(400).json({ error: "No image files uploaded." });
   }
 
   try {
-    const sharp = require("sharp");
     const pdfDoc = await PDFDocument.create();
 
     for (const imgPath of inputPaths) {
@@ -434,12 +457,13 @@ async function wordToPdf({ res, req, file }) {
   }
 
   try {
-    const { execSync } = require("child_process");
     const outputDir = path.dirname(inputPath);
 
-    // LibreOffice converts in place — output will be same filename with .pdf
-    execSync(
-      `libreoffice --headless --convert-to pdf --outdir ${outputDir} ${inputPath}`,
+    // LibreOffice converts in place — output will be same filename with .pdf.
+    // Use execFileSync (no shell) so filenames can never inject shell commands.
+    execFileSync(
+      "libreoffice",
+      ["--headless", "--convert-to", "pdf", "--outdir", outputDir, inputPath],
       { timeout: 30000 }
     );
 
@@ -670,8 +694,9 @@ async function protectPdf({ res, req, file }) {
 
   try {
     // qpdf --encrypt user-password owner-password key-length [restrictions] -- input.pdf output.pdf
-    // Using 256-bit AES encryption
-    execSync(`qpdf --encrypt "${password}" "${password}" 256 -- "${inputPath}" "${outputPath}"`);
+    // Using 256-bit AES encryption. execFileSync (no shell) keeps the password
+    // out of any shell interpretation — prevents command injection.
+    execFileSync("qpdf", ["--encrypt", password, password, "256", "--", inputPath, outputPath]);
 
     const origBase = path.parse(file.originalname).name;
     safeDelete(inputPath);
@@ -698,7 +723,8 @@ async function unlockPdf({ res, req, file }) {
 
   try {
     // qpdf --password=pw --decrypt input.pdf output.pdf
-    execSync(`qpdf --password="${password}" --decrypt "${inputPath}" "${outputPath}"`);
+    // execFileSync (no shell) prevents the password from injecting shell commands.
+    execFileSync("qpdf", [`--password=${password}`, "--decrypt", inputPath, outputPath]);
 
     const origBase = path.parse(file.originalname).name;
     safeDelete(inputPath);
@@ -719,6 +745,8 @@ module.exports = {
   splitPdf,
   compressPdf,
   pdfToJpg,
+  pdfToPng,
+  pdfToWebp,
   jpgToPdf,
   wordToPdf,
   pdfToWord,

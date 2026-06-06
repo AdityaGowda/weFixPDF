@@ -62,7 +62,6 @@ export default function ChmodCalculator() {
     <ToolShell>
       <div className="space-y-4">
 
-        {/* Grid */}
         <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
           <div className="grid grid-cols-4 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
             {['Entity', 'Read (4)', 'Write (2)', 'Execute (1)'].map(h => (
@@ -91,7 +90,6 @@ export default function ChmodCalculator() {
           ))}
         </div>
 
-        {/* Output row */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="rounded-xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.07)] overflow-hidden">
             <div className="flex items-center justify-between px-3 py-2 bg-[var(--surface)] border-b border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.06)]">
@@ -129,7 +127,6 @@ export default function ChmodCalculator() {
           </div>
         </div>
 
-        {/* Common presets */}
         <div className="flex flex-wrap gap-2">
           {COMMON.map(({ label, value }) => (
             <button
