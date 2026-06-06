@@ -19,6 +19,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://wefixpdf.com"),
+  // AdSense site verification — NOT gated by cookie consent, so Google can
+  // verify ownership even when the adsbygoogle loader is withheld pre-consent.
+  other: { "google-adsense-account": "ca-pub-8668995301634402" },
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -67,6 +70,37 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Google Consent Mode v2 — must run BEFORE adsbygoogle.js / gtag.js.
+            Defaults to denied (GDPR-safe); returning visitors who already
+            accepted are upgraded to granted immediately. AdSense reads these
+            signals, so the loader can be present for everyone (incl. the AdSense
+            crawler) while personalization stays gated until consent. */}
+        <script
+          id="consent-mode-default"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('consent', 'default', {
+                ad_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied',
+                analytics_storage: 'denied',
+                wait_for_update: 500
+              });
+              try {
+                if (localStorage.getItem('cookie_consent') === 'accepted') {
+                  gtag('consent', 'update', {
+                    ad_storage: 'granted',
+                    ad_user_data: 'granted',
+                    ad_personalization: 'granted',
+                    analytics_storage: 'granted'
+                  });
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
         <script id="website-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_SCHEMA) }} />
         <script id="organization-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_SCHEMA) }} />
       </head>
